@@ -48,32 +48,32 @@ Smpita\MakeAs::array('example') === ['example'];
 
 #### Arrays
 ```php
-array(mixed $value): array
+Smpita\TypeAs::array(mixed $value): array
 ```
 
 #### Carbon
 ```php
-carbon(mixed $value, DateTimeZone|string|null $tz = null, Carbon $default = null): Carbon
+Smpita\TypeAs::carbon(mixed $value, DateTimeZone|string|null $tz = null, Carbon $default = null): Carbon
 ```
 
 #### Classes
 ```php
-class(mixed $value, string $class, object $default = null): object
+Smpita\TypeAs::class(mixed $value, string $class, object $default = null): object
 ```
 
 #### Floats
 ```php
-float(mixed $value, float $default = null): float
+Smpita\TypeAs::float(mixed $value, float $default = null): float
 ```
 
 #### Integers
 ```php
-int(mixed $value, int $default = null): int
+Smpita\TypeAs::int(mixed $value, int $default = null): int
 ```
 
 #### Strings
 ```php
-string(mixed $value, string $default = null): string
+Smpita\TypeAs::string(mixed $value, string $default = null): string
 ```
 
 ## Testing
