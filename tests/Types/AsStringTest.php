@@ -104,6 +104,19 @@ class AsStringTest extends TestCase
     {
         $this->assertIsString(TypeAs::string(stream_context_create()));
     }
+
+    /**
+     * @test
+     *
+     * @group smpita
+     * @group typeas
+     */
+    public function canPassStaticAnalysis(): void
+    {
+        $test = fn (string $value) => $value;
+
+        $this->assertIsString($test(TypeAs::string(fake()->randomNumber())));
+    }
 }
 
 class StringableStub

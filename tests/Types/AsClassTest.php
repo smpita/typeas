@@ -67,6 +67,19 @@ class AsClassTest extends TestCase
     {
         $this->assertInstanceOf(StdClass::class, TypeAs::class(new ParentStub, ChildStub::class, new StdClass));
     }
+
+    /**
+     * @test
+     *
+     * @group smpita
+     * @group typeas
+     */
+    public function canPassStaticAnalysis(): void
+    {
+        $test = fn (StdClass $value) => $value;
+
+        $this->assertInstanceOf(StdClass::class, $test(new StdClass));
+    }
 }
 
 class ParentStub

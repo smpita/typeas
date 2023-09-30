@@ -103,6 +103,19 @@ class AsFloatTest extends TestCase
     {
         $this->assertIsFloat(TypeAs::float(stream_context_create()));
     }
+
+    /**
+     * @test
+     *
+     * @group smpita
+     * @group typeas
+     */
+    public function canPassStaticAnalysis(): void
+    {
+        $test = fn (float $value) => $value;
+
+        $this->assertIsFloat($test(TypeAs::float(fake()->randomNumber())));
+    }
 }
 
 class FloatableStub

@@ -55,4 +55,17 @@ class AsCarbonTest extends TestCase
     {
         $this->assertInstanceOf(Carbon::class, TypeAs::carbon('not-valid', null, now()));
     }
+
+    /**
+     * @test
+     *
+     * @group smpita
+     * @group typeas
+     */
+    public function canPassStaticAnalysis(): void
+    {
+        $test = fn (Carbon $value) => $value;
+
+        $this->assertInstanceOf(Carbon::class, $test(TypeAs::carbon('now')));
+    }
 }

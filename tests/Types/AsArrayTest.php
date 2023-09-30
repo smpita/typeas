@@ -120,6 +120,19 @@ class AsArrayTest extends TestCase
 
         $this->assertSame($array, TypeAs::array($array));
     }
+
+    /**
+     * @test
+     *
+     * @group smpita
+     * @group typeas
+     */
+    public function canPassStaticAnalysis(): void
+    {
+        $test = fn (array $value) => $value;
+
+        $this->assertIsArray($test(TypeAs::array(fake()->sentence())));
+    }
 }
 
 class ArrayableStub

@@ -103,6 +103,19 @@ class AsIntegerTest extends TestCase
     {
         $this->assertIsInt(TypeAs::int(stream_context_create()));
     }
+
+    /**
+     * @test
+     *
+     * @group smpita
+     * @group typeas
+     */
+    public function canPassStaticAnalysis(): void
+    {
+        $test = fn (int $value) => $value;
+
+        $this->assertIsInt($test(TypeAs::int(fake()->randomFloat())));
+    }
 }
 
 class IntegerableStub
