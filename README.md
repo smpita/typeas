@@ -5,11 +5,9 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/smpita/typeas/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/smpita/typeas/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/smpita/typeas.svg?style=flat-square)](https://packagist.org/packages/smpita/typeas)
 
-- Do you fight the `mixed` signature of `app()->make()` when resolving objects?
-- Do you want to effortlessly guarantee the resolved object is the expected object? 
-- Do you use static analysis on your [Laravel](https://laravel.com/) app?
+- Do you fight `mixed` signatures when performing static analysis?
 
-[TypeAs](https://github.com/smpita/typeas) will make sure you make the object you expect, and nicely type the return for static analysis.
+[TypeAs](https://github.com/smpita/typeas) will help you keep tight control of your typing.
 
 ## Installation
 
