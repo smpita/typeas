@@ -16,7 +16,7 @@ class AsClass extends Type
      *
      * @throws TypeAsResolutionException
      */
-    public function handle(mixed $value, string $class, object $default = null)
+    public function handle(string $class, mixed $value, object $default = null)
     {
         return is_object($value) && is_a($value, $class)
             ? $value
