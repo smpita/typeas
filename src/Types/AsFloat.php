@@ -20,11 +20,6 @@ class AsFloat extends Type
         } ?? $default ?? $this->error($value);
     }
 
-    /**
-     * @return ?float
-     *
-     * @throws TypeAsResolutionException
-     */
     protected function fromObject(object $value): ?float
     {
         return match (true) {

@@ -20,11 +20,6 @@ class AsString extends Type
         } ?? $default ?? $this->error($value);
     }
 
-    /**
-     * @return ?string
-     *
-     * @throws TypeAsResolutionException
-     */
     protected function fromObject(object $value): ?string
     {
         return match (true) {

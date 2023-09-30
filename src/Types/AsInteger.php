@@ -20,11 +20,6 @@ class AsInteger extends Type
         } ?? $default ?? $this->error($value);
     }
 
-    /**
-     * @return ?int
-     *
-     * @throws TypeAsResolutionException
-     */
     protected function fromObject(object $value): ?int
     {
         return match (true) {
