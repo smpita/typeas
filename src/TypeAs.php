@@ -39,9 +39,9 @@ class TypeAs
      *
      * @throws TypeAsResolutionException
      */
-    public static function class(mixed $value, string $class, object $default = null): object
+    public static function class(string $class, mixed $value, object $default = null): object
     {
-        return (new AsClass)->handle($value, $class, $default);
+        return (new AsClass)->handle($class, $value, $default);
     }
 
     /**

@@ -17,7 +17,7 @@ class AsClassTest extends TestCase
      */
     public function canTypeClasses(): void
     {
-        $this->assertInstanceOf(ParentStub::class, TypeAs::class(new ParentStub, ParentStub::class));
+        $this->assertInstanceOf(ParentStub::class, TypeAs::class(ParentStub::class, new ParentStub));
     }
 
     /**
@@ -28,7 +28,7 @@ class AsClassTest extends TestCase
      */
     public function canInferFromChildrenClasses(): void
     {
-        $this->assertInstanceOf(ParentStub::class, TypeAs::class(new ChildStub(), ParentStub::class));
+        $this->assertInstanceOf(ParentStub::class, TypeAs::class(ParentStub::class, new ChildStub()));
     }
 
     /**
@@ -41,7 +41,7 @@ class AsClassTest extends TestCase
     {
         $this->expectException(TypeAsResolutionException::class);
 
-        TypeAs::class(new ParentStub, ChildStub::class);
+        TypeAs::class(ChildStub::class, new ParentStub);
     }
 
     /**
@@ -65,7 +65,7 @@ class AsClassTest extends TestCase
      */
     public function willNotThrowExceptionWithDefaults(): void
     {
-        $this->assertInstanceOf(StdClass::class, TypeAs::class(new ParentStub, ChildStub::class, new StdClass));
+        $this->assertInstanceOf(StdClass::class, TypeAs::class(ChildStub::class, new ParentStub, new StdClass));
     }
 
     /**
@@ -76,9 +76,9 @@ class AsClassTest extends TestCase
      */
     public function canPassStaticAnalysis(): void
     {
-        $test = fn (StdClass $value) => $value;
+        $test = fn (ParentStub $value) => $value;
 
-        $this->assertInstanceOf(StdClass::class, $test(new StdClass));
+        $this->assertInstanceOf(ChildStub::class, $test(TypeAs::class(ChildStub::class, new ChildStub)));
     }
 }
 

@@ -33,12 +33,17 @@ $typed = Smpita\TypeAs::string($mixed, '');
 ### The Class Method 
 `class()` has a slightly different signature because you need to specify the class you are expecting.
 ```php
-$typed = Smpita\TypeAs::class($mixed, Target::class);
+$typed = Smpita\TypeAs::class(Target::class, $mixed);
 ```
 
 You can still provide a default.
 ```php
-$typed = Smpita\TypeAs::class($mixed, Target::class, new \StdClass);
+$typed = Smpita\TypeAs::class(Target::class, $mixed, new \StdClass);
+```
+
+Note: In versions prior to `v2.0.0` the signature had a different order.
+```php
+$typed = Smpita\TypeAs::class($mixed, Target::class, $default);
 ```
 
 ### The Array Method
@@ -72,7 +77,7 @@ Smpita\TypeAs::carbon(mixed $value, DateTimeZone|string|null $tz = null, Carbon 
 
 #### Class
 ```php
-Smpita\TypeAs::class(mixed $value, string $class, object $default = null): object
+Smpita\TypeAs::class(string $class, mixed $value, object $default = null): object
 ```
 
 #### Float
