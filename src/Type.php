@@ -15,6 +15,6 @@ abstract class Type
     {
         $type = is_object($value) ? get_class($value) : gettype($value);
 
-        throw new TypeAsResolutionException("Resolution error converting $type to a string");
+        throw new TypeAsResolutionException("Resolution error converting $type [".class_basename(static::class).']');
     }
 }

@@ -14,9 +14,12 @@ use Smpita\TypeAs\Types\AsString;
 
 class TypeAs
 {
-    public static function array(mixed $value): array
+    /**
+     * @throws TypeAsResolutionException
+     */
+    public static function array(mixed $value, bool|array $wrap = true): array
     {
-        return (new AsArray)->handle($value);
+        return (new AsArray)->handle($value, $wrap);
     }
 
     /**

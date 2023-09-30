@@ -39,9 +39,19 @@ You can still provide a default.
 $typed = Smpita\TypeAs::class($mixed, Target::class, new \StdClass);
 ```
 
-Array doesn't have defaults and never throws an exceptions, it'll just wrap the value.
+By default, `array()` will it wrap the value similar to `(array) $mixed` instead of throwing exceptions.
 ```php
 Smpita\TypeAs::array('example') === ['example'];
+```
+
+That might not always be appropriate, so you can turn wrapping off to get exceptions.
+```php
+$typed = Smpita\TypeAs::array($mixed, false);
+```
+
+Or you may supply a default.
+```php
+$typed = Smpita\TypeAs::array($mixed, []);
 ```
 
 ## Signatures
