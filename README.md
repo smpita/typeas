@@ -21,27 +21,27 @@ composer require smpita/typeas
 
 Generally, you just pass the mixed and it will throw a `TypeAsResolutionException` if the `$mixed` can't be cast.
 ```php
-$typed = Smpita\MakeAs::string($mixed);
+$typed = Smpita\TypeAs::string($mixed);
 ```
 
 If you want to suppress throwing exceptions, provide a default.
 ```php
-$typed = Smpita\MakeAs::string($mixed, '');
+$typed = Smpita\TypeAs::string($mixed, '');
 ```
 
 Class has a slightly different signature because you have to specify the class you want.
 ```php
-$typed = Smpita\MakeAs::class($mixed, Target::class);
+$typed = Smpita\TypeAs::class($mixed, Target::class);
 ```
 
 You can still provide a default.
 ```php
-$typed = Smpita\MakeAs::class($mixed, Target::class, new \StdClass);
+$typed = Smpita\TypeAs::class($mixed, Target::class, new \StdClass);
 ```
 
 Array doesn't have defaults and never throws an exceptions, it'll just wrap the value.
 ```php
-Smpita\MakeAs::array('example') === ['example'];
+Smpita\TypeAs::array('example') === ['example'];
 ```
 
 ## Signatures
