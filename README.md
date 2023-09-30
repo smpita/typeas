@@ -19,7 +19,7 @@ composer require smpita/typeas
 
 ## Usage
 
-Generally, you just pass the mixed and it will throw a `TypeAsResolutionException` if the `$mixed` can't be cast.
+Generally, you just pass a `$mixed` and it will throw a `TypeAsResolutionException` if the `$mixed` can't be cast.
 ```php
 $typed = Smpita\TypeAs::string($mixed);
 ```
@@ -29,7 +29,7 @@ If you want to suppress throwing exceptions, provide a default.
 $typed = Smpita\TypeAs::string($mixed, '');
 ```
 
-Class has a slightly different signature because you have to specify the class you want.
+`class()` has a slightly different signature because you have to specify the class you want.
 ```php
 $typed = Smpita\TypeAs::class($mixed, Target::class);
 ```
@@ -58,7 +58,7 @@ $typed = Smpita\TypeAs::array($mixed, []);
 
 #### Arrays
 ```php
-Smpita\TypeAs::array(mixed $value): array
+Smpita\TypeAs::array(mixed $value, bool|array $wrap = true): array
 ```
 
 #### Carbon
