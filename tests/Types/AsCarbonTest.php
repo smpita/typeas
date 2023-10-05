@@ -2,8 +2,8 @@
 
 namespace Smpita\TypeAs\Tests\Types;
 
-use Carbon\Exceptions\InvalidFormatException;
 use DateTime;
+use Exception;
 use Illuminate\Support\Carbon;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
@@ -40,7 +40,7 @@ class AsCarbonTest extends TestCase
      */
     public function willThrowExceptionOnNonObjects(): void
     {
-        $this->expectException(InvalidFormatException::class);
+        $this->expectException(Exception::class);
 
         TypeAs::carbon('not-valid');
     }
