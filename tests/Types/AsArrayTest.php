@@ -16,7 +16,7 @@ class AsArrayTest extends TestCase
      */
     public function canArrayifyArrayableObjects(): void
     {
-        $inner = [fake()->sentence()];
+        $inner = [$this->faker->sentence()];
 
         $this->assertSame($inner, TypeAs::array(new ArrayableStub($inner)));
     }
@@ -29,7 +29,7 @@ class AsArrayTest extends TestCase
      */
     public function canArrayifyMagicArrayableObjects(): void
     {
-        $inner = [fake()->sentence()];
+        $inner = [$this->faker->sentence()];
 
         $this->assertSame($inner, TypeAs::array(new MagicArrayableStub($inner)));
     }
@@ -42,7 +42,7 @@ class AsArrayTest extends TestCase
      */
     public function canArrayifyStrings(): void
     {
-        $string = fake()->sentence();
+        $string = $this->faker->sentence();
         $this->assertSame([$string], TypeAs::array($string));
     }
 
@@ -54,7 +54,7 @@ class AsArrayTest extends TestCase
      */
     public function canArrayifyIntegers(): void
     {
-        $int = fake()->randomNumber();
+        $int = $this->faker->randomNumber();
         $this->assertSame([$int], TypeAs::array($int));
     }
 
@@ -66,7 +66,7 @@ class AsArrayTest extends TestCase
      */
     public function canArrayifyFloats(): void
     {
-        $float = fake()->randomFloat();
+        $float = $this->faker->randomFloat();
         $this->assertSame([$float], TypeAs::array($float));
     }
 
@@ -92,7 +92,7 @@ class AsArrayTest extends TestCase
     {
         $this->expectException(TypeAsResolutionException::class);
 
-        TypeAs::array(fake()->sentence(), false);
+        TypeAs::array($this->faker->sentence(), false);
     }
 
     /**
@@ -103,7 +103,7 @@ class AsArrayTest extends TestCase
      */
     public function willNotThrowExceptionsIfNotReturningDefaults(): void
     {
-        $array = [fake()->sentence()];
+        $array = [$this->faker->sentence()];
 
         $this->assertSame($array, TypeAs::array('', $array));
     }
@@ -116,7 +116,7 @@ class AsArrayTest extends TestCase
      */
     public function willNotDoubleWrapArrays(): void
     {
-        $array = [fake()->sentence()];
+        $array = [$this->faker->sentence()];
 
         $this->assertSame($array, TypeAs::array($array));
     }
@@ -131,7 +131,7 @@ class AsArrayTest extends TestCase
     {
         $test = fn (array $value) => $value;
 
-        $this->assertIsArray($test(TypeAs::array(fake()->sentence())));
+        $this->assertIsArray($test(TypeAs::array($this->faker->sentence())));
     }
 }
 

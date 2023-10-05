@@ -64,7 +64,7 @@ class AsFloatTest extends TestCase
      */
     public function canFloatifyBooleans(): void
     {
-        $this->assertIsFloat(TypeAs::float(fake()->boolean()));
+        $this->assertIsFloat(TypeAs::float($this->faker->boolean()));
     }
 
     /**
@@ -75,7 +75,7 @@ class AsFloatTest extends TestCase
      */
     public function canFloatifyFloatableObjects(): void
     {
-        $value = fake()->randomFloat();
+        $value = $this->faker->randomFloat();
 
         $this->assertEquals(TypeAs::float(new FloatableStub($value)), $value);
     }
@@ -88,7 +88,7 @@ class AsFloatTest extends TestCase
      */
     public function canFloatifyMagicFloatableObjects(): void
     {
-        $value = fake()->randomFloat();
+        $value = $this->faker->randomFloat();
 
         $this->assertEquals(TypeAs::float(new MagicFloatableStub($value)), $value);
     }
@@ -114,7 +114,7 @@ class AsFloatTest extends TestCase
     {
         $test = fn (float $value) => $value;
 
-        $this->assertIsFloat($test(TypeAs::float(fake()->randomNumber())));
+        $this->assertIsFloat($test(TypeAs::float($this->faker->randomNumber())));
     }
 }
 
