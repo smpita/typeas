@@ -64,7 +64,7 @@ class AsIntegerTest extends TestCase
      */
     public function canIntegerifyBooleans(): void
     {
-        $this->assertIsInt(TypeAs::int(fake()->boolean()));
+        $this->assertIsInt(TypeAs::int($this->faker->boolean()));
     }
 
     /**
@@ -75,7 +75,7 @@ class AsIntegerTest extends TestCase
      */
     public function canIntegerifyIntegerableObjects(): void
     {
-        $value = fake()->randomNumber();
+        $value = $this->faker->randomNumber();
 
         $this->assertEquals(TypeAs::int(new IntegerableStub($value)), $value);
     }
@@ -88,7 +88,7 @@ class AsIntegerTest extends TestCase
      */
     public function canIntegerifyMagicIntegerableObjects(): void
     {
-        $value = fake()->randomNumber();
+        $value = $this->faker->randomNumber();
 
         $this->assertEquals(TypeAs::int(new MagicIntegerableStub($value)), $value);
     }
@@ -114,7 +114,7 @@ class AsIntegerTest extends TestCase
     {
         $test = fn (int $value) => $value;
 
-        $this->assertIsInt($test(TypeAs::int(fake()->randomFloat())));
+        $this->assertIsInt($test(TypeAs::int($this->faker->randomFloat())));
     }
 }
 

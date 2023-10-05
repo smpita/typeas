@@ -54,7 +54,7 @@ class AsStringTest extends TestCase
      */
     public function canStringifyIntegers(): void
     {
-        $this->assertIsString(TypeAs::string(fake()->randomDigit()));
+        $this->assertIsString(TypeAs::string($this->faker->randomDigit()));
     }
 
     /**
@@ -65,7 +65,7 @@ class AsStringTest extends TestCase
      */
     public function canStringifyBooleans(): void
     {
-        $this->assertIsString(TypeAs::string(fake()->boolean()));
+        $this->assertIsString(TypeAs::string($this->faker->boolean()));
     }
 
     /**
@@ -76,7 +76,7 @@ class AsStringTest extends TestCase
      */
     public function canStringifyStringableObjects(): void
     {
-        $value = fake()->word();
+        $value = $this->faker->word();
 
         $this->assertEquals(TypeAs::string(new StringableStub($value)), $value);
     }
@@ -89,7 +89,7 @@ class AsStringTest extends TestCase
      */
     public function canStringifyMagicStringableObjects(): void
     {
-        $value = fake()->word();
+        $value = $this->faker->word();
 
         $this->assertEquals(TypeAs::string(new MagicStringableStub($value)), $value);
     }
@@ -115,7 +115,7 @@ class AsStringTest extends TestCase
     {
         $test = fn (string $value) => $value;
 
-        $this->assertIsString($test(TypeAs::string(fake()->randomNumber())));
+        $this->assertIsString($test(TypeAs::string($this->faker->randomNumber())));
     }
 }
 
