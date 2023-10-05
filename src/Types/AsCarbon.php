@@ -2,9 +2,9 @@
 
 namespace Smpita\TypeAs\Types;
 
-use Carbon\Exceptions\InvalidFormatException;
 use DateTimeInterface;
 use DateTimeZone;
+use Exception;
 use Illuminate\Support\Carbon;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Type;
@@ -23,7 +23,7 @@ class AsCarbon extends Type
         if (is_string($value) || $value instanceof DateTimeInterface) {
             try {
                 return Carbon::parse($value, $tz);
-            } catch (InvalidFormatException $e) {
+            } catch (Exception $e) {
                 if ($default) {
                     return $this->localized($default, $tz);
                 }
