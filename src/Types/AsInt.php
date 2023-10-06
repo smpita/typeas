@@ -5,13 +5,13 @@ namespace Smpita\TypeAs\Types;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Type;
 
-class AsFloat extends Type
+class AsInt extends Type
 {
     /**
      * @throws TypeAsResolutionException
      */
-    public function handle(mixed $value, float $default = null): float
+    public function handle(mixed $value, int $default = null): int
     {
-        return (new AsNullableFloat)->handle($value, $default) ?? $this->error($value);
+        return (new AsNullableInt)->handle($value, $default) ?? $this->error($value);
     }
 }
