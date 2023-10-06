@@ -79,7 +79,7 @@ $typed = Smpita\TypeAs::array($mixed, []);
 
 ## Nullables
 
-If you would prefer to receive `null` instead of having an exception thrown, each type method has a nullable counterpart.
+Starting in `v2.2.0` if you would prefer to receive `null` instead of having an exception thrown, each type method has a nullable counterpart.
 
 ```php
 Smpita\TypeAs::nullableCarbon('invalid-timestamp') === null
