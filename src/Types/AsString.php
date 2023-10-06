@@ -12,20 +12,6 @@ class AsString extends Type
      */
     public function handle(mixed $value, string $default = null): string
     {
-        return match (gettype($value)) {
-            'string' => $value,
-            'object' => $this->fromObject($value),
-            'boolean', 'integer', 'double', 'resource' => strval($value),
-            default => null,
-        } ?? $default ?? $this->error($value);
-    }
-
-    protected function fromObject(object $value): ?string
-    {
-        return match (true) {
-            method_exists($value, '__toString') => $value->__toString(),
-            method_exists($value, 'toString') => $value->toString(),
-            default => null,
-        };
+        return (new AsNullableString)->handle($value, $default) ?? $this->error($value);
     }
 }

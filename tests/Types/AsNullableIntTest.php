@@ -2,11 +2,10 @@
 
 namespace Smpita\TypeAs\Tests\Types;
 
-use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
 
-class AsIntegerTest extends TestCase
+class AsNullableIntTest extends TestCase
 {
     /**
      * @test
@@ -14,11 +13,9 @@ class AsIntegerTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function willThrowExceptionOnUnintegerableTypes(): void
+    public function willReturnNullOnUnintegerableTypes(): void
     {
-        $this->expectException(TypeAsResolutionException::class);
-
-        TypeAs::int([]);
+        $this->assertNull(TypeAs::nullableInt([]));
     }
 
     /**
@@ -27,11 +24,9 @@ class AsIntegerTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function willThrowExceptionOnUnintegerableObjects(): void
+    public function willReturnNullOnUnintegerableObjects(): void
     {
-        $this->expectException(TypeAsResolutionException::class);
-
-        TypeAs::int(new \StdClass());
+        $this->assertNull(TypeAs::nullableInt(new \StdClass()));
     }
 
     /**
@@ -42,7 +37,7 @@ class AsIntegerTest extends TestCase
      */
     public function willNotThrowExceptionWithDefaults(): void
     {
-        $this->assertTrue(TypeAs::int([], 0) === 0);
+        $this->assertTrue(TypeAs::nullableInt([], 0) === 0);
     }
 
     /**
@@ -53,7 +48,7 @@ class AsIntegerTest extends TestCase
      */
     public function canIntegerifyStrings(): void
     {
-        $this->assertTrue(TypeAs::int('0001234567890.000') === 1234567890);
+        $this->assertTrue(TypeAs::nullableInt('0001234567890.000') === 1234567890);
     }
 
     /**
@@ -64,7 +59,7 @@ class AsIntegerTest extends TestCase
      */
     public function canIntegerifyBooleans(): void
     {
-        $this->assertIsInt(TypeAs::int($this->faker->boolean()));
+        $this->assertIsInt(TypeAs::nullableInt($this->faker->boolean()));
     }
 
     /**
@@ -77,7 +72,7 @@ class AsIntegerTest extends TestCase
     {
         $value = $this->faker->randomNumber();
 
-        $this->assertEquals(TypeAs::int(new IntegerableStub($value)), $value);
+        $this->assertEquals(TypeAs::nullableInt(new NullableIntegerableStub($value)), $value);
     }
 
     /**
@@ -90,7 +85,7 @@ class AsIntegerTest extends TestCase
     {
         $value = $this->faker->randomNumber();
 
-        $this->assertEquals(TypeAs::int(new MagicIntegerableStub($value)), $value);
+        $this->assertEquals(TypeAs::nullableInt(new MagicNullableIntegerableStub($value)), $value);
     }
 
     /**
@@ -101,7 +96,7 @@ class AsIntegerTest extends TestCase
      */
     public function canInterifyOpenResource(): void
     {
-        $this->assertIsInt(TypeAs::int(stream_context_create()));
+        $this->assertIsInt(TypeAs::nullableInt(stream_context_create()));
     }
 
     /**
@@ -112,13 +107,13 @@ class AsIntegerTest extends TestCase
      */
     public function canPassStaticAnalysis(): void
     {
-        $test = fn (int $value) => $value;
+        $test = fn (?int $value) => $value;
 
-        $this->assertIsInt($test(TypeAs::int($this->faker->randomFloat())));
+        $this->assertIsInt($test(TypeAs::nullableInt($this->faker->randomFloat())));
     }
 }
 
-class IntegerableStub
+class NullableIntegerableStub
 {
     public function __construct(public int $value)
     {
@@ -130,7 +125,7 @@ class IntegerableStub
     }
 }
 
-class MagicIntegerableStub
+class MagicNullableIntegerableStub
 {
     public function __construct(public int $value)
     {

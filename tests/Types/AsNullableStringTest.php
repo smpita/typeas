@@ -2,10 +2,11 @@
 
 namespace Smpita\TypeAs\Tests\Types;
 
+use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
 
-class AsStringTest extends TestCase
+class AsNullableStringTest extends TestCase
 {
     /**
      * @test
@@ -13,9 +14,11 @@ class AsStringTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function willReturnNullOnUnstringableTypes(): void
+    public function willThrowExceptionOnUnstringableTypes(): void
     {
-        $this->assertNull(TypeAs::nullableString([]));
+        $this->expectException(TypeAsResolutionException::class);
+
+        TypeAs::string([]);
     }
 
     /**
@@ -24,9 +27,11 @@ class AsStringTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function willReturnNullOnUnstringableObjects(): void
+    public function willThrowExceptionOnUnstringableObjects(): void
     {
-        $this->assertNull(TypeAs::nullableString(new \StdClass()));
+        $this->expectException(TypeAsResolutionException::class);
+
+        TypeAs::string(new \StdClass());
     }
 
     /**
@@ -37,7 +42,7 @@ class AsStringTest extends TestCase
      */
     public function willNotThrowExceptionWithDefaults(): void
     {
-        $this->assertTrue(TypeAs::nullableString(function () {
+        $this->assertTrue(TypeAs::string(function () {
         }, 'default') === 'default');
     }
 
@@ -49,7 +54,7 @@ class AsStringTest extends TestCase
      */
     public function canStringifyIntegers(): void
     {
-        $this->assertIsString(TypeAs::nullableString($this->faker->randomDigit()));
+        $this->assertIsString(TypeAs::string($this->faker->randomDigit()));
     }
 
     /**
@@ -60,7 +65,7 @@ class AsStringTest extends TestCase
      */
     public function canStringifyBooleans(): void
     {
-        $this->assertIsString(TypeAs::nullableString($this->faker->boolean()));
+        $this->assertIsString(TypeAs::string($this->faker->boolean()));
     }
 
     /**
@@ -73,7 +78,7 @@ class AsStringTest extends TestCase
     {
         $value = $this->faker->word();
 
-        $this->assertEquals(TypeAs::nullableString(new NullableStringableStub($value)), $value);
+        $this->assertEquals(TypeAs::string(new StringableStub($value)), $value);
     }
 
     /**
@@ -86,7 +91,7 @@ class AsStringTest extends TestCase
     {
         $value = $this->faker->word();
 
-        $this->assertEquals(TypeAs::nullableString(new MagicNullableStringableStub($value)), $value);
+        $this->assertEquals(TypeAs::string(new MagicStringableStub($value)), $value);
     }
 
     /**
@@ -97,7 +102,7 @@ class AsStringTest extends TestCase
      */
     public function canStringifyOpenResource(): void
     {
-        $this->assertIsString(TypeAs::nullableString(stream_context_create()));
+        $this->assertIsString(TypeAs::string(stream_context_create()));
     }
 
     /**
@@ -108,13 +113,13 @@ class AsStringTest extends TestCase
      */
     public function canPassStaticAnalysis(): void
     {
-        $test = fn (?string $value) => $value;
+        $test = fn (string $value) => $value;
 
-        $this->assertIsString($test(TypeAs::nullableString($this->faker->randomNumber())));
+        $this->assertIsString($test(TypeAs::string($this->faker->randomNumber())));
     }
 }
 
-class NullableStringableStub
+class StringableStub
 {
     public function __construct(public string $value)
     {
@@ -126,7 +131,7 @@ class NullableStringableStub
     }
 }
 
-class MagicNullableStringableStub
+class MagicStringableStub
 {
     public function __construct(public string $value)
     {
