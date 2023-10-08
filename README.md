@@ -7,7 +7,9 @@
 
 Do you fight `mixed` signatures when performing static analysis?
 
-[Smpita/TypeAs](https://github.com/smpita/typeas) will give you easy control of your typing.
+## [Smpita/TypeAs](https://github.com/smpita/typeas) will give you easy control of your typing.
+
+---
 
 ## Installation
 
@@ -111,6 +113,21 @@ class CustomStringResolver implements StringResolver
     }
 }
 ```
+
+### Interfaces
+
+-   `Smpita\TypeAs\Contracts\ArrayResolver`
+-   `Smpita\TypeAs\Contracts\CarbonResolver`
+-   `Smpita\TypeAs\Contracts\ClassResolver`
+-   `Smpita\TypeAs\Contracts\FloatResolver`
+-   `Smpita\TypeAs\Contracts\IntResolver`
+-   `Smpita\TypeAs\Contracts\NullableArrayResolver`
+-   `Smpita\TypeAs\Contracts\NullableCarbonResolver`
+-   `Smpita\TypeAs\Contracts\NullableClassResolver`
+-   `Smpita\TypeAs\Contracts\NullableFloatResolver`
+-   `Smpita\TypeAs\Contracts\NullableIntResolver`
+-   `Smpita\TypeAs\Contracts\NullableStringResolver`
+-   `Smpita\TypeAs\Contracts\StringResolver`
 
 ### Registering Custom Resolvers
 
