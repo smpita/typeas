@@ -4,36 +4,76 @@ namespace Smpita\TypeAs;
 
 use DateTimeZone;
 use Illuminate\Support\Carbon;
+use Smpita\TypeAs\Contracts\ArrayResolver;
+use Smpita\TypeAs\Contracts\CarbonResolver;
+use Smpita\TypeAs\Contracts\ClassResolver;
+use Smpita\TypeAs\Contracts\FloatResolver;
+use Smpita\TypeAs\Contracts\IntResolver;
+use Smpita\TypeAs\Contracts\NullableArrayResolver;
+use Smpita\TypeAs\Contracts\NullableCarbonResolver;
+use Smpita\TypeAs\Contracts\NullableClassResolver;
+use Smpita\TypeAs\Contracts\NullableFloatResolver;
+use Smpita\TypeAs\Contracts\NullableIntResolver;
+use Smpita\TypeAs\Contracts\NullableStringResolver;
+use Smpita\TypeAs\Contracts\StringResolver;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
-use Smpita\TypeAs\Types\AsArray;
-use Smpita\TypeAs\Types\AsCarbon;
-use Smpita\TypeAs\Types\AsClass;
-use Smpita\TypeAs\Types\AsFloat;
-use Smpita\TypeAs\Types\AsInt;
-use Smpita\TypeAs\Types\AsNullableArray;
-use Smpita\TypeAs\Types\AsNullableCarbon;
-use Smpita\TypeAs\Types\AsNullableClass;
-use Smpita\TypeAs\Types\AsNullableFloat;
-use Smpita\TypeAs\Types\AsNullableInt;
-use Smpita\TypeAs\Types\AsNullableString;
-use Smpita\TypeAs\Types\AsString;
+use Smpita\TypeAs\Resolvers\AsArray;
+use Smpita\TypeAs\Resolvers\AsCarbon;
+use Smpita\TypeAs\Resolvers\AsClass;
+use Smpita\TypeAs\Resolvers\AsFloat;
+use Smpita\TypeAs\Resolvers\AsInt;
+use Smpita\TypeAs\Resolvers\AsNullableArray;
+use Smpita\TypeAs\Resolvers\AsNullableCarbon;
+use Smpita\TypeAs\Resolvers\AsNullableClass;
+use Smpita\TypeAs\Resolvers\AsNullableFloat;
+use Smpita\TypeAs\Resolvers\AsNullableInt;
+use Smpita\TypeAs\Resolvers\AsNullableString;
+use Smpita\TypeAs\Resolvers\AsString;
 
 class TypeAs
 {
+    protected static ?ArrayResolver $arrayResolver = null;
+
+    protected static ?CarbonResolver $carbonResolver = null;
+
+    protected static ?ClassResolver $classResolver = null;
+
+    protected static ?FloatResolver $floatResolver = null;
+
+    protected static ?IntResolver $intResolver = null;
+
+    protected static ?NullableArrayResolver $nullableArrayResolver = null;
+
+    protected static ?NullableCarbonResolver $nullableCarbonResolver = null;
+
+    protected static ?NullableClassResolver $nullableClassResolver = null;
+
+    protected static ?NullableFloatResolver $nullableFloatResolver = null;
+
+    protected static ?NullableIntResolver $nullableIntResolver = null;
+
+    protected static ?NullableStringResolver $nullableStringResolver = null;
+
+    protected static ?StringResolver $stringResolver = null;
+
     /**
      * @throws TypeAsResolutionException
      */
-    public static function array(mixed $value, bool|array $wrap = true): array
+    public static function array(mixed $value, bool|array $wrap = true, ArrayResolver $resolver = null): array
     {
-        return (new AsArray)->handle($value, $wrap);
+        $resolver ??= static::$arrayResolver ?? new AsArray;
+
+        return $resolver->resolve($value, $wrap);
     }
 
     /**
      * @throws TypeAsResolutionException
      */
-    public static function carbon(mixed $value, DateTimeZone|string $tz = null, Carbon $default = null): Carbon
+    public static function carbon(mixed $value, DateTimeZone|string $tz = null, Carbon $default = null, CarbonResolver $resolver = null): Carbon
     {
-        return (new AsCarbon)->handle($value, $tz, $default);
+        $resolver ??= static::$carbonResolver ?? new AsCarbon;
+
+        return $resolver->resolve($value, $tz, $default);
     }
 
     /**
@@ -45,35 +85,45 @@ class TypeAs
      *
      * @throws TypeAsResolutionException
      */
-    public static function class(string $class, mixed $value, object $default = null): object
+    public static function class(string $class, mixed $value, object $default = null, ClassResolver $resolver = null)
     {
-        return (new AsClass)->handle($class, $value, $default);
+        $resolver ??= static::$classResolver ?? new AsClass;
+
+        return $resolver->resolve($class, $value, $default);
     }
 
     /**
      * @throws TypeAsResolutionException
      */
-    public static function float(mixed $value, float $default = null): float
+    public static function float(mixed $value, float $default = null, FloatResolver $resolver = null): float
     {
-        return (new AsFloat)->handle($value, $default);
+        $resolver ??= static::$floatResolver ?? new AsFloat;
+
+        return $resolver->resolve($value, $default);
     }
 
     /**
      * @throws TypeAsResolutionException
      */
-    public static function int(mixed $value, int $default = null): int
+    public static function int(mixed $value, int $default = null, IntResolver $resolver = null): int
     {
-        return (new AsInt)->handle($value, $default);
+        $resolver ??= static::$intResolver ?? new AsInt;
+
+        return $resolver->resolve($value, $default);
     }
 
-    public static function nullableArray(mixed $value, bool|array $wrap = true): ?array
+    public static function nullableArray(mixed $value, bool|array $wrap = true, NullableArrayResolver $resolver = null): ?array
     {
-        return (new AsNullableArray)->handle($value, $wrap);
+        $resolver ??= static::$nullableArrayResolver ?? new AsNullableArray;
+
+        return $resolver->resolve($value, $wrap);
     }
 
-    public static function nullableCarbon(mixed $value, DateTimeZone|string $tz = null, Carbon $default = null): ?Carbon
+    public static function nullableCarbon(mixed $value, DateTimeZone|string $tz = null, Carbon $default = null, NullableCarbonResolver $resolver = null): ?Carbon
     {
-        return (new AsNullableCarbon)->handle($value, $tz, $default);
+        $resolver ??= static::$nullableCarbonResolver ?? new AsNullableCarbon;
+
+        return $resolver->resolve($value, $tz, $default);
     }
 
     /**
@@ -83,31 +133,101 @@ class TypeAs
      * @param  TClass  $default
      * @return TClass|null
      */
-    public static function nullableClass(string $class, mixed $value, object $default = null): ?object
+    public static function nullableClass(string $class, mixed $value, object $default = null, NullableClassResolver $resolver = null)
     {
-        return (new AsNullableClass)->handle($class, $value, $default);
+        $resolver ??= static::$nullableClassResolver ?? new AsNullableClass;
+
+        return $resolver->resolve($class, $value, $default);
     }
 
-    public static function nullableFloat(mixed $value, float $default = null): ?float
+    public static function nullableFloat(mixed $value, float $default = null, NullableFloatResolver $resolver = null): ?float
     {
-        return (new AsNullableFloat)->handle($value, $default);
+        $resolver ??= static::$nullableFloatResolver ?? new AsNullableFloat;
+
+        return $resolver->resolve($value, $default);
     }
 
-    public static function nullableInt(mixed $value, int $default = null): ?int
+    public static function nullableInt(mixed $value, int $default = null, NullableIntResolver $resolver = null): ?int
     {
-        return (new AsNullableInt)->handle($value, $default);
+        $resolver ??= static::$nullableIntResolver ?? new AsNullableInt;
+
+        return $resolver->resolve($value, $default);
     }
 
-    public static function nullableString(mixed $value, string $default = null): ?string
+    public static function nullableString(mixed $value, string $default = null, NullableStringResolver $resolver = null): ?string
     {
-        return (new AsNullableString)->handle($value, $default);
+        $resolver ??= static::$nullableStringResolver ?? new AsNullableString;
+
+        return $resolver->resolve($value, $default);
     }
 
     /**
      * @throws TypeAsResolutionException
      */
-    public static function string(mixed $value, string $default = null): string
+    public static function string(mixed $value, string $default = null, StringResolver $resolver = null): string
     {
-        return (new AsString)->handle($value, $default);
+        $resolver ??= static::$stringResolver ?? new AsString;
+
+        return $resolver->resolve($value, $default);
+    }
+
+    public static function setArrayResolver(?ArrayResolver $resolver): void
+    {
+        static::$arrayResolver = $resolver;
+    }
+
+    public static function setCarbonResolver(?CarbonResolver $resolver): void
+    {
+        static::$carbonResolver = $resolver;
+    }
+
+    public static function setClassResolver(?ClassResolver $resolver): void
+    {
+        static::$classResolver = $resolver;
+    }
+
+    public static function setFloatResolver(?FloatResolver $resolver): void
+    {
+        static::$floatResolver = $resolver;
+    }
+
+    public static function setIntResolver(?IntResolver $resolver): void
+    {
+        static::$intResolver = $resolver;
+    }
+
+    public static function setNullableArrayResolver(?NullableArrayResolver $resolver): void
+    {
+        static::$nullableArrayResolver = $resolver;
+    }
+
+    public static function setNullableCarbonResolver(?NullableCarbonResolver $resolver): void
+    {
+        static::$nullableCarbonResolver = $resolver;
+    }
+
+    public static function setNullableClassResolver(?NullableClassResolver $resolver): void
+    {
+        static::$nullableClassResolver = $resolver;
+    }
+
+    public static function setNullableFloatResolver(?NullableFloatResolver $resolver): void
+    {
+        static::$nullableFloatResolver = $resolver;
+    }
+
+    public static function setNullableIntResolver(?NullableIntResolver $resolver): void
+    {
+        static::$nullableIntResolver = $resolver;
+    }
+
+    public static function setNullableStringResolver(?NullableStringResolver $resolver): void
+    {
+        static::$nullableStringResolver = $resolver;
+    }
+
+    public static function setStringResolver(?StringResolver $resolver): void
+    {
+        static::$stringResolver = $resolver;
     }
 }
