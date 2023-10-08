@@ -35,6 +35,8 @@ class TypeAsTest extends TestCase
         TypeAs::setNullableIntResolver(null);
         TypeAs::setNullableStringResolver(null);
         TypeAs::setStringResolver(null);
+
+        parent::tearDown();
     }
 
     /**
