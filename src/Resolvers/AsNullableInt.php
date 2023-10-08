@@ -1,12 +1,13 @@
 <?php
 
-namespace Smpita\TypeAs\Types;
+namespace Smpita\TypeAs\Resolvers;
 
-use Smpita\TypeAs\Type;
+use Smpita\TypeAs\Abstracts\Resolver;
+use Smpita\TypeAs\Contracts\NullableIntResolver;
 
-class AsNullableInt extends Type
+class AsNullableInt extends Resolver implements NullableIntResolver
 {
-    public function handle(mixed $value, int $default = null): ?int
+    public function resolve(mixed $value, int $default = null): ?int
     {
         return match (gettype($value)) {
             'integer' => $value,

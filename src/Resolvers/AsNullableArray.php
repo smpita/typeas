@@ -1,12 +1,13 @@
 <?php
 
-namespace Smpita\TypeAs\Types;
+namespace Smpita\TypeAs\Resolvers;
 
-use Smpita\TypeAs\Type;
+use Smpita\TypeAs\Abstracts\Resolver;
+use Smpita\TypeAs\Contracts\NullableArrayResolver;
 
-class AsNullableArray extends Type
+class AsNullableArray extends Resolver implements NullableArrayResolver
 {
-    public function handle(mixed $value, bool|array $wrap = true): ?array
+    public function resolve(mixed $value, bool|array $wrap = true): ?array
     {
         $array = match (gettype($value)) {
             'array' => $value,

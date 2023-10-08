@@ -1,10 +1,10 @@
 <?php
 
-namespace Smpita\TypeAs;
+namespace Smpita\TypeAs\Concerns;
 
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
-abstract class Type
+trait ThrowsErrorExceptions
 {
     /**
      * @return never

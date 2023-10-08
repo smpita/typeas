@@ -1,12 +1,13 @@
 <?php
 
-namespace Smpita\TypeAs\Types;
+namespace Smpita\TypeAs\Resolvers;
 
-use Smpita\TypeAs\Type;
+use Smpita\TypeAs\Abstracts\Resolver;
+use Smpita\TypeAs\Contracts\NullableFloatResolver;
 
-class AsNullableFloat extends Type
+class AsNullableFloat extends Resolver implements NullableFloatResolver
 {
-    public function handle(mixed $value, float $default = null): ?float
+    public function resolve(mixed $value, float $default = null): ?float
     {
         return match (gettype($value)) {
             'double' => $value,

@@ -1,16 +1,17 @@
 <?php
 
-namespace Smpita\TypeAs\Types;
+namespace Smpita\TypeAs\Resolvers;
 
 use DateTimeInterface;
 use DateTimeZone;
 use Exception;
 use Illuminate\Support\Carbon;
-use Smpita\TypeAs\Type;
+use Smpita\TypeAs\Abstracts\Resolver;
+use Smpita\TypeAs\Contracts\NullableCarbonResolver;
 
-class AsNullableCarbon extends Type
+class AsNullableCarbon extends Resolver implements NullableCarbonResolver
 {
-    public function handle(mixed $value, DateTimeZone|string $tz = null, Carbon $default = null): ?Carbon
+    public function resolve(mixed $value, DateTimeZone|string $tz = null, Carbon $default = null): ?Carbon
     {
         if ($value instanceof Carbon) {
             return $value;

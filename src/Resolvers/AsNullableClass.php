@@ -1,10 +1,11 @@
 <?php
 
-namespace Smpita\TypeAs\Types;
+namespace Smpita\TypeAs\Resolvers;
 
-use Smpita\TypeAs\Type;
+use Smpita\TypeAs\Abstracts\Resolver;
+use Smpita\TypeAs\Contracts\NullableClassResolver;
 
-class AsNullableClass extends Type
+class AsNullableClass extends Resolver implements NullableClassResolver
 {
     /**
      * @template TClass of object
@@ -13,7 +14,7 @@ class AsNullableClass extends Type
      * @param  TClass  $default
      * @return TClass|null
      */
-    public function handle(string $class, mixed $value, object $default = null)
+    public function resolve(string $class, mixed $value, object $default = null)
     {
         return is_object($value) && is_a($value, $class)
             ? $value

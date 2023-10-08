@@ -1,12 +1,13 @@
 <?php
 
-namespace Smpita\TypeAs\Types;
+namespace Smpita\TypeAs\Resolvers;
 
-use Smpita\TypeAs\Type;
+use Smpita\TypeAs\Abstracts\Resolver;
+use Smpita\TypeAs\Contracts\NullableStringResolver;
 
-class AsNullableString extends Type
+class AsNullableString extends Resolver implements NullableStringResolver
 {
-    public function handle(mixed $value, string $default = null): ?string
+    public function resolve(mixed $value, string $default = null): ?string
     {
         return match (gettype($value)) {
             'string' => $value,

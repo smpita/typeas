@@ -1,12 +1,11 @@
 <?php
 
-namespace Smpita\TypeAs\Tests\Types;
+namespace Smpita\TypeAs\Tests\Resolvers;
 
-use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
 
-class AsArrayTest extends TestCase
+class AsNullableArrayTest extends TestCase
 {
     /**
      * @test
@@ -18,7 +17,7 @@ class AsArrayTest extends TestCase
     {
         $inner = [$this->faker->sentence()];
 
-        $this->assertSame($inner, TypeAs::array(new ArrayableStub($inner)));
+        $this->assertSame($inner, TypeAs::nullableArray(new NullableArrayableStub($inner)));
     }
 
     /**
@@ -31,7 +30,7 @@ class AsArrayTest extends TestCase
     {
         $inner = [$this->faker->sentence()];
 
-        $this->assertSame($inner, TypeAs::array(new MagicArrayableStub($inner)));
+        $this->assertSame($inner, TypeAs::nullableArray(new MagicNullableArrayableStub($inner)));
     }
 
     /**
@@ -43,7 +42,7 @@ class AsArrayTest extends TestCase
     public function canArrayifyStrings(): void
     {
         $string = $this->faker->sentence();
-        $this->assertSame([$string], TypeAs::array($string));
+        $this->assertSame([$string], TypeAs::nullableArray($string));
     }
 
     /**
@@ -55,7 +54,7 @@ class AsArrayTest extends TestCase
     public function canArrayifyIntegers(): void
     {
         $int = $this->faker->randomNumber();
-        $this->assertSame([$int], TypeAs::array($int));
+        $this->assertSame([$int], TypeAs::nullableArray($int));
     }
 
     /**
@@ -67,7 +66,7 @@ class AsArrayTest extends TestCase
     public function canArrayifyFloats(): void
     {
         $float = $this->faker->randomFloat();
-        $this->assertSame([$float], TypeAs::array($float));
+        $this->assertSame([$float], TypeAs::nullableArray($float));
     }
 
     /**
@@ -79,7 +78,7 @@ class AsArrayTest extends TestCase
     public function canArrayifyObjects(): void
     {
         $object = new \StdClass;
-        $this->assertSame([$object], TypeAs::array($object));
+        $this->assertSame([$object], TypeAs::nullableArray($object));
     }
 
     /**
@@ -88,11 +87,9 @@ class AsArrayTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function willThrowExceptionsIfNotWrapping(): void
+    public function willReturnNullIfNotWrapping(): void
     {
-        $this->expectException(TypeAsResolutionException::class);
-
-        TypeAs::array($this->faker->sentence(), false);
+        $this->assertNull(TypeAs::nullableArray($this->faker->sentence(), false));
     }
 
     /**
@@ -101,11 +98,11 @@ class AsArrayTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function willNotThrowExceptionsIfNotReturningDefaults(): void
+    public function willNotReturnNullIfNotReturningDefaults(): void
     {
         $array = [$this->faker->sentence()];
 
-        $this->assertSame($array, TypeAs::array('', $array));
+        $this->assertSame($array, TypeAs::nullableArray('', $array));
     }
 
     /**
@@ -118,7 +115,7 @@ class AsArrayTest extends TestCase
     {
         $array = [$this->faker->sentence()];
 
-        $this->assertSame($array, TypeAs::array($array));
+        $this->assertSame($array, TypeAs::nullableArray($array));
     }
 
     /**
@@ -129,13 +126,13 @@ class AsArrayTest extends TestCase
      */
     public function canPassStaticAnalysis(): void
     {
-        $test = fn (array $value) => $value;
+        $test = fn (?array $value) => $value;
 
-        $this->assertIsArray($test(TypeAs::array($this->faker->sentence())));
+        $this->assertIsArray($test(TypeAs::nullableArray($this->faker->sentence())));
     }
 }
 
-class ArrayableStub
+class NullableArrayableStub
 {
     public function __construct(public array $value)
     {
@@ -147,7 +144,7 @@ class ArrayableStub
     }
 }
 
-class MagicArrayableStub
+class MagicNullableArrayableStub
 {
     public function __construct(public array $value)
     {

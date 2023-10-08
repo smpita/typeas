@@ -2,8 +2,8 @@
 
 namespace Smpita\TypeAs\Exceptions;
 
-use Exception;
+use UnexpectedValueException;
 
-class TypeAsResolutionException extends Exception
+class TypeAsResolutionException extends UnexpectedValueException
 {
 }

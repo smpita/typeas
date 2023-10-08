@@ -1,6 +1,6 @@
 <?php
 
-namespace Smpita\TypeAs\Tests\Types;
+namespace Smpita\TypeAs\Tests\Resolvers;
 
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;

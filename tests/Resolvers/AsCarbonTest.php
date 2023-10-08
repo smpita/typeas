@@ -1,13 +1,14 @@
 <?php
 
-namespace Smpita\TypeAs\Tests\Types;
+namespace Smpita\TypeAs\Tests\Resolvers;
 
 use DateTime;
+use Exception;
 use Illuminate\Support\Carbon;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
 
-class AsNullableCarbonTest extends TestCase
+class AsCarbonTest extends TestCase
 {
     /**
      * @test
@@ -17,7 +18,7 @@ class AsNullableCarbonTest extends TestCase
      */
     public function canCarbonifyStrings(): void
     {
-        $this->assertInstanceOf(Carbon::class, TypeAs::nullableCarbon(now()->toDateString()));
+        $this->assertInstanceOf(Carbon::class, TypeAs::carbon(now()->toDateString()));
     }
 
     /**
@@ -28,7 +29,7 @@ class AsNullableCarbonTest extends TestCase
      */
     public function canCarbonifyDateTimeObjects(): void
     {
-        $this->assertInstanceOf(Carbon::class, TypeAs::nullableCarbon(new DateTime()));
+        $this->assertInstanceOf(Carbon::class, TypeAs::carbon(new DateTime()));
     }
 
     /**
@@ -37,9 +38,11 @@ class AsNullableCarbonTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function willReturnNullOnNonObjects(): void
+    public function willThrowExceptionOnNonObjects(): void
     {
-        $this->assertNull(TypeAs::nullableCarbon('not-valid'));
+        $this->expectException(Exception::class);
+
+        TypeAs::carbon('not-valid');
     }
 
     /**
@@ -50,7 +53,7 @@ class AsNullableCarbonTest extends TestCase
      */
     public function willNotThrowExceptionWithDefaults(): void
     {
-        $this->assertInstanceOf(Carbon::class, TypeAs::nullableCarbon('not-valid', null, now()));
+        $this->assertInstanceOf(Carbon::class, TypeAs::carbon('not-valid', null, now()));
     }
 
     /**
@@ -61,8 +64,8 @@ class AsNullableCarbonTest extends TestCase
      */
     public function canPassStaticAnalysis(): void
     {
-        $test = fn (?Carbon $value) => $value;
+        $test = fn (Carbon $value) => $value;
 
-        $this->assertInstanceOf(Carbon::class, $test(TypeAs::nullableCarbon('now')));
+        $this->assertInstanceOf(Carbon::class, $test(TypeAs::carbon('now')));
     }
 }
