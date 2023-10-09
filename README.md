@@ -23,7 +23,7 @@ composer require smpita/typeas
 
 ## Usage
 
-Please see [SIGNATURES](docs/signatures.md) for a list of current methods and signatures.
+Please see [SIGNATURES](docs/signatures.md) for the list of current methods and signatures.
 
 ### General Usage
 
@@ -32,13 +32,17 @@ Please see [SIGNATURES](docs/signatures.md) for a list of current methods and si
 Pass a `$mixed` and it will throw a `TypeAsResolutionException` if the `$mixed` can't be cast.
 
 ```php
-$typed = Smpita\TypeAs::string($mixed);
+use Smpita\TypeAs\TypeAs;
+
+$typed = TypeAs::string($mixed);
 ```
 
 If you want to suppress throwing exceptions, provide a default.
 
 ```php
-$typed = Smpita\TypeAs::string($mixed, '');
+use Smpita\TypeAs\TypeAs;
+
+$typed = TypeAs::string($mixed, '');
 ```
 
 ### The Class Method
@@ -48,19 +52,25 @@ $typed = Smpita\TypeAs::string($mixed, '');
 `class()` has a slightly different signature because you need to specify the class you are expecting.
 
 ```php
-$typed = Smpita\TypeAs::class(Target::class, $mixed);
+use Smpita\TypeAs\TypeAs;
+
+$typed = TypeAs::class(Target::class, $mixed);
 ```
 
 You can still provide a default.
 
 ```php
-$typed = Smpita\TypeAs::class(Target::class, $mixed, new \StdClass);
+use Smpita\TypeAs\TypeAs;
+
+$typed = TypeAs::class(Target::class, $mixed, new \StdClass);
 ```
 
 Note: In versions prior to `v2.0.0` the signature had a different order.
 
 ```php
-$typed = Smpita\TypeAs::class($mixed, Target::class, $default);
+use Smpita\TypeAs\TypeAs;
+
+$typed = TypeAs::class($mixed, Target::class, $default);
 ```
 
 ### The Array Method
@@ -70,19 +80,25 @@ $typed = Smpita\TypeAs::class($mixed, Target::class, $default);
 By default, `array()` will wrap non-iterables similar to `(array) $mixed` instead of throwing exceptions.
 
 ```php
-Smpita\TypeAs::array('example') === ['example'];
+use Smpita\TypeAs\TypeAs;
+
+TypeAs::array('example') === ['example'];
 ```
 
 That might not always be appropriate, so you can turn wrapping off to get exceptions.
 
 ```php
-$typed = Smpita\TypeAs::array($mixed, false);
+use Smpita\TypeAs\TypeAs;
+
+$typed = TypeAs::array($mixed, false);
 ```
 
 Or you may supply a default.
 
 ```php
-$typed = Smpita\TypeAs::array($mixed, []);
+use Smpita\TypeAs\TypeAs;
+
+$typed = TypeAs::array($mixed, []);
 ```
 
 ---
@@ -92,7 +108,9 @@ $typed = Smpita\TypeAs::array($mixed, []);
 Starting in `v2.3.0` if you would prefer to receive `null` instead of having an exception thrown, each type method has a nullable counterpart.
 
 ```php
-Smpita\TypeAs::nullableCarbon('invalid-timestamp') === null
+use Smpita\TypeAs\TypeAs;
+
+TypeAs::nullableString(new \stdClass) === null
 ```
 
 ---
@@ -188,7 +206,9 @@ use Smpita\TypeAs\asString;
 $typed = asString($mixed);
 ```
 
---- Deprecations
+---
+
+## Deprecations
 
 [SIGNATURES#deprecations](docs/signatures.md#deprecations)
 
