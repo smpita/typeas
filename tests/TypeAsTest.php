@@ -2,15 +2,11 @@
 
 namespace Smpita\TypeAs\Tests;
 
-use DateTimeZone;
-use Illuminate\Support\Carbon;
 use Smpita\TypeAs\Contracts\ArrayResolver;
-use Smpita\TypeAs\Contracts\CarbonResolver;
 use Smpita\TypeAs\Contracts\ClassResolver;
 use Smpita\TypeAs\Contracts\FloatResolver;
 use Smpita\TypeAs\Contracts\IntResolver;
 use Smpita\TypeAs\Contracts\NullableArrayResolver;
-use Smpita\TypeAs\Contracts\NullableCarbonResolver;
 use Smpita\TypeAs\Contracts\NullableClassResolver;
 use Smpita\TypeAs\Contracts\NullableFloatResolver;
 use Smpita\TypeAs\Contracts\NullableIntResolver;
@@ -40,24 +36,6 @@ class TypeAsTest extends TestCase
         TypeAs::setArrayResolver($resolver);
 
         $this->assertSame($resolver->resolve('test'), TypeAs::array('test'));
-    }
-
-    /**
-     * @test
-     *
-     * @legacy
-     *
-     * @deprecated 2.5.0
-     *
-     * @group smpita
-     * @group typeas
-     */
-    public function canSetCarbonResolver(): void
-    {
-        $resolver = new CarbonResolverStub;
-        TypeAs::setCarbonResolver($resolver);
-
-        $this->assertSame($resolver->resolve('test')->toDateString(), TypeAs::carbon('test')->toDateString());
     }
 
     /**
@@ -114,24 +92,6 @@ class TypeAsTest extends TestCase
         TypeAs::setNullableArrayResolver($resolver);
 
         $this->assertSame($resolver->resolve('test'), TypeAs::nullableArray('test'));
-    }
-
-    /**
-     * @test
-     *
-     * @legacy
-     *
-     * @deprecated 2.5.0
-     *
-     * @group smpita
-     * @group typeas
-     */
-    public function canSetNullableCarbonResolver(): void
-    {
-        $resolver = new NullableCarbonResolverStub;
-        TypeAs::setNullableCarbonResolver($resolver);
-
-        $this->assertSame($resolver->resolve('test'), TypeAs::nullableCarbon('test'));
     }
 
     /**
@@ -218,15 +178,6 @@ class ArrayResolverStub implements ArrayResolver
     }
 }
 
-class CarbonResolverStub implements CarbonResolver
-{
-    /** @throws \UnexpectedValueException */
-    public function resolve(mixed $value, DateTimeZone|string $tz = null, Carbon $default = null): Carbon
-    {
-        return Carbon::createFromTimestamp(0);
-    }
-}
-
 class ClassResolverStub implements ClassResolver
 {
     /**
@@ -269,14 +220,6 @@ class IntResolverStub implements IntResolver
 class NullableArrayResolverStub implements NullableArrayResolver
 {
     public function resolve(mixed $value, bool|array $wrap = true): ?array
-    {
-        return null;
-    }
-}
-
-class NullableCarbonResolverStub implements NullableCarbonResolver
-{
-    public function resolve(mixed $value, DateTimeZone|string $tz = null, Carbon $default = null): ?Carbon
     {
         return null;
     }
