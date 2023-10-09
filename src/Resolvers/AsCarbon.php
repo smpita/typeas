@@ -8,6 +8,9 @@ use Smpita\TypeAs\Abstracts\Resolver;
 use Smpita\TypeAs\Contracts\CarbonResolver;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
+/**
+ * @deprecated v2.5.0
+ */
 class AsCarbon extends Resolver implements CarbonResolver
 {
     /**

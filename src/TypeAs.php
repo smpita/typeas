@@ -67,6 +67,8 @@ class TypeAs
     }
 
     /**
+     * @deprecated v2.5.0
+     *
      * @throws TypeAsResolutionException
      */
     public static function carbon(mixed $value, DateTimeZone|string $tz = null, Carbon $default = null, CarbonResolver $resolver = null): Carbon
@@ -119,6 +121,9 @@ class TypeAs
         return $resolver->resolve($value, $wrap);
     }
 
+    /**
+     * @deprecated v2.5.0
+     */
     public static function nullableCarbon(mixed $value, DateTimeZone|string $tz = null, Carbon $default = null, NullableCarbonResolver $resolver = null): ?Carbon
     {
         $resolver ??= static::$nullableCarbonResolver ?? new AsNullableCarbon;
@@ -176,6 +181,9 @@ class TypeAs
         static::$arrayResolver = $resolver;
     }
 
+    /**
+     * @deprecated v2.5.0
+     */
     public static function setCarbonResolver(?CarbonResolver $resolver): void
     {
         static::$carbonResolver = $resolver;
@@ -201,6 +209,9 @@ class TypeAs
         static::$nullableArrayResolver = $resolver;
     }
 
+    /**
+     * @deprecated v2.5.0
+     */
     public static function setNullableCarbonResolver(?NullableCarbonResolver $resolver): void
     {
         static::$nullableCarbonResolver = $resolver;
