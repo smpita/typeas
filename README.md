@@ -270,7 +270,7 @@ Smpita\TypeAs::setNullableClassResolver(?\Smpita\TypeAs\Contracts\NullableClassR
 ```
 
 ```php
-Smpita\TypeAs::setNullableFloatResolver(\Smpita\TypeAs\Contracts\NullableFloatResolver $resolver): void
+Smpita\TypeAs::setNullableFloatResolver(?\Smpita\TypeAs\Contracts\NullableFloatResolver $resolver): void
 ```
 
 ```php
