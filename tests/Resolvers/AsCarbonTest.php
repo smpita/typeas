@@ -15,6 +15,8 @@ class AsCarbonTest extends TestCase
      *
      * @legacy
      *
+     * @deprecated 2.5.0
+     *
      * @group smpita
      * @group typeas
      */
@@ -28,6 +30,8 @@ class AsCarbonTest extends TestCase
      *
      * @legacy
      *
+     * @deprecated 2.5.0
+     *
      * @group smpita
      * @group typeas
      */
@@ -40,6 +44,8 @@ class AsCarbonTest extends TestCase
      * @test
      *
      * @legacy
+     *
+     * @deprecated 2.5.0
      *
      * @group smpita
      * @group typeas
@@ -56,6 +62,8 @@ class AsCarbonTest extends TestCase
      *
      * @legacy
      *
+     * @deprecated 2.5.0
+     *
      * @group smpita
      * @group typeas
      */
@@ -68,6 +76,8 @@ class AsCarbonTest extends TestCase
      * @test
      *
      * @legacy
+     *
+     * @deprecated 2.5.0
      *
      * @group smpita
      * @group typeas
