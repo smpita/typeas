@@ -245,16 +245,17 @@ class TypeAs
     public static function useDefaultResolvers(): void
     {
         self::setArrayResolver(null);
-        self::setCarbonResolver(null);
         self::setClassResolver(null);
         self::setFloatResolver(null);
         self::setIntResolver(null);
         self::setNullableArrayResolver(null);
-        self::setNullableCarbonResolver(null);
         self::setNullableClassResolver(null);
         self::setNullableFloatResolver(null);
         self::setNullableIntResolver(null);
         self::setNullableStringResolver(null);
         self::setStringResolver(null);
+
+        self::$carbonResolver = null;
+        self::$nullableCarbonResolver = null;
     }
 }
