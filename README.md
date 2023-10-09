@@ -97,6 +97,21 @@ Each type has an associated interface located in `Smpita\TypeAs\Contracts` which
 
 Simply implement the interface, then either register the resolver or use it in the resolver method.
 
+### Interfaces
+
+-   `Smpita\TypeAs\Contracts\ArrayResolver`
+-   `Smpita\TypeAs\Contracts\CarbonResolver`
+-   `Smpita\TypeAs\Contracts\ClassResolver`
+-   `Smpita\TypeAs\Contracts\FloatResolver`
+-   `Smpita\TypeAs\Contracts\IntResolver`
+-   `Smpita\TypeAs\Contracts\NullableArrayResolver`
+-   `Smpita\TypeAs\Contracts\NullableCarbonResolver`
+-   `Smpita\TypeAs\Contracts\NullableClassResolver`
+-   `Smpita\TypeAs\Contracts\NullableFloatResolver`
+-   `Smpita\TypeAs\Contracts\NullableIntResolver`
+-   `Smpita\TypeAs\Contracts\NullableStringResolver`
+-   `Smpita\TypeAs\Contracts\StringResolver`
+
 ### Creating Custom Resolvers
 
 ```php
@@ -113,21 +128,6 @@ class CustomStringResolver implements StringResolver
     }
 }
 ```
-
-### Interfaces
-
--   `Smpita\TypeAs\Contracts\ArrayResolver`
--   `Smpita\TypeAs\Contracts\CarbonResolver`
--   `Smpita\TypeAs\Contracts\ClassResolver`
--   `Smpita\TypeAs\Contracts\FloatResolver`
--   `Smpita\TypeAs\Contracts\IntResolver`
--   `Smpita\TypeAs\Contracts\NullableArrayResolver`
--   `Smpita\TypeAs\Contracts\NullableCarbonResolver`
--   `Smpita\TypeAs\Contracts\NullableClassResolver`
--   `Smpita\TypeAs\Contracts\NullableFloatResolver`
--   `Smpita\TypeAs\Contracts\NullableIntResolver`
--   `Smpita\TypeAs\Contracts\NullableStringResolver`
--   `Smpita\TypeAs\Contracts\StringResolver`
 
 ### Registering Custom Resolvers
 
