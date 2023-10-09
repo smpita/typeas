@@ -98,9 +98,51 @@ Smpita\TypeAs::setNullableStringResolver(?\Smpita\TypeAs\Contracts\NullableStrin
 Smpita\TypeAs::setStringResolver(?\Smpita\TypeAs\Contracts\StringResolver $resolver): void
 ```
 
+### Helpers
+
+```php
+\Smpita\TypeAs\asArray(mixed $value, bool|array $wrap = true, ArrayResolver $resolver = null): array
+```
+
+```php
+\Smpita\TypeAs\asClass(string $class, mixed $value, object $default = null, ClassResolver $resolver = null)
+```
+
+```php
+\Smpita\TypeAs\asFloat(mixed $value, float $default = null, FloatResolver $resolver = null): float
+```
+
+```php
+\Smpita\TypeAs\asInt(mixed $value, int $default = null, IntResolver $resolver = null): int
+```
+
+```php
+\Smpita\TypeAs\asNullableArray(mixed $value, bool|array $wrap = true, NullableArrayResolver $resolver = null): ?array
+```
+
+```php
+\Smpita\TypeAs\asNullableClass(string $class, mixed $value, object $default = null, NullableClassResolver $resolver = null): ?object
+```
+
+```php
+\Smpita\TypeAs\asNullableFloat(mixed $value, float $default = null, NullableFloatResolver $resolver = null): ?float
+```
+
+```php
+\Smpita\TypeAs\asNullableInt(mixed $value, int $default = null, NullableIntResolver $resolver = null): ?int
+```
+
+```php
+\Smpita\TypeAs\asNullableString(mixed $value, string $default = null, NullableStringResolver $resolver = null): ?string
+```
+
+```php
+\Smpita\TypeAs\asString(mixed $value, string $default = null, StringResolver $resolver = null): string
+```
+
 ---
 
-## Deprecated or Removed methods
+## Deprecations
 
 #### Carbon
 
@@ -122,4 +164,14 @@ Smpita\TypeAs::setCarbonResolver(?\Smpita\TypeAs\Contracts\CarbonResolver $resol
 ```php
 // (DEPRECATED in v2.5.0, REMOVED in v3.0.0)
 Smpita\TypeAs::setNullableCarbonResolver(?\Smpita\TypeAs\Contracts\NullableCarbonResolver $resolver): void
+```
+
+```php
+// (DEPRECATED in v1.0.1, UPDATED in v2.0.0)
+\Smpita\TypeAs\asClass(mixed $value, string $class, object $default = null): object
+```
+
+```php
+// (DEPRECATED in v1.0.1, UPDATED in v2.0.0)
+\Smpita\TypeAs\asNullableClass(mixed $value, string $class, object $default = null): ?object
 ```

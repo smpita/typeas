@@ -23,7 +23,11 @@ composer require smpita/typeas
 
 ## Usage
 
+Please see [SIGNATURES](docs/signatures.md) for a list of current methods and signatures.
+
 ### General Usage
+
+[SIGNATURES#resolving](docs/signatures.md#resolving)
 
 Pass a `$mixed` and it will throw a `TypeAsResolutionException` if the `$mixed` can't be cast.
 
@@ -38,6 +42,8 @@ $typed = Smpita\TypeAs::string($mixed, '');
 ```
 
 ### The Class Method
+
+[SIGNATURES#class](docs/signatures.md#class)
 
 `class()` has a slightly different signature because you need to specify the class you are expecting.
 
@@ -58,6 +64,8 @@ $typed = Smpita\TypeAs::class($mixed, Target::class, $default);
 ```
 
 ### The Array Method
+
+[SIGNATURES#array](docs/signatures.md#array)
 
 By default, `array()` will wrap non-iterables similar to `(array) $mixed` instead of throwing exceptions.
 
@@ -91,6 +99,8 @@ Smpita\TypeAs::nullableCarbon('invalid-timestamp') === null
 
 ## Resolvers
 
+[SIGNATURES#resolver-registration](docs/signatures.md#resolver-registration)
+
 Starting in `v2.4.0` you can specify your own custom resolvers.
 
 Each type has an associated interface located in `Smpita\TypeAs\Contracts` which you can implement to make your own resolvers.
@@ -100,12 +110,10 @@ Simply implement the interface, then either register the resolver or use it in t
 ### Interfaces
 
 -   `Smpita\TypeAs\Contracts\ArrayResolver`
--   `Smpita\TypeAs\Contracts\CarbonResolver`
 -   `Smpita\TypeAs\Contracts\ClassResolver`
 -   `Smpita\TypeAs\Contracts\FloatResolver`
 -   `Smpita\TypeAs\Contracts\IntResolver`
 -   `Smpita\TypeAs\Contracts\NullableArrayResolver`
--   `Smpita\TypeAs\Contracts\NullableCarbonResolver`
 -   `Smpita\TypeAs\Contracts\NullableClassResolver`
 -   `Smpita\TypeAs\Contracts\NullableFloatResolver`
 -   `Smpita\TypeAs\Contracts\NullableIntResolver`
@@ -167,9 +175,24 @@ $typed = Smpita\TypeAs::string($mixed, null, new \Smpita\TypeAs\Resolvers\AsStri
 
 ---
 
-## Methods and Signatures
+## Helpers
 
-Please see [SIGNATURES](docs/signatures.md) for a list of current methods and signatures.
+[SIGNATURES#helpers](docs/signatures.md#helpers)
+
+Starting in `v2.5.0` resolver methods have an associated helper method located in the `Smpita\TypeAs` namespace.
+The helper method names follow the `TypeAs` method names, but are prepended by `as` and are **camelCased**.
+
+```php
+use Smpita\TypeAs\asString;
+
+$typed = asString($mixed);
+```
+
+--- Deprecations
+
+[SIGNATURES#deprecations](docs/signatures.md#deprecations)
+
+---
 
 ## Testing
 

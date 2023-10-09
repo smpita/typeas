@@ -31,7 +31,10 @@
     "autoload": {
         "psr-4": {
             "Smpita\\TypeAs\\": "src/"
-        }
+        },
+        "files": [
+            "src/Helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
