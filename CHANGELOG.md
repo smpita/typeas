@@ -2,6 +2,10 @@
 
 All notable changes to `typeas` will be documented in this file.
 
+## v.2.4.1 - 2023-10-09
+
+Fixed documentation typos
+
 ## v2.4.0 - 2023-10-09
 
 Added ability for consumers to create custom resolvers
@@ -32,11 +36,13 @@ $typed = Smpita\TypeAs::class($mixed, Target::class, $default);
 
 
 
+
 ```
 ### To
 
 ```php
 $typed = Smpita\TypeAs::class(Target::class, $mixed, $default);
+
 
 
 
@@ -49,6 +55,7 @@ Which should make it easier and more readable for situations like this:
 $typed = Smpita\TypeAs::class(Target::class, function () {
   // Lots of code here
 }, $default);
+
 
 
 
