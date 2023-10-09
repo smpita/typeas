@@ -136,13 +136,13 @@ class CustomStringResolver implements StringResolver
 To globally register a resolver, use the associated setter method. In Laravel, it's recommended to do this in the boot method of a `ServiceProvider`.
 
 ```php
-TypeAs::setStringResolver(CustomStringResolver::class);
+TypeAs::setStringResolver(new CustomStringResolver);
 ```
 
 #### Single use
 
 ```php
-$typed = Smpita\TypeAs::string($mixed, null, CustomStringResolver::class);
+$typed = Smpita\TypeAs::string($mixed, null, new CustomStringResolver);
 ```
 
 ### Unregistering Custom Resolvers
@@ -162,7 +162,7 @@ TypeAs::useDefaultResolvers();
 If you registered a custom resolver and want to use the default resolver on a single use basis, passing `null` to the resolver method will not work. You must pass the default resolver.
 
 ```php
-$typed = Smpita\TypeAs::string($mixed, null, \Smpita\TypeAs\Resolvers\AsString::class);
+$typed = Smpita\TypeAs::string($mixed, null, new \Smpita\TypeAs\Resolvers\AsString);
 ```
 
 ---
