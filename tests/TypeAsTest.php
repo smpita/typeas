@@ -23,18 +23,7 @@ class TypeAsTest extends TestCase
 {
     protected function tearDown(): void
     {
-        TypeAs::setArrayResolver(null);
-        TypeAs::setCarbonResolver(null);
-        TypeAs::setClassResolver(null);
-        TypeAs::setFloatResolver(null);
-        TypeAs::setIntResolver(null);
-        TypeAs::setNullableArrayResolver(null);
-        TypeAs::setNullableCarbonResolver(null);
-        TypeAs::setNullableClassResolver(null);
-        TypeAs::setNullableFloatResolver(null);
-        TypeAs::setNullableIntResolver(null);
-        TypeAs::setNullableStringResolver(null);
-        TypeAs::setStringResolver(null);
+        TypeAs::useDefaultResolvers();
 
         parent::tearDown();
     }
