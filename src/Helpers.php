@@ -2,14 +2,11 @@
 
 namespace Smpita\TypeAs;
 
-use DateTimeZone;
-use Illuminate\Support\Carbon;
 use Smpita\TypeAs\Contracts\ArrayResolver;
 use Smpita\TypeAs\Contracts\ClassResolver;
 use Smpita\TypeAs\Contracts\FloatResolver;
 use Smpita\TypeAs\Contracts\IntResolver;
 use Smpita\TypeAs\Contracts\NullableArrayResolver;
-use Smpita\TypeAs\Contracts\NullableCarbonResolver;
 use Smpita\TypeAs\Contracts\NullableClassResolver;
 use Smpita\TypeAs\Contracts\NullableFloatResolver;
 use Smpita\TypeAs\Contracts\NullableIntResolver;
@@ -58,11 +55,6 @@ function asInt(mixed $value, int $default = null, IntResolver $resolver = null):
 function asNullableArray(mixed $value, bool|array $wrap = true, NullableArrayResolver $resolver = null): ?array
 {
     return TypeAs::nullableArray($value, $wrap, $resolver);
-}
-
-function asNullableCarbon(mixed $value, DateTimeZone|string $tz = null, Carbon $default = null, NullableCarbonResolver $resolver = null): ?Carbon
-{
-    return TypeAs::nullableCarbon($value, $tz, $default, $resolver);
 }
 
 /**
