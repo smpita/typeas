@@ -45,6 +45,10 @@ class TypeAsTest extends TestCase
     /**
      * @test
      *
+     * @legacy
+     *
+     * @deprecated 2.5.0
+     *
      * @group smpita
      * @group typeas
      */
@@ -114,6 +118,10 @@ class TypeAsTest extends TestCase
 
     /**
      * @test
+     *
+     * @legacy
+     *
+     * @deprecated 2.5.0
      *
      * @group smpita
      * @group typeas

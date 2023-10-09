@@ -9,6 +9,9 @@ use Illuminate\Support\Carbon;
 use Smpita\TypeAs\Abstracts\Resolver;
 use Smpita\TypeAs\Contracts\NullableCarbonResolver;
 
+/**
+ * @deprecated v2.5.0
+ */
 class AsNullableCarbon extends Resolver implements NullableCarbonResolver
 {
     public function resolve(mixed $value, DateTimeZone|string $tz = null, Carbon $default = null): ?Carbon
