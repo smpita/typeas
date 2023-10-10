@@ -30,12 +30,38 @@ class TypeAsTest extends TestCase
      * @group smpita
      * @group typeas
      */
+    public function canUseInlineResolver(): void
+    {
+        $resolver = new StringResolverStub;
+
+        $this->assertSame($resolver->resolve('test'), TypeAs::string('test', null, $resolver));
+    }
+
+    /**
+     * @test
+     *
+     * @group smpita
+     * @group typeas
+     */
     public function canSetArrayResolver(): void
     {
         $resolver = new ArrayResolverStub;
         TypeAs::setArrayResolver($resolver);
 
         $this->assertSame($resolver->resolve('test'), TypeAs::array('test'));
+    }
+
+    /**
+     * @test
+     *
+     * @group smpita
+     * @group typeas
+     */
+    public function canUseInlineClassResolver(): void
+    {
+        $resolver = new ClassResolverStub;
+
+        $this->assertEqualsCanonicalizing($resolver->resolve(ClassStub::class, 'test'), TypeAs::class(ClassStub::class, 'test', null, $resolver));
     }
 
     /**
@@ -58,12 +84,38 @@ class TypeAsTest extends TestCase
      * @group smpita
      * @group typeas
      */
+    public function canUseInlineFloatResolver(): void
+    {
+        $resolver = new FloatResolverStub;
+
+        $this->assertSame($resolver->resolve('test'), TypeAs::float('test', null, $resolver));
+    }
+
+    /**
+     * @test
+     *
+     * @group smpita
+     * @group typeas
+     */
     public function canSetFloatResolver(): void
     {
         $resolver = new FloatResolverStub;
         TypeAs::setFloatResolver($resolver);
 
         $this->assertSame($resolver->resolve('test'), TypeAs::float('test'));
+    }
+
+    /**
+     * @test
+     *
+     * @group smpita
+     * @group typeas
+     */
+    public function canUseInlineIntResolver(): void
+    {
+        $resolver = new IntResolverStub;
+
+        $this->assertSame($resolver->resolve('test'), TypeAs::int('test', null, $resolver));
     }
 
     /**
@@ -86,12 +138,38 @@ class TypeAsTest extends TestCase
      * @group smpita
      * @group typeas
      */
+    public function canUseInlineNullableArrayResolver(): void
+    {
+        $resolver = new NullableArrayResolverStub;
+
+        $this->assertSame($resolver->resolve('test'), TypeAs::nullableArray('test', false, $resolver));
+    }
+
+    /**
+     * @test
+     *
+     * @group smpita
+     * @group typeas
+     */
     public function canSetNullableArrayResolver(): void
     {
         $resolver = new NullableArrayResolverStub;
         TypeAs::setNullableArrayResolver($resolver);
 
         $this->assertSame($resolver->resolve('test'), TypeAs::nullableArray('test'));
+    }
+
+    /**
+     * @test
+     *
+     * @group smpita
+     * @group typeas
+     */
+    public function canUseInlinetNullableClassResolver(): void
+    {
+        $resolver = new NullableClassResolverStub;
+
+        $this->assertSame($resolver->resolve(ClassStub::class, 'test'), TypeAs::nullableClass(ClassStub::class, 'test', null, $resolver));
     }
 
     /**
@@ -114,12 +192,38 @@ class TypeAsTest extends TestCase
      * @group smpita
      * @group typeas
      */
+    public function canUseInlineNullableFloatResolver(): void
+    {
+        $resolver = new NullableFloatResolverStub;
+
+        $this->assertSame($resolver->resolve('test'), TypeAs::nullableFloat('test', null, $resolver));
+    }
+
+    /**
+     * @test
+     *
+     * @group smpita
+     * @group typeas
+     */
     public function canSetNullableFloatResolver(): void
     {
         $resolver = new NullableFloatResolverStub;
         TypeAs::setNullableFloatResolver($resolver);
 
         $this->assertSame($resolver->resolve('test'), TypeAs::nullableFloat('test'));
+    }
+
+    /**
+     * @test
+     *
+     * @group smpita
+     * @group typeas
+     */
+    public function canUseInlineNullableIntResolver(): void
+    {
+        $resolver = new NullableIntResolverStub;
+
+        $this->assertSame($resolver->resolve('test'), TypeAs::nullableInt('test', null, $resolver));
     }
 
     /**
@@ -142,12 +246,38 @@ class TypeAsTest extends TestCase
      * @group smpita
      * @group typeas
      */
+    public function canUseInlineNullableStringResolver(): void
+    {
+        $resolver = new NullableStringResolverStub;
+
+        $this->assertSame($resolver->resolve('test'), TypeAs::nullableString('test', null, $resolver));
+    }
+
+    /**
+     * @test
+     *
+     * @group smpita
+     * @group typeas
+     */
     public function canSetNullableStringResolver(): void
     {
         $resolver = new NullableStringResolverStub;
         TypeAs::setNullableStringResolver($resolver);
 
         $this->assertSame($resolver->resolve('test'), TypeAs::nullableString('test'));
+    }
+
+    /**
+     * @test
+     *
+     * @group smpita
+     * @group typeas
+     */
+    public function canUseInlineStringResolver(): void
+    {
+        $resolver = new StringResolverStub;
+
+        $this->assertSame($resolver->resolve('test'), TypeAs::string('test', null, $resolver));
     }
 
     /**
