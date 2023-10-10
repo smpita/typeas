@@ -2,15 +2,11 @@
 
 namespace Smpita\TypeAs;
 
-use DateTimeZone;
-use Illuminate\Support\Carbon;
 use Smpita\TypeAs\Contracts\ArrayResolver;
-use Smpita\TypeAs\Contracts\CarbonResolver;
 use Smpita\TypeAs\Contracts\ClassResolver;
 use Smpita\TypeAs\Contracts\FloatResolver;
 use Smpita\TypeAs\Contracts\IntResolver;
 use Smpita\TypeAs\Contracts\NullableArrayResolver;
-use Smpita\TypeAs\Contracts\NullableCarbonResolver;
 use Smpita\TypeAs\Contracts\NullableClassResolver;
 use Smpita\TypeAs\Contracts\NullableFloatResolver;
 use Smpita\TypeAs\Contracts\NullableIntResolver;
@@ -18,12 +14,10 @@ use Smpita\TypeAs\Contracts\NullableStringResolver;
 use Smpita\TypeAs\Contracts\StringResolver;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Resolvers\AsArray;
-use Smpita\TypeAs\Resolvers\AsCarbon;
 use Smpita\TypeAs\Resolvers\AsClass;
 use Smpita\TypeAs\Resolvers\AsFloat;
 use Smpita\TypeAs\Resolvers\AsInt;
 use Smpita\TypeAs\Resolvers\AsNullableArray;
-use Smpita\TypeAs\Resolvers\AsNullableCarbon;
 use Smpita\TypeAs\Resolvers\AsNullableClass;
 use Smpita\TypeAs\Resolvers\AsNullableFloat;
 use Smpita\TypeAs\Resolvers\AsNullableInt;
@@ -34,8 +28,6 @@ class TypeAs
 {
     protected static ?ArrayResolver $arrayResolver = null;
 
-    protected static ?CarbonResolver $carbonResolver = null;
-
     protected static ?ClassResolver $classResolver = null;
 
     protected static ?FloatResolver $floatResolver = null;
@@ -43,8 +35,6 @@ class TypeAs
     protected static ?IntResolver $intResolver = null;
 
     protected static ?NullableArrayResolver $nullableArrayResolver = null;
-
-    protected static ?NullableCarbonResolver $nullableCarbonResolver = null;
 
     protected static ?NullableClassResolver $nullableClassResolver = null;
 
@@ -64,18 +54,6 @@ class TypeAs
         $resolver ??= static::$arrayResolver ?? new AsArray;
 
         return $resolver->resolve($value, $wrap);
-    }
-
-    /**
-     * @deprecated v2.5.0
-     *
-     * @throws TypeAsResolutionException
-     */
-    public static function carbon(mixed $value, DateTimeZone|string $tz = null, Carbon $default = null, CarbonResolver $resolver = null): Carbon
-    {
-        $resolver ??= static::$carbonResolver ?? new AsCarbon;
-
-        return $resolver->resolve($value, $tz, $default);
     }
 
     /**
@@ -119,16 +97,6 @@ class TypeAs
         $resolver ??= static::$nullableArrayResolver ?? new AsNullableArray;
 
         return $resolver->resolve($value, $wrap);
-    }
-
-    /**
-     * @deprecated v2.5.0
-     */
-    public static function nullableCarbon(mixed $value, DateTimeZone|string $tz = null, Carbon $default = null, NullableCarbonResolver $resolver = null): ?Carbon
-    {
-        $resolver ??= static::$nullableCarbonResolver ?? new AsNullableCarbon;
-
-        return $resolver->resolve($value, $tz, $default);
     }
 
     /**
@@ -181,14 +149,6 @@ class TypeAs
         static::$arrayResolver = $resolver;
     }
 
-    /**
-     * @deprecated v2.5.0
-     */
-    public static function setCarbonResolver(?CarbonResolver $resolver): void
-    {
-        static::$carbonResolver = $resolver;
-    }
-
     public static function setClassResolver(?ClassResolver $resolver): void
     {
         static::$classResolver = $resolver;
@@ -207,14 +167,6 @@ class TypeAs
     public static function setNullableArrayResolver(?NullableArrayResolver $resolver): void
     {
         static::$nullableArrayResolver = $resolver;
-    }
-
-    /**
-     * @deprecated v2.5.0
-     */
-    public static function setNullableCarbonResolver(?NullableCarbonResolver $resolver): void
-    {
-        static::$nullableCarbonResolver = $resolver;
     }
 
     public static function setNullableClassResolver(?NullableClassResolver $resolver): void
@@ -254,8 +206,5 @@ class TypeAs
         self::setNullableIntResolver(null);
         self::setNullableStringResolver(null);
         self::setStringResolver(null);
-
-        self::$carbonResolver = null;
-        self::$nullableCarbonResolver = null;
     }
 }
