@@ -243,3 +243,6 @@ Please review [our security policy](../../security/policy) on how to report secu
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fsmpita%2Ftypeas.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fsmpita%2Ftypeas?ref=badge_large)
