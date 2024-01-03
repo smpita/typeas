@@ -166,6 +166,8 @@ Smpita\TypeAs::setCarbonResolver(?\Smpita\TypeAs\Contracts\CarbonResolver $resol
 Smpita\TypeAs::setNullableCarbonResolver(?\Smpita\TypeAs\Contracts\NullableCarbonResolver $resolver): void
 ```
 
+#### Class
+
 ```php
 // (DEPRECATED in v1.0.1, UPDATED in v2.0.0)
 \Smpita\TypeAs\asClass(mixed $value, string $class, object $default = null): object
