@@ -17,7 +17,7 @@ class AsClass extends Resolver implements ClassResolver
      *
      * @throws TypeAsResolutionException
      */
-    public function resolve(string $class, mixed $value, object $default = null): object
+    public function resolve(string $class, mixed $value, ?object $default = null): object
     {
         return (new AsNullableClass)->resolve($class, $value, $default) ?? $this->error($value);
     }

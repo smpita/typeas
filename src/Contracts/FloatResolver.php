@@ -9,5 +9,5 @@ interface FloatResolver
     /**
      * @throws UnexpectedValueException
      */
-    public function resolve(mixed $value, float $default = null): float;
+    public function resolve(mixed $value, ?float $default = null): float;
 }

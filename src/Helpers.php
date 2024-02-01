@@ -17,7 +17,7 @@ use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 /**
  * @throws TypeAsResolutionException
  */
-function asArray(mixed $value, bool|array $wrap = true, ArrayResolver $resolver = null): array
+function asArray(mixed $value, bool|array $wrap = true, ?ArrayResolver $resolver = null): array
 {
     return TypeAs::array($value, $wrap, $resolver);
 }
@@ -31,7 +31,7 @@ function asArray(mixed $value, bool|array $wrap = true, ArrayResolver $resolver 
  *
  * @throws TypeAsResolutionException
  */
-function asClass(string $class, mixed $value, object $default = null, ClassResolver $resolver = null)
+function asClass(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null)
 {
     return TypeAs::class($class, $value, $default, $resolver);
 }
@@ -39,7 +39,7 @@ function asClass(string $class, mixed $value, object $default = null, ClassResol
 /**
  * @throws TypeAsResolutionException
  */
-function asFloat(mixed $value, float $default = null, FloatResolver $resolver = null): float
+function asFloat(mixed $value, ?float $default = null, ?FloatResolver $resolver = null): float
 {
     return TypeAs::float($value, $default, $resolver);
 }
@@ -47,12 +47,12 @@ function asFloat(mixed $value, float $default = null, FloatResolver $resolver = 
 /**
  * @throws TypeAsResolutionException
  */
-function asInt(mixed $value, int $default = null, IntResolver $resolver = null): int
+function asInt(mixed $value, ?int $default = null, ?IntResolver $resolver = null): int
 {
     return TypeAs::int($value, $default, $resolver);
 }
 
-function asNullableArray(mixed $value, bool|array $wrap = true, NullableArrayResolver $resolver = null): ?array
+function asNullableArray(mixed $value, bool|array $wrap = true, ?NullableArrayResolver $resolver = null): ?array
 {
     return TypeAs::nullableArray($value, $wrap, $resolver);
 }
@@ -64,22 +64,22 @@ function asNullableArray(mixed $value, bool|array $wrap = true, NullableArrayRes
  * @param  TClass  $default
  * @return TClass|null
  */
-function asNullableClass(string $class, mixed $value, object $default = null, NullableClassResolver $resolver = null)
+function asNullableClass(string $class, mixed $value, ?object $default = null, ?NullableClassResolver $resolver = null)
 {
     return TypeAs::nullableClass($class, $value, $default, $resolver);
 }
 
-function asNullableFloat(mixed $value, float $default = null, NullableFloatResolver $resolver = null): ?float
+function asNullableFloat(mixed $value, ?float $default = null, ?NullableFloatResolver $resolver = null): ?float
 {
     return TypeAs::nullableFloat($value, $default, $resolver);
 }
 
-function asNullableInt(mixed $value, int $default = null, NullableIntResolver $resolver = null): ?int
+function asNullableInt(mixed $value, ?int $default = null, ?NullableIntResolver $resolver = null): ?int
 {
     return TypeAs::nullableInt($value, $default, $resolver);
 }
 
-function asNullableString(mixed $value, string $default = null, NullableStringResolver $resolver = null): ?string
+function asNullableString(mixed $value, ?string $default = null, ?NullableStringResolver $resolver = null): ?string
 {
     return TypeAs::nullableString($value, $default, $resolver);
 }
@@ -87,7 +87,7 @@ function asNullableString(mixed $value, string $default = null, NullableStringRe
 /**
  * @throws TypeAsResolutionException
  */
-function asString(mixed $value, string $default = null, StringResolver $resolver = null): string
+function asString(mixed $value, ?string $default = null, ?StringResolver $resolver = null): string
 {
     return TypeAs::string($value, $default, $resolver);
 }

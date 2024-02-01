@@ -11,7 +11,7 @@ class AsString extends Resolver implements StringResolver
     /**
      * @throws TypeAsResolutionException
      */
-    public function resolve(mixed $value, string $default = null): string
+    public function resolve(mixed $value, ?string $default = null): string
     {
         return (new AsNullableString)->resolve($value, $default) ?? $this->error($value);
     }

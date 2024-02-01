@@ -15,5 +15,5 @@ interface ClassResolver
      *
      * @throws UnexpectedValueException
      */
-    public function resolve(string $class, mixed $value, object $default = null);
+    public function resolve(string $class, mixed $value, ?object $default = null);
 }

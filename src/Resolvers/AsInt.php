@@ -11,7 +11,7 @@ class AsInt extends Resolver implements IntResolver
     /**
      * @throws TypeAsResolutionException
      */
-    public function resolve(mixed $value, int $default = null): int
+    public function resolve(mixed $value, ?int $default = null): int
     {
         return (new AsNullableInt)->resolve($value, $default) ?? $this->error($value);
     }

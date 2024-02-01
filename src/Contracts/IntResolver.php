@@ -9,5 +9,5 @@ interface IntResolver
     /**
      * @throws UnexpectedValueException
      */
-    public function resolve(mixed $value, int $default = null): int;
+    public function resolve(mixed $value, ?int $default = null): int;
 }

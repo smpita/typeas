@@ -7,7 +7,7 @@ use Smpita\TypeAs\Contracts\NullableIntResolver;
 
 class AsNullableInt extends Resolver implements NullableIntResolver
 {
-    public function resolve(mixed $value, int $default = null): ?int
+    public function resolve(mixed $value, ?int $default = null): ?int
     {
         return match (gettype($value)) {
             'integer' => $value,
