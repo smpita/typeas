@@ -7,7 +7,7 @@ use Smpita\TypeAs\Contracts\NullableStringResolver;
 
 class AsNullableString extends Resolver implements NullableStringResolver
 {
-    public function resolve(mixed $value, string $default = null): ?string
+    public function resolve(mixed $value, ?string $default = null): ?string
     {
         return match (gettype($value)) {
             'string' => $value,

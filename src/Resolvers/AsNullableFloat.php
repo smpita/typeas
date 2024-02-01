@@ -7,7 +7,7 @@ use Smpita\TypeAs\Contracts\NullableFloatResolver;
 
 class AsNullableFloat extends Resolver implements NullableFloatResolver
 {
-    public function resolve(mixed $value, float $default = null): ?float
+    public function resolve(mixed $value, ?float $default = null): ?float
     {
         return match (gettype($value)) {
             'double' => $value,

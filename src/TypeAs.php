@@ -49,7 +49,7 @@ class TypeAs
     /**
      * @throws TypeAsResolutionException
      */
-    public static function array(mixed $value, bool|array $wrap = true, ArrayResolver $resolver = null): array
+    public static function array(mixed $value, bool|array $wrap = true, ?ArrayResolver $resolver = null): array
     {
         $resolver ??= static::$arrayResolver ?? new AsArray;
 
@@ -65,7 +65,7 @@ class TypeAs
      *
      * @throws TypeAsResolutionException
      */
-    public static function class(string $class, mixed $value, object $default = null, ClassResolver $resolver = null)
+    public static function class(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null)
     {
         $resolver ??= static::$classResolver ?? new AsClass;
 
@@ -75,7 +75,7 @@ class TypeAs
     /**
      * @throws TypeAsResolutionException
      */
-    public static function float(mixed $value, float $default = null, FloatResolver $resolver = null): float
+    public static function float(mixed $value, ?float $default = null, ?FloatResolver $resolver = null): float
     {
         $resolver ??= static::$floatResolver ?? new AsFloat;
 
@@ -85,14 +85,14 @@ class TypeAs
     /**
      * @throws TypeAsResolutionException
      */
-    public static function int(mixed $value, int $default = null, IntResolver $resolver = null): int
+    public static function int(mixed $value, ?int $default = null, ?IntResolver $resolver = null): int
     {
         $resolver ??= static::$intResolver ?? new AsInt;
 
         return $resolver->resolve($value, $default);
     }
 
-    public static function nullableArray(mixed $value, bool|array $wrap = true, NullableArrayResolver $resolver = null): ?array
+    public static function nullableArray(mixed $value, bool|array $wrap = true, ?NullableArrayResolver $resolver = null): ?array
     {
         $resolver ??= static::$nullableArrayResolver ?? new AsNullableArray;
 
@@ -106,28 +106,28 @@ class TypeAs
      * @param  TClass  $default
      * @return TClass|null
      */
-    public static function nullableClass(string $class, mixed $value, object $default = null, NullableClassResolver $resolver = null)
+    public static function nullableClass(string $class, mixed $value, ?object $default = null, ?NullableClassResolver $resolver = null)
     {
         $resolver ??= static::$nullableClassResolver ?? new AsNullableClass;
 
         return $resolver->resolve($class, $value, $default);
     }
 
-    public static function nullableFloat(mixed $value, float $default = null, NullableFloatResolver $resolver = null): ?float
+    public static function nullableFloat(mixed $value, ?float $default = null, ?NullableFloatResolver $resolver = null): ?float
     {
         $resolver ??= static::$nullableFloatResolver ?? new AsNullableFloat;
 
         return $resolver->resolve($value, $default);
     }
 
-    public static function nullableInt(mixed $value, int $default = null, NullableIntResolver $resolver = null): ?int
+    public static function nullableInt(mixed $value, ?int $default = null, ?NullableIntResolver $resolver = null): ?int
     {
         $resolver ??= static::$nullableIntResolver ?? new AsNullableInt;
 
         return $resolver->resolve($value, $default);
     }
 
-    public static function nullableString(mixed $value, string $default = null, NullableStringResolver $resolver = null): ?string
+    public static function nullableString(mixed $value, ?string $default = null, ?NullableStringResolver $resolver = null): ?string
     {
         $resolver ??= static::$nullableStringResolver ?? new AsNullableString;
 
@@ -137,7 +137,7 @@ class TypeAs
     /**
      * @throws TypeAsResolutionException
      */
-    public static function string(mixed $value, string $default = null, StringResolver $resolver = null): string
+    public static function string(mixed $value, ?string $default = null, ?StringResolver $resolver = null): string
     {
         $resolver ??= static::$stringResolver ?? new AsString;
 

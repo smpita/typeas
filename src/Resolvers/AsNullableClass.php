@@ -14,7 +14,7 @@ class AsNullableClass extends Resolver implements NullableClassResolver
      * @param  TClass  $default
      * @return TClass|null
      */
-    public function resolve(string $class, mixed $value, object $default = null)
+    public function resolve(string $class, mixed $value, ?object $default = null)
     {
         return is_object($value) && is_a($value, $class)
             ? $value

@@ -319,7 +319,7 @@ class ClassResolverStub implements ClassResolver
      *
      * @throws UnexpectedValueException
      */
-    public function resolve(string $class, mixed $value, object $default = null)
+    public function resolve(string $class, mixed $value, ?object $default = null)
     {
         if (class_exists($class)) {
             return new $class;
@@ -332,7 +332,7 @@ class ClassResolverStub implements ClassResolver
 class FloatResolverStub implements FloatResolver
 {
     /** @throws \UnexpectedValueException */
-    public function resolve(mixed $value, float $default = null): float
+    public function resolve(mixed $value, ?float $default = null): float
     {
         return 0.0;
     }
@@ -341,7 +341,7 @@ class FloatResolverStub implements FloatResolver
 class IntResolverStub implements IntResolver
 {
     /** @throws \UnexpectedValueException */
-    public function resolve(mixed $value, int $default = null): int
+    public function resolve(mixed $value, ?int $default = null): int
     {
         return 0;
     }
@@ -364,7 +364,7 @@ class NullableClassResolverStub implements NullableClassResolver
      * @param  TClass  $default
      * @return TClass|null
      */
-    public function resolve(string $class, mixed $value, object $default = null)
+    public function resolve(string $class, mixed $value, ?object $default = null)
     {
         return null;
     }
@@ -372,7 +372,7 @@ class NullableClassResolverStub implements NullableClassResolver
 
 class NullableFloatResolverStub implements NullableFloatResolver
 {
-    public function resolve(mixed $value, float $default = null): ?float
+    public function resolve(mixed $value, ?float $default = null): ?float
     {
         return null;
     }
@@ -380,7 +380,7 @@ class NullableFloatResolverStub implements NullableFloatResolver
 
 class NullableIntResolverStub implements NullableIntResolver
 {
-    public function resolve(mixed $value, int $default = null): ?int
+    public function resolve(mixed $value, ?int $default = null): ?int
     {
         return null;
     }
@@ -388,7 +388,7 @@ class NullableIntResolverStub implements NullableIntResolver
 
 class NullableStringResolverStub implements NullableStringResolver
 {
-    public function resolve(mixed $value, string $default = null): ?string
+    public function resolve(mixed $value, ?string $default = null): ?string
     {
         return null;
     }
@@ -397,7 +397,7 @@ class NullableStringResolverStub implements NullableStringResolver
 class StringResolverStub implements StringResolver
 {
     /** @throws \UnexpectedValueException */
-    public function resolve(mixed $value, string $default = null): string
+    public function resolve(mixed $value, ?string $default = null): string
     {
         return '';
     }
