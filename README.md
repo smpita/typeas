@@ -129,6 +129,7 @@ Simply implement the interface, then either register the resolver or use it in t
 ### Interfaces
 
 -   `Smpita\TypeAs\Contracts\ArrayResolver`
+-   `Smpita\TypeAs\Contracts\BoolResolver`   
 -   `Smpita\TypeAs\Contracts\ClassResolver`
 -   `Smpita\TypeAs\Contracts\FloatResolver`
 -   `Smpita\TypeAs\Contracts\IntResolver`
