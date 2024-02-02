@@ -174,6 +174,11 @@ class TypeAs
         static::$arrayResolver = $resolver;
     }
 
+    public static function setBoolResolver(?BoolResolver $resolver): void
+    {
+        static::$boolResolver = $resolver;
+    }
+
     public static function setClassResolver(?ClassResolver $resolver): void
     {
         static::$classResolver = $resolver;
@@ -192,6 +197,11 @@ class TypeAs
     public static function setNullableArrayResolver(?NullableArrayResolver $resolver): void
     {
         static::$nullableArrayResolver = $resolver;
+    }
+
+    public static function setNullableBoolResolver(?NullableBoolResolver $resolver): void
+    {
+        static::$nullableBoolResolver = $resolver;
     }
 
     public static function setNullableClassResolver(?NullableClassResolver $resolver): void
@@ -222,6 +232,7 @@ class TypeAs
     public static function useDefaultResolvers(): void
     {
         self::setArrayResolver(null);
+        self::setNullableBoolResolver(null);
         self::setClassResolver(null);
         self::setFloatResolver(null);
         self::setIntResolver(null);
