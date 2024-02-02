@@ -3,10 +3,12 @@
 namespace Smpita\TypeAs;
 
 use Smpita\TypeAs\Contracts\ArrayResolver;
+use Smpita\TypeAs\Contracts\BoolResolver;
 use Smpita\TypeAs\Contracts\ClassResolver;
 use Smpita\TypeAs\Contracts\FloatResolver;
 use Smpita\TypeAs\Contracts\IntResolver;
 use Smpita\TypeAs\Contracts\NullableArrayResolver;
+use Smpita\TypeAs\Contracts\NullableBoolResolver;
 use Smpita\TypeAs\Contracts\NullableClassResolver;
 use Smpita\TypeAs\Contracts\NullableFloatResolver;
 use Smpita\TypeAs\Contracts\NullableIntResolver;
@@ -14,10 +16,12 @@ use Smpita\TypeAs\Contracts\NullableStringResolver;
 use Smpita\TypeAs\Contracts\StringResolver;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Resolvers\AsArray;
+use Smpita\TypeAs\Resolvers\AsBool;
 use Smpita\TypeAs\Resolvers\AsClass;
 use Smpita\TypeAs\Resolvers\AsFloat;
 use Smpita\TypeAs\Resolvers\AsInt;
 use Smpita\TypeAs\Resolvers\AsNullableArray;
+use Smpita\TypeAs\Resolvers\AsNullableBool;
 use Smpita\TypeAs\Resolvers\AsNullableClass;
 use Smpita\TypeAs\Resolvers\AsNullableFloat;
 use Smpita\TypeAs\Resolvers\AsNullableInt;
@@ -28,6 +32,8 @@ class TypeAs
 {
     protected static ?ArrayResolver $arrayResolver = null;
 
+    protected static ?BoolResolver $boolResolver = null;
+
     protected static ?ClassResolver $classResolver = null;
 
     protected static ?FloatResolver $floatResolver = null;
@@ -35,6 +41,8 @@ class TypeAs
     protected static ?IntResolver $intResolver = null;
 
     protected static ?NullableArrayResolver $nullableArrayResolver = null;
+
+    protected static ?NullableBoolResolver $nullableBoolResolver = null;
 
     protected static ?NullableClassResolver $nullableClassResolver = null;
 
@@ -54,6 +62,16 @@ class TypeAs
         $resolver ??= static::$arrayResolver ?? new AsArray;
 
         return $resolver->resolve($value, $wrap);
+    }
+
+    /**
+     * @throws TypeAsResolutionException
+     */
+    public static function bool(mixed $value, ?bool $default = null, ?BoolResolver $resolver = null): bool
+    {
+        $resolver ??= static::$boolResolver ?? new AsBool;
+
+        return $resolver->resolve($value, $default);
     }
 
     /**
@@ -97,6 +115,13 @@ class TypeAs
         $resolver ??= static::$nullableArrayResolver ?? new AsNullableArray;
 
         return $resolver->resolve($value, $wrap);
+    }
+
+    public static function nullableBool(mixed $value, ?bool $default = null, ?NullableBoolResolver $resolver = null): ?bool
+    {
+        $resolver ??= static::$nullableBoolResolver ?? new AsNullableBool;
+
+        return $resolver->resolve($value, $default);
     }
 
     /**
