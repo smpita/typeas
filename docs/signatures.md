@@ -15,11 +15,11 @@ Smpita\TypeAs::nullableArray(mixed $value, bool|array $wrap = true, ?NullableArr
 #### Boolean
 
 ```php
-Smpita\TypeAs::bool(mixed $value, ?bool $default = null, ?BoolResolver $resolver = null): array
+Smpita\TypeAs::bool(mixed $value, ?bool $default = null, ?BoolResolver $resolver = null): bool
 ```
 
 ```php
-Smpita\TypeAs::nullableBool(mixed $value, ?bool $default = null, ?NullableBoolResolver $resolver = null): ?array
+Smpita\TypeAs::nullableBool(mixed $value, ?bool $default = null, ?NullableBoolResolver $resolver = null): ?bool
 ```
 
 #### Class
@@ -123,7 +123,7 @@ Smpita\TypeAs::setStringResolver(?\Smpita\TypeAs\Contracts\StringResolver $resol
 ```
 
 ```php
-\Smpita\TypeAs\asBool(mixed $value, ?bool $default = null, ?ArrayResolver $resolver = null): array
+\Smpita\TypeAs\asBool(mixed $value, ?bool $default = null, ?ArrayResolver $resolver = null): bool
 ```
 
 ```php
@@ -140,6 +140,10 @@ Smpita\TypeAs::setStringResolver(?\Smpita\TypeAs\Contracts\StringResolver $resol
 
 ```php
 \Smpita\TypeAs\asNullableArray(mixed $value, bool|array $wrap = true, ?NullableArrayResolver $resolver = null): ?array
+```
+
+```php
+\Smpita\TypeAs\asNullableBool(mixed $value, ?bool $default = null, ?NullableBoolResolver $resolver = null): ?bool
 ```
 
 ```php
