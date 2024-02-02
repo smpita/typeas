@@ -12,44 +12,54 @@ Smpita\TypeAs::array(mixed $value, bool|array $wrap = true, ?ArrayResolver $reso
 Smpita\TypeAs::nullableArray(mixed $value, bool|array $wrap = true, ?NullableArrayResolver $resolver = null): ?array
 ```
 
-#### Class
+#### Boolean
 
 ```php
-Smpita\TypeAs::class(string $class, mixed $value, object $default = null, ?ClassResolver $resolver = null): object
+Smpita\TypeAs::bool(mixed $value, ?bool $default = null, ?BoolResolver $resolver = null): array
 ```
 
 ```php
-Smpita\TypeAs::nullableClass(string $class, mixed $value, object $default = null, ?NullableClassResolver $resolver = null): ?object
+Smpita\TypeAs::nullableBool(mixed $value, ?bool $default = null, ?NullableBoolResolver $resolver = null): ?array
+```
+
+#### Class
+
+```php
+Smpita\TypeAs::class(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null): object
+```
+
+```php
+Smpita\TypeAs::nullableClass(string $class, mixed $value, ?object $default = null, ?NullableClassResolver $resolver = null): ?object
 ```
 
 #### Float
 
 ```php
-Smpita\TypeAs::float(mixed $value, float $default = null, >FloatResolver $resolver = null): float
+Smpita\TypeAs::float(mixed $value, ?float $default = null, >FloatResolver $resolver = null): float
 ```
 
 ```php
-Smpita\TypeAs::nullableFloat(mixed $value, float $default = null, ?NullableFloatResolver $resolver = null): ?float
+Smpita\TypeAs::nullableFloat(mixed $value, ?float $default = null, ?NullableFloatResolver $resolver = null): ?float
 ```
 
 #### Integer
 
 ```php
-Smpita\TypeAs::int(mixed $value, int $default = null, ?IntResolver $resolver = null): int
+Smpita\TypeAs::int(mixed $value, ?int $default = null, ?IntResolver $resolver = null): int
 ```
 
 ```php
-Smpita\TypeAs::nullableInt(mixed $value, int $default = null, ?NullableIntResolver $resolver = null): ?int
+Smpita\TypeAs::nullableInt(mixed $value, ?int $default = null, ?NullableIntResolver $resolver = null): ?int
 ```
 
 #### String
 
 ```php
-Smpita\TypeAs::string(mixed $value, string $default = null, ?StringResolver $resolver = null): string
+Smpita\TypeAs::string(mixed $value, ?string $default = null, ?StringResolver $resolver = null): string
 ```
 
 ```php
-Smpita\TypeAs::nullableString(mixed $value, string $default = null, ?NullableStringResolver $resolver = null): ?string
+Smpita\TypeAs::nullableString(mixed $value, ?string $default = null, ?NullableStringResolver $resolver = null): ?string
 ```
 
 ### Resolver registration
@@ -60,6 +70,10 @@ Smpita\TypeAs::useDefaultResolvers(): void
 
 ```php
 Smpita\TypeAs::setArrayResolver(?\Smpita\TypeAs\Contracts\ArrayResolver $resolver): void
+```
+
+```php
+Smpita\TypeAs::setBoolResolver(?\Smpita\TypeAs\Contracts\BoolResolver $resolver): void
 ```
 
 ```php
@@ -76,6 +90,10 @@ Smpita\TypeAs::setIntResolver(?\Smpita\TypeAs\Contracts\IntResolver $resolver): 
 
 ```php
 Smpita\TypeAs::setNullableArrayResolver(?\Smpita\TypeAs\Contracts\NullableArrayResolver $resolver): void
+```
+
+```php
+Smpita\TypeAs::setNullableBoolResolver(?\Smpita\TypeAs\Contracts\NullableBoolResolver $resolver): void
 ```
 
 ```php
@@ -105,15 +123,19 @@ Smpita\TypeAs::setStringResolver(?\Smpita\TypeAs\Contracts\StringResolver $resol
 ```
 
 ```php
-\Smpita\TypeAs\asClass(string $class, mixed $value, object $default = null, ?ClassResolver $resolver = null)
+\Smpita\TypeAs\asBool(mixed $value, ?bool $default = null, ?ArrayResolver $resolver = null): array
 ```
 
 ```php
-\Smpita\TypeAs\asFloat(mixed $value, float $default = null, ?FloatResolver $resolver = null): float
+\Smpita\TypeAs\asClass(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null)
 ```
 
 ```php
-\Smpita\TypeAs\asInt(mixed $value, int $default = null, ?IntResolver $resolver = null): int
+\Smpita\TypeAs\asFloat(mixed $value, ?float $default = null, ?FloatResolver $resolver = null): float
+```
+
+```php
+\Smpita\TypeAs\asInt(mixed $value, ?int $default = null, ?IntResolver $resolver = null): int
 ```
 
 ```php
@@ -121,23 +143,23 @@ Smpita\TypeAs::setStringResolver(?\Smpita\TypeAs\Contracts\StringResolver $resol
 ```
 
 ```php
-\Smpita\TypeAs\asNullableClass(string $class, mixed $value, object $default = null, ?NullableClassResolver $resolver = null): ?object
+\Smpita\TypeAs\asNullableClass(string $class, mixed $value, ?object $default = null, ?NullableClassResolver $resolver = null): ?object
 ```
 
 ```php
-\Smpita\TypeAs\asNullableFloat(mixed $value, float $default = null, ?NullableFloatResolver $resolver = null): ?float
+\Smpita\TypeAs\asNullableFloat(mixed $value, ?float $default = null, ?NullableFloatResolver $resolver = null): ?float
 ```
 
 ```php
-\Smpita\TypeAs\asNullableInt(mixed $value, int $default = null, ?NullableIntResolver $resolver = null): ?int
+\Smpita\TypeAs\asNullableInt(mixed $value, ?int $default = null, ?NullableIntResolver $resolver = null): ?int
 ```
 
 ```php
-\Smpita\TypeAs\asNullableString(mixed $value, string $default = null, ?NullableStringResolver $resolver = null): ?string
+\Smpita\TypeAs\asNullableString(mixed $value, ?string $default = null, ?NullableStringResolver $resolver = null): ?string
 ```
 
 ```php
-\Smpita\TypeAs\asString(mixed $value, string $default = null, ?StringResolver $resolver = null): string
+\Smpita\TypeAs\asString(mixed $value, string ?$default = null, ?StringResolver $resolver = null): string
 ```
 
 ---

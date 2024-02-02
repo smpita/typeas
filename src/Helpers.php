@@ -3,10 +3,12 @@
 namespace Smpita\TypeAs;
 
 use Smpita\TypeAs\Contracts\ArrayResolver;
+use Smpita\TypeAs\Contracts\BoolResolver;
 use Smpita\TypeAs\Contracts\ClassResolver;
 use Smpita\TypeAs\Contracts\FloatResolver;
 use Smpita\TypeAs\Contracts\IntResolver;
 use Smpita\TypeAs\Contracts\NullableArrayResolver;
+use Smpita\TypeAs\Contracts\NullableBoolResolver;
 use Smpita\TypeAs\Contracts\NullableClassResolver;
 use Smpita\TypeAs\Contracts\NullableFloatResolver;
 use Smpita\TypeAs\Contracts\NullableIntResolver;
@@ -20,6 +22,14 @@ use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 function asArray(mixed $value, bool|array $wrap = true, ?ArrayResolver $resolver = null): array
 {
     return TypeAs::array($value, $wrap, $resolver);
+}
+
+/**
+ * @throws TypeAsResolutionException
+ */
+function asBool(mixed $value, ?bool $default = null, ?BoolResolver $resolver = null): bool
+{
+    return TypeAs::bool($value, $default, $resolver);
 }
 
 /**
@@ -55,6 +65,11 @@ function asInt(mixed $value, ?int $default = null, ?IntResolver $resolver = null
 function asNullableArray(mixed $value, bool|array $wrap = true, ?NullableArrayResolver $resolver = null): ?array
 {
     return TypeAs::nullableArray($value, $wrap, $resolver);
+}
+
+function asNullableBool(mixed $value, ?bool $default = null, ?NullableBoolResolver $resolver = null): ?bool
+{
+    return TypeAs::nullableBool($value, $default, $resolver);
 }
 
 /**
