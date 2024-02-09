@@ -202,7 +202,7 @@ Starting in `v2.5.0` resolver methods have an associated helper method located i
 The helper method names follow the `TypeAs` method names, but are prepended by `as` and are **camelCased**.
 
 ```php
-use Smpita\TypeAs\asString;
+use function Smpita\TypeAs\asString;
 
 $typed = asString($mixed);
 ```
