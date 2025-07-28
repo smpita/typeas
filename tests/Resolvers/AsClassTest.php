@@ -15,7 +15,7 @@ class AsClassTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canTypeClasses(): void
+    public function testCanTypeClasses(): void
     {
         $this->assertInstanceOf(ParentStub::class, TypeAs::class(ParentStub::class, new ParentStub));
     }
@@ -26,7 +26,7 @@ class AsClassTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canInferFromChildrenClasses(): void
+    public function testCanInferFromChildrenClasses(): void
     {
         $this->assertInstanceOf(ParentStub::class, TypeAs::class(ParentStub::class, new ChildStub()));
     }
@@ -37,7 +37,7 @@ class AsClassTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function willThrowExceptionOnWrongClass(): void
+    public function testWillThrowExceptionOnWrongClass(): void
     {
         $this->expectException(TypeAsResolutionException::class);
 
@@ -50,7 +50,7 @@ class AsClassTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function willThrowExceptionOnNonObjects(): void
+    public function testWillThrowExceptionOnNonObjects(): void
     {
         $this->expectException(TypeAsResolutionException::class);
 
@@ -63,7 +63,7 @@ class AsClassTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function willNotThrowExceptionWithDefaults(): void
+    public function testWillNotThrowExceptionWithDefaults(): void
     {
         $this->assertInstanceOf(StdClass::class, TypeAs::class(ChildStub::class, new ParentStub, new StdClass));
     }
@@ -74,7 +74,7 @@ class AsClassTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canPassStaticAnalysis(): void
+    public function testCanPassStaticAnalysis(): void
     {
         $test = fn (ParentStub $value) => $value;
 

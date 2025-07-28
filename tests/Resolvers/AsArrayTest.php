@@ -14,7 +14,7 @@ class AsArrayTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canArrayifyArrayableObjects(): void
+    public function testCanArrayifyArrayableObjects(): void
     {
         $inner = [$this->faker->sentence()];
 
@@ -27,7 +27,7 @@ class AsArrayTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canArrayifyMagicArrayableObjects(): void
+    public function testCanArrayifyMagicArrayableObjects(): void
     {
         $inner = [$this->faker->sentence()];
 
@@ -40,7 +40,7 @@ class AsArrayTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canArrayifyStrings(): void
+    public function testCanArrayifyStrings(): void
     {
         $string = $this->faker->sentence();
         $this->assertSame([$string], TypeAs::array($string));
@@ -52,7 +52,7 @@ class AsArrayTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canArrayifyIntegers(): void
+    public function testCanArrayifyIntegers(): void
     {
         $int = $this->faker->randomNumber();
         $this->assertSame([$int], TypeAs::array($int));
@@ -64,7 +64,7 @@ class AsArrayTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canArrayifyFloats(): void
+    public function testCanArrayifyFloats(): void
     {
         $float = $this->faker->randomFloat();
         $this->assertSame([$float], TypeAs::array($float));
@@ -76,7 +76,7 @@ class AsArrayTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canArrayifyObjects(): void
+    public function testCanArrayifyObjects(): void
     {
         $object = new \StdClass;
         $this->assertSame([$object], TypeAs::array($object));
@@ -88,7 +88,7 @@ class AsArrayTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function willThrowExceptionsIfNotWrapping(): void
+    public function testWillThrowExceptionsIfNotWrapping(): void
     {
         $this->expectException(TypeAsResolutionException::class);
 
@@ -101,7 +101,7 @@ class AsArrayTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function willNotThrowExceptionsIfNotReturningDefaults(): void
+    public function testWillNotThrowExceptionsIfNotReturningDefaults(): void
     {
         $array = [$this->faker->sentence()];
 
@@ -114,7 +114,7 @@ class AsArrayTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function willNotDoubleWrapArrays(): void
+    public function testWillNotDoubleWrapArrays(): void
     {
         $array = [$this->faker->sentence()];
 
@@ -127,7 +127,7 @@ class AsArrayTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canPassStaticAnalysis(): void
+    public function testCanPassStaticAnalysis(): void
     {
         $test = fn (array $value) => $value;
 

@@ -13,7 +13,7 @@ class HelpersTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canUseArrayHelper(): void
+    public function testCanUseArrayHelper(): void
     {
         $mixed = $this->faker->word();
 
@@ -26,7 +26,7 @@ class HelpersTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canUseClassHelper(): void
+    public function testCanUseClassHelper(): void
     {
         $mixed = new HelperStub;
 
@@ -39,7 +39,7 @@ class HelpersTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canUseFloatHelper(): void
+    public function testCanUseFloatHelper(): void
     {
         $mixed = strval($this->faker->randomFloat());
 
@@ -52,7 +52,7 @@ class HelpersTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canUseIntHelper(): void
+    public function testCanUseIntHelper(): void
     {
         $mixed = strval($this->faker->randomNumber());
 
@@ -65,7 +65,7 @@ class HelpersTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canUseNullableArrayHelper(): void
+    public function testCanUseNullableArrayHelper(): void
     {
         $mixed = $this->faker->word();
 
@@ -78,7 +78,7 @@ class HelpersTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canUseNullableClassHelper(): void
+    public function testCanUseNullableClassHelper(): void
     {
         $mixed = new HelperStub;
 
@@ -91,7 +91,7 @@ class HelpersTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canUseNullableFloatHelper(): void
+    public function testCanUseNullableFloatHelper(): void
     {
         $mixed = strval($this->faker->randomFloat());
 
@@ -104,7 +104,7 @@ class HelpersTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canUseNullableIntHelper(): void
+    public function testCanUseNullableIntHelper(): void
     {
         $mixed = strval($this->faker->randomNumber());
 
@@ -117,7 +117,7 @@ class HelpersTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canUseNullableStringHelper(): void
+    public function testCanUseNullableStringHelper(): void
     {
         $mixed = $this->faker->randomNumber();
 
@@ -130,7 +130,7 @@ class HelpersTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canUseStringHelper(): void
+    public function testCanUseStringHelper(): void
     {
         $mixed = $this->faker->randomNumber();
 

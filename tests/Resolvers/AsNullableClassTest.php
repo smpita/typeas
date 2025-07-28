@@ -14,7 +14,7 @@ class AsNullableClassTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canTypeClasses(): void
+    public function testCanTypeClasses(): void
     {
         $this->assertInstanceOf(NullableParentStub::class, TypeAs::nullableClass(NullableParentStub::class, new NullableParentStub));
     }
@@ -25,7 +25,7 @@ class AsNullableClassTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canInferFromChildrenClasses(): void
+    public function testCanInferFromChildrenClasses(): void
     {
         $this->assertInstanceOf(NullableParentStub::class, TypeAs::nullableClass(NullableParentStub::class, new NullableChildStub()));
     }
@@ -36,7 +36,7 @@ class AsNullableClassTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function willReturnNullOnWrongClass(): void
+    public function testWillReturnNullOnWrongClass(): void
     {
         $this->assertNull(TypeAs::nullableClass(NullableChildStub::class, new NullableParentStub));
     }
@@ -47,7 +47,7 @@ class AsNullableClassTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function willReturnNullOnNonObjects(): void
+    public function testWillReturnNullOnNonObjects(): void
     {
         $this->assertNull(TypeAs::nullableClass(NullableParentStub::class, NullableParentStub::class));
     }
@@ -58,7 +58,7 @@ class AsNullableClassTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function willNotReturnNullWithDefaults(): void
+    public function testWillNotReturnNullWithDefaults(): void
     {
         $this->assertInstanceOf(StdClass::class, TypeAs::nullableClass(NullableChildStub::class, new NullableParentStub, new StdClass));
     }
@@ -69,7 +69,7 @@ class AsNullableClassTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canPassStaticAnalysis(): void
+    public function testCanPassStaticAnalysis(): void
     {
         $test = fn (?NullableParentStub $value) => $value;
 
