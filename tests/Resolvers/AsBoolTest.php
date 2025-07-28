@@ -15,11 +15,11 @@ class AsBoolTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_will_throw_exception_on_unboolable_types(): void
+    public function testWillThrowExceptionOnUnboolableTypes(): void
     {
         $this->expectException(UnexpectedValueException::class);
 
-        TypeAs::bool('', null, new FakeBoolResolverStub);
+        TypeAs::bool('', null, new FakeBoolResolverStub());
     }
 
     /**
@@ -28,11 +28,11 @@ class AsBoolTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_will_not_throw_exception_with_defaults(): void
+    public function testWillNotThrowExceptionWithDefaults(): void
     {
         $this->expectException(UnexpectedValueException::class);
 
-        TypeAs::bool('', true, new FakeBoolResolverStub);
+        TypeAs::bool('', true, new FakeBoolResolverStub());
     }
 
     /**
@@ -41,7 +41,7 @@ class AsBoolTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_boolify_strings(): void
+    public function testCanBoolifyStrings(): void
     {
         $this->assertFalse(TypeAs::bool('0'));
     }
@@ -52,7 +52,7 @@ class AsBoolTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_boolify_ints(): void
+    public function testCanBoolifyInts(): void
     {
         $this->assertFalse(TypeAs::bool(0));
     }
@@ -63,7 +63,7 @@ class AsBoolTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_boolify_floats(): void
+    public function testCanBoolifyFloats(): void
     {
         $this->assertFalse(TypeAs::bool(0.0));
     }
@@ -74,7 +74,7 @@ class AsBoolTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_boolify_booleans(): void
+    public function testCanBoolifyBooleans(): void
     {
         $this->assertIsBool(TypeAs::bool($this->faker->boolean()));
     }
@@ -85,9 +85,9 @@ class AsBoolTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_boolify_objects(): void
+    public function testCanBoolifyObjects(): void
     {
-        $this->assertTrue(TypeAs::bool(new \stdClass));
+        $this->assertTrue(TypeAs::bool(new \stdClass()));
     }
 
     /**
@@ -96,7 +96,7 @@ class AsBoolTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_boolify_resources(): void
+    public function testCanBoolifyResources(): void
     {
         $this->assertTrue(TypeAs::bool(stream_context_create()));
     }
@@ -107,7 +107,7 @@ class AsBoolTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_pass_static_analysis(): void
+    public function testCanPassStaticAnalysis(): void
     {
         $test = fn (bool $value) => $value;
 
@@ -119,6 +119,6 @@ class FakeBoolResolverStub implements BoolResolver
 {
     public function resolve(mixed $value, ?bool $default = null): bool
     {
-        throw new UnexpectedValueException;
+        throw new UnexpectedValueException();
     }
 }

@@ -13,7 +13,7 @@ class HelpersTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_use_array_helper(): void
+    public function testCanUseArrayHelper(): void
     {
         $mixed = $this->faker->word();
 
@@ -26,7 +26,7 @@ class HelpersTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_use_class_helper(): void
+    public function testCanUseClassHelper(): void
     {
         $mixed = new HelperStub;
 
@@ -39,7 +39,7 @@ class HelpersTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_use_float_helper(): void
+    public function testCanUseFloatHelper(): void
     {
         $mixed = strval($this->faker->randomFloat());
 
@@ -52,7 +52,7 @@ class HelpersTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_use_int_helper(): void
+    public function testCanUseIntHelper(): void
     {
         $mixed = strval($this->faker->randomNumber());
 
@@ -65,7 +65,7 @@ class HelpersTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_use_nullable_array_helper(): void
+    public function testCanUseNullableArrayHelper(): void
     {
         $mixed = $this->faker->word();
 
@@ -78,7 +78,7 @@ class HelpersTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_use_nullable_class_helper(): void
+    public function testCanUseNullableClassHelper(): void
     {
         $mixed = new HelperStub;
 
@@ -91,7 +91,7 @@ class HelpersTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_use_nullable_float_helper(): void
+    public function testCanUseNullableFloatHelper(): void
     {
         $mixed = strval($this->faker->randomFloat());
 
@@ -104,7 +104,7 @@ class HelpersTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_use_nullable_int_helper(): void
+    public function testCanUseNullableIntHelper(): void
     {
         $mixed = strval($this->faker->randomNumber());
 
@@ -117,7 +117,7 @@ class HelpersTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_use_nullable_string_helper(): void
+    public function testCanUseNullableStringHelper(): void
     {
         $mixed = $this->faker->randomNumber();
 
@@ -130,7 +130,7 @@ class HelpersTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_use_string_helper(): void
+    public function testCanUseStringHelper(): void
     {
         $mixed = $this->faker->randomNumber();
 
@@ -138,4 +138,6 @@ class HelpersTest extends TestCase
     }
 }
 
-class HelperStub extends stdClass {}
+class HelperStub extends stdClass
+{
+}

@@ -13,7 +13,7 @@ class AsNullableArrayTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_arrayify_arrayable_objects(): void
+    public function testCanArrayifyArrayableObjects(): void
     {
         $inner = [$this->faker->sentence()];
 
@@ -26,7 +26,7 @@ class AsNullableArrayTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_arrayify_magic_arrayable_objects(): void
+    public function testCanArrayifyMagicArrayableObjects(): void
     {
         $inner = [$this->faker->sentence()];
 
@@ -39,7 +39,7 @@ class AsNullableArrayTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_arrayify_strings(): void
+    public function testCanArrayifyStrings(): void
     {
         $string = $this->faker->sentence();
         $this->assertSame([$string], TypeAs::nullableArray($string));
@@ -51,7 +51,7 @@ class AsNullableArrayTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_arrayify_integers(): void
+    public function testCanArrayifyIntegers(): void
     {
         $int = $this->faker->randomNumber();
         $this->assertSame([$int], TypeAs::nullableArray($int));
@@ -63,7 +63,7 @@ class AsNullableArrayTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_arrayify_floats(): void
+    public function testCanArrayifyFloats(): void
     {
         $float = $this->faker->randomFloat();
         $this->assertSame([$float], TypeAs::nullableArray($float));
@@ -75,7 +75,7 @@ class AsNullableArrayTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_arrayify_objects(): void
+    public function testCanArrayifyObjects(): void
     {
         $object = new \StdClass;
         $this->assertSame([$object], TypeAs::nullableArray($object));
@@ -87,7 +87,7 @@ class AsNullableArrayTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_will_return_null_if_not_wrapping(): void
+    public function testWillReturnNullIfNotWrapping(): void
     {
         $this->assertNull(TypeAs::nullableArray($this->faker->sentence(), false));
     }
@@ -98,7 +98,7 @@ class AsNullableArrayTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_will_not_return_null_if_not_returning_defaults(): void
+    public function testWillNotReturnNullIfNotReturningDefaults(): void
     {
         $array = [$this->faker->sentence()];
 
@@ -111,7 +111,7 @@ class AsNullableArrayTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_will_not_double_wrap_arrays(): void
+    public function testWillNotDoubleWrapArrays(): void
     {
         $array = [$this->faker->sentence()];
 
@@ -124,7 +124,7 @@ class AsNullableArrayTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_pass_static_analysis(): void
+    public function testCanPassStaticAnalysis(): void
     {
         $test = fn (?array $value) => $value;
 
@@ -134,7 +134,9 @@ class AsNullableArrayTest extends TestCase
 
 class NullableArrayableStub
 {
-    public function __construct(public array $value) {}
+    public function __construct(public array $value)
+    {
+    }
 
     public function toArray(): array
     {
@@ -144,7 +146,9 @@ class NullableArrayableStub
 
 class MagicNullableArrayableStub
 {
-    public function __construct(public array $value) {}
+    public function __construct(public array $value)
+    {
+    }
 
     public function __toArray(): array
     {

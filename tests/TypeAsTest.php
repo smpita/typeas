@@ -30,7 +30,7 @@ class TypeAsTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_use_inline_resolver(): void
+    public function testCanUseInlineResolver(): void
     {
         $resolver = new StringResolverStub;
 
@@ -43,7 +43,7 @@ class TypeAsTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_set_array_resolver(): void
+    public function testCanSetArrayResolver(): void
     {
         $resolver = new ArrayResolverStub;
         TypeAs::setArrayResolver($resolver);
@@ -57,7 +57,7 @@ class TypeAsTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_use_inline_class_resolver(): void
+    public function testCanUseInlineClassResolver(): void
     {
         $resolver = new ClassResolverStub;
 
@@ -70,7 +70,7 @@ class TypeAsTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_set_class_resolver(): void
+    public function testCanSetClassResolver(): void
     {
         $resolver = new ClassResolverStub;
         TypeAs::setClassResolver($resolver);
@@ -84,7 +84,7 @@ class TypeAsTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_use_inline_float_resolver(): void
+    public function testCanUseInlineFloatResolver(): void
     {
         $resolver = new FloatResolverStub;
 
@@ -97,7 +97,7 @@ class TypeAsTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_set_float_resolver(): void
+    public function testCanSetFloatResolver(): void
     {
         $resolver = new FloatResolverStub;
         TypeAs::setFloatResolver($resolver);
@@ -111,7 +111,7 @@ class TypeAsTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_use_inline_int_resolver(): void
+    public function testCanUseInlineIntResolver(): void
     {
         $resolver = new IntResolverStub;
 
@@ -124,7 +124,7 @@ class TypeAsTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_set_int_resolver(): void
+    public function testCanSetIntResolver(): void
     {
         $resolver = new IntResolverStub;
         TypeAs::setIntResolver($resolver);
@@ -138,7 +138,7 @@ class TypeAsTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_use_inline_nullable_array_resolver(): void
+    public function testCanUseInlineNullableArrayResolver(): void
     {
         $resolver = new NullableArrayResolverStub;
 
@@ -151,7 +151,7 @@ class TypeAsTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_set_nullable_array_resolver(): void
+    public function testCanSetNullableArrayResolver(): void
     {
         $resolver = new NullableArrayResolverStub;
         TypeAs::setNullableArrayResolver($resolver);
@@ -165,7 +165,7 @@ class TypeAsTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_use_inlinet_nullable_class_resolver(): void
+    public function testCanUseInlinetNullableClassResolver(): void
     {
         $resolver = new NullableClassResolverStub;
 
@@ -178,7 +178,7 @@ class TypeAsTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_set_nullable_class_resolver(): void
+    public function testCanSetNullableClassResolver(): void
     {
         $resolver = new NullableClassResolverStub;
         TypeAs::setNullableClassResolver($resolver);
@@ -192,7 +192,7 @@ class TypeAsTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_use_inline_nullable_float_resolver(): void
+    public function testCanUseInlineNullableFloatResolver(): void
     {
         $resolver = new NullableFloatResolverStub;
 
@@ -205,7 +205,7 @@ class TypeAsTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_set_nullable_float_resolver(): void
+    public function testCanSetNullableFloatResolver(): void
     {
         $resolver = new NullableFloatResolverStub;
         TypeAs::setNullableFloatResolver($resolver);
@@ -219,7 +219,7 @@ class TypeAsTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_use_inline_nullable_int_resolver(): void
+    public function testCanUseInlineNullableIntResolver(): void
     {
         $resolver = new NullableIntResolverStub;
 
@@ -232,7 +232,7 @@ class TypeAsTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_set_nullable_int_resolver(): void
+    public function testCanSetNullableIntResolver(): void
     {
         $resolver = new NullableIntResolverStub;
         TypeAs::setNullableIntResolver($resolver);
@@ -246,7 +246,7 @@ class TypeAsTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_use_inline_nullable_string_resolver(): void
+    public function testCanUseInlineNullableStringResolver(): void
     {
         $resolver = new NullableStringResolverStub;
 
@@ -259,7 +259,7 @@ class TypeAsTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_set_nullable_string_resolver(): void
+    public function testCanSetNullableStringResolver(): void
     {
         $resolver = new NullableStringResolverStub;
         TypeAs::setNullableStringResolver($resolver);
@@ -273,7 +273,7 @@ class TypeAsTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_use_inline_string_resolver(): void
+    public function testCanUseInlineStringResolver(): void
     {
         $resolver = new StringResolverStub;
 
@@ -286,7 +286,7 @@ class TypeAsTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_set_string_resolver(): void
+    public function testCanSetStringResolver(): void
     {
         $resolver = new StringResolverStub;
         TypeAs::setStringResolver($resolver);
@@ -295,7 +295,9 @@ class TypeAsTest extends TestCase
     }
 }
 
-class ClassStub {}
+class ClassStub
+{
+}
 
 class ArrayResolverStub implements ArrayResolver
 {

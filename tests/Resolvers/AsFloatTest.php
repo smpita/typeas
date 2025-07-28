@@ -14,7 +14,7 @@ class AsFloatTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_will_throw_on_unfloatable_types(): void
+    public function testWillThrowOnUnfloatableTypes(): void
     {
         $this->expectException(TypeAsResolutionException::class);
 
@@ -27,11 +27,11 @@ class AsFloatTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_will_throw_on_unfloatable_objects(): void
+    public function testWillThrowOnUnfloatableObjects(): void
     {
         $this->expectException(TypeAsResolutionException::class);
 
-        TypeAs::float(new \StdClass);
+        TypeAs::float(new \StdClass());
     }
 
     /**
@@ -40,7 +40,7 @@ class AsFloatTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_will_not_throw_with_defaults(): void
+    public function testWillNotThrowWithDefaults(): void
     {
         $this->assertTrue(TypeAs::float([], 0.0) === 0.0);
     }
@@ -51,7 +51,7 @@ class AsFloatTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_floatify_strings(): void
+    public function testCanFloatifyStrings(): void
     {
         $this->assertTrue(TypeAs::float('0001234567890.000') === 1234567890.0);
     }
@@ -62,7 +62,7 @@ class AsFloatTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_floatify_booleans(): void
+    public function testCanFloatifyBooleans(): void
     {
         $this->assertIsFloat(TypeAs::float($this->faker->boolean()));
     }
@@ -73,7 +73,7 @@ class AsFloatTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_floatify_floatable_objects(): void
+    public function testCanFloatifyFloatableObjects(): void
     {
         $value = $this->faker->randomFloat();
 
@@ -86,7 +86,7 @@ class AsFloatTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_floatify_magic_floatable_objects(): void
+    public function testCanFloatifyMagicFloatableObjects(): void
     {
         $value = $this->faker->randomFloat();
 
@@ -99,7 +99,7 @@ class AsFloatTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_floatify_open_resource(): void
+    public function testCanFloatifyOpenResource(): void
     {
         $this->assertIsFloat(TypeAs::float(stream_context_create()));
     }
@@ -110,7 +110,7 @@ class AsFloatTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_pass_static_analysis(): void
+    public function testCanPassStaticAnalysis(): void
     {
         $test = fn (float $value) => $value;
 
@@ -120,7 +120,9 @@ class AsFloatTest extends TestCase
 
 class FloatableStub
 {
-    public function __construct(public float $value) {}
+    public function __construct(public float $value)
+    {
+    }
 
     public function toFloat(): float
     {
@@ -130,7 +132,9 @@ class FloatableStub
 
 class MagicFloatableStub
 {
-    public function __construct(public float $value) {}
+    public function __construct(public float $value)
+    {
+    }
 
     public function __toFloat(): float
     {

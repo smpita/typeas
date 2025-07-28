@@ -14,7 +14,7 @@ class AsNullableClassTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_type_classes(): void
+    public function testCanTypeClasses(): void
     {
         $this->assertInstanceOf(NullableParentStub::class, TypeAs::nullableClass(NullableParentStub::class, new NullableParentStub));
     }
@@ -25,9 +25,9 @@ class AsNullableClassTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_infer_from_children_classes(): void
+    public function testCanInferFromChildrenClasses(): void
     {
-        $this->assertInstanceOf(NullableParentStub::class, TypeAs::nullableClass(NullableParentStub::class, new NullableChildStub));
+        $this->assertInstanceOf(NullableParentStub::class, TypeAs::nullableClass(NullableParentStub::class, new NullableChildStub()));
     }
 
     /**
@@ -36,7 +36,7 @@ class AsNullableClassTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_will_return_null_on_wrong_class(): void
+    public function testWillReturnNullOnWrongClass(): void
     {
         $this->assertNull(TypeAs::nullableClass(NullableChildStub::class, new NullableParentStub));
     }
@@ -47,7 +47,7 @@ class AsNullableClassTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_will_return_null_on_non_objects(): void
+    public function testWillReturnNullOnNonObjects(): void
     {
         $this->assertNull(TypeAs::nullableClass(NullableParentStub::class, NullableParentStub::class));
     }
@@ -58,7 +58,7 @@ class AsNullableClassTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_will_not_return_null_with_defaults(): void
+    public function testWillNotReturnNullWithDefaults(): void
     {
         $this->assertInstanceOf(StdClass::class, TypeAs::nullableClass(NullableChildStub::class, new NullableParentStub, new StdClass));
     }
@@ -69,7 +69,7 @@ class AsNullableClassTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_pass_static_analysis(): void
+    public function testCanPassStaticAnalysis(): void
     {
         $test = fn (?NullableParentStub $value) => $value;
 
@@ -77,6 +77,10 @@ class AsNullableClassTest extends TestCase
     }
 }
 
-class NullableParentStub {}
+class NullableParentStub
+{
+}
 
-class NullableChildStub extends NullableParentStub {}
+class NullableChildStub extends NullableParentStub
+{
+}

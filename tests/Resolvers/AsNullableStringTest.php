@@ -14,7 +14,7 @@ class AsNullableStringTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_will_throw_exception_on_unstringable_types(): void
+    public function testWillThrowExceptionOnUnstringableTypes(): void
     {
         $this->expectException(TypeAsResolutionException::class);
 
@@ -27,11 +27,11 @@ class AsNullableStringTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_will_throw_exception_on_unstringable_objects(): void
+    public function testWillThrowExceptionOnUnstringableObjects(): void
     {
         $this->expectException(TypeAsResolutionException::class);
 
-        TypeAs::string(new \StdClass);
+        TypeAs::string(new \StdClass());
     }
 
     /**
@@ -40,9 +40,10 @@ class AsNullableStringTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_will_not_throw_exception_with_defaults(): void
+    public function testWillNotThrowExceptionWithDefaults(): void
     {
-        $this->assertTrue(TypeAs::string(function () {}, 'default') === 'default');
+        $this->assertTrue(TypeAs::string(function () {
+        }, 'default') === 'default');
     }
 
     /**
@@ -51,7 +52,7 @@ class AsNullableStringTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_stringify_integers(): void
+    public function testCanStringifyIntegers(): void
     {
         $this->assertIsString(TypeAs::string($this->faker->randomDigit()));
     }
@@ -62,7 +63,7 @@ class AsNullableStringTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_stringify_booleans(): void
+    public function testCanStringifyBooleans(): void
     {
         $this->assertIsString(TypeAs::string($this->faker->boolean()));
     }
@@ -73,7 +74,7 @@ class AsNullableStringTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_stringify_stringable_objects(): void
+    public function testCanStringifyStringableObjects(): void
     {
         $value = $this->faker->word();
 
@@ -86,7 +87,7 @@ class AsNullableStringTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_stringify_magic_stringable_objects(): void
+    public function testCanStringifyMagicStringableObjects(): void
     {
         $value = $this->faker->word();
 
@@ -99,7 +100,7 @@ class AsNullableStringTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_stringify_open_resource(): void
+    public function testCanStringifyOpenResource(): void
     {
         $this->assertIsString(TypeAs::string(stream_context_create()));
     }
@@ -110,7 +111,7 @@ class AsNullableStringTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function test_can_pass_static_analysis(): void
+    public function testCanPassStaticAnalysis(): void
     {
         $test = fn (string $value) => $value;
 
@@ -120,7 +121,9 @@ class AsNullableStringTest extends TestCase
 
 class StringableStub
 {
-    public function __construct(public string $value) {}
+    public function __construct(public string $value)
+    {
+    }
 
     public function toString(): string
     {
@@ -130,7 +133,9 @@ class StringableStub
 
 class MagicStringableStub
 {
-    public function __construct(public string $value) {}
+    public function __construct(public string $value)
+    {
+    }
 
     public function __toString(): string
     {
