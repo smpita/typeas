@@ -16,7 +16,7 @@ class AsNullableClassTest extends TestCase
      */
     public function testCanTypeClasses(): void
     {
-        $this->assertInstanceOf(NullableParentStub::class, TypeAs::nullableClass(NullableParentStub::class, new NullableParentStub));
+        $this->assertInstanceOf(NullableParentStub::class, TypeAs::nullableClass(NullableParentStub::class, new NullableParentStub()));
     }
 
     /**
@@ -38,7 +38,7 @@ class AsNullableClassTest extends TestCase
      */
     public function testWillReturnNullOnWrongClass(): void
     {
-        $this->assertNull(TypeAs::nullableClass(NullableChildStub::class, new NullableParentStub));
+        $this->assertNull(TypeAs::nullableClass(NullableChildStub::class, new NullableParentStub()));
     }
 
     /**
@@ -60,7 +60,7 @@ class AsNullableClassTest extends TestCase
      */
     public function testWillNotReturnNullWithDefaults(): void
     {
-        $this->assertInstanceOf(StdClass::class, TypeAs::nullableClass(NullableChildStub::class, new NullableParentStub, new StdClass));
+        $this->assertInstanceOf(StdClass::class, TypeAs::nullableClass(NullableChildStub::class, new NullableParentStub(), new StdClass()));
     }
 
     /**
@@ -73,7 +73,7 @@ class AsNullableClassTest extends TestCase
     {
         $test = fn (?NullableParentStub $value) => $value;
 
-        $this->assertInstanceOf(NullableChildStub::class, $test(TypeAs::nullableClass(NullableChildStub::class, new NullableChildStub)));
+        $this->assertInstanceOf(NullableChildStub::class, $test(TypeAs::nullableClass(NullableChildStub::class, new NullableChildStub())));
     }
 }
 

@@ -13,6 +13,6 @@ class AsArray extends Resolver implements ArrayResolver
      */
     public function resolve(mixed $value, bool|array $wrap = true): array
     {
-        return (new AsNullableArray)->resolve($value, $wrap) ?? $this->error($value);
+        return (new AsNullableArray())->resolve($value, $wrap) ?? $this->error($value);
     }
 }

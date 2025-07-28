@@ -59,7 +59,7 @@ class TypeAs
      */
     public static function array(mixed $value, bool|array $wrap = true, ?ArrayResolver $resolver = null): array
     {
-        $resolver ??= static::$arrayResolver ?? new AsArray;
+        $resolver ??= static::$arrayResolver ?? new AsArray();
 
         return $resolver->resolve($value, $wrap);
     }
@@ -69,7 +69,7 @@ class TypeAs
      */
     public static function bool(mixed $value, ?bool $default = null, ?BoolResolver $resolver = null): bool
     {
-        $resolver ??= static::$boolResolver ?? new AsBool;
+        $resolver ??= static::$boolResolver ?? new AsBool();
 
         return $resolver->resolve($value, $default);
     }
@@ -85,7 +85,7 @@ class TypeAs
      */
     public static function class(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null)
     {
-        $resolver ??= static::$classResolver ?? new AsClass;
+        $resolver ??= static::$classResolver ?? new AsClass();
 
         return $resolver->resolve($class, $value, $default);
     }
@@ -95,7 +95,7 @@ class TypeAs
      */
     public static function float(mixed $value, ?float $default = null, ?FloatResolver $resolver = null): float
     {
-        $resolver ??= static::$floatResolver ?? new AsFloat;
+        $resolver ??= static::$floatResolver ?? new AsFloat();
 
         return $resolver->resolve($value, $default);
     }
@@ -105,21 +105,21 @@ class TypeAs
      */
     public static function int(mixed $value, ?int $default = null, ?IntResolver $resolver = null): int
     {
-        $resolver ??= static::$intResolver ?? new AsInt;
+        $resolver ??= static::$intResolver ?? new AsInt();
 
         return $resolver->resolve($value, $default);
     }
 
     public static function nullableArray(mixed $value, bool|array $wrap = true, ?NullableArrayResolver $resolver = null): ?array
     {
-        $resolver ??= static::$nullableArrayResolver ?? new AsNullableArray;
+        $resolver ??= static::$nullableArrayResolver ?? new AsNullableArray();
 
         return $resolver->resolve($value, $wrap);
     }
 
     public static function nullableBool(mixed $value, ?bool $default = null, ?NullableBoolResolver $resolver = null): ?bool
     {
-        $resolver ??= static::$nullableBoolResolver ?? new AsNullableBool;
+        $resolver ??= static::$nullableBoolResolver ?? new AsNullableBool();
 
         return $resolver->resolve($value, $default);
     }
@@ -133,28 +133,28 @@ class TypeAs
      */
     public static function nullableClass(string $class, mixed $value, ?object $default = null, ?NullableClassResolver $resolver = null)
     {
-        $resolver ??= static::$nullableClassResolver ?? new AsNullableClass;
+        $resolver ??= static::$nullableClassResolver ?? new AsNullableClass();
 
         return $resolver->resolve($class, $value, $default);
     }
 
     public static function nullableFloat(mixed $value, ?float $default = null, ?NullableFloatResolver $resolver = null): ?float
     {
-        $resolver ??= static::$nullableFloatResolver ?? new AsNullableFloat;
+        $resolver ??= static::$nullableFloatResolver ?? new AsNullableFloat();
 
         return $resolver->resolve($value, $default);
     }
 
     public static function nullableInt(mixed $value, ?int $default = null, ?NullableIntResolver $resolver = null): ?int
     {
-        $resolver ??= static::$nullableIntResolver ?? new AsNullableInt;
+        $resolver ??= static::$nullableIntResolver ?? new AsNullableInt();
 
         return $resolver->resolve($value, $default);
     }
 
     public static function nullableString(mixed $value, ?string $default = null, ?NullableStringResolver $resolver = null): ?string
     {
-        $resolver ??= static::$nullableStringResolver ?? new AsNullableString;
+        $resolver ??= static::$nullableStringResolver ?? new AsNullableString();
 
         return $resolver->resolve($value, $default);
     }
@@ -164,7 +164,7 @@ class TypeAs
      */
     public static function string(mixed $value, ?string $default = null, ?StringResolver $resolver = null): string
     {
-        $resolver ??= static::$stringResolver ?? new AsString;
+        $resolver ??= static::$stringResolver ?? new AsString();
 
         return $resolver->resolve($value, $default);
     }

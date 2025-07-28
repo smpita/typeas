@@ -77,7 +77,7 @@ class AsNullableArrayTest extends TestCase
      */
     public function testCanArrayifyObjects(): void
     {
-        $object = new \StdClass;
+        $object = new \StdClass();
         $this->assertSame([$object], TypeAs::nullableArray($object));
     }
 

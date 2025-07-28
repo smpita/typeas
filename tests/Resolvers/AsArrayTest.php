@@ -78,7 +78,7 @@ class AsArrayTest extends TestCase
      */
     public function testCanArrayifyObjects(): void
     {
-        $object = new \StdClass;
+        $object = new \StdClass();
         $this->assertSame([$object], TypeAs::array($object));
     }
 

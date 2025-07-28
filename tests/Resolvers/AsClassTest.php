@@ -17,7 +17,7 @@ class AsClassTest extends TestCase
      */
     public function testCanTypeClasses(): void
     {
-        $this->assertInstanceOf(ParentStub::class, TypeAs::class(ParentStub::class, new ParentStub));
+        $this->assertInstanceOf(ParentStub::class, TypeAs::class(ParentStub::class, new ParentStub()));
     }
 
     /**
@@ -41,7 +41,7 @@ class AsClassTest extends TestCase
     {
         $this->expectException(TypeAsResolutionException::class);
 
-        TypeAs::class(ChildStub::class, new ParentStub);
+        TypeAs::class(ChildStub::class, new ParentStub());
     }
 
     /**
@@ -65,7 +65,7 @@ class AsClassTest extends TestCase
      */
     public function testWillNotThrowExceptionWithDefaults(): void
     {
-        $this->assertInstanceOf(StdClass::class, TypeAs::class(ChildStub::class, new ParentStub, new StdClass));
+        $this->assertInstanceOf(StdClass::class, TypeAs::class(ChildStub::class, new ParentStub(), new StdClass()));
     }
 
     /**
@@ -78,7 +78,7 @@ class AsClassTest extends TestCase
     {
         $test = fn (ParentStub $value) => $value;
 
-        $this->assertInstanceOf(ChildStub::class, $test(TypeAs::class(ChildStub::class, new ChildStub)));
+        $this->assertInstanceOf(ChildStub::class, $test(TypeAs::class(ChildStub::class, new ChildStub())));
     }
 }
 
