@@ -15,7 +15,7 @@ class AsNullableBoolTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testWillNotCastNull(): void
+    public function test_will_not_cast_null(): void
     {
         $this->assertNull(TypeAs::nullableBool(null));
     }
@@ -26,7 +26,7 @@ class AsNullableBoolTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testWillCastNullWithDefaults(): void
+    public function test_will_cast_null_with_defaults(): void
     {
         $this->assertTrue(TypeAs::nullableBool(null, true));
     }
@@ -37,7 +37,7 @@ class AsNullableBoolTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testCanBoolifyStrings(): void
+    public function test_can_boolify_strings(): void
     {
         $this->assertFalse(TypeAs::nullableBool('0'));
     }
@@ -48,7 +48,7 @@ class AsNullableBoolTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testCanBoolifyInts(): void
+    public function test_can_boolify_ints(): void
     {
         $this->assertFalse(TypeAs::nullableBool(0));
     }
@@ -59,7 +59,7 @@ class AsNullableBoolTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testCanBoolifyFloats(): void
+    public function test_can_boolify_floats(): void
     {
         $this->assertFalse(TypeAs::nullableBool(0.0));
     }
@@ -70,7 +70,7 @@ class AsNullableBoolTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testCanBoolifyBooleans(): void
+    public function test_can_boolify_booleans(): void
     {
         $this->assertIsBool(TypeAs::nullableBool($this->faker->boolean()));
     }
@@ -81,9 +81,9 @@ class AsNullableBoolTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testCanBoolifyObjects(): void
+    public function test_can_boolify_objects(): void
     {
-        $this->assertTrue(TypeAs::nullableBool(new \stdClass()));
+        $this->assertTrue(TypeAs::nullableBool(new \stdClass));
     }
 
     /**
@@ -92,7 +92,7 @@ class AsNullableBoolTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testCanBoolifyResources(): void
+    public function test_can_boolify_resources(): void
     {
         $this->assertTrue(TypeAs::nullableBool(stream_context_create()));
     }
@@ -103,7 +103,7 @@ class AsNullableBoolTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testCanPassStaticAnalysis(): void
+    public function test_can_pass_static_analysis(): void
     {
         $test = fn (?bool $value) => $value;
 
@@ -115,6 +115,6 @@ class FakeNullableBoolResolverStub implements BoolResolver
 {
     public function resolve(mixed $value, ?bool $default = null): bool
     {
-        throw new UnexpectedValueException();
+        throw new UnexpectedValueException;
     }
 }

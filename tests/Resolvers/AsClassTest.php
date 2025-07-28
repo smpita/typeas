@@ -15,7 +15,7 @@ class AsClassTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testCanTypeClasses(): void
+    public function test_can_type_classes(): void
     {
         $this->assertInstanceOf(ParentStub::class, TypeAs::class(ParentStub::class, new ParentStub));
     }
@@ -26,9 +26,9 @@ class AsClassTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testCanInferFromChildrenClasses(): void
+    public function test_can_infer_from_children_classes(): void
     {
-        $this->assertInstanceOf(ParentStub::class, TypeAs::class(ParentStub::class, new ChildStub()));
+        $this->assertInstanceOf(ParentStub::class, TypeAs::class(ParentStub::class, new ChildStub));
     }
 
     /**
@@ -37,7 +37,7 @@ class AsClassTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testWillThrowExceptionOnWrongClass(): void
+    public function test_will_throw_exception_on_wrong_class(): void
     {
         $this->expectException(TypeAsResolutionException::class);
 
@@ -50,7 +50,7 @@ class AsClassTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testWillThrowExceptionOnNonObjects(): void
+    public function test_will_throw_exception_on_non_objects(): void
     {
         $this->expectException(TypeAsResolutionException::class);
 
@@ -63,7 +63,7 @@ class AsClassTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testWillNotThrowExceptionWithDefaults(): void
+    public function test_will_not_throw_exception_with_defaults(): void
     {
         $this->assertInstanceOf(StdClass::class, TypeAs::class(ChildStub::class, new ParentStub, new StdClass));
     }
@@ -74,7 +74,7 @@ class AsClassTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testCanPassStaticAnalysis(): void
+    public function test_can_pass_static_analysis(): void
     {
         $test = fn (ParentStub $value) => $value;
 
@@ -82,10 +82,6 @@ class AsClassTest extends TestCase
     }
 }
 
-class ParentStub
-{
-}
+class ParentStub {}
 
-class ChildStub extends ParentStub
-{
-}
+class ChildStub extends ParentStub {}
