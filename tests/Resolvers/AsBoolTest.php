@@ -15,7 +15,7 @@ class AsBoolTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function willThrowExceptionOnUnboolableTypes(): void
+    public function testWillThrowExceptionOnUnboolableTypes(): void
     {
         $this->expectException(UnexpectedValueException::class);
 
@@ -28,7 +28,7 @@ class AsBoolTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function willNotThrowExceptionWithDefaults(): void
+    public function testWillNotThrowExceptionWithDefaults(): void
     {
         $this->expectException(UnexpectedValueException::class);
 
@@ -41,7 +41,7 @@ class AsBoolTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canBoolifyStrings(): void
+    public function testCanBoolifyStrings(): void
     {
         $this->assertFalse(TypeAs::bool('0'));
     }
@@ -52,7 +52,7 @@ class AsBoolTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canBoolifyInts(): void
+    public function testCanBoolifyInts(): void
     {
         $this->assertFalse(TypeAs::bool(0));
     }
@@ -63,7 +63,7 @@ class AsBoolTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canBoolifyFloats(): void
+    public function testCanBoolifyFloats(): void
     {
         $this->assertFalse(TypeAs::bool(0.0));
     }
@@ -74,7 +74,7 @@ class AsBoolTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canBoolifyBooleans(): void
+    public function testCanBoolifyBooleans(): void
     {
         $this->assertIsBool(TypeAs::bool($this->faker->boolean()));
     }
@@ -85,7 +85,7 @@ class AsBoolTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canBoolifyObjects(): void
+    public function testCanBoolifyObjects(): void
     {
         $this->assertTrue(TypeAs::bool(new \stdClass()));
     }
@@ -96,7 +96,7 @@ class AsBoolTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canBoolifyResources(): void
+    public function testCanBoolifyResources(): void
     {
         $this->assertTrue(TypeAs::bool(stream_context_create()));
     }
@@ -107,7 +107,7 @@ class AsBoolTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canPassStaticAnalysis(): void
+    public function testCanPassStaticAnalysis(): void
     {
         $test = fn (bool $value) => $value;
 

@@ -13,6 +13,6 @@ class AsFloat extends Resolver implements FloatResolver
      */
     public function resolve(mixed $value, ?float $default = null): float
     {
-        return (new AsNullableFloat)->resolve($value, $default) ?? $this->error($value);
+        return (new AsNullableFloat())->resolve($value, $default) ?? $this->error($value);
     }
 }

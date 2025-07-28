@@ -14,7 +14,7 @@ class AsIntTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function willThrowExceptionOnUnintegerableTypes(): void
+    public function testWillThrowExceptionOnUnintegerableTypes(): void
     {
         $this->expectException(TypeAsResolutionException::class);
 
@@ -27,7 +27,7 @@ class AsIntTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function willThrowExceptionOnUnintegerableObjects(): void
+    public function testWillThrowExceptionOnUnintegerableObjects(): void
     {
         $this->expectException(TypeAsResolutionException::class);
 
@@ -40,7 +40,7 @@ class AsIntTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function willNotThrowExceptionWithDefaults(): void
+    public function testWillNotThrowExceptionWithDefaults(): void
     {
         $this->assertTrue(TypeAs::int([], 0) === 0);
     }
@@ -51,7 +51,7 @@ class AsIntTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canIntegerifyStrings(): void
+    public function testCanIntegerifyStrings(): void
     {
         $this->assertTrue(TypeAs::int('0001234567890.000') === 1234567890);
     }
@@ -62,7 +62,7 @@ class AsIntTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canIntegerifyBooleans(): void
+    public function testCanIntegerifyBooleans(): void
     {
         $this->assertIsInt(TypeAs::int($this->faker->boolean()));
     }
@@ -73,7 +73,7 @@ class AsIntTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canIntegerifyIntegerableObjects(): void
+    public function testCanIntegerifyIntegerableObjects(): void
     {
         $value = $this->faker->randomNumber();
 
@@ -86,7 +86,7 @@ class AsIntTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canIntegerifyMagicIntegerableObjects(): void
+    public function testCanIntegerifyMagicIntegerableObjects(): void
     {
         $value = $this->faker->randomNumber();
 
@@ -99,7 +99,7 @@ class AsIntTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canInterifyOpenResource(): void
+    public function testCanInterifyOpenResource(): void
     {
         $this->assertIsInt(TypeAs::int(stream_context_create()));
     }
@@ -110,7 +110,7 @@ class AsIntTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function canPassStaticAnalysis(): void
+    public function testCanPassStaticAnalysis(): void
     {
         $test = fn (int $value) => $value;
 
