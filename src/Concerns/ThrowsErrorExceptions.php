@@ -14,7 +14,8 @@ trait ThrowsErrorExceptions
     protected static function error(mixed $value)
     {
         $type = is_object($value) ? get_class($value) : gettype($value);
+        $classname = basename(str_replace('\\', '/', static::class));
 
-        throw new TypeAsResolutionException("Resolution error converting $type [".class_basename(static::class).']');
+        throw new TypeAsResolutionException("Resolution error converting $type [".$classname.']');
     }
 }

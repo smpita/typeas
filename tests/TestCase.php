@@ -2,10 +2,17 @@
 
 namespace Smpita\TypeAs\Tests;
 
-use Illuminate\Foundation\Testing\WithFaker;
-use Orchestra\Testbench\TestCase as Orchestra;
+use Faker\Factory;
+use Faker\Generator;
+use PHPUnit\Framework\TestCase as FrameworkTestCase;
 
-class TestCase extends Orchestra
+class TestCase extends FrameworkTestCase
 {
-    use WithFaker;
+    protected Generator $faker;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->faker = Factory::create();
+    }
 }
