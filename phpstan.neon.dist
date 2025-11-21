@@ -4,4 +4,6 @@ parameters:
         - src
         - tests
     tmpDir: build/phpstan
-    checkMissingIterableValueType: false
+    ignoreErrors:
+        - identifier: missingType.iterableValue
+        - identifier: method.alreadyNarrowedType

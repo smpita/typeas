@@ -19,10 +19,14 @@ class AsNullableString extends Resolver implements NullableStringResolver
 
     protected function fromObject(object $value): ?string
     {
-        return match (true) {
+        $muted = match (true) {
             method_exists($value, '__toString') => $value->__toString(),
             method_exists($value, 'toString') => $value->toString(),
             default => null,
         };
+
+        return is_string($muted)
+            ? $muted
+            : null;
     }
 }

@@ -19,10 +19,14 @@ class AsNullableInt extends Resolver implements NullableIntResolver
 
     protected function fromObject(object $value): ?int
     {
-        return match (true) {
+        $muted = match (true) {
             method_exists($value, '__toInteger') => $value->__toInteger(),
             method_exists($value, 'toInteger') => $value->toInteger(),
             default => null,
         };
+
+        return is_int($muted)
+            ? $muted
+            : null;
     }
 }
