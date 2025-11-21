@@ -21,7 +21,7 @@
     "require-dev": {
         "laravel/pint": "^1.0",
         "phpstan/phpstan": "^2.1",
-        "phpunit/phpunit": "^12.3",
+        "phpunit/phpunit": "^12.3|^11.0|^10.0",
         "fakerphp/faker": "^1.0"
     },
     "autoload": {
