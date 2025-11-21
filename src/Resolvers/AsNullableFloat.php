@@ -19,10 +19,14 @@ class AsNullableFloat extends Resolver implements NullableFloatResolver
 
     protected function fromObject(object $value): ?float
     {
-        return match (true) {
+        $muted = match (true) {
             method_exists($value, '__toFloat') => $value->__toFloat(),
             method_exists($value, 'toFloat') => $value->toFloat(),
             default => null,
         };
+
+        return is_float($muted)
+            ? $muted
+            : null;
     }
 }

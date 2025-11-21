@@ -32,10 +32,14 @@ class AsNullableArray extends Resolver implements NullableArrayResolver
 
     protected function fromObject(object $value): ?array
     {
-        return match (true) {
+        $muted = match (true) {
             method_exists($value, '__toArray') => $value->__toArray(),
             method_exists($value, 'toArray') => $value->toArray(),
             default => null,
         };
+
+        return is_array($muted)
+            ? $muted
+            : null;
     }
 }
