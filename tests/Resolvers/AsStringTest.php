@@ -26,7 +26,7 @@ class AsStringTest extends TestCase
      */
     public function test_will_return_null_on_unstringable_objects(): void
     {
-        $this->assertNull(TypeAs::nullableString(new \StdClass));
+        $this->assertNull(TypeAs::nullableString(new \StdClass()));
     }
 
     /**
@@ -115,7 +115,9 @@ class AsStringTest extends TestCase
 
 class NullableStringableStub
 {
-    public function __construct(public string $value) {}
+    public function __construct(public string $value)
+    {
+    }
 
     public function toString(): string
     {
@@ -125,7 +127,9 @@ class NullableStringableStub
 
 class MagicNullableStringableStub
 {
-    public function __construct(public string $value) {}
+    public function __construct(public string $value)
+    {
+    }
 
     public function __toString(): string
     {

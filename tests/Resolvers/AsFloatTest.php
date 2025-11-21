@@ -31,7 +31,7 @@ class AsFloatTest extends TestCase
     {
         $this->expectException(TypeAsResolutionException::class);
 
-        TypeAs::float(new \StdClass);
+        TypeAs::float(new \StdClass());
     }
 
     /**
@@ -120,7 +120,9 @@ class AsFloatTest extends TestCase
 
 class FloatableStub
 {
-    public function __construct(public float $value) {}
+    public function __construct(public float $value)
+    {
+    }
 
     public function toFloat(): float
     {
@@ -130,7 +132,9 @@ class FloatableStub
 
 class MagicFloatableStub
 {
-    public function __construct(public float $value) {}
+    public function __construct(public float $value)
+    {
+    }
 
     public function __toFloat(): float
     {

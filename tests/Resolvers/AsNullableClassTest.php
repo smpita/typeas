@@ -16,7 +16,7 @@ class AsNullableClassTest extends TestCase
      */
     public function test_can_type_classes(): void
     {
-        $this->assertInstanceOf(NullableParentStub::class, TypeAs::nullableClass(NullableParentStub::class, new NullableParentStub));
+        $this->assertInstanceOf(NullableParentStub::class, TypeAs::nullableClass(NullableParentStub::class, new NullableParentStub()));
     }
 
     /**
@@ -27,7 +27,7 @@ class AsNullableClassTest extends TestCase
      */
     public function test_can_infer_from_children_classes(): void
     {
-        $this->assertInstanceOf(NullableParentStub::class, TypeAs::nullableClass(NullableParentStub::class, new NullableChildStub));
+        $this->assertInstanceOf(NullableParentStub::class, TypeAs::nullableClass(NullableParentStub::class, new NullableChildStub()));
     }
 
     /**
@@ -38,7 +38,7 @@ class AsNullableClassTest extends TestCase
      */
     public function test_will_return_null_on_wrong_class(): void
     {
-        $this->assertNull(TypeAs::nullableClass(NullableChildStub::class, new NullableParentStub));
+        $this->assertNull(TypeAs::nullableClass(NullableChildStub::class, new NullableParentStub()));
     }
 
     /**
@@ -60,7 +60,7 @@ class AsNullableClassTest extends TestCase
      */
     public function test_will_not_return_null_with_defaults(): void
     {
-        $this->assertInstanceOf(StdClass::class, TypeAs::nullableClass(NullableChildStub::class, new NullableParentStub, new StdClass));
+        $this->assertInstanceOf(StdClass::class, TypeAs::nullableClass(NullableChildStub::class, new NullableParentStub(), new StdClass()));
     }
 
     /**
@@ -73,10 +73,14 @@ class AsNullableClassTest extends TestCase
     {
         $test = fn (?NullableParentStub $value) => $value;
 
-        $this->assertInstanceOf(NullableChildStub::class, $test(TypeAs::nullableClass(NullableChildStub::class, new NullableChildStub)));
+        $this->assertInstanceOf(NullableChildStub::class, $test(TypeAs::nullableClass(NullableChildStub::class, new NullableChildStub())));
     }
 }
 
-class NullableParentStub {}
+class NullableParentStub
+{
+}
 
-class NullableChildStub extends NullableParentStub {}
+class NullableChildStub extends NullableParentStub
+{
+}

@@ -26,7 +26,7 @@ class AsNullableFloatTest extends TestCase
      */
     public function test_will_return_null_on_unfloatable_objects(): void
     {
-        $this->assertNull(TypeAs::nullableFloat(new \StdClass));
+        $this->assertNull(TypeAs::nullableFloat(new \StdClass()));
     }
 
     /**
@@ -115,7 +115,9 @@ class AsNullableFloatTest extends TestCase
 
 class NullableFloatableStub
 {
-    public function __construct(public float $value) {}
+    public function __construct(public float $value)
+    {
+    }
 
     public function toFloat(): float
     {
@@ -125,7 +127,9 @@ class NullableFloatableStub
 
 class MagicNullableFloatableStub
 {
-    public function __construct(public float $value) {}
+    public function __construct(public float $value)
+    {
+    }
 
     public function __toFloat(): float
     {

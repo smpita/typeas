@@ -78,7 +78,7 @@ class AsArrayTest extends TestCase
      */
     public function test_can_arrayify_objects(): void
     {
-        $object = new \StdClass;
+        $object = new \StdClass();
         $this->assertSame([$object], TypeAs::array($object));
     }
 
@@ -137,7 +137,9 @@ class AsArrayTest extends TestCase
 
 class ArrayableStub
 {
-    public function __construct(public array $value) {}
+    public function __construct(public array $value)
+    {
+    }
 
     public function toArray(): array
     {
@@ -147,7 +149,9 @@ class ArrayableStub
 
 class MagicArrayableStub
 {
-    public function __construct(public array $value) {}
+    public function __construct(public array $value)
+    {
+    }
 
     public function __toArray(): array
     {

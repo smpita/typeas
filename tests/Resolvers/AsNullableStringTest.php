@@ -31,7 +31,7 @@ class AsNullableStringTest extends TestCase
     {
         $this->expectException(TypeAsResolutionException::class);
 
-        TypeAs::string(new \StdClass);
+        TypeAs::string(new \StdClass());
     }
 
     /**
@@ -120,7 +120,9 @@ class AsNullableStringTest extends TestCase
 
 class StringableStub
 {
-    public function __construct(public string $value) {}
+    public function __construct(public string $value)
+    {
+    }
 
     public function toString(): string
     {
@@ -130,7 +132,9 @@ class StringableStub
 
 class MagicStringableStub
 {
-    public function __construct(public string $value) {}
+    public function __construct(public string $value)
+    {
+    }
 
     public function __toString(): string
     {
