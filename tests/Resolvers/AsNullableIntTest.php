@@ -13,7 +13,7 @@ class AsNullableIntTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testWillReturnNullOnUnintegerableTypes(): void
+    public function test_will_return_null_on_unintegerable_types(): void
     {
         $this->assertNull(TypeAs::nullableInt([]));
     }
@@ -24,7 +24,7 @@ class AsNullableIntTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testWillReturnNullOnUnintegerableObjects(): void
+    public function test_will_return_null_on_unintegerable_objects(): void
     {
         $this->assertNull(TypeAs::nullableInt(new \StdClass()));
     }
@@ -35,7 +35,7 @@ class AsNullableIntTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testWillNotThrowExceptionWithDefaults(): void
+    public function test_will_not_throw_exception_with_defaults(): void
     {
         $this->assertTrue(TypeAs::nullableInt([], 0) === 0);
     }
@@ -46,7 +46,7 @@ class AsNullableIntTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testCanIntegerifyStrings(): void
+    public function test_can_integerify_strings(): void
     {
         $this->assertTrue(TypeAs::nullableInt('0001234567890.000') === 1234567890);
     }
@@ -57,7 +57,7 @@ class AsNullableIntTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testCanIntegerifyBooleans(): void
+    public function test_can_integerify_booleans(): void
     {
         $this->assertIsInt(TypeAs::nullableInt($this->faker->boolean()));
     }
@@ -68,7 +68,7 @@ class AsNullableIntTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testCanIntegerifyIntegerableObjects(): void
+    public function test_can_integerify_integerable_objects(): void
     {
         $value = $this->faker->randomNumber();
 
@@ -81,7 +81,7 @@ class AsNullableIntTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testCanIntegerifyMagicIntegerableObjects(): void
+    public function test_can_integerify_magic_integerable_objects(): void
     {
         $value = $this->faker->randomNumber();
 
@@ -94,7 +94,7 @@ class AsNullableIntTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testCanInterifyOpenResource(): void
+    public function test_can_interify_open_resource(): void
     {
         $this->assertIsInt(TypeAs::nullableInt(stream_context_create()));
     }
@@ -105,7 +105,7 @@ class AsNullableIntTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testCanPassStaticAnalysis(): void
+    public function test_can_pass_static_analysis(): void
     {
         $test = fn (?int $value) => $value;
 

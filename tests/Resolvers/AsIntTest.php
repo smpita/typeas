@@ -14,7 +14,7 @@ class AsIntTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testWillThrowExceptionOnUnintegerableTypes(): void
+    public function test_will_throw_exception_on_unintegerable_types(): void
     {
         $this->expectException(TypeAsResolutionException::class);
 
@@ -27,7 +27,7 @@ class AsIntTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testWillThrowExceptionOnUnintegerableObjects(): void
+    public function test_will_throw_exception_on_unintegerable_objects(): void
     {
         $this->expectException(TypeAsResolutionException::class);
 
@@ -40,7 +40,7 @@ class AsIntTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testWillNotThrowExceptionWithDefaults(): void
+    public function test_will_not_throw_exception_with_defaults(): void
     {
         $this->assertTrue(TypeAs::int([], 0) === 0);
     }
@@ -51,7 +51,7 @@ class AsIntTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testCanIntegerifyStrings(): void
+    public function test_can_integerify_strings(): void
     {
         $this->assertTrue(TypeAs::int('0001234567890.000') === 1234567890);
     }
@@ -62,7 +62,7 @@ class AsIntTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testCanIntegerifyBooleans(): void
+    public function test_can_integerify_booleans(): void
     {
         $this->assertIsInt(TypeAs::int($this->faker->boolean()));
     }
@@ -73,7 +73,7 @@ class AsIntTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testCanIntegerifyIntegerableObjects(): void
+    public function test_can_integerify_integerable_objects(): void
     {
         $value = $this->faker->randomNumber();
 
@@ -86,7 +86,7 @@ class AsIntTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testCanIntegerifyMagicIntegerableObjects(): void
+    public function test_can_integerify_magic_integerable_objects(): void
     {
         $value = $this->faker->randomNumber();
 
@@ -99,7 +99,7 @@ class AsIntTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testCanInterifyOpenResource(): void
+    public function test_can_interify_open_resource(): void
     {
         $this->assertIsInt(TypeAs::int(stream_context_create()));
     }
@@ -110,7 +110,7 @@ class AsIntTest extends TestCase
      * @group smpita
      * @group typeas
      */
-    public function testCanPassStaticAnalysis(): void
+    public function test_can_pass_static_analysis(): void
     {
         $test = fn (int $value) => $value;
 
