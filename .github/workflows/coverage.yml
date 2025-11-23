@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -21,8 +21,13 @@ jobs:
           php-version: '8.1'
           coverage: pcov
 
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-interaction
+      - name: Setup problem matchers
+        run: |
+          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+      - name: Install composer dependencies
+        uses: ramsey/composer-install@v3
 
       - name: Run tests with coverage
         run: vendor/bin/phpunit --coverage-cobertura=coverage.xml
