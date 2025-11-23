@@ -1,12 +1,13 @@
 # Easy type control for static analysis
 
+[![Total Downloads](https://img.shields.io/packagist/dt/smpita/typeas.svg?style=flat-square)](https://packagist.org/packages/smpita/typeas)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/smpita/typeas.svg?style=flat-square)](https://packagist.org/packages/smpita/typeas)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/smpita/typeas/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/smpita/typeas/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/smpita/typeas/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/smpita/typeas/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fsmpita%2Ftypeas.svg?type=shield&issueType=security)](https://app.fossa.com/projects/git%2Bgithub.com%2Fsmpita%2Ftypeas?ref=badge_shield&issueType=security)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fsmpita%2Ftypeas.svg?type=shield&issueType=license)](https://app.fossa.com/projects/git%2Bgithub.com%2Fsmpita%2Ftypeas?ref=badge_shield&issueType=license)
-[![Total Downloads](https://img.shields.io/packagist/dt/smpita/typeas.svg?style=flat-square)](https://packagist.org/packages/smpita/typeas)
 
-Do you fight `mixed` signatures when performing static analysis?
+Easily type your `mixed` signatures. Perfect for static analysis!
 
 ## [Smpita/TypeAs](https://github.com/smpita/typeas) will give you easy control of your typing.
 
@@ -129,7 +130,7 @@ Simply implement the interface, then either register the resolver or use it in t
 ### Interfaces
 
 -   `Smpita\TypeAs\Contracts\ArrayResolver`
--   `Smpita\TypeAs\Contracts\BoolResolver`   
+-   `Smpita\TypeAs\Contracts\BoolResolver`
 -   `Smpita\TypeAs\Contracts\ClassResolver`
 -   `Smpita\TypeAs\Contracts\FloatResolver`
 -   `Smpita\TypeAs\Contracts\IntResolver`
