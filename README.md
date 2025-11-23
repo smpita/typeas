@@ -8,6 +8,7 @@ Easily type your `mixed` signatures. Perfect for static analysis!
 [![License](https://img.shields.io/packagist/l/smpita/typeas.svg?style=flat-square)](https://packagist.org/packages/smpita/typeas)
 
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/smpita/typeas/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/smpita/typeas/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![Coverage Status](https://coveralls.io/repos/github/smpita/typeas/badge.svg)](https://coveralls.io/github/smpita/typeas)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/smpita/typeas/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/smpita/typeas/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fsmpita%2Ftypeas.svg?type=shield&issueType=security)](https://app.fossa.com/projects/git%2Bgithub.com%2Fsmpita%2Ftypeas?ref=badge_shield&issueType=security)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fsmpita%2Ftypeas.svg?type=shield&issueType=license)](https://app.fossa.com/projects/git%2Bgithub.com%2Fsmpita%2Ftypeas?ref=badge_shield&issueType=license)
