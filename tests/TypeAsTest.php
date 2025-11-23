@@ -304,8 +304,7 @@ class TypeAsTest extends TestCase
 
         $service = new TypeAs();
 
-        foreach($resolvers as $key => $resolver)
-        {
+        foreach ($resolvers as $key => $resolver) {
             $setResolverMethod = 'set' . ucfirst($key);
             $service->$setResolverMethod($resolver); // @phpstan-ignore-line
 
