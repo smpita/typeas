@@ -12,6 +12,33 @@ class AsNullableArrayTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
+    public function test_can_arrayify_arrays(): void
+    {
+        $array = [$this->faker->sentence()];
+        $this->assertSame($array, TypeAs::nullableArray($array));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_arrayify_bools(): void
+    {
+        $bool = $this->faker->boolean();
+        $this->assertSame([$bool], TypeAs::nullableArray($bool));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_arrayify_objects(): void
+    {
+        $object = new \StdClass();
+        $this->assertSame([$object], TypeAs::nullableArray($object));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
     public function test_can_arrayify_arrayable_objects(): void
     {
         $inner = [$this->faker->sentence()];
@@ -27,15 +54,6 @@ class AsNullableArrayTest extends TestCase
         $inner = [$this->faker->sentence()];
 
         $this->assertSame($inner, TypeAs::nullableArray(new MagicNullableArrayableStub($inner)));
-    }
-
-    #[Test]
-    #[Group('smpita')]
-    #[Group('typeas')]
-    public function test_can_arrayify_strings(): void
-    {
-        $string = $this->faker->sentence();
-        $this->assertSame([$string], TypeAs::nullableArray($string));
     }
 
     #[Test]
@@ -59,10 +77,19 @@ class AsNullableArrayTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_can_arrayify_objects(): void
+    public function test_can_arrayify_resources(): void
     {
-        $object = new \StdClass();
-        $this->assertSame([$object], TypeAs::nullableArray($object));
+        $resource = stream_context_create();
+        $this->assertSame([$resource], TypeAs::nullableArray($resource));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_arrayify_strings(): void
+    {
+        $string = $this->faker->sentence();
+        $this->assertSame([$string], TypeAs::nullableArray($string));
     }
 
     #[Test]

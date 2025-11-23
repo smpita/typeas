@@ -2,27 +2,32 @@
 
 namespace Smpita\TypeAs\Tests\Resolvers;
 
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\Test;
-use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
+use Smpita\TypeAs\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\Group;
+use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
 class AsStringTest extends TestCase
 {
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_will_return_null_on_unstringable_types(): void
+    public function test_will_throw_exception_on_unstringable_types(): void
     {
-        $this->assertNull(TypeAs::nullableString([]));
+        $this->expectException(TypeAsResolutionException::class);
+
+        TypeAs::string([]);
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_will_return_null_on_unstringable_objects(): void
+    public function test_will_throw_exception_on_unstringable_objects(): void
     {
-        $this->assertNull(TypeAs::nullableString(new \StdClass()));
+        $this->expectException(TypeAsResolutionException::class);
+
+        TypeAs::string(new \StdClass());
     }
 
     #[Test]
@@ -30,15 +35,9 @@ class AsStringTest extends TestCase
     #[Group('typeas')]
     public function test_will_not_throw_exception_with_defaults(): void
     {
-        $this->assertTrue(TypeAs::nullableString(function () {}, 'default') === 'default');
-    }
+        $default = $this->faker->word();
 
-    #[Test]
-    #[Group('smpita')]
-    #[Group('typeas')]
-    public function test_can_stringify_integers(): void
-    {
-        $this->assertIsString(TypeAs::nullableString($this->faker->randomDigit()));
+        $this->assertSame($default, TypeAs::string(new \StdClass(), $default));
     }
 
     #[Test]
@@ -46,7 +45,8 @@ class AsStringTest extends TestCase
     #[Group('typeas')]
     public function test_can_stringify_booleans(): void
     {
-        $this->assertIsString(TypeAs::nullableString($this->faker->boolean()));
+        $this->assertSame('1', TypeAs::string(true));
+        $this->assertSame('', TypeAs::string(false));
     }
 
     #[Test]
@@ -56,7 +56,23 @@ class AsStringTest extends TestCase
     {
         $value = $this->faker->word();
 
-        $this->assertEquals(TypeAs::nullableString(new NullableStringableStub($value)), $value);
+        $this->assertSame($value, TypeAs::string(new NullableStringableStub($value)));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_stringify_floats(): void
+    {
+        $this->assertIsString(TypeAs::string($this->faker->randomFloat()));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_stringify_integers(): void
+    {
+        $this->assertIsString(TypeAs::string($this->faker->randomNumber()));
     }
 
     #[Test]
@@ -66,7 +82,7 @@ class AsStringTest extends TestCase
     {
         $value = $this->faker->word();
 
-        $this->assertEquals(TypeAs::nullableString(new MagicNullableStringableStub($value)), $value);
+        $this->assertSame($value, TypeAs::string(new MagicNullableStringableStub($value)));
     }
 
     #[Test]
@@ -74,7 +90,7 @@ class AsStringTest extends TestCase
     #[Group('typeas')]
     public function test_can_stringify_open_resource(): void
     {
-        $this->assertIsString(TypeAs::nullableString(stream_context_create()));
+        $this->assertIsString(TypeAs::string(stream_context_create()));
     }
 
     #[Test]
@@ -84,7 +100,7 @@ class AsStringTest extends TestCase
     {
         $test = fn (?string $value) => $value;
 
-        $this->assertIsString($test(TypeAs::nullableString($this->faker->randomNumber())));
+        $this->assertIsString($test(TypeAs::string($this->faker->randomNumber())));
     }
 }
 

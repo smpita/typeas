@@ -34,25 +34,10 @@ class AsBoolTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_can_boolify_strings(): void
+    public function test_can_boolify_arrays(): void
     {
-        $this->assertFalse(TypeAs::bool('0'));
-    }
-
-    #[Test]
-    #[Group('smpita')]
-    #[Group('typeas')]
-    public function test_can_boolify_ints(): void
-    {
-        $this->assertFalse(TypeAs::bool(0));
-    }
-
-    #[Test]
-    #[Group('smpita')]
-    #[Group('typeas')]
-    public function test_can_boolify_floats(): void
-    {
-        $this->assertFalse(TypeAs::bool(0.0));
+        $this->assertTrue(TypeAs::bool(['test']));
+        $this->assertFalse(TypeAs::bool([]));
     }
 
     #[Test]
@@ -74,9 +59,36 @@ class AsBoolTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
+    public function test_can_boolify_floats(): void
+    {
+        $this->assertTrue(TypeAs::bool(867.5309));
+        $this->assertFalse(TypeAs::bool(0.0));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_boolify_ints(): void
+    {
+        $this->assertTrue(TypeAs::bool(12345));
+        $this->assertFalse(TypeAs::bool(0));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
     public function test_can_boolify_resources(): void
     {
         $this->assertTrue(TypeAs::bool(stream_context_create()));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_boolify_strings(): void
+    {
+        $this->assertTrue(TypeAs::bool('test'));
+        $this->assertFalse(TypeAs::bool('0'));
     }
 
     #[Test]

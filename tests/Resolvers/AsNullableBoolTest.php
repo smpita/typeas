@@ -30,25 +30,10 @@ class AsNullableBoolTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_can_boolify_strings(): void
+    public function test_can_boolify_arrays(): void
     {
-        $this->assertFalse(TypeAs::nullableBool('0'));
-    }
-
-    #[Test]
-    #[Group('smpita')]
-    #[Group('typeas')]
-    public function test_can_boolify_ints(): void
-    {
-        $this->assertFalse(TypeAs::nullableBool(0));
-    }
-
-    #[Test]
-    #[Group('smpita')]
-    #[Group('typeas')]
-    public function test_can_boolify_floats(): void
-    {
-        $this->assertFalse(TypeAs::nullableBool(0.0));
+        $this->assertTrue(TypeAs::nullableBool(['test']));
+        $this->assertFalse(TypeAs::nullableBool([]));
     }
 
     #[Test]
@@ -57,6 +42,24 @@ class AsNullableBoolTest extends TestCase
     public function test_can_boolify_booleans(): void
     {
         $this->assertIsBool(TypeAs::nullableBool($this->faker->boolean()));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_boolify_floats(): void
+    {
+        $this->assertTrue(TypeAs::nullableBool(867.5309));
+        $this->assertFalse(TypeAs::nullableBool(0.0));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_boolify_ints(): void
+    {
+        $this->assertTrue(TypeAs::nullableBool(12345));
+        $this->assertFalse(TypeAs::nullableBool(0));
     }
 
     #[Test]
@@ -73,6 +76,15 @@ class AsNullableBoolTest extends TestCase
     public function test_can_boolify_resources(): void
     {
         $this->assertTrue(TypeAs::nullableBool(stream_context_create()));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_boolify_strings(): void
+    {
+        $this->assertTrue(TypeAs::nullableBool('test'));
+        $this->assertFalse(TypeAs::nullableBool('0'));
     }
 
     #[Test]

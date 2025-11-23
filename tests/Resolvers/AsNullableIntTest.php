@@ -30,15 +30,9 @@ class AsNullableIntTest extends TestCase
     #[Group('typeas')]
     public function test_will_not_throw_exception_with_defaults(): void
     {
-        $this->assertTrue(TypeAs::nullableInt([], 0) === 0);
-    }
+        $default = $this->faker->randomNumber();
 
-    #[Test]
-    #[Group('smpita')]
-    #[Group('typeas')]
-    public function test_can_integerify_strings(): void
-    {
-        $this->assertTrue(TypeAs::nullableInt('0001234567890.000') === 1234567890);
+        $this->assertSame($default, TypeAs::nullableInt([], $default));
     }
 
     #[Test]
@@ -46,7 +40,8 @@ class AsNullableIntTest extends TestCase
     #[Group('typeas')]
     public function test_can_integerify_booleans(): void
     {
-        $this->assertIsInt(TypeAs::nullableInt($this->faker->boolean()));
+        $this->assertSame(1, TypeAs::nullableInt(true));
+        $this->assertSame(0, TypeAs::nullableInt(false));
     }
 
     #[Test]
@@ -56,7 +51,7 @@ class AsNullableIntTest extends TestCase
     {
         $value = $this->faker->randomNumber();
 
-        $this->assertEquals(TypeAs::nullableInt(new NullableIntegerableStub($value)), $value);
+        $this->assertSame($value, TypeAs::nullableInt(new NullableIntegerableStub($value)));
     }
 
     #[Test]
@@ -66,15 +61,41 @@ class AsNullableIntTest extends TestCase
     {
         $value = $this->faker->randomNumber();
 
-        $this->assertEquals(TypeAs::nullableInt(new MagicNullableIntegerableStub($value)), $value);
+        $this->assertSame($value, TypeAs::nullableInt(new MagicNullableIntegerableStub($value)));
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_can_interify_open_resource(): void
+    public function test_can_integerify_integers(): void
+    {
+        $int = $this->faker->randomNumber();
+
+        $this->assertSame($int, TypeAs::nullableInt($int));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_integerify_floats(): void
+    {
+        $this->assertSame(867, TypeAs::nullableInt(867.5309));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_integerify_open_resource(): void
     {
         $this->assertIsInt(TypeAs::nullableInt(stream_context_create()));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_integerify_strings(): void
+    {
+        $this->assertSame(1234567890, TypeAs::nullableInt('0001234567890.000'));
     }
 
     #[Test]

@@ -35,15 +35,7 @@ class AsFloatTest extends TestCase
     #[Group('typeas')]
     public function test_will_not_throw_with_defaults(): void
     {
-        $this->assertTrue(TypeAs::float([], 0.0) === 0.0);
-    }
-
-    #[Test]
-    #[Group('smpita')]
-    #[Group('typeas')]
-    public function test_can_floatify_strings(): void
-    {
-        $this->assertTrue(TypeAs::float('0001234567890.000') === 1234567890.0);
+        $this->assertSame(0.0, TypeAs::float(new \StdClass(), 0.0));
     }
 
     #[Test]
@@ -61,7 +53,7 @@ class AsFloatTest extends TestCase
     {
         $value = $this->faker->randomFloat();
 
-        $this->assertEquals(TypeAs::float(new FloatableStub($value)), $value);
+        $this->assertSame($value, TypeAs::float(new FloatableStub($value)));
     }
 
     #[Test]
@@ -71,7 +63,25 @@ class AsFloatTest extends TestCase
     {
         $value = $this->faker->randomFloat();
 
-        $this->assertEquals(TypeAs::float(new MagicFloatableStub($value)), $value);
+        $this->assertSame($value, TypeAs::float(new MagicFloatableStub($value)));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_floatify_integers(): void
+    {
+        $this->assertSame(1234567890.0, TypeAs::float(1234567890));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_floatify_floats(): void
+    {
+        $float = $this->faker->randomFloat();
+
+        $this->assertSame($float, TypeAs::float($float));
     }
 
     #[Test]
@@ -80,6 +90,14 @@ class AsFloatTest extends TestCase
     public function test_can_floatify_open_resource(): void
     {
         $this->assertIsFloat(TypeAs::float(stream_context_create()));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_floatify_strings(): void
+    {
+        $this->assertSame(1234567890.0, TypeAs::float('0001234567890.000'));
     }
 
     #[Test]

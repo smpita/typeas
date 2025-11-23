@@ -284,7 +284,6 @@ class TypeAsTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    #[Group('testing')]
     public function test_can_reset_resolvers(): void
     {
         $resolvers = [
@@ -311,7 +310,8 @@ class TypeAsTest extends TestCase
             $reflection = new ReflectionClass($service);
 
             $this->assertNotNull($reflection->getStaticPropertyValue($key));
-            $this->assertEquals($resolver, $reflection->getStaticPropertyValue($key));
+            $this->assertSame($resolver, $reflection->getStaticPropertyValue($key));
+
             TypeAs::useDefaultResolvers();
             $this->assertNull($reflection->getStaticPropertyValue($key));
 

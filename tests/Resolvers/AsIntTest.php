@@ -35,15 +35,9 @@ class AsIntTest extends TestCase
     #[Group('typeas')]
     public function test_will_not_throw_exception_with_defaults(): void
     {
-        $this->assertTrue(TypeAs::int([], 0) === 0);
-    }
+        $default = $this->faker->randomNumber();
 
-    #[Test]
-    #[Group('smpita')]
-    #[Group('typeas')]
-    public function test_can_integerify_strings(): void
-    {
-        $this->assertTrue(TypeAs::int('0001234567890.000') === 1234567890);
+        $this->assertSame($default, TypeAs::nullableInt([], $default));
     }
 
     #[Test]
@@ -51,7 +45,8 @@ class AsIntTest extends TestCase
     #[Group('typeas')]
     public function test_can_integerify_booleans(): void
     {
-        $this->assertIsInt(TypeAs::int($this->faker->boolean()));
+        $this->assertSame(1, TypeAs::int(true));
+        $this->assertSame(0, TypeAs::int(false));
     }
 
     #[Test]
@@ -61,7 +56,7 @@ class AsIntTest extends TestCase
     {
         $value = $this->faker->randomNumber();
 
-        $this->assertEquals(TypeAs::int(new IntegerableStub($value)), $value);
+        $this->assertSame($value, TypeAs::int(new IntegerableStub($value)));
     }
 
     #[Test]
@@ -71,15 +66,41 @@ class AsIntTest extends TestCase
     {
         $value = $this->faker->randomNumber();
 
-        $this->assertEquals(TypeAs::int(new MagicIntegerableStub($value)), $value);
+        $this->assertSame($value, TypeAs::int(new MagicIntegerableStub($value)));
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_can_interify_open_resource(): void
+    public function test_can_integerify_integers(): void
+    {
+        $int = $this->faker->randomNumber();
+
+        $this->assertSame($int, TypeAs::int($int));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_integerify_floats(): void
+    {
+        $this->assertSame(867, TypeAs::int(867.5309));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_integerify_open_resource(): void
     {
         $this->assertIsInt(TypeAs::int(stream_context_create()));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_integerify_strings(): void
+    {
+        $this->assertSame(1234567890, TypeAs::int('0001234567890.000'));
     }
 
     #[Test]

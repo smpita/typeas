@@ -33,19 +33,28 @@ class AsArrayTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_can_arrayify_strings(): void
+    public function test_can_arrayify_arrays(): void
     {
-        $string = $this->faker->sentence();
-        $this->assertSame([$string], TypeAs::array($string));
+        $array = [$this->faker->sentence()];
+        $this->assertSame($array, TypeAs::array($array));
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_can_arrayify_integers(): void
+    public function test_can_arrayify_bools(): void
     {
-        $int = $this->faker->randomNumber();
-        $this->assertSame([$int], TypeAs::array($int));
+        $bool = $this->faker->boolean();
+        $this->assertSame([$bool], TypeAs::array($bool));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_arrayify_objects(): void
+    {
+        $object = new \StdClass();
+        $this->assertSame([$object], TypeAs::array($object));
     }
 
     #[Test]
@@ -60,10 +69,28 @@ class AsArrayTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_can_arrayify_objects(): void
+    public function test_can_arrayify_integers(): void
     {
-        $object = new \StdClass();
-        $this->assertSame([$object], TypeAs::array($object));
+        $int = $this->faker->randomNumber();
+        $this->assertSame([$int], TypeAs::array($int));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_arrayify_resources(): void
+    {
+        $resource = stream_context_create();
+        $this->assertSame([$resource], TypeAs::array($resource));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_arrayify_strings(): void
+    {
+        $string = $this->faker->sentence();
+        $this->assertSame([$string], TypeAs::array($string));
     }
 
     #[Test]
