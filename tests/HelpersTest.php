@@ -22,6 +22,16 @@ class HelpersTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
+    public function test_can_use_bool_helper(): void
+    {
+        $mixed = $this->faker->randomElement([0, 1]);
+
+        $this->assertSame(\Smpita\TypeAs\asBool($mixed), TypeAs::bool($mixed));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
     public function test_can_use_class_helper(): void
     {
         $mixed = new HelperStub();
@@ -57,6 +67,16 @@ class HelpersTest extends TestCase
         $mixed = $this->faker->word();
 
         $this->assertSame(\Smpita\TypeAs\asNullableArray($mixed), TypeAs::nullableArray($mixed));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_use_nullable_bool_helper(): void
+    {
+        $mixed = $this->faker->randomElement([0, 1]);
+
+        $this->assertSame(\Smpita\TypeAs\asNullableBool($mixed), TypeAs::nullableBool($mixed));
     }
 
     #[Test]
