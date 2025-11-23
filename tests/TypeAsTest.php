@@ -280,6 +280,44 @@ class TypeAsTest extends TestCase
 
         $this->assertSame($resolver->resolve('test'), TypeAs::nullableString('test'));
     }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    #[Group('testing')]
+    public function test_can_reset_resolvers(): void
+    {
+        $resolvers = [
+            'nullableArrayResolver' => new NullableArrayResolverStub(),
+            'nullableBoolResolver' => new NullableBoolResolverStub(),
+            'nullableClassResolver' => new NullableClassResolverStub(),
+            'nullableFloatResolver' => new NullableFloatResolverStub(),
+            'nullableIntResolver' => new NullableIntResolverStub(),
+            'nullableStringResolver' => new NullableStringResolverStub(),
+            'arrayResolver' => new ArrayResolverStub(),
+            'boolResolver' => new BoolResolverStub(),
+            'classResolver' => new ClassResolverStub(),
+            'floatResolver' => new FloatResolverStub(),
+            'intResolver' => new IntResolverStub(),
+            'stringResolver' => new StringResolverStub(),
+        ];
+
+        $service = new TypeAs();
+
+        foreach($resolvers as $key => $resolver)
+        {
+            $setResolverMethod = 'set' . ucfirst($key);
+            $service->$setResolverMethod($resolver); // @phpstan-ignore-line
+
+            $reflection = new ReflectionClass($service);
+
+            $this->assertNotNull($reflection->getStaticPropertyValue($key));
+            $this->assertEquals($resolver, $reflection->getStaticPropertyValue($key));
+            TypeAs::useDefaultResolvers();
+            $this->assertNull($reflection->getStaticPropertyValue($key));
+
+        }
+    }
 }
 
 class ClassStub
