@@ -16,7 +16,7 @@ class HelpersTest extends TestCase
     {
         $mixed = $this->faker->word();
 
-        $this->assertSame(\Smpita\TypeAs\asArray($mixed), TypeAs::array($mixed));
+        $this->assertSame(TypeAs::array($mixed), \Smpita\TypeAs\asArray($mixed));
     }
 
     #[Test]
@@ -26,7 +26,7 @@ class HelpersTest extends TestCase
     {
         $mixed = $this->faker->randomElement([0, 1]);
 
-        $this->assertSame(\Smpita\TypeAs\asBool($mixed), TypeAs::bool($mixed));
+        $this->assertSame(TypeAs::bool($mixed), \Smpita\TypeAs\asBool($mixed));
     }
 
     #[Test]
@@ -36,7 +36,7 @@ class HelpersTest extends TestCase
     {
         $mixed = new HelperStub();
 
-        $this->assertSame(\Smpita\TypeAs\asClass(stdClass::class, $mixed), TypeAs::class(stdClass::class, $mixed));
+        $this->assertSame(TypeAs::class(stdClass::class, $mixed), \Smpita\TypeAs\asClass(stdClass::class, $mixed));
     }
 
     #[Test]
@@ -46,7 +46,7 @@ class HelpersTest extends TestCase
     {
         $mixed = strval($this->faker->randomFloat());
 
-        $this->assertSame(\Smpita\TypeAs\asFloat($mixed), TypeAs::float($mixed));
+        $this->assertSame(TypeAs::float($mixed), \Smpita\TypeAs\asFloat($mixed));
     }
 
     #[Test]
@@ -56,7 +56,7 @@ class HelpersTest extends TestCase
     {
         $mixed = strval($this->faker->randomNumber());
 
-        $this->assertSame(\Smpita\TypeAs\asInt($mixed), TypeAs::int($mixed));
+        $this->assertSame(TypeAs::int($mixed), \Smpita\TypeAs\asInt($mixed));
     }
 
     #[Test]
@@ -66,7 +66,7 @@ class HelpersTest extends TestCase
     {
         $mixed = $this->faker->word();
 
-        $this->assertSame(\Smpita\TypeAs\asNullableArray($mixed), TypeAs::nullableArray($mixed));
+        $this->assertSame(TypeAs::nullableArray($mixed), \Smpita\TypeAs\asNullableArray($mixed));
     }
 
     #[Test]
@@ -76,7 +76,7 @@ class HelpersTest extends TestCase
     {
         $mixed = $this->faker->randomElement([0, 1]);
 
-        $this->assertSame(\Smpita\TypeAs\asNullableBool($mixed), TypeAs::nullableBool($mixed));
+        $this->assertSame(TypeAs::nullableBool($mixed), \Smpita\TypeAs\asNullableBool($mixed));
     }
 
     #[Test]
@@ -86,7 +86,7 @@ class HelpersTest extends TestCase
     {
         $mixed = new HelperStub();
 
-        $this->assertSame(\Smpita\TypeAs\asNullableClass(stdClass::class, $mixed), TypeAs::nullableClass(stdClass::class, $mixed));
+        $this->assertSame(TypeAs::nullableClass(stdClass::class, $mixed), \Smpita\TypeAs\asNullableClass(stdClass::class, $mixed));
     }
 
     #[Test]
@@ -96,7 +96,7 @@ class HelpersTest extends TestCase
     {
         $mixed = strval($this->faker->randomFloat());
 
-        $this->assertSame(\Smpita\TypeAs\asNullableFloat($mixed), TypeAs::nullableFloat($mixed));
+        $this->assertSame(TypeAs::nullableFloat($mixed), \Smpita\TypeAs\asNullableFloat($mixed));
     }
 
     #[Test]
@@ -106,7 +106,7 @@ class HelpersTest extends TestCase
     {
         $mixed = strval($this->faker->randomNumber());
 
-        $this->assertSame(\Smpita\TypeAs\asNullableInt($mixed), TypeAs::nullableInt($mixed));
+        $this->assertSame(TypeAs::nullableInt($mixed), \Smpita\TypeAs\asNullableInt($mixed));
     }
 
     #[Test]
@@ -116,7 +116,7 @@ class HelpersTest extends TestCase
     {
         $mixed = $this->faker->randomNumber();
 
-        $this->assertSame(\Smpita\TypeAs\asNullableString($mixed), TypeAs::nullableString($mixed));
+        $this->assertSame(TypeAs::nullableString($mixed), \Smpita\TypeAs\asNullableString($mixed));
     }
 
     #[Test]
@@ -126,7 +126,7 @@ class HelpersTest extends TestCase
     {
         $mixed = $this->faker->randomNumber();
 
-        $this->assertSame(\Smpita\TypeAs\asString($mixed), TypeAs::string($mixed));
+        $this->assertSame(TypeAs::string($mixed), \Smpita\TypeAs\asString($mixed));
     }
 }
 

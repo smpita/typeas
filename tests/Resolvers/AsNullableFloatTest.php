@@ -30,15 +30,7 @@ class AsNullableFloatTest extends TestCase
     #[Group('typeas')]
     public function test_will_not_throw_with_defaults(): void
     {
-        $this->assertTrue(TypeAs::nullableFloat([], 0.0) === 0.0);
-    }
-
-    #[Test]
-    #[Group('smpita')]
-    #[Group('typeas')]
-    public function test_can_floatify_strings(): void
-    {
-        $this->assertTrue(TypeAs::nullableFloat('0001234567890.000') === 1234567890.0);
+        $this->assertSame(0.0, TypeAs::nullableFloat([], 0.0));
     }
 
     #[Test]
@@ -56,7 +48,7 @@ class AsNullableFloatTest extends TestCase
     {
         $value = $this->faker->randomFloat();
 
-        $this->assertEquals(TypeAs::nullableFloat(new NullableFloatableStub($value)), $value);
+        $this->assertSame($value, TypeAs::nullableFloat(new NullableFloatableStub($value)));
     }
 
     #[Test]
@@ -66,7 +58,33 @@ class AsNullableFloatTest extends TestCase
     {
         $value = $this->faker->randomFloat();
 
-        $this->assertEquals(TypeAs::nullableFloat(new MagicNullableFloatableStub($value)), $value);
+        $this->assertSame($value, TypeAs::nullableFloat(new MagicNullableFloatableStub($value)));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_floatify_integers(): void
+    {
+        $this->assertSame(1234567890.0, TypeAs::nullableFloat(1234567890));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_floatify_floats(): void
+    {
+        $float = $this->faker->randomFloat();
+
+        $this->assertSame($float, TypeAs::nullableFloat($float));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_floatify_strings(): void
+    {
+        $this->assertSame(1234567890.0, TypeAs::nullableFloat('0001234567890.000'));
     }
 
     #[Test]

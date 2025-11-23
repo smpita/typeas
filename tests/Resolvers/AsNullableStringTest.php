@@ -4,7 +4,6 @@ namespace Smpita\TypeAs\Tests\Resolvers;
 
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
-use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
 
@@ -13,37 +12,27 @@ class AsNullableStringTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_will_throw_exception_on_unstringable_types(): void
+    public function test_will_return_null_on_unstringable_types(): void
     {
-        $this->expectException(TypeAsResolutionException::class);
-
-        TypeAs::string([]);
+        $this->assertNull(TypeAs::nullableString([]));
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_will_throw_exception_on_unstringable_objects(): void
+    public function test_will_return_null_on_unstringable_objects(): void
     {
-        $this->expectException(TypeAsResolutionException::class);
-
-        TypeAs::string(new \StdClass());
+        $this->assertNull(TypeAs::nullableString(new \StdClass()));
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_will_not_throw_exception_with_defaults(): void
+    public function test_will_not_return_null_with_defaults(): void
     {
-        $this->assertTrue(TypeAs::string(function () {}, 'default') === 'default');
-    }
+        $default = $this->faker->word();
 
-    #[Test]
-    #[Group('smpita')]
-    #[Group('typeas')]
-    public function test_can_stringify_integers(): void
-    {
-        $this->assertIsString(TypeAs::string($this->faker->randomDigit()));
+        $this->assertSame($default, TypeAs::nullableString(new \StdClass(), $default));
     }
 
     #[Test]
@@ -51,7 +40,24 @@ class AsNullableStringTest extends TestCase
     #[Group('typeas')]
     public function test_can_stringify_booleans(): void
     {
-        $this->assertIsString(TypeAs::string($this->faker->boolean()));
+        $this->assertSame('1', TypeAs::nullableString(true));
+        $this->assertSame('', TypeAs::nullableString(false));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_stringify_floats(): void
+    {
+        $this->assertIsString(TypeAs::nullableString($this->faker->randomFloat()));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_stringify_integers(): void
+    {
+        $this->assertIsString(TypeAs::nullableString($this->faker->randomNumber()));
     }
 
     #[Test]
@@ -61,7 +67,7 @@ class AsNullableStringTest extends TestCase
     {
         $value = $this->faker->word();
 
-        $this->assertEquals(TypeAs::string(new StringableStub($value)), $value);
+        $this->assertSame(TypeAs::nullableString(new StringableStub($value)), $value);
     }
 
     #[Test]
@@ -71,7 +77,7 @@ class AsNullableStringTest extends TestCase
     {
         $value = $this->faker->word();
 
-        $this->assertEquals(TypeAs::string(new MagicStringableStub($value)), $value);
+        $this->assertSame(TypeAs::nullableString(new MagicStringableStub($value)), $value);
     }
 
     #[Test]
@@ -79,7 +85,17 @@ class AsNullableStringTest extends TestCase
     #[Group('typeas')]
     public function test_can_stringify_open_resource(): void
     {
-        $this->assertIsString(TypeAs::string(stream_context_create()));
+        $this->assertIsString(TypeAs::nullableString(stream_context_create()));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_stringify_strings(): void
+    {
+        $string = $this->faker->word();
+
+        $this->assertSame($string, TypeAs::nullableString($string));
     }
 
     #[Test]
@@ -87,9 +103,9 @@ class AsNullableStringTest extends TestCase
     #[Group('typeas')]
     public function test_can_pass_static_analysis(): void
     {
-        $test = fn (string $value) => $value;
+        $test = fn (?string $value) => $value;
 
-        $this->assertIsString($test(TypeAs::string($this->faker->randomNumber())));
+        $this->assertIsString($test(TypeAs::nullableString($this->faker->randomNumber())));
     }
 }
 
