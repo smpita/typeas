@@ -18,69 +18,84 @@ Easily type your `mixed` signatures. Perfect for static analysis!
 
 ---
 
-## Installation
+## Table of Contents
+- [Quick Start](#quick-start)
+  - [Installation](#installation)
+  - [Resolving Types](#resolving-types)
+  - [Caveats](#caveats)
+  - [Custom Resolvers](#custom-resolvers)
+  - [Helpers](#helpers)
+- [Deprecations](#deprecations)
+- [Testing](#testing)
+- [Changelog](#changelog)
+- [Contributing](#contributing)
+- [Security Vulnerabilities](#security-vulnerabilities)
+- [Credits](#credits)
+- [License](#license)
 
-You can install the package via composer:
+---
+
+## Quick Start
+
+### Installation
+
+Install the package via composer:
 
 ```bash
 composer require smpita/typeas
 ```
 
----
+See [SIGNATURES](docs/signatures.md) for the full list of methods and signatures.
 
-## Usage
-
-Please see [SIGNATURES](docs/signatures.md) for the list of current methods and signatures.
-
-### General Usage
+### Resolving types
 
 [SIGNATURES#resolving](docs/signatures.md#resolving)
 
-Pass a `$mixed` and it will throw a `TypeAsResolutionException` if the `$mixed` can't be cast.
+Pass a mixed variable to get a typed variable.
 
 ```php
 use Smpita\TypeAs\TypeAs;
 
-$typed = TypeAs::string($mixed);
+// Throws \Smpita\TypeAs\TypeAsResolutionException if $mixed can't resolve to the type.
+$array = TypeAs::array($mixed);
+$bool = TypeAs::bool($mixed);
+$class = TypeAs::class(Expected::class, $mixed);
+$float = TypeAs::float($mixed);
+$int = TypeAs::int($mixed);
+$string = TypeAs::string($mixed);
+
+// Returns null if $mixed can't resolve to the type.
+$nullableArray = TypeAs::nullableArray($mixed);
+$nullableBool = TypeAs::nullableBool($mixed);
+$nullableClass = TypeAs::nullableClass(Expected::class, $mixed);
+$nullableFloat = TypeAs::nullableFloat($mixed);
+$nullableInt = TypeAs::nullableInt($mixed);
+$nullableString = TypeAs::nullableString($mixed);
 ```
 
-If you want to suppress throwing exceptions, provide a default.
+To suppress throwing exceptions, provide a default.
 
 ```php
 use Smpita\TypeAs\TypeAs;
 
-$typed = TypeAs::string($mixed, '');
+// Returns the default if passed null, or if $mixed can't resolve to the type.
+$array = TypeAs::array($mixed, []);
+$bool = TypeAs::bool($mixed, false);
+$class = TypeAs::class(Expected::class, $mixed, new StdClass());
+$float = TypeAs::float($mixed, 0.0);
+$int = TypeAs::int($mixed, 0);
+$string = TypeAs::string($mixed, '');
+
+// Nullable types can specify defaults.
+$nullableArray = TypeAs::nullableArray($mixed, []);
+$nullableBool = TypeAs::nullableBool($mixed, false);
+$nullableClass = TypeAs::nullableClass(Expected::class, $mixed, new StdClass());
+$nullableFloat = TypeAs::nullableFloat($mixed, 0.0);
+$nullableInt = TypeAs::nullableInt($mixed, 0);
+$nullableString = TypeAs::nullableString($mixed, '');
 ```
 
-### The Class Method
-
-[SIGNATURES#class](docs/signatures.md#class)
-
-`class()` has a slightly different signature because you need to specify the class you are expecting.
-
-```php
-use Smpita\TypeAs\TypeAs;
-
-$typed = TypeAs::class(Target::class, $mixed);
-```
-
-You can still provide a default.
-
-```php
-use Smpita\TypeAs\TypeAs;
-
-$typed = TypeAs::class(Target::class, $mixed, new \StdClass);
-```
-
-Note: In versions prior to `v2.0.0` the signature had a different order.
-
-```php
-use Smpita\TypeAs\TypeAs;
-
-$typed = TypeAs::class($mixed, Target::class, $default);
-```
-
-### The Array Method
+### Caveats
 
 [SIGNATURES#array](docs/signatures.md#array)
 
@@ -89,10 +104,11 @@ By default, `array()` will wrap non-iterables similar to `(array) $mixed` instea
 ```php
 use Smpita\TypeAs\TypeAs;
 
-TypeAs::array('example') === ['example'];
+TypeAs::array('example'); // returns ['example']
+TypeAs::array(['example']); // returns ['example']
 ```
 
-That might not always be appropriate, so you can turn wrapping off to get exceptions.
+Wrapping might not always be appropriate. Turn wrapping off to get exceptions.
 
 ```php
 use Smpita\TypeAs\TypeAs;
@@ -100,29 +116,9 @@ use Smpita\TypeAs\TypeAs;
 $typed = TypeAs::array($mixed, false);
 ```
 
-Or you may supply a default.
-
-```php
-use Smpita\TypeAs\TypeAs;
-
-$typed = TypeAs::array($mixed, []);
-```
-
 ---
 
-## Nullables
-
-Starting in `v2.3.0` if you would prefer to receive `null` instead of having an exception thrown, each type method has a nullable counterpart.
-
-```php
-use Smpita\TypeAs\TypeAs;
-
-TypeAs::nullableString(new \stdClass) === null
-```
-
----
-
-## Resolvers
+## Custom Resolvers
 
 [SIGNATURES#resolver-registration](docs/signatures.md#resolver-registration)
 
@@ -170,18 +166,19 @@ class CustomStringResolver implements StringResolver
 To globally register a resolver, use the associated setter method. In Laravel, it's recommended to do this in the boot method of a `ServiceProvider`.
 
 ```php
-TypeAs::setStringResolver(new CustomStringResolver);
+TypeAs::setStringResolver(new CustomStringResolver());
+TypeAs::setNullableStringResolver(new CustomNullableStringResolver());
 ```
 
 #### Single use
 
 ```php
-$typed = Smpita\TypeAs::string($mixed, null, new CustomStringResolver);
+$typed = Smpita\TypeAs::string($mixed, null, new CustomStringResolver());
 ```
 
 ### Unregistering Custom Resolvers
 
-To return to default, simply set the resolver to `null`.
+To return to default, set the resolver to `null`.
 
 ```php
 TypeAs::setStringResolver(null);
@@ -196,7 +193,7 @@ TypeAs::useDefaultResolvers();
 If you registered a custom resolver and want to use the default resolver on a single use basis, passing `null` to the resolver method will not work. You must pass the default resolver.
 
 ```php
-$typed = Smpita\TypeAs::string($mixed, null, new \Smpita\TypeAs\Resolvers\AsString);
+$typed = Smpita\TypeAs::string($mixed, null, new \Smpita\TypeAs\Resolvers\AsString());
 ```
 
 ---
