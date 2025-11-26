@@ -113,7 +113,7 @@ Wrapping might not always be appropriate. Turn wrapping off to get exceptions.
 ```php
 use Smpita\TypeAs\TypeAs;
 
-$typed = TypeAs::array($mixed, false);
+TypeAs::array('', false); // throws \Smpita\TypeAs\TypeAsResolutionException
 ```
 
 ---
@@ -173,7 +173,7 @@ TypeAs::setNullableStringResolver(new CustomNullableStringResolver());
 #### Single use
 
 ```php
-$typed = Smpita\TypeAs::string($mixed, null, new CustomStringResolver());
+$string = Smpita\TypeAs::string($mixed, null, new CustomStringResolver());
 ```
 
 ### Unregistering Custom Resolvers
@@ -193,7 +193,7 @@ TypeAs::useDefaultResolvers();
 If you registered a custom resolver and want to use the default resolver on a single use basis, passing `null` to the resolver method will not work. You must pass the default resolver.
 
 ```php
-$typed = Smpita\TypeAs::string($mixed, null, new \Smpita\TypeAs\Resolvers\AsString());
+$string = Smpita\TypeAs::string($mixed, null, new \Smpita\TypeAs\Resolvers\AsString());
 ```
 
 ---
@@ -208,7 +208,7 @@ The helper method names follow the `TypeAs` method names, but are prepended by `
 ```php
 use function Smpita\TypeAs\asString;
 
-$typed = asString($mixed);
+$string = asString($mixed);
 ```
 
 ---
