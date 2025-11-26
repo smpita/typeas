@@ -229,7 +229,7 @@ composer test
 
 ## Changelog
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+Please see [RELEASES](https://github.com/smpita/typeas/releases) for more information on what has changed recently.
 
 ## Contributing
 
