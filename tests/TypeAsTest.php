@@ -36,7 +36,7 @@ class TypeAsTest extends TestCase
     {
         $resolver = new ArrayResolverStub();
 
-        $this->assertSame($resolver->resolve('test'), TypeAs::array('test', resolver:$resolver));
+        $this->assertSame($resolver->resolve('test'), TypeAs::array('test', resolver: $resolver));
     }
 
     #[Test]
