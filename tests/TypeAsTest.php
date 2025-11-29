@@ -19,7 +19,6 @@ use Smpita\TypeAs\Contracts\NullableArrayResolver;
 use Smpita\TypeAs\Contracts\NullableClassResolver;
 use Smpita\TypeAs\Contracts\NullableFloatResolver;
 use Smpita\TypeAs\Contracts\NullableStringResolver;
-use Smpita\TypeAs\Concerns\ThrowsTypeAsResolutionExceptions;
 
 class TypeAsTest extends TestCase
 {
