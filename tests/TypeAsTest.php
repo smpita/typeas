@@ -4,7 +4,6 @@ namespace Smpita\TypeAs\Tests;
 
 use ReflectionClass;
 use Smpita\TypeAs\TypeAs;
-use UnexpectedValueException;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\Group;
 use Smpita\TypeAs\Contracts\IntResolver;
@@ -19,6 +18,7 @@ use Smpita\TypeAs\Contracts\NullableArrayResolver;
 use Smpita\TypeAs\Contracts\NullableClassResolver;
 use Smpita\TypeAs\Contracts\NullableFloatResolver;
 use Smpita\TypeAs\Contracts\NullableStringResolver;
+use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
 class TypeAsTest extends TestCase
 {
@@ -36,7 +36,7 @@ class TypeAsTest extends TestCase
     {
         $resolver = new ArrayResolverStub();
 
-        $this->assertSame($resolver->resolve('test'), TypeAs::array('test', true, $resolver));
+        $this->assertSame($resolver->resolve('test'), TypeAs::array('test', resolver: $resolver));
     }
 
     #[Test]
@@ -57,7 +57,7 @@ class TypeAsTest extends TestCase
     {
         $resolver = new NullableArrayResolverStub();
 
-        $this->assertSame($resolver->resolve('test'), TypeAs::nullableArray('test', false, $resolver));
+        $this->assertSame($resolver->resolve('test'), TypeAs::nullableArray('test', resolver: $resolver, wrap: false));
     }
 
     #[Test]
@@ -325,8 +325,8 @@ class ClassStub
 
 class ArrayResolverStub implements ArrayResolver
 {
-    /** @throws \UnexpectedValueException */
-    public function resolve(mixed $value, bool|array $wrap = true): array
+    /** @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException */
+    public function resolve(mixed $value, ?array $default = null, ?bool $wrap = true): array
     {
         return [];
     }
@@ -334,7 +334,7 @@ class ArrayResolverStub implements ArrayResolver
 
 class BoolResolverStub implements BoolResolver
 {
-    /** @throws \UnexpectedValueException */
+    /** @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException */
     public function resolve(mixed $value, ?bool $default = null): bool
     {
         return false;
@@ -350,7 +350,7 @@ class ClassResolverStub implements ClassResolver
      * @param  TClass  $default
      * @return TClass
      *
-     * @throws UnexpectedValueException
+     * @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException
      */
     public function resolve(string $class, mixed $value, ?object $default = null)
     {
@@ -358,13 +358,13 @@ class ClassResolverStub implements ClassResolver
             return new $class();
         }
 
-        throw new UnexpectedValueException();
+        throw new TypeAsResolutionException();
     }
 }
 
 class FloatResolverStub implements FloatResolver
 {
-    /** @throws \UnexpectedValueException */
+    /** @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException */
     public function resolve(mixed $value, ?float $default = null): float
     {
         return 0.0;
@@ -373,16 +373,25 @@ class FloatResolverStub implements FloatResolver
 
 class IntResolverStub implements IntResolver
 {
-    /** @throws \UnexpectedValueException */
+    /** @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException */
     public function resolve(mixed $value, ?int $default = null): int
     {
         return 0;
     }
 }
 
+class StringResolverStub implements StringResolver
+{
+    /** @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException */
+    public function resolve(mixed $value, ?string $default = null): string
+    {
+        return '';
+    }
+}
+
 class NullableArrayResolverStub implements NullableArrayResolver
 {
-    public function resolve(mixed $value, bool|array $wrap = true): ?array
+    public function resolve(mixed $value, ?array $default = null, ?bool $wrap = true): ?array
     {
         return null;
     }
@@ -390,7 +399,6 @@ class NullableArrayResolverStub implements NullableArrayResolver
 
 class NullableBoolResolverStub implements NullableBoolResolver
 {
-    /** @throws \UnexpectedValueException */
     public function resolve(mixed $value, ?bool $default = null): ?bool
     {
         return null;
@@ -433,14 +441,5 @@ class NullableStringResolverStub implements NullableStringResolver
     public function resolve(mixed $value, ?string $default = null): ?string
     {
         return null;
-    }
-}
-
-class StringResolverStub implements StringResolver
-{
-    /** @throws \UnexpectedValueException */
-    public function resolve(mixed $value, ?string $default = null): string
-    {
-        return '';
     }
 }

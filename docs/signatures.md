@@ -5,11 +5,11 @@
 #### Array
 
 ```php
-Smpita\TypeAs::array(mixed $value, bool|array $wrap = true, ?ArrayResolver $resolver = null): array
+Smpita\TypeAs::array(mixed $value, ?array $default = null, ?ArrayResolver $resolver = null, ?bool $wrap = true): array
 ```
 
 ```php
-Smpita\TypeAs::nullableArray(mixed $value, bool|array $wrap = true, ?NullableArrayResolver $resolver = null): ?array
+Smpita\TypeAs::nullableArray(mixed $value, ?array $default = null, ?NullableArrayResolver $resolver = null, ?bool $wrap = true): ?array
 ```
 
 #### Boolean
@@ -89,6 +89,10 @@ Smpita\TypeAs::setIntResolver(?\Smpita\TypeAs\Contracts\IntResolver $resolver): 
 ```
 
 ```php
+Smpita\TypeAs::setStringResolver(?\Smpita\TypeAs\Contracts\StringResolver $resolver): void
+```
+
+```php
 Smpita\TypeAs::setNullableArrayResolver(?\Smpita\TypeAs\Contracts\NullableArrayResolver $resolver): void
 ```
 
@@ -112,14 +116,10 @@ Smpita\TypeAs::setNullableIntResolver(?\Smpita\TypeAs\Contracts\NullableIntResol
 Smpita\TypeAs::setNullableStringResolver(?\Smpita\TypeAs\Contracts\NullableStringResolver $resolver): void
 ```
 
-```php
-Smpita\TypeAs::setStringResolver(?\Smpita\TypeAs\Contracts\StringResolver $resolver): void
-```
-
 ### Helpers
 
 ```php
-\Smpita\TypeAs\asArray(mixed $value, bool|array $wrap = true, ?ArrayResolver $resolver = null): array
+\Smpita\TypeAs\asArray(mixed $value, ?array $default = null, ?ArrayResolver $resolver = null, ?bool $wrap = true): array
 ```
 
 ```php
@@ -139,7 +139,11 @@ Smpita\TypeAs::setStringResolver(?\Smpita\TypeAs\Contracts\StringResolver $resol
 ```
 
 ```php
-\Smpita\TypeAs\asNullableArray(mixed $value, bool|array $wrap = true, ?NullableArrayResolver $resolver = null): ?array
+\Smpita\TypeAs\asString(mixed $value, string ?$default = null, ?StringResolver $resolver = null): string
+```
+
+```php
+\Smpita\TypeAs\asNullableArray(mixed $value, ?array $default = null, ?NullableArrayResolver $resolver = null, ?bool $wrap = true): ?array
 ```
 
 ```php
@@ -162,13 +166,21 @@ Smpita\TypeAs::setStringResolver(?\Smpita\TypeAs\Contracts\StringResolver $resol
 \Smpita\TypeAs\asNullableString(mixed $value, ?string $default = null, ?NullableStringResolver $resolver = null): ?string
 ```
 
-```php
-\Smpita\TypeAs\asString(mixed $value, string ?$default = null, ?StringResolver $resolver = null): string
-```
-
 ---
 
 ## Deprecations
+
+#### Array
+
+```php
+// UPDATED in v4.0.0
+Smpita\TypeAs::array(mixed $value, bool|array $wrap = true, ?ArrayResolver $resolver = null): array
+```
+
+```php
+// UPDATED in v4.0.0
+Smpita\TypeAs::nullableArray(mixed $value, bool|array $wrap = true, ?NullableArrayResolver $resolver = null): ?array
+```
 
 #### Carbon
 

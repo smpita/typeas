@@ -7,7 +7,7 @@ use Smpita\TypeAs\Contracts\NullableArrayResolver;
 
 class AsNullableArray extends Resolver implements NullableArrayResolver
 {
-    public function resolve(mixed $value, bool|array $wrap = true): ?array
+    public function resolve(mixed $value, ?array $default = null, ?bool $wrap = true): ?array
     {
         $array = match (gettype($value)) {
             'array' => $value,
@@ -23,8 +23,8 @@ class AsNullableArray extends Resolver implements NullableArrayResolver
             return [$value];
         }
 
-        if (is_array($wrap)) {
-            return $wrap;
+        if (is_array($default)) {
+            return $default;
         }
 
         return null;

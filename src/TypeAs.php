@@ -57,11 +57,11 @@ class TypeAs
     /**
      * @throws TypeAsResolutionException
      */
-    public static function array(mixed $value, bool|array $wrap = true, ?ArrayResolver $resolver = null): array
+    public static function array(mixed $value, ?array $default = null, ?ArrayResolver $resolver = null, bool $wrap = true): array
     {
         $resolver ??= static::$arrayResolver ?? new AsArray();
 
-        return $resolver->resolve($value, $wrap);
+        return $resolver->resolve($value, $default, $wrap);
     }
 
     /**
@@ -110,11 +110,11 @@ class TypeAs
         return $resolver->resolve($value, $default);
     }
 
-    public static function nullableArray(mixed $value, bool|array $wrap = true, ?NullableArrayResolver $resolver = null): ?array
+    public static function nullableArray(mixed $value, ?array $default = null, ?NullableArrayResolver $resolver = null, ?bool $wrap = true): ?array
     {
         $resolver ??= static::$nullableArrayResolver ?? new AsNullableArray();
 
-        return $resolver->resolve($value, $wrap);
+        return $resolver->resolve($value, $default, $wrap);
     }
 
     public static function nullableBool(mixed $value, ?bool $default = null, ?NullableBoolResolver $resolver = null): ?bool
