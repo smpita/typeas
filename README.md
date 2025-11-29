@@ -106,14 +106,10 @@ use Smpita\TypeAs\TypeAs;
 
 TypeAs::array('example'); // returns ['example']
 TypeAs::array(['example']); // returns ['example']
-```
 
-Wrapping might not always be appropriate. Turn wrapping off to get exceptions.
-
-```php
-use Smpita\TypeAs\TypeAs;
-
-TypeAs::array('', false); // throws \Smpita\TypeAs\TypeAsResolutionException
+// Disable wrapping to get exceptions.
+TypeAs::array('', wrap: false); // throws \Smpita\TypeAs\TypeAsResolutionException
+TypeAs::array('', null, null, false); // throws \Smpita\TypeAs\TypeAsResolutionException
 ```
 
 ---
