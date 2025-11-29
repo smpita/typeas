@@ -268,6 +268,8 @@ composer test
 
 Please see [RELEASES](https://github.com/smpita/typeas/releases) for more information on what has changed recently.
 
+Please see [SIGNATURES#deprecations](docs/signatures.md#deprecations) if you encounter a breaking change.
+
 ## Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
