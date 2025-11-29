@@ -95,19 +95,29 @@ class AsNullableArrayTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_will_return_null_if_not_wrapping(): void
+    public function test_will_return_null_when_no_default_and_not_wrapping(): void
     {
-        $this->assertNull(TypeAs::nullableArray($this->faker->sentence(), false));
+        $this->assertNull(TypeAs::nullableArray($this->faker->sentence(), wrap: false));
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_will_not_return_null_if_not_returning_defaults(): void
+    public function test_will_return_defaults_when_has_default_and_not_wrapping(): void
     {
         $array = [$this->faker->sentence()];
 
-        $this->assertSame($array, TypeAs::nullableArray('', $array));
+        $this->assertSame($array, TypeAs::nullableArray('', $array, wrap: false));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_will_wrap_scalars_when_passed_a_default(): void
+    {
+        $words = $this->faker->sentence();
+
+        $this->assertSame([$words], TypeAs::nullableArray($words, []));
     }
 
     #[Test]

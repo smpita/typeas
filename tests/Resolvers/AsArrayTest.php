@@ -96,21 +96,31 @@ class AsArrayTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_will_throw_exceptions_if_not_wrapping(): void
+    public function test_will_throw_exception_when_no_default_and_not_wrapping(): void
     {
         $this->expectException(TypeAsResolutionException::class);
 
-        TypeAs::array($this->faker->sentence(), false);
+        TypeAs::array($this->faker->sentence(), wrap: false);
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_will_not_throw_exceptions_if_not_returning_defaults(): void
+    public function test_will_return_defaults_when_has_default_and_not_wrapping(): void
     {
         $array = [$this->faker->sentence()];
 
-        $this->assertSame($array, TypeAs::array('', $array));
+        $this->assertSame($array, TypeAs::array('', $array, wrap: false));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_will_wrap_scalars_when_passed_a_default(): void
+    {
+        $words = $this->faker->sentence();
+
+        $this->assertSame([$words], TypeAs::array($words, []));
     }
 
     #[Test]
