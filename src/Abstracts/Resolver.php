@@ -2,9 +2,9 @@
 
 namespace Smpita\TypeAs\Abstracts;
 
-use Smpita\TypeAs\Concerns\ThrowsErrorExceptions;
+use Smpita\TypeAs\Concerns\ThrowsTypeAsResolutionExceptions;
 
 abstract class Resolver
 {
-    use ThrowsErrorExceptions;
+    use ThrowsTypeAsResolutionExceptions;
 }

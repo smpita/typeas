@@ -4,14 +4,14 @@ namespace Smpita\TypeAs\Concerns;
 
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
-trait ThrowsErrorExceptions
+trait ThrowsTypeAsResolutionExceptions
 {
     /**
      * @return never
      *
      * @throws TypeAsResolutionException
      */
-    protected static function error(mixed $value)
+    protected static function throwResolutionException(mixed $value)
     {
         $type = is_object($value) ? get_class($value) : gettype($value);
         $classname = basename(str_replace('\\', '/', static::class));

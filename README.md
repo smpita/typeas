@@ -135,12 +135,12 @@ Simply implement the interface, then either register the resolver or use it in t
 -   `Smpita\TypeAs\Contracts\ClassResolver`
 -   `Smpita\TypeAs\Contracts\FloatResolver`
 -   `Smpita\TypeAs\Contracts\IntResolver`
+-   `Smpita\TypeAs\Contracts\StringResolver`
 -   `Smpita\TypeAs\Contracts\NullableArrayResolver`
 -   `Smpita\TypeAs\Contracts\NullableClassResolver`
 -   `Smpita\TypeAs\Contracts\NullableFloatResolver`
 -   `Smpita\TypeAs\Contracts\NullableIntResolver`
 -   `Smpita\TypeAs\Contracts\NullableStringResolver`
--   `Smpita\TypeAs\Contracts\StringResolver`
 
 ### Creating Custom Resolvers
 
@@ -150,7 +150,7 @@ use Smpita\TypeAs\Contracts\StringResolver;
 class CustomStringResolver implements StringResolver
 {
     /**
-     * @throws \UnexpectedValueException
+     * @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException
      */
     public function resolve(mixed $value, string $default = null): string
     {
@@ -166,14 +166,18 @@ class CustomStringResolver implements StringResolver
 To globally register a resolver, use the associated setter method. In Laravel, it's recommended to do this in the boot method of a `ServiceProvider`.
 
 ```php
+TypeAs::setArrayResolver(new CustomArrayResolver());
+TypeAs::setBoolResolver(new CustomBoolResolver());
+TypeAs::setClassResolver(new CustomClassResolver());
+TypeAs::setFloatResolver(new CustomFloatResolver());
+TypeAs::setIntResolver(new CustomIntResolver());
 TypeAs::setStringResolver(new CustomStringResolver());
+TypeAs::setNullableArrayResolver(new CustomNullableArrayResolver());
+TypeAs::setNullableBoolResolver(new CustomNullableBoolResolver());
+TypeAs::setNullableClassResolver(new CustomNullableClassResolver());
+TypeAs::setNullableFloatResolver(new CustomNullableFloatResolver());
+TypeAs::setNullableIntResolver(new CustomIntNullableResolver());
 TypeAs::setNullableStringResolver(new CustomNullableStringResolver());
-```
-
-#### Single use
-
-```php
-$string = Smpita\TypeAs::string($mixed, null, new CustomStringResolver());
 ```
 
 ### Unregistering Custom Resolvers
@@ -181,19 +185,56 @@ $string = Smpita\TypeAs::string($mixed, null, new CustomStringResolver());
 To return to default, set the resolver to `null`.
 
 ```php
+TypeAs::setArrayResolver(null);
+TypeAs::setBoolResolver(null);
+TypeAs::setClassResolver(null);
+TypeAs::setFloatResolver(null);
+TypeAs::setIntResolver(null);
 TypeAs::setStringResolver(null);
+TypeAs::setNullableArrayResolver(null);
+TypeAs::setNullableBoolResolver(null);
+TypeAs::setNullableClassResolver(null);
+TypeAs::setNullableFloatResolver(null);
+TypeAs::setNullableIntResolver(null);
+TypeAs::setNullableStringResolver(null);
+
+// Return all resolvers to default
+TypeAs::useDefaultResolvers();
 ```
 
-To return all resolvers to default, you can leverage the `useDefaultResolvers()`.
+#### Single use
 
+Inject a resolver to use it on a per call basis.
 ```php
-TypeAs::useDefaultResolvers();
+$array = Smpita\TypeAs::array($mixed, null, new CustomArrayResolver());
+$bool = Smpita\TypeAs::bool($mixed, null, new CustomBoolResolver());
+$class = Smpita\TypeAs::class(Expected::class, $mixed, null, new CustomClassResolver());
+$float = Smpita\TypeAs::float($mixed, null, new CustomFloatResolver());
+$int = Smpita\TypeAs::int($mixed, null, new CustomIntResolver());
+$string = Smpita\TypeAs::string($mixed, null, new CustomStringResolver());
+$nullableArray = Smpita\TypeAs::nullableArray($mixed, null, new CustomNullableArrayResolver());
+$nullableBool = Smpita\TypeAs::nullableBool($mixed, null, new CustomNullableBoolResolver());
+$nullableClass = Smpita\TypeAs::nullableClass($mixed, null, new CustomNullableClassResolver());
+$nullableFloat = Smpita\TypeAs::nullableFloat($mixed, null, new CustomNullableFloatResolver());
+$nullableInt = Smpita\TypeAs::nullableInt($mixed, null, new CustomNullableIntResolver());
+$nullableString = Smpita\TypeAs::nullableString($mixed, null, new CustomNullableStringResolver());
 ```
 
 If you registered a custom resolver and want to use the default resolver on a single use basis, passing `null` to the resolver method will not work. You must pass the default resolver.
 
 ```php
+$array = Smpita\TypeAs::array($mixed, null, new \Smpita\TypeAs\Resolvers\AsArray());
+$bool = Smpita\TypeAs::bool($mixed, null, new \Smpita\TypeAs\Resolvers\AsBool());
+$class = Smpita\TypeAs::class(Expected::class, $mixed, null, \Smpita\TypeAs\Resolvers\AsClass());
+$float = Smpita\TypeAs::float($mixed, null, new \Smpita\TypeAs\Resolvers\AsFloat());
+$int = Smpita\TypeAs::int($mixed, null, new \Smpita\TypeAs\Resolvers\AsInt());
 $string = Smpita\TypeAs::string($mixed, null, new \Smpita\TypeAs\Resolvers\AsString());
+$nullableArray = Smpita\TypeAs::nullableArray($mixed, null, new \Smpita\TypeAs\Resolvers\AsNullableArray());
+$nullableBool = Smpita\TypeAs::nullableBool($mixed, null, new \Smpita\TypeAs\Resolvers\AsNullableBool());
+$nullableClass = Smpita\TypeAs::nullableClass($mixed, null, new \Smpita\TypeAs\Resolvers\AsNullableClass());
+$nullableFloat = Smpita\TypeAs::nullableFloat($mixed, null, new \Smpita\TypeAs\Resolvers\AsNullableFloat());
+$nullableInt = Smpita\TypeAs::nullableInt($mixed, null, new \Smpita\TypeAs\Resolvers\AsNullableInt());
+$nullableString = Smpita\TypeAs::nullableString($mixed, null, new \Smpita\TypeAs\Resolvers\AsNullableString());
 ```
 
 ---

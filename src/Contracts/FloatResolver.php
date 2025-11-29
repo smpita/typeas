@@ -2,12 +2,12 @@
 
 namespace Smpita\TypeAs\Contracts;
 
-use UnexpectedValueException;
+use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
 interface FloatResolver
 {
     /**
-     * @throws UnexpectedValueException
+     * @throws TypeAsResolutionException
      */
     public function resolve(mixed $value, ?float $default = null): float;
 }

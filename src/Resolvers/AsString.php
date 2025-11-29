@@ -13,6 +13,6 @@ class AsString extends Resolver implements StringResolver
      */
     public function resolve(mixed $value, ?string $default = null): string
     {
-        return (new AsNullableString())->resolve($value, $default) ?? $this->error($value);
+        return (new AsNullableString())->resolve($value, $default) ?? $this->throwResolutionException($value);
     }
 }
