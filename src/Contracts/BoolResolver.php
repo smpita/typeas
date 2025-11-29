@@ -2,12 +2,12 @@
 
 namespace Smpita\TypeAs\Contracts;
 
-use UnexpectedValueException;
+use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
 interface BoolResolver
 {
     /**
-     * @throws UnexpectedValueException
+     * @throws TypeAsResolutionException
      */
     public function resolve(mixed $value, ?bool $default = null): bool;
 }

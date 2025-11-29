@@ -2,7 +2,7 @@
 
 namespace Smpita\TypeAs\Contracts;
 
-use UnexpectedValueException;
+use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
 interface ClassResolver
 {
@@ -13,7 +13,7 @@ interface ClassResolver
      * @param  TClass  $default
      * @return TClass
      *
-     * @throws UnexpectedValueException
+     * @throws TypeAsResolutionException
      */
     public function resolve(string $class, mixed $value, ?object $default = null);
 }
