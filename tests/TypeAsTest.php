@@ -4,7 +4,6 @@ namespace Smpita\TypeAs\Tests;
 
 use ReflectionClass;
 use Smpita\TypeAs\TypeAs;
-use UnexpectedValueException;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\Group;
 use Smpita\TypeAs\Contracts\IntResolver;
@@ -19,6 +18,7 @@ use Smpita\TypeAs\Contracts\NullableArrayResolver;
 use Smpita\TypeAs\Contracts\NullableClassResolver;
 use Smpita\TypeAs\Contracts\NullableFloatResolver;
 use Smpita\TypeAs\Contracts\NullableStringResolver;
+use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
 class TypeAsTest extends TestCase
 {
@@ -358,7 +358,7 @@ class ClassResolverStub implements ClassResolver
             return new $class();
         }
 
-        throw new UnexpectedValueException();
+        throw new TypeAsResolutionException();
     }
 }
 
