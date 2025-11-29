@@ -19,9 +19,9 @@ use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 /**
  * @throws TypeAsResolutionException
  */
-function asArray(mixed $value, bool|array $wrap = true, ?ArrayResolver $resolver = null): array
+function asArray(mixed $value, ?array $default = null, ?ArrayResolver $resolver = null, bool $wrap = true): array
 {
-    return TypeAs::array($value, $wrap, $resolver);
+    return TypeAs::array($value, $default, $resolver, $wrap);
 }
 
 /**
@@ -62,9 +62,9 @@ function asInt(mixed $value, ?int $default = null, ?IntResolver $resolver = null
     return TypeAs::int($value, $default, $resolver);
 }
 
-function asNullableArray(mixed $value, bool|array $wrap = true, ?NullableArrayResolver $resolver = null): ?array
+function asNullableArray(mixed $value, ?array $default = null, ?NullableArrayResolver $resolver = null, ?bool $wrap = true): ?array
 {
-    return TypeAs::nullableArray($value, $wrap, $resolver);
+    return TypeAs::nullableArray($value, $default, $resolver, $wrap);
 }
 
 function asNullableBool(mixed $value, ?bool $default = null, ?NullableBoolResolver $resolver = null): ?bool

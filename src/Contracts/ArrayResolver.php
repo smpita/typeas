@@ -9,5 +9,5 @@ interface ArrayResolver
     /**
      * @throws TypeAsResolutionException
      */
-    public function resolve(mixed $value, bool|array $wrap = true): array;
+    public function resolve(mixed $value, ?array $default = null, bool $wrap = true): array;
 }
