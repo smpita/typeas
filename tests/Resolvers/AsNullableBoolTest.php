@@ -7,7 +7,7 @@ use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Contracts\BoolResolver;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
-use UnexpectedValueException;
+use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
 class AsNullableBoolTest extends TestCase
 {
@@ -102,6 +102,6 @@ class FakeNullableBoolResolverStub implements BoolResolver
 {
     public function resolve(mixed $value, ?bool $default = null): bool
     {
-        throw new UnexpectedValueException();
+        throw new TypeAsResolutionException();
     }
 }
