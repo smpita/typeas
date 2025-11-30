@@ -1,6 +1,6 @@
 {
     "name": "smpita/typeas",
-    "description": "Easy type control for static analysis",
+    "description": "Guaranteed type control for PHP",
     "keywords": [
         "smpita",
         "laravel",
