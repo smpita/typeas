@@ -7,7 +7,7 @@ use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Contracts\BoolResolver;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
-use UnexpectedValueException;
+use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
 class AsBoolTest extends TestCase
 {
@@ -16,7 +16,7 @@ class AsBoolTest extends TestCase
     #[Group('typeas')]
     public function test_will_throw_exception_on_unboolable_types(): void
     {
-        $this->expectException(UnexpectedValueException::class);
+        $this->expectException(TypeAsResolutionException::class);
 
         TypeAs::bool('', null, new FakeBoolResolverStub());
     }
@@ -26,7 +26,7 @@ class AsBoolTest extends TestCase
     #[Group('typeas')]
     public function test_will_not_throw_exception_with_defaults(): void
     {
-        $this->expectException(UnexpectedValueException::class);
+        $this->expectException(TypeAsResolutionException::class);
 
         TypeAs::bool('', true, new FakeBoolResolverStub());
     }
@@ -106,6 +106,6 @@ class FakeBoolResolverStub implements BoolResolver
 {
     public function resolve(mixed $value, ?bool $default = null): bool
     {
-        throw new UnexpectedValueException();
+        throw new TypeAsResolutionException();
     }
 }
