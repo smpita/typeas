@@ -19,7 +19,7 @@ use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 /**
  * @throws TypeAsResolutionException
  */
-function asArray(mixed $value, ?array $default = null, ?ArrayResolver $resolver = null, bool $wrap = true): array
+function asArray(mixed $value, ?array $default = null, ?ArrayResolver $resolver = null, ?bool $wrap = true): array
 {
     return TypeAs::array($value, $default, $resolver, $wrap);
 }

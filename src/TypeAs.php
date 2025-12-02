@@ -57,7 +57,7 @@ class TypeAs
     /**
      * @throws TypeAsResolutionException
      */
-    public static function array(mixed $value, ?array $default = null, ?ArrayResolver $resolver = null, bool $wrap = true): array
+    public static function array(mixed $value, ?array $default = null, ?ArrayResolver $resolver = null, ?bool $wrap = true): array
     {
         $resolver ??= static::$arrayResolver ?? new AsArray();
 
