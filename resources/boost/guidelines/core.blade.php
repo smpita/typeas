@@ -1,4 +1,4 @@
-### Use TypeAs to narrow types when handling mixed type signatures
+### Guaranteed type control for PHP
 
 - Use \Smpita\TypeAs\TypeAs to narrow types when handling mixed type signatures.
 - Avoid casts like (string) and (int). Use TypeAs::string() and TypeAs::int() and similar methods instead.
