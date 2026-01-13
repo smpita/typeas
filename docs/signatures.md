@@ -170,6 +170,26 @@ Smpita\TypeAs::array(mixed $value, bool|array $wrap = true, ?ArrayResolver $reso
 Smpita\TypeAs::nullableArray(mixed $value, bool|array $wrap = true, ?NullableArrayResolver $resolver = null): ?array
 ```
 
+#### Bool
+
+```php
+// In v4.1.0 and forward resolves with FILTER_VALIDATE_BOOLEAN for strings
+// returns true for strings "1", "true", "on" and "yes"
+// returns false for strings "0", "false", "off" and "no"
+
+Smpita\TypeAs::bool(string 'false') === false
+
+Smpita\TypeAs::nullableBool(string 'false') === false
+
+// v4.0.2 and previous resolves with boolval() for strings
+// returns true for strings "1", "true", "false", "on", "off", "yes", "no", "null" and "NULL"
+// returns false for strings "0"
+
+Smpita\TypeAs::bool(string 'false') === true
+
+Smpita\TypeAs::nullableBool(string 'false') === true
+```
+
 #### Carbon
 
 ```php
