@@ -89,6 +89,7 @@ class AsBoolTest extends TestCase
     {
         $this->assertTrue(TypeAs::bool('test'));
         $this->assertFalse(TypeAs::bool('0'));
+        $this->assertFalse(TypeAs::bool('false'));
     }
 
     #[Test]

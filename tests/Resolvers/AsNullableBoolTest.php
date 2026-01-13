@@ -85,6 +85,7 @@ class AsNullableBoolTest extends TestCase
     {
         $this->assertTrue(TypeAs::nullableBool('test'));
         $this->assertFalse(TypeAs::nullableBool('0'));
+        $this->assertFalse(TypeAs::nullableBool('false'));
     }
 
     #[Test]
