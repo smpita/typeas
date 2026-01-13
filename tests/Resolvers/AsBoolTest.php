@@ -87,9 +87,22 @@ class AsBoolTest extends TestCase
     #[Group('typeas')]
     public function test_can_boolify_strings(): void
     {
+        // Non-truthy strings
         $this->assertTrue(TypeAs::bool('test'));
+        $this->assertTrue(TypeAs::bool('null'));
+        $this->assertTrue(TypeAs::bool('NULL'));
+
+        // Truthy strings
+        $this->assertTrue(TypeAs::bool('1'));
+        $this->assertTrue(TypeAs::bool('true'));
+        $this->assertTrue(TypeAs::bool('on'));
+        $this->assertTrue(TypeAs::bool('yes'));
+
+        // Falsy strings
         $this->assertFalse(TypeAs::bool('0'));
         $this->assertFalse(TypeAs::bool('false'));
+        $this->assertFalse(TypeAs::bool('off'));
+        $this->assertFalse(TypeAs::bool('no'));
     }
 
     #[Test]

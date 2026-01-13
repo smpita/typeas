@@ -83,9 +83,21 @@ class AsNullableBoolTest extends TestCase
     #[Group('typeas')]
     public function test_can_boolify_strings(): void
     {
+        // Non-truthy strings
         $this->assertTrue(TypeAs::nullableBool('test'));
+        $this->assertTrue(TypeAs::nullableBool('null'));
+
+        // Truthy strings
+        $this->assertTrue(TypeAs::nullableBool('1'));
+        $this->assertTrue(TypeAs::nullableBool('true'));
+        $this->assertTrue(TypeAs::nullableBool('on'));
+        $this->assertTrue(TypeAs::nullableBool('yes'));
+
+        // Falsy strings
         $this->assertFalse(TypeAs::nullableBool('0'));
         $this->assertFalse(TypeAs::nullableBool('false'));
+        $this->assertFalse(TypeAs::nullableBool('off'));
+        $this->assertFalse(TypeAs::nullableBool('no'));
     }
 
     #[Test]
