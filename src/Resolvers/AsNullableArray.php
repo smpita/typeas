@@ -23,11 +23,7 @@ class AsNullableArray extends Resolver implements NullableArrayResolver
             return [$value];
         }
 
-        if (is_array($default)) {
-            return $default;
-        }
-
-        return null;
+        return $default;
     }
 
     protected function fromObject(object $value): ?array
