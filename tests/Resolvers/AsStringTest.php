@@ -2,11 +2,11 @@
 
 namespace Smpita\TypeAs\Tests\Resolvers;
 
-use Smpita\TypeAs\TypeAs;
-use Smpita\TypeAs\Tests\TestCase;
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
+use Smpita\TypeAs\Tests\TestCase;
+use Smpita\TypeAs\TypeAs;
 
 class AsStringTest extends TestCase
 {

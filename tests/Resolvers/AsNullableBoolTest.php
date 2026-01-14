@@ -5,9 +5,9 @@ namespace Smpita\TypeAs\Tests\Resolvers;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Contracts\BoolResolver;
+use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
-use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
 class AsNullableBoolTest extends TestCase
 {
