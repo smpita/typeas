@@ -27,7 +27,7 @@ class AsFloatTest extends TestCase
     {
         $this->expectException(TypeAsResolutionException::class);
 
-        TypeAs::float(new \StdClass());
+        TypeAs::float(new \StdClass);
     }
 
     #[Test]
@@ -35,7 +35,7 @@ class AsFloatTest extends TestCase
     #[Group('typeas')]
     public function test_will_not_throw_with_defaults(): void
     {
-        $this->assertSame(0.0, TypeAs::float(new \StdClass(), 0.0));
+        $this->assertSame(0.0, TypeAs::float(new \StdClass, 0.0));
     }
 
     #[Test]
@@ -113,9 +113,7 @@ class AsFloatTest extends TestCase
 
 class FloatableStub
 {
-    public function __construct(public float $value)
-    {
-    }
+    public function __construct(public float $value) {}
 
     public function toFloat(): float
     {
@@ -125,9 +123,7 @@ class FloatableStub
 
 class MagicFloatableStub
 {
-    public function __construct(public float $value)
-    {
-    }
+    public function __construct(public float $value) {}
 
     public function __toFloat(): float
     {

@@ -13,6 +13,6 @@ class AsInt extends Resolver implements IntResolver
      */
     public function resolve(mixed $value, ?int $default = null): int
     {
-        return (new AsNullableInt())->resolve($value, $default) ?? $this->throwResolutionException($value);
+        return (new AsNullableInt)->resolve($value, $default) ?? $this->throwResolutionException($value);
     }
 }

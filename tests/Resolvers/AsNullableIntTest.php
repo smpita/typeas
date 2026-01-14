@@ -22,7 +22,7 @@ class AsNullableIntTest extends TestCase
     #[Group('typeas')]
     public function test_will_return_null_on_unintegerable_objects(): void
     {
-        $this->assertNull(TypeAs::nullableInt(new \StdClass()));
+        $this->assertNull(TypeAs::nullableInt(new \StdClass));
     }
 
     #[Test]
@@ -111,9 +111,7 @@ class AsNullableIntTest extends TestCase
 
 class NullableIntegerableStub
 {
-    public function __construct(public int $value)
-    {
-    }
+    public function __construct(public int $value) {}
 
     public function toInteger(): int
     {
@@ -123,9 +121,7 @@ class NullableIntegerableStub
 
 class MagicNullableIntegerableStub
 {
-    public function __construct(public int $value)
-    {
-    }
+    public function __construct(public int $value) {}
 
     public function __toInteger(): int
     {

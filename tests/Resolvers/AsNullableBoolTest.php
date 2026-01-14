@@ -5,9 +5,9 @@ namespace Smpita\TypeAs\Tests\Resolvers;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Contracts\BoolResolver;
+use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
-use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
 class AsNullableBoolTest extends TestCase
 {
@@ -67,7 +67,7 @@ class AsNullableBoolTest extends TestCase
     #[Group('typeas')]
     public function test_can_boolify_objects(): void
     {
-        $this->assertTrue(TypeAs::nullableBool(new \stdClass()));
+        $this->assertTrue(TypeAs::nullableBool(new \stdClass));
     }
 
     #[Test]
@@ -102,6 +102,6 @@ class FakeNullableBoolResolverStub implements BoolResolver
 {
     public function resolve(mixed $value, ?bool $default = null): bool
     {
-        throw new TypeAsResolutionException();
+        throw new TypeAsResolutionException;
     }
 }
