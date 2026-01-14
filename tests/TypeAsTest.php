@@ -2,23 +2,23 @@
 
 namespace Smpita\TypeAs\Tests;
 
-use ReflectionClass;
-use Smpita\TypeAs\TypeAs;
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\Group;
-use Smpita\TypeAs\Contracts\IntResolver;
-use Smpita\TypeAs\Contracts\BoolResolver;
+use PHPUnit\Framework\Attributes\Test;
+use ReflectionClass;
 use Smpita\TypeAs\Contracts\ArrayResolver;
+use Smpita\TypeAs\Contracts\BoolResolver;
 use Smpita\TypeAs\Contracts\ClassResolver;
 use Smpita\TypeAs\Contracts\FloatResolver;
-use Smpita\TypeAs\Contracts\StringResolver;
-use Smpita\TypeAs\Contracts\NullableIntResolver;
-use Smpita\TypeAs\Contracts\NullableBoolResolver;
+use Smpita\TypeAs\Contracts\IntResolver;
 use Smpita\TypeAs\Contracts\NullableArrayResolver;
+use Smpita\TypeAs\Contracts\NullableBoolResolver;
 use Smpita\TypeAs\Contracts\NullableClassResolver;
 use Smpita\TypeAs\Contracts\NullableFloatResolver;
+use Smpita\TypeAs\Contracts\NullableIntResolver;
 use Smpita\TypeAs\Contracts\NullableStringResolver;
+use Smpita\TypeAs\Contracts\StringResolver;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
+use Smpita\TypeAs\TypeAs;
 
 class TypeAsTest extends TestCase
 {
@@ -133,10 +133,10 @@ class TypeAsTest extends TestCase
 
         $this->assertEqualsCanonicalizing($resolver->resolve(ClassStub::class, 'test'), TypeAs::class(ClassStub::class, 'test'));
     }
+
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-
     public function test_can_use_inline_nullable_class_resolver(): void
     {
         $resolver = new NullableClassResolverStub();
@@ -304,7 +304,7 @@ class TypeAsTest extends TestCase
         $service = new TypeAs();
 
         foreach ($resolvers as $key => $resolver) {
-            $setResolverMethod = 'set' . ucfirst($key);
+            $setResolverMethod = 'set'.ucfirst($key);
             $service->$setResolverMethod($resolver); // @phpstan-ignore-line
 
             $reflection = new ReflectionClass($service);
