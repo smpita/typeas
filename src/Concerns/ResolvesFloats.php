@@ -19,14 +19,14 @@ trait ResolvesFloats
      */
     public static function float(mixed $value, ?float $default = null, ?FloatResolver $resolver = null): float
     {
-        $resolver ??= static::$floatResolver ?? new AsFloat;
+        $resolver ??= static::$floatResolver ?? new AsFloat();
 
         return $resolver->resolve($value, $default);
     }
 
     public static function nullableFloat(mixed $value, ?float $default = null, ?NullableFloatResolver $resolver = null): ?float
     {
-        $resolver ??= static::$nullableFloatResolver ?? new AsNullableFloat;
+        $resolver ??= static::$nullableFloatResolver ?? new AsNullableFloat();
 
         return $resolver->resolve($value, $default);
     }

@@ -32,7 +32,7 @@ class AsNullableArrayTest extends TestCase
     #[Group('typeas')]
     public function test_can_arrayify_objects(): void
     {
-        $object = new \StdClass;
+        $object = new \StdClass();
         $this->assertSame([$object], TypeAs::nullableArray($object));
     }
 
@@ -143,7 +143,9 @@ class AsNullableArrayTest extends TestCase
 
 class NullableArrayableStub
 {
-    public function __construct(public array $value) {}
+    public function __construct(public array $value)
+    {
+    }
 
     public function toArray(): array
     {
@@ -153,7 +155,9 @@ class NullableArrayableStub
 
 class MagicNullableArrayableStub
 {
-    public function __construct(public array $value) {}
+    public function __construct(public array $value)
+    {
+    }
 
     public function __toArray(): array
     {

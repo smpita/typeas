@@ -19,14 +19,14 @@ trait ResolvesInts
      */
     public static function int(mixed $value, ?int $default = null, ?IntResolver $resolver = null): int
     {
-        $resolver ??= static::$intResolver ?? new AsInt;
+        $resolver ??= static::$intResolver ?? new AsInt();
 
         return $resolver->resolve($value, $default);
     }
 
     public static function nullableInt(mixed $value, ?int $default = null, ?NullableIntResolver $resolver = null): ?int
     {
-        $resolver ??= static::$nullableIntResolver ?? new AsNullableInt;
+        $resolver ??= static::$nullableIntResolver ?? new AsNullableInt();
 
         return $resolver->resolve($value, $default);
     }

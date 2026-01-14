@@ -22,7 +22,7 @@ class AsNullableStringTest extends TestCase
     #[Group('typeas')]
     public function test_will_return_null_on_unstringable_objects(): void
     {
-        $this->assertNull(TypeAs::nullableString(new \StdClass));
+        $this->assertNull(TypeAs::nullableString(new \StdClass()));
     }
 
     #[Test]
@@ -32,7 +32,7 @@ class AsNullableStringTest extends TestCase
     {
         $default = $this->faker->word();
 
-        $this->assertSame($default, TypeAs::nullableString(new \StdClass, $default));
+        $this->assertSame($default, TypeAs::nullableString(new \StdClass(), $default));
     }
 
     #[Test]
@@ -111,7 +111,9 @@ class AsNullableStringTest extends TestCase
 
 class StringableStub
 {
-    public function __construct(public string $value) {}
+    public function __construct(public string $value)
+    {
+    }
 
     public function toString(): string
     {
@@ -121,7 +123,9 @@ class StringableStub
 
 class MagicStringableStub
 {
-    public function __construct(public string $value) {}
+    public function __construct(public string $value)
+    {
+    }
 
     public function __toString(): string
     {

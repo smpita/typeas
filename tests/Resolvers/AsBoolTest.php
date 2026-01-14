@@ -18,7 +18,7 @@ class AsBoolTest extends TestCase
     {
         $this->expectException(TypeAsResolutionException::class);
 
-        TypeAs::bool('', null, new FakeBoolResolverStub);
+        TypeAs::bool('', null, new FakeBoolResolverStub());
     }
 
     #[Test]
@@ -28,7 +28,7 @@ class AsBoolTest extends TestCase
     {
         $this->expectException(TypeAsResolutionException::class);
 
-        TypeAs::bool('', true, new FakeBoolResolverStub);
+        TypeAs::bool('', true, new FakeBoolResolverStub());
     }
 
     #[Test]
@@ -53,7 +53,7 @@ class AsBoolTest extends TestCase
     #[Group('typeas')]
     public function test_can_boolify_objects(): void
     {
-        $this->assertTrue(TypeAs::bool(new \stdClass));
+        $this->assertTrue(TypeAs::bool(new \stdClass()));
     }
 
     #[Test]
@@ -106,6 +106,6 @@ class FakeBoolResolverStub implements BoolResolver
 {
     public function resolve(mixed $value, ?bool $default = null): bool
     {
-        throw new TypeAsResolutionException;
+        throw new TypeAsResolutionException();
     }
 }

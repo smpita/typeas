@@ -67,7 +67,7 @@ class AsNullableBoolTest extends TestCase
     #[Group('typeas')]
     public function test_can_boolify_objects(): void
     {
-        $this->assertTrue(TypeAs::nullableBool(new \stdClass));
+        $this->assertTrue(TypeAs::nullableBool(new \stdClass()));
     }
 
     #[Test]
@@ -102,6 +102,6 @@ class FakeNullableBoolResolverStub implements BoolResolver
 {
     public function resolve(mixed $value, ?bool $default = null): bool
     {
-        throw new TypeAsResolutionException;
+        throw new TypeAsResolutionException();
     }
 }

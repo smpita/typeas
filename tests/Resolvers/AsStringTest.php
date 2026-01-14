@@ -27,7 +27,7 @@ class AsStringTest extends TestCase
     {
         $this->expectException(TypeAsResolutionException::class);
 
-        TypeAs::string(new \StdClass);
+        TypeAs::string(new \StdClass());
     }
 
     #[Test]
@@ -37,7 +37,7 @@ class AsStringTest extends TestCase
     {
         $default = $this->faker->word();
 
-        $this->assertSame($default, TypeAs::string(new \StdClass, $default));
+        $this->assertSame($default, TypeAs::string(new \StdClass(), $default));
     }
 
     #[Test]
@@ -106,7 +106,9 @@ class AsStringTest extends TestCase
 
 class NullableStringableStub
 {
-    public function __construct(public string $value) {}
+    public function __construct(public string $value)
+    {
+    }
 
     public function toString(): string
     {
@@ -116,7 +118,9 @@ class NullableStringableStub
 
 class MagicNullableStringableStub
 {
-    public function __construct(public string $value) {}
+    public function __construct(public string $value)
+    {
+    }
 
     public function __toString(): string
     {

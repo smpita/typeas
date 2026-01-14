@@ -19,14 +19,14 @@ trait ResolvesArrays
      */
     public static function array(mixed $value, ?array $default = null, ?ArrayResolver $resolver = null, ?bool $wrap = true): array
     {
-        $resolver ??= static::$arrayResolver ?? new AsArray;
+        $resolver ??= static::$arrayResolver ?? new AsArray();
 
         return $resolver->resolve($value, $default, $wrap);
     }
 
     public static function nullableArray(mixed $value, ?array $default = null, ?NullableArrayResolver $resolver = null, ?bool $wrap = true): ?array
     {
-        $resolver ??= static::$nullableArrayResolver ?? new AsNullableArray;
+        $resolver ??= static::$nullableArrayResolver ?? new AsNullableArray();
 
         return $resolver->resolve($value, $default, $wrap);
     }

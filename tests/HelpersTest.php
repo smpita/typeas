@@ -34,7 +34,7 @@ class HelpersTest extends TestCase
     #[Group('typeas')]
     public function test_can_use_class_helper(): void
     {
-        $mixed = new HelperStub;
+        $mixed = new HelperStub();
 
         $this->assertSame(TypeAs::class(stdClass::class, $mixed), \Smpita\TypeAs\asClass(stdClass::class, $mixed));
     }
@@ -84,7 +84,7 @@ class HelpersTest extends TestCase
     #[Group('typeas')]
     public function test_can_use_nullable_class_helper(): void
     {
-        $mixed = new HelperStub;
+        $mixed = new HelperStub();
 
         $this->assertSame(TypeAs::nullableClass(stdClass::class, $mixed), \Smpita\TypeAs\asNullableClass(stdClass::class, $mixed));
     }
@@ -130,4 +130,6 @@ class HelpersTest extends TestCase
     }
 }
 
-class HelperStub extends stdClass {}
+class HelperStub extends stdClass
+{
+}

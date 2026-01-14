@@ -27,7 +27,7 @@ class AsIntTest extends TestCase
     {
         $this->expectException(TypeAsResolutionException::class);
 
-        TypeAs::int(new \StdClass);
+        TypeAs::int(new \StdClass());
     }
 
     #[Test]
@@ -116,7 +116,9 @@ class AsIntTest extends TestCase
 
 class IntegerableStub
 {
-    public function __construct(public int $value) {}
+    public function __construct(public int $value)
+    {
+    }
 
     public function toInteger(): int
     {
@@ -126,7 +128,9 @@ class IntegerableStub
 
 class MagicIntegerableStub
 {
-    public function __construct(public int $value) {}
+    public function __construct(public int $value)
+    {
+    }
 
     public function __toInteger(): int
     {
