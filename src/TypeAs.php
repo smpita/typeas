@@ -13,6 +13,7 @@ class TypeAs
 {
     use ResolvesArrays;
     use ResolvesBools;
+    use ResolvesFilterBools;
     use ResolvesClasses;
     use ResolvesFloats;
     use ResolvesInts;
