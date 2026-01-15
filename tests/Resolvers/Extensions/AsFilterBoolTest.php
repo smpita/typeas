@@ -24,11 +24,12 @@ class AsFilterBoolTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
+    #[Group('extensions')]
     public function test_will_not_throw_exception_with_defaults(): void
     {
         $this->expectNotToPerformAssertions();
 
-        TypeAs::filterBool('', true); // This should not throw an exception
+        TypeAs::filterBool('test', true);
     }
 
     #[Test]
@@ -45,10 +46,11 @@ class AsFilterBoolTest extends TestCase
     #[Group('smpita')]
     #[Group('typeas')]
     #[Group('extensions')]
-    public function test_can_boolify_arrays(): void
+    public function test_will_throw_exception_on_arrays(): void
     {
-        $this->assertTrue(TypeAs::filterBool(['test']));
-        $this->assertFalse(TypeAs::filterBool([]));
+        $this->expectException(TypeAsResolutionException::class);
+
+        TypeAs::filterBool([]);
     }
 
     #[Test]
@@ -64,9 +66,11 @@ class AsFilterBoolTest extends TestCase
     #[Group('smpita')]
     #[Group('typeas')]
     #[Group('extensions')]
-    public function test_can_boolify_objects(): void
+    public function test_will_throw_exceptions_on_objects(): void
     {
-        $this->assertTrue(TypeAs::filterBool(new \stdClass()));
+        $this->expectException(TypeAsResolutionException::class);
+
+        $this->assertTrue(TypeAs::filterBool(new FilterBoolStub()));
     }
 
     #[Test]
@@ -75,8 +79,21 @@ class AsFilterBoolTest extends TestCase
     #[Group('extensions')]
     public function test_can_boolify_floats(): void
     {
-        $this->assertTrue(TypeAs::filterBool(867.5309));
+        $this->assertTrue(TypeAs::filterBool(1.0));
         $this->assertFalse(TypeAs::filterBool(0.0));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    #[Group('extensions')]
+    public function test_will_throw_exceptions_on_non_truthy_floats(): void
+    {
+        $this->expectException(TypeAsResolutionException::class);
+        TypeAs::filterBool(1.1);
+
+        $this->expectException(TypeAsResolutionException::class);
+        TypeAs::filterBool(0.1);
     }
 
     #[Test]
@@ -85,7 +102,7 @@ class AsFilterBoolTest extends TestCase
     #[Group('extensions')]
     public function test_can_boolify_ints(): void
     {
-        $this->assertTrue(TypeAs::filterBool(12345));
+        $this->assertTrue(TypeAs::filterBool(1));
         $this->assertFalse(TypeAs::filterBool(0));
     }
 
@@ -93,9 +110,24 @@ class AsFilterBoolTest extends TestCase
     #[Group('smpita')]
     #[Group('typeas')]
     #[Group('extensions')]
-    public function test_can_boolify_resources(): void
+    public function test_will_throw_exceptions_on_non_truthy_ints(): void
     {
-        $this->assertTrue(TypeAs::filterBool(stream_context_create()));
+        $this->expectException(TypeAsResolutionException::class);
+        TypeAs::filterBool(2);
+
+        $this->expectException(TypeAsResolutionException::class);
+        TypeAs::filterBool(-1);
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    #[Group('extensions')]
+    public function test_will_throw_exceptions_on_resources(): void
+    {
+        $this->expectException(TypeAsResolutionException::class);
+
+        TypeAs::filterBool(stream_context_create());
     }
 
     #[Test]
@@ -115,6 +147,7 @@ class AsFilterBoolTest extends TestCase
         $this->assertFalse(TypeAs::filterBool('false'));
         $this->assertFalse(TypeAs::filterBool('off'));
         $this->assertFalse(TypeAs::filterBool('no'));
+        $this->assertFalse(TypeAs::filterBool(''));
 
         // Other strings will throw exceptions
     }
@@ -128,5 +161,23 @@ class AsFilterBoolTest extends TestCase
         $test = fn (bool $value) => $value;
 
         $this->assertIsBool($test(TypeAs::bool($this->faker->randomFloat())));
+    }
+}
+
+class FilterBoolStub
+{
+    public function __invoke(): bool
+    {
+        return true;
+    }
+
+    public function __toBool(): bool
+    {
+        return true;
+    }
+
+    public function toBool(): bool
+    {
+        return true;
     }
 }

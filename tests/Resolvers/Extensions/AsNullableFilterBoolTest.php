@@ -2,11 +2,10 @@
 
 namespace Smpita\TypeAs\Tests\Resolvers\Extensions;
 
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\Test;
-use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
-
+use Smpita\TypeAs\Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\Group;
 class AsNullableFilterBoolTest extends TestCase
 {
     #[Test]
@@ -38,10 +37,10 @@ class AsNullableFilterBoolTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_can_boolify_arrays(): void
+    public function test_return_null_on_arrays(): void
     {
-        $this->assertTrue(TypeAs::nullableFilterBool(['test']));
-        $this->assertFalse(TypeAs::nullableFilterBool([]));
+        $this->assertNull(TypeAs::nullableFilterBool('test'));
+        $this->assertNull(TypeAs::nullableFilterBool([]));
     }
 
     #[Test]
@@ -51,39 +50,52 @@ class AsNullableFilterBoolTest extends TestCase
     {
         $this->assertIsBool(TypeAs::nullableFilterBool($this->faker->boolean()));
     }
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    #[Group('extensions')]
+    public function test_will_return_null_on_objects(): void
+    {
+        $this->assertNull(TypeAs::nullableFilterBool(new NullableFilterBoolStub()));
+    }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
+    #[Group('extensions')]
     public function test_can_boolify_floats(): void
     {
-        $this->assertTrue(TypeAs::nullableFilterBool(867.5309));
+        $this->assertTrue(TypeAs::nullableFilterBool(1.0));
         $this->assertFalse(TypeAs::nullableFilterBool(0.0));
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
+    #[Group('extensions')]
+    public function test_will_return_null_on_non_truthy_floats(): void
+    {
+        $this->assertNull(TypeAs::nullableFilterBool(1.1));
+
+        $this->assertNull(TypeAs::nullableFilterBool(0.1));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    #[Group('extensions')]
     public function test_can_boolify_ints(): void
     {
-        $this->assertTrue(TypeAs::nullableFilterBool(12345));
+        $this->assertTrue(TypeAs::nullableFilterBool(1));
         $this->assertFalse(TypeAs::nullableFilterBool(0));
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_can_boolify_objects(): void
+    public function test_will_return_null_on_resources(): void
     {
-        $this->assertTrue(TypeAs::nullableFilterBool(new \stdClass()));
-    }
-
-    #[Test]
-    #[Group('smpita')]
-    #[Group('typeas')]
-    public function test_can_boolify_resources(): void
-    {
-        $this->assertTrue(TypeAs::nullableFilterBool(stream_context_create()));
+        $this->assertNull(TypeAs::nullableFilterBool(stream_context_create()));
     }
 
     #[Test]
@@ -116,6 +128,25 @@ class AsNullableFilterBoolTest extends TestCase
     {
         $test = fn (?bool $value) => $value;
 
-        $this->assertIsBool($test(TypeAs::nullableFilterBool($this->faker->randomFloat())));
+        $truthies = [ 0, 1, 0.0, 1.0, '', '0', '1', 'on', 'off', 'yes', 'no', 'true', 'false' ];
+
+        $this->assertIsBool($test(TypeAs::nullableFilterBool($this->faker->randomElement($truthies))));
+    }
+}
+class NullableFilterBoolStub
+{
+    public function __invoke(): ?bool
+    {
+        return true;
+    }
+
+    public function __toBool(): ?bool
+    {
+        return true;
+    }
+
+    public function toBool(): ?bool
+    {
+        return true;
     }
 }
