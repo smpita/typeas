@@ -2,13 +2,10 @@
 
 namespace Smpita\TypeAs\Tests\Resolvers\Base;
 
-use stdClass;
 use Smpita\TypeAs\TypeAs;
 use Smpita\TypeAs\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\Group;
-use Smpita\TypeAs\Contracts\BoolResolver;
-use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
 class AsBoolTest extends TestCase
 {

@@ -6,6 +6,7 @@ use Smpita\TypeAs\TypeAs;
 use Smpita\TypeAs\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\Group;
+
 class AsNullableFilterBoolTest extends TestCase
 {
     #[Test]
