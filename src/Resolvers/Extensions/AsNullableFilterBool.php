@@ -9,10 +9,8 @@ class AsNullableFilterBool extends Resolver implements NullableBoolResolver
 {
     public function resolve(mixed $value, ?bool $default = null): ?bool
     {
-        return match (gettype($value)) {
-            'string' => filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? $default,
-            'NULL' => $default,
-            default => boolval($value),
-        };
+        return is_null($value)
+            ? $default
+            : filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? $default;
     }
 }
