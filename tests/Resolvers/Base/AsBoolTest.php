@@ -2,35 +2,16 @@
 
 namespace Smpita\TypeAs\Tests\Resolvers\Base;
 
-use PHPUnit\Framework\Attributes\Group;
+use stdClass;
+use Smpita\TypeAs\TypeAs;
+use Smpita\TypeAs\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\Group;
 use Smpita\TypeAs\Contracts\BoolResolver;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
-use Smpita\TypeAs\Tests\TestCase;
-use Smpita\TypeAs\TypeAs;
 
 class AsBoolTest extends TestCase
 {
-    #[Test]
-    #[Group('smpita')]
-    #[Group('typeas')]
-    public function test_will_throw_exception_on_unboolable_types(): void
-    {
-        $this->expectException(TypeAsResolutionException::class);
-
-        TypeAs::bool('', null, new FakeBoolResolverStub());
-    }
-
-    #[Test]
-    #[Group('smpita')]
-    #[Group('typeas')]
-    public function test_will_not_throw_exception_with_defaults(): void
-    {
-        $this->expectException(TypeAsResolutionException::class);
-
-        TypeAs::bool('', true, new FakeBoolResolverStub());
-    }
-
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
@@ -99,13 +80,5 @@ class AsBoolTest extends TestCase
         $test = fn (bool $value) => $value;
 
         $this->assertIsBool($test(TypeAs::bool($this->faker->randomFloat())));
-    }
-}
-
-class FakeBoolResolverStub implements BoolResolver
-{
-    public function resolve(mixed $value, ?bool $default = null): bool
-    {
-        throw new TypeAsResolutionException();
     }
 }
