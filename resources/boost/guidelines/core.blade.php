@@ -3,6 +3,7 @@
 - Use \Smpita\TypeAs\TypeAs to narrow types when handling mixed type signatures.
 - Avoid casts like (string) and (int). Use TypeAs::string() and TypeAs::int() and similar methods instead.
 - Use nullable methods like TypeAs::nullableArray() and TypeAs::nullableFloat() when a null is a feasible value.
+- Use TypeAs::filterBool() to apply FILTER_VALIDATE_BOOL rules instead of filter_var().
 - TypeAs::array() will wrap non-iterable values in an array. Use the wrap parameter to control this behavior, e.g. TypeAs::array($mixed, wrap: false).
 - Default values can be provided as the second parameter, or the third parameter for class, e.g. TypeAs::array($mixed, default: []) and TypeAs::class(Expected::class, $mixed, default: new Expected()).
 - Helpers like asArray(), asNullableArray(), asBool(), etc are available for all types but they need to be imported, e.g. use function Smpita\TypeAs\asArray;
@@ -23,6 +24,12 @@ $nullableArray = TypeAs::nullableArray($mixed);
 @verbatim
 <code-snippet name="How to type as bool" lang="php">
 $bool = TypeAs::bool($mixed);
+</code-snippet>
+@endverbatim
+
+@verbatim
+<code-snippet name="How to FILTER_VALIDATE_BOOL" lang="php">
+$filterBool = TypeAs::filterBool($mixed);
 </code-snippet>
 @endverbatim
 
