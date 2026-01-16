@@ -11,6 +11,6 @@ class AsNullableFilterBool extends Resolver implements NullableBoolResolver
     {
         return is_null($value)
             ? $default
-            : filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? $default;
+            : filter_var($value, FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE) ?? $default;
     }
 }
