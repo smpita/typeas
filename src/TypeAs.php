@@ -2,17 +2,19 @@
 
 namespace Smpita\TypeAs;
 
-use Smpita\TypeAs\Concerns\ResolvesArrays;
-use Smpita\TypeAs\Concerns\ResolvesBools;
-use Smpita\TypeAs\Concerns\ResolvesClasses;
-use Smpita\TypeAs\Concerns\ResolvesFloats;
-use Smpita\TypeAs\Concerns\ResolvesInts;
-use Smpita\TypeAs\Concerns\ResolvesStrings;
+use Smpita\TypeAs\Concerns\Resolvers\Base\ResolvesInts;
+use Smpita\TypeAs\Concerns\Resolvers\Base\ResolvesBools;
+use Smpita\TypeAs\Concerns\Resolvers\Base\ResolvesArrays;
+use Smpita\TypeAs\Concerns\Resolvers\Base\ResolvesFloats;
+use Smpita\TypeAs\Concerns\Resolvers\Base\ResolvesClasses;
+use Smpita\TypeAs\Concerns\Resolvers\Base\ResolvesStrings;
+use Smpita\TypeAs\Concerns\Resolvers\Extensions\ResolvesFilterBools;
 
 class TypeAs
 {
     use ResolvesArrays;
     use ResolvesBools;
+    use ResolvesFilterBools;
     use ResolvesClasses;
     use ResolvesFloats;
     use ResolvesInts;

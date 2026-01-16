@@ -23,6 +23,7 @@ Easily type your `mixed` signatures. Perfect for static analysis!
   - [Installation](#installation)
   - [Resolving Types](#resolving-types)
   - [Caveats](#caveats)
+  - [Extensions](#extensions)
   - [Custom Resolvers](#custom-resolvers)
   - [Helpers](#helpers)
 - [Deprecations](#deprecations)
@@ -138,6 +139,27 @@ Simply implement the interface, then either register the resolver or use it in t
 -   `Smpita\TypeAs\Contracts\NullableIntResolver`
 -   `Smpita\TypeAs\Contracts\NullableStringResolver`
 
+### Extensions
+
+Extensions are created by passing a custom resolver to a function.
+
+#### Official Extensions
+
+```php
+ /**
+  * @see \Smpita\TypeAs\Resolvers\Extensions\AsNullableFilterBool
+  *
+  * Uses FILTER_VALIDATE_BOOL
+  * https://www.php.net/manual/en/filter.constants.php#constant.filter-validate-bool
+  *
+  * Returns true  on 1 1.0 "1" "true"  "yes" "on"
+  * Returns false on 0 0.0 "0" "false" "no" "off" ""
+  */
+
+$filterBool = TypeAs::filterBool($mixed, $default);
+$nullableFilterBool = TypeAs::nullableFilterBool($mixed, $default);
+```
+
 ### Creating Custom Resolvers
 
 ```php
@@ -150,7 +172,13 @@ class CustomStringResolver implements StringResolver
      */
     public function resolve(mixed $value, string $default = null): string
     {
-        // Your logic here
+        /**
+         * Your logic here
+         *
+         * Note:
+         * The resolver is responsible for returning $default when appropriate.
+         * See \Smpita\TypeAs\Resolvers for examples.
+         */
     }
 }
 ```
@@ -280,12 +308,14 @@ $nullableString = TypeAs::nullableString($mixed, null, new \Smpita\TypeAs\Resolv
 ```php
 use function Smpita\TypeAs\asArray;
 use function Smpita\TypeAs\asBool;
+use function Smpita\TypeAs\asFilterBool;
 use function Smpita\TypeAs\asClass;
 use function Smpita\TypeAs\asFloat;
 use function Smpita\TypeAs\asInt;
 use function Smpita\TypeAs\asString;
 use function Smpita\TypeAs\asNullableArray;
 use function Smpita\TypeAs\asNullableBool;
+use function Smpita\TypeAs\asNullableFilterBool;
 use function Smpita\TypeAs\asNullableClass;
 use function Smpita\TypeAs\asNullableFloat;
 use function Smpita\TypeAs\asNullableInt;
@@ -293,12 +323,14 @@ use function Smpita\TypeAs\asNullableString;
 
 $array = asArray($mixed);
 $bool = asBool($mixed);
+$filterBool = asFilterBool($mixed);
 $class = asClass(Target::class, $mixed);
 $float = asFloat($mixed);
 $int = asInt($mixed);
 $string = asString($mixed);
 $nullableArray = asNullableArray($mixed);
 $nullableBool = asNullableBool($mixed);
+$nullableFilterBool = asNullableFilterBool($mixed);
 $nullableClass = asNullableClass(Target::class, $mixed);
 $nullableFloat = asNullableFloat($mixed);
 $nullableInt = asNullableInt($mixed);
