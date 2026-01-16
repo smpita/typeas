@@ -2,6 +2,7 @@
 
 namespace Smpita\TypeAs\Tests\Resolvers\Extensions;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Smpita\TypeAs\TypeAs;
 use Smpita\TypeAs\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
@@ -77,7 +78,6 @@ class AsNullableFilterBoolTest extends TestCase
     public function test_will_return_null_on_non_truthy_floats(): void
     {
         $this->assertNull(TypeAs::nullableFilterBool(1.1));
-
         $this->assertNull(TypeAs::nullableFilterBool(0.1));
     }
 
@@ -99,39 +99,45 @@ class AsNullableFilterBoolTest extends TestCase
         $this->assertNull(TypeAs::nullableFilterBool(stream_context_create()));
     }
 
-    #[Test]
-    #[Group('smpita')]
-    #[Group('typeas')]
-    public function test_can_boolify_strings(): void
+    public static function truthyDataProvider(): array
     {
-        // Truthy strings
-        $this->assertTrue(TypeAs::nullableFilterBool('1'));
-        $this->assertTrue(TypeAs::nullableFilterBool('true'));
-        $this->assertTrue(TypeAs::nullableFilterBool('on'));
-        $this->assertTrue(TypeAs::nullableFilterBool('yes'));
-
-        // Falsy strings
-        $this->assertFalse(TypeAs::nullableFilterBool(''));
-        $this->assertFalse(TypeAs::nullableFilterBool('0'));
-        $this->assertFalse(TypeAs::nullableFilterBool('false'));
-        $this->assertFalse(TypeAs::nullableFilterBool('off'));
-        $this->assertFalse(TypeAs::nullableFilterBool('no'));
-
-        // Other strings return null
-        $this->assertNull(TypeAs::nullableFilterBool('null'));
-        $this->assertNull(TypeAs::nullableFilterBool($this->faker->word()));
+        return [
+            'truthy_1' => [1, true],
+            'truthy_1_0' => [1.0, true],
+            'truthy_1_string' => ['1', true],
+            'truthy_string' => ['true', true],
+            'truthy_yes' => ['yes', true],
+            'truthy_on' => ['on', true],
+            'falsy_0' => [0, false],
+            'falsy_0_0' => [0.0, false],
+            'falsy_0_string' => ['0', false],
+            'falsy_string' => ['false', false],
+            'falsy_no' => ['no', false],
+            'falsy_off' => ['off', false],
+            'falsy_empty' => ['', false],
+            'nully_null' => ['null', null],
+            'nully_any' => ['test', null],
+        ];
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_can_pass_static_analysis(): void
+    #[DataProvider('truthyDataProvider')]
+    public function test_can_boolify_strings(mixed $truthy, ?bool $expected): void
+    {
+        $this->assertSame($expected, TypeAs::nullableFilterBool($truthy));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    #[DataProvider('truthyDataProvider')]
+    public function test_can_pass_static_analysis(mixed $truthy, ?bool $expected): void
     {
         $test = fn (?bool $value) => $value;
 
-        $truthies = [ 0, 1, 0.0, 1.0, '', '0', '1', 'on', 'off', 'yes', 'no', 'true', 'false' ];
-
-        $this->assertIsBool($test(TypeAs::nullableFilterBool($this->faker->randomElement($truthies))));
+        $this->assertSame($expected, $test(TypeAs::nullableFilterBool($truthy)));
     }
 }
 class NullableFilterBoolStub

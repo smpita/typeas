@@ -2,6 +2,7 @@
 
 namespace Smpita\TypeAs\Tests\Resolvers\Extensions;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
@@ -130,37 +131,45 @@ class AsFilterBoolTest extends TestCase
         TypeAs::filterBool(stream_context_create());
     }
 
-    #[Test]
-    #[Group('smpita')]
-    #[Group('typeas')]
-    #[Group('extensions')]
-    public function test_can_boolify_strings(): void
+    public static function truthyDataProvider(): array
     {
-        // Truthy strings
-        $this->assertTrue(TypeAs::filterBool('1'));
-        $this->assertTrue(TypeAs::filterBool('true'));
-        $this->assertTrue(TypeAs::filterBool('on'));
-        $this->assertTrue(TypeAs::filterBool('yes'));
-
-        // Falsy strings
-        $this->assertFalse(TypeAs::filterBool('0'));
-        $this->assertFalse(TypeAs::filterBool('false'));
-        $this->assertFalse(TypeAs::filterBool('off'));
-        $this->assertFalse(TypeAs::filterBool('no'));
-        $this->assertFalse(TypeAs::filterBool(''));
-
-        // Other strings will throw exceptions
+        return [
+            'truthy_1' => [1, true],
+            'truthy_1_0' => [1.0, true],
+            'truthy_1_string' => ['1', true],
+            'truthy_string' => ['true', true],
+            'truthy_yes' => ['yes', true],
+            'truthy_on' => ['on', true],
+            'falsy_0' => [0, false],
+            'falsy_0_0' => [0.0, false],
+            'falsy_0_string' => ['0', false],
+            'falsy_string' => ['false', false],
+            'falsy_no' => ['no', false],
+            'falsy_off' => ['off', false],
+            'falsy_empty' => ['', false],
+        ];
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
     #[Group('extensions')]
-    public function test_can_pass_static_analysis(): void
+    #[DataProvider('truthyDataProvider')]
+    public function test_can_boolify_strings(mixed $truthy, bool $expected): void
+    {
+        $this->assertSame($expected, TypeAs::filterBool($truthy));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    #[Group('extensions')]
+    #[DataProvider('truthyDataProvider')]
+    public function test_can_pass_static_analysis(mixed $truthy, bool $expected): void
     {
         $test = fn (bool $value) => $value;
 
-        $this->assertIsBool($test(TypeAs::bool($this->faker->randomFloat())));
+        $this->assertSame($expected, $test(TypeAs::filterBool($truthy)));
     }
 }
 
