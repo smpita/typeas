@@ -16,6 +16,9 @@ class Strict
 {
     use HandlesFluentCalls;
 
+    /**
+     * @throws TypeAsResolutionException
+     */
     public function toArray(): array
     {
         return TypeAs::array(
@@ -26,6 +29,9 @@ class Strict
         );
     }
 
+    /**
+     * @throws TypeAsResolutionException
+     */
     public function toBool(): bool
     {
         return TypeAs::bool(
@@ -53,6 +59,9 @@ class Strict
         );
     }
 
+    /**
+     * @throws TypeAsResolutionException
+     */
     public function toFloat(): float
     {
         return TypeAs::float(
@@ -62,6 +71,9 @@ class Strict
         );
     }
 
+    /**
+     * @throws TypeAsResolutionException
+     */
     public function toInt(): int
     {
         return TypeAs::int(
@@ -71,6 +83,9 @@ class Strict
         );
     }
 
+    /**
+     * @throws TypeAsResolutionException
+     */
     public function toString(): string
     {
         return TypeAs::string(
