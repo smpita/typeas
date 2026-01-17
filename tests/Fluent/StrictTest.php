@@ -1,0 +1,273 @@
+<?php
+
+namespace Smpita\TypeAs\Tests;
+
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
+use Smpita\TypeAs\Contracts\ArrayResolver;
+use Smpita\TypeAs\Contracts\BoolResolver;
+use Smpita\TypeAs\Contracts\ClassResolver;
+use Smpita\TypeAs\Contracts\FloatResolver;
+use Smpita\TypeAs\Contracts\IntResolver;
+use Smpita\TypeAs\Contracts\StringResolver;
+use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
+use Smpita\TypeAs\Fluent\Strict;
+use Smpita\TypeAs\TypeAs;
+
+class StrictTest extends TestCase
+{
+    protected function tearDown(): void
+    {
+        TypeAs::useDefaultResolvers();
+
+        parent::tearDown();
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_strict_can_use_fluent_array_resolver(): void
+    {
+        $resolver = new FluentStrictArrayResolverStub();
+
+        $this->assertSame(
+            $resolver->resolve('test'),
+            Strict::new()->from('test')->using($resolver)->toArray(),
+        );
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_strict_can_use_the_global_array_resolver(): void
+    {
+        $resolver = new FluentStrictArrayResolverStub();
+        TypeAs::setArrayResolver($resolver);
+
+        $this->assertSame(
+            $resolver->resolve('test'),
+            Strict::new()->from('test')->toArray(),
+        );
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_strict_can_array_wrap(): void
+    {
+        $string = $this->faker->sentence();
+
+        $this->assertSame([$string], Strict::new()->from($string)->wrap()->toArray());
+
+        $this->expectException(TypeAsResolutionException::class);
+        Strict::new()->from($string)->wrap(enabled: false)->toArray();
+
+        $this->expectException(TypeAsResolutionException::class);
+        Strict::new()->from($string)->noWrap()->toArray();
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_strict_can_use_fluent_bool_resolver(): void
+    {
+        $resolver = new FluentStrictBoolResolverStub();
+
+        $this->assertSame(
+            $resolver->resolve('test'),
+            Strict::new()->from('test')->using($resolver)->toBool(),
+        );
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_strict_can_use_the_global_bool_resolver(): void
+    {
+        $resolver = new FluentStrictBoolResolverStub();
+        TypeAs::setBoolResolver($resolver);
+
+        $this->assertSame(
+            $resolver->resolve('test'),
+            Strict::new()->from('test')->toBool(),
+        );
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_strict_can_use_fluent_class_resolver(): void
+    {
+        $resolver = new FluentStrictClassResolverStub();
+
+        $this->assertEqualsCanonicalizing(
+            $resolver->resolve(ClassStub::class, 'test'),
+            Strict::new()->from('test')->using($resolver)->toClass(ClassStub::class),
+        );
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_strict_can_use_global_class_resolver(): void
+    {
+        $resolver = new FluentStrictClassResolverStub();
+        TypeAs::setClassResolver($resolver);
+
+        $this->assertEqualsCanonicalizing(
+            $resolver->resolve(ClassStub::class, 'test'),
+            Strict::new()->from('test')->toClass(ClassStub::class),
+        );
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_strict_can_use_fluent_float_resolver(): void
+    {
+        $resolver = new FluentStrictFloatResolverStub();
+
+        $this->assertSame(
+            $resolver->resolve('test'),
+            Strict::new()->from('test')->using($resolver)->toFloat(),
+        );
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_strict_can_use_global_float_resolver(): void
+    {
+        $resolver = new FluentStrictFloatResolverStub();
+        TypeAs::setFloatResolver($resolver);
+
+        $this->assertSame(
+            $resolver->resolve('test'),
+            Strict::new()->from('test')->toFloat(),
+        );
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_strict_can_use_fluent_int_resolver(): void
+    {
+        $resolver = new FluentStrictIntResolverStub();
+
+        $this->assertSame(
+            $resolver->resolve('test'),
+            Strict::new()->from('test')->using($resolver)->toInt(),
+        );
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_strict_can_use_global_int_resolver(): void
+    {
+        $resolver = new FluentStrictIntResolverStub();
+        TypeAs::setIntResolver($resolver);
+
+        $this->assertSame(
+            $resolver->resolve('test'),
+            Strict::new()->from('test')->toInt(),
+        );
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_strict_can_use_fluent_string_resolver(): void
+    {
+        $resolver = new FluentStrictStringResolverStub();
+
+        $this->assertSame(
+            $resolver->resolve('test'),
+            Strict::new()->from('test')->using($resolver)->toString(),
+        );
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_strict_can_use_global_string_resolver(): void
+    {
+        $resolver = new FluentStrictStringResolverStub();
+        TypeAs::setStringResolver($resolver);
+
+        $this->assertSame(
+            $resolver->resolve('test'),
+            Strict::new()->from('test')->toString(),
+        );
+    }
+}
+
+class FluentStrictClassStub
+{
+}
+
+class FluentStrictArrayResolverStub implements ArrayResolver
+{
+    /** @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException */
+    public function resolve(mixed $value, ?array $default = null, ?bool $wrap = true): array
+    {
+        return [];
+    }
+}
+
+class FluentStrictBoolResolverStub implements BoolResolver
+{
+    /** @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException */
+    public function resolve(mixed $value, ?bool $default = null): bool
+    {
+        return false;
+    }
+}
+
+class FluentStrictClassResolverStub implements ClassResolver
+{
+    /**
+     * @template TClass of object
+     *
+     * @param  class-string<TClass>  $class
+     * @param  TClass  $default
+     * @return TClass
+     *
+     * @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException
+     */
+    public function resolve(string $class, mixed $value, ?object $default = null)
+    {
+        if (class_exists($class)) {
+            return new $class();
+        }
+
+        throw new TypeAsResolutionException();
+    }
+}
+
+class FluentStrictFloatResolverStub implements FloatResolver
+{
+    /** @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException */
+    public function resolve(mixed $value, ?float $default = null): float
+    {
+        return 0.0;
+    }
+}
+
+class FluentStrictIntResolverStub implements IntResolver
+{
+    /** @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException */
+    public function resolve(mixed $value, ?int $default = null): int
+    {
+        return 0;
+    }
+}
+
+class FluentStrictStringResolverStub implements StringResolver
+{
+    /** @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException */
+    public function resolve(mixed $value, ?string $default = null): string
+    {
+        return '';
+    }
+}
