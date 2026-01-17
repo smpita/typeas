@@ -3,10 +3,10 @@
 namespace Smpita\TypeAs\Tests\Resolvers\Extensions;
 
 use PHPUnit\Framework\Attributes\DataProvider;
-use Smpita\TypeAs\TypeAs;
-use Smpita\TypeAs\Tests\TestCase;
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
+use Smpita\TypeAs\Tests\TestCase;
+use Smpita\TypeAs\TypeAs;
 
 class AsNullableFilterBoolTest extends TestCase
 {
@@ -52,6 +52,7 @@ class AsNullableFilterBoolTest extends TestCase
     {
         $this->assertIsBool(TypeAs::nullableFilterBool($this->faker->boolean()));
     }
+
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
