@@ -16,6 +16,10 @@ Smpita\TypeAs::nullableArray(mixed $value, ?array $default = null, ?NullableArra
 Smpita\TypeAs::bool(mixed $value, ?bool $default = null, ?BoolResolver $resolver = null): bool
 
 Smpita\TypeAs::nullableBool(mixed $value, ?bool $default = null, ?NullableBoolResolver $resolver = null): ?bool
+
+Smpita\TypeAs::bool(mixed $value, ?bool $default = null): bool
+
+Smpita\TypeAs::nullableBool(mixed $value, ?bool $default = null): ?bool
 ```
 
 #### Class
@@ -122,6 +126,10 @@ Smpita\TypeAs::setNullableStringResolver(?\Smpita\TypeAs\Contracts\NullableStrin
 \Smpita\TypeAs\asBool(mixed $value, ?bool $default = null, ?ArrayResolver $resolver = null): bool
 
 \Smpita\TypeAs\asNullableBool(mixed $value, ?bool $default = null, ?NullableBoolResolver $resolver = null): ?bool
+
+\Smpita\TypeAs\asFilterBool(mixed $value, ?bool $default = null): bool
+
+\Smpita\TypeAs\asNullableFilterBool(mixed $value, ?bool $default = null): ?bool
 ```
 
 #### Class
@@ -159,6 +167,8 @@ Smpita\TypeAs::setNullableStringResolver(?\Smpita\TypeAs\Contracts\NullableStrin
 ---
 
 ## Deprecations
+
+See [Resolving](#Resolving) for current signatures.
 
 #### Array
 

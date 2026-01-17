@@ -23,7 +23,7 @@ Easily type your `mixed` signatures. Perfect for static analysis!
   - [Installation](#installation)
   - [Resolving Types](#resolving-types)
   - [Caveats](#caveats)
-  - [Extensions](#extensions)
+  - [Official Extensions](#official-extensions)
   - [Custom Resolvers](#custom-resolvers)
   - [Helpers](#helpers)
 - [Deprecations](#deprecations)
@@ -115,13 +115,32 @@ TypeAs::array('', null, null, false); // throws \Smpita\TypeAs\TypeAsResolutionE
 
 ---
 
-## Custom Resolvers
+## Extensions
+
+Extensions are created by passing a custom resolver to a function.
+
+### Official Extensions
+
+```php
+ /**
+  * @see \Smpita\TypeAs\Resolvers\Extensions\AsNullableFilterBool
+  *
+  * Uses FILTER_VALIDATE_BOOL
+  * https://www.php.net/manual/en/filter.constants.php#constant.filter-validate-bool
+  *
+  * Returns true  on 1 1.0 "1" "true"  "yes" "on"
+  * Returns false on 0 0.0 "0" "false" "no" "off" ""
+  */
+
+$filterBool = TypeAs::filterBool($mixed, $default);
+$nullableFilterBool = TypeAs::nullableFilterBool($mixed, $default);
+```
+
+### Custom Resolvers
 
 [SIGNATURES#resolver-registration](docs/signatures.md#resolver-registration)
 
-Starting in `v2.4.0` you can specify your own custom resolvers.
-
-Each type has an associated interface located in `Smpita\TypeAs\Contracts` which you can implement to make your own resolvers.
+Each base type has an associated interface located in `Smpita\TypeAs\Contracts` which you can implement to make your own resolvers.
 
 Simply implement the interface, then either register the resolver or use it in the resolver method.
 
@@ -138,27 +157,6 @@ Simply implement the interface, then either register the resolver or use it in t
 -   `Smpita\TypeAs\Contracts\NullableFloatResolver`
 -   `Smpita\TypeAs\Contracts\NullableIntResolver`
 -   `Smpita\TypeAs\Contracts\NullableStringResolver`
-
-### Extensions
-
-Extensions are created by passing a custom resolver to a function.
-
-#### Official Extensions
-
-```php
- /**
-  * @see \Smpita\TypeAs\Resolvers\Extensions\AsNullableFilterBool
-  *
-  * Uses FILTER_VALIDATE_BOOL
-  * https://www.php.net/manual/en/filter.constants.php#constant.filter-validate-bool
-  *
-  * Returns true  on 1 1.0 "1" "true"  "yes" "on"
-  * Returns false on 0 0.0 "0" "false" "no" "off" ""
-  */
-
-$filterBool = TypeAs::filterBool($mixed, $default);
-$nullableFilterBool = TypeAs::nullableFilterBool($mixed, $default);
-```
 
 ### Creating Custom Resolvers
 
