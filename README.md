@@ -99,7 +99,9 @@ $nullableString = TypeAs::nullableString($mixed, '');
 
 ### Fluent Syntax
 
-TypeAs supports fluent syntax.
+As a convenience, TypeAs supports fluent syntax.
+The `NonNullable` and `Nullable` fluent classes wrap the base TypeAs methods.
+In performance critical environments, the [standard methods](#resolving-types) are recommended.
 
 #### Basic Usage
 
