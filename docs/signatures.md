@@ -110,6 +110,50 @@ Smpita\TypeAs::setStringResolver(?\Smpita\TypeAs\Contracts\StringResolver $resol
 Smpita\TypeAs::setNullableStringResolver(?\Smpita\TypeAs\Contracts\NullableStringResolver $resolver): void
 ```
 
+### Fluent
+
+#### TypeAs
+
+```php
+\Smpita\TypeAs\TypeAs::from($mixed): Strict
+```
+
+#### `\Smpita\TypeAs\Concerns\Fluent\HandlesFluentCalls`
+Trait methods common to Strict and Nullable
+```php
+new(): self
+from(mixed $value): self
+default(mixed $default): self
+using(null|ArrayResolver|NullableArrayResolver|BoolResolver|NullableBoolResolver|ClassResolver|NullableClassResolver|FloatResolver|NullableFloatResolver|IntResolver|NullableIntResolver|StringResolver|NullableStringResolver $resolver): self
+wrap(bool $enabled = true): self
+noWrap(): self // Inverse wrapper of wrap()
+strict(): Strict
+nullable(): Nullable
+```
+#### `\Smpita\TypeAs\Fluent\Strict`
+
+```php
+toArray(): array
+toBool(): bool
+toFilterBool(): bool
+toClass(string $class): object
+toFloat(): float
+toInt(): int
+toString(): string
+```
+
+#### `\Smpita\TypeAs\Fluent\Nullable`
+
+```php
+toArray(): ?array
+toBool(): ?bool
+toFilterBool(): ?bool
+toClass(string $class): ?object
+toFloat(): ?float
+toInt(): ?int
+toString(): ?string
+```
+
 ### Helpers
 
 #### Array

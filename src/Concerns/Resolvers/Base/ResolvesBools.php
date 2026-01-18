@@ -2,11 +2,11 @@
 
 namespace Smpita\TypeAs\Concerns\Resolvers\Base;
 
-use Smpita\TypeAs\Resolvers\Base\AsBool;
 use Smpita\TypeAs\Contracts\BoolResolver;
-use Smpita\TypeAs\Resolvers\Base\AsNullableBool;
 use Smpita\TypeAs\Contracts\NullableBoolResolver;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
+use Smpita\TypeAs\Resolvers\Base\AsBool;
+use Smpita\TypeAs\Resolvers\Base\AsNullableBool;
 
 trait ResolvesBools
 {
