@@ -207,10 +207,10 @@ $config = new TypeConfig(
     arrayWrap: null,
 );
 
-$nonNullable = NonNullable::new($config);
+$nonNullable = NonNullable::make($config);
 $nonNullable = (new NonNullable())->import($config);
 
-$nullable = Nullable::new($config);
+$nullable = Nullable::make($config);
 $nullable = (new Nullable())->import($config);
 ```
 

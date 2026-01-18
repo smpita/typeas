@@ -27,7 +27,7 @@ trait HandlesFluentCalls
         $this->config = clone $this->config;
     }
 
-    public static function new(?TypeConfig $config = null): self
+    public static function make(?TypeConfig $config = null): self
     {
         $config ??= new TypeConfig();
 
@@ -88,11 +88,11 @@ trait HandlesFluentCalls
 
     public function nonNullable(): NonNullable
     {
-        return NonNullable::new($this->config);
+        return NonNullable::make($this->config);
     }
 
     public function nullable(): Nullable
     {
-        return Nullable::new($this->config);
+        return Nullable::make($this->config);
     }
 }

@@ -8,6 +8,6 @@ trait DelegatesFluent
 {
     public static function from(mixed $value): NonNullable
     {
-        return NonNullable::new()->from($value);
+        return NonNullable::make()->from($value);
     }
 }
