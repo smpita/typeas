@@ -119,7 +119,7 @@ $string = TypeAs::from($mixed)->toString();
 
 Chain `nullable()` for nullable returns.
 
-Note: Moving between NonNullable and Nullable returns a new instance of a different class.
+Note: Moving between `NonNullable` and `Nullable` returns a new instance of the associated class.
 
 ```php
 use Smpita\TypeAs\TypeAs;
