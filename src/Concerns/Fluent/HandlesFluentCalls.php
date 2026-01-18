@@ -38,6 +38,11 @@ trait HandlesFluentCalls
         return new self();
     }
 
+    public function copy(): self
+    {
+        return clone $this;
+    }
+
     public function from(mixed $value): self
     {
         $this->fromValue = $value;
