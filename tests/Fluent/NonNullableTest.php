@@ -76,7 +76,7 @@ class NonNullableTest extends TestCase
 
         $this->assertSame([$string], NonNullable::make($config)->toArray());
 
-        $this->assertSame([$string], (new NonNullable)->import($config)->toArray());
+        $this->assertSame([$string], (new NonNullable())->import($config)->toArray());
     }
 
     #[Test]

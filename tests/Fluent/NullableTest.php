@@ -75,7 +75,7 @@ class NullableTest extends TestCase
 
         $this->assertSame([$string], Nullable::make($config)->toArray());
 
-        $this->assertSame([$string], (new Nullable)->import($config)->toArray());
+        $this->assertSame([$string], (new Nullable())->import($config)->toArray());
     }
 
     #[Test]
