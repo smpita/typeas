@@ -42,6 +42,17 @@ class Strict
     }
 
     /**
+     * @throws TypeAsResolutionException
+     */
+    public function toFilterBool(): ?bool
+    {
+        return TypeAs::filterBool(
+            value: $this->fromValue,
+            default: TypeAs::nullableBool($this->defaultTo),
+        );
+    }
+
+    /**
      * @template TClass of object
      *
      * @param  class-string<TClass>  $class

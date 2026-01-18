@@ -128,6 +128,19 @@ class NullableTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
+    public function test_nullable_can_use_fluent_filter_bool_default(): void
+    {
+        $default = false;
+
+        $this->assertSame(
+            $default,
+            Nullable::new()->from(null)->default($default)->toFilterBool(),
+        );
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
     public function test_nullable_can_use_fluent_class_default(): void
     {
         $default = new stdClass();

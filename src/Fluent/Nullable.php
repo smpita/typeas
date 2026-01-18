@@ -34,6 +34,14 @@ class Nullable
         );
     }
 
+    public function toFilterBool(): ?bool
+    {
+        return TypeAs::nullableFilterBool(
+            value: $this->fromValue,
+            default: TypeAs::nullableBool($this->defaultTo),
+        );
+    }
+
     /**
      * @template TClass of object
      *
