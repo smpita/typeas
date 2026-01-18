@@ -35,6 +35,35 @@ class StrictTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
+    public function test_strict_can_copy_to_a_new_instance(): void
+    {
+        $instance = Strict::new()
+            ->from($this->faker->word())
+            ->default($this->faker->word())
+            ->using(new FluentStrictArrayResolverStub())
+            ->noWrap();
+
+        $assignment = $instance;
+        $copy = $instance->copy();
+        $clone = clone $instance;
+
+        $this->assertEquals($instance, $assignment);
+        $this->assertEquals($instance, $copy);
+        $this->assertEquals($instance, $clone);
+
+        $instance->from(null)
+            ->default(null)
+            ->using(null)
+            ->wrap();
+
+        $this->assertEquals($instance, $assignment);
+        $this->assertNotEquals($instance, $copy);
+        $this->assertNotEquals($instance, $clone);
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
     public function test_strict_can_use_fluent_array_default(): void
     {
         $default = [$this->faker->word];

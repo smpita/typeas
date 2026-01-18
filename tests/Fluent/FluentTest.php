@@ -32,4 +32,12 @@ class FluentTest extends TestCase
     {
         $this->assertInstanceOf(Nullable::class, TypeAs::from('test')->nullable());
     }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_create_a_strict_instance_from_a_nullable_instance(): void
+    {
+        $this->assertInstanceOf(Strict::class, TypeAs::from('test')->nullable()->strict());
+    }
 }
