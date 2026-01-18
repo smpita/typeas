@@ -22,7 +22,8 @@ Easily type your `mixed` signatures. Perfect for static analysis!
 - [Quick Start](#quick-start)
   - [Installation](#installation)
   - [Resolving Types](#resolving-types)
-  - [Caveats](#caveats)
+  - [Fluent Syntax](#fluent-syntax)
+  - [Array Wrapping](#array-wrapping)
   - [Official Extensions](#official-extensions)
   - [Custom Resolvers](#custom-resolvers)
   - [Helpers](#helpers)
@@ -96,7 +97,61 @@ $nullableInt = TypeAs::nullableInt($mixed, 0);
 $nullableString = TypeAs::nullableString($mixed, '');
 ```
 
-### Caveats
+### Fluent Syntax
+
+TypeAs supports fluent syntax.
+
+#### Basic Usage
+
+```php
+use Smpita\TypeAs\TypeAs;
+
+$array = TypeAs::from($mixed)->toArray();
+$bool = TypeAs::from($mixed)->toBool();
+$filterBool = TypeAs::from($mixed)->toFilterBool()
+$class = TypeAs::from($mixed)->toClass(Expected::class);
+$float = TypeAs::from($mixed)->toFloat();
+$int = TypeAs::from($mixed)->toInt();
+$string = TypeAs::from($mixed)->toString();
+```
+
+#### Nullable
+
+Chain `nullable()` for nullable returns.
+
+```php
+use Smpita\TypeAs\TypeAs;
+
+$nullableArray = TypeAs::from($mixed)
+    ->nullable()
+    ->toArray();
+```
+
+#### Custom Resolver
+
+Chain `using()` to resolve using a [Custom Resolver](#custom-resolvers).
+
+```php
+use Smpita\TypeAs\TypeAs;
+
+$array = TypeAs::from($mixed)
+    ->using(new CustomArrayResolver())
+    ->toArray();
+```
+
+#### Defaults
+
+Chain `default()` to specify a default.
+
+```php
+use Smpita\TypeAs\TypeAs;
+
+$array = TypeAs::from($mixed)
+    ->default([])
+    ->toArray();
+```
+
+### Array Wrapping
 
 [SIGNATURES#array](docs/signatures.md#array)
 
@@ -108,9 +163,14 @@ use Smpita\TypeAs\TypeAs;
 TypeAs::array('example'); // returns ['example']
 TypeAs::array(['example']); // returns ['example']
 
-// Disable wrapping to get exceptions.
-TypeAs::array('', wrap: false); // throws \Smpita\TypeAs\TypeAsResolutionException
-TypeAs::array('', null, null, false); // throws \Smpita\TypeAs\TypeAsResolutionException
+/**
+ * Disable array wrapping to get exceptions.
+ * These throw \Smpita\TypeAs\TypeAsResolutionException
+ */
+TypeAs::array('', wrap: false);
+TypeAs::array('', null, null, false);
+TypeAs::from('')->noWrap()->toArray();
+TypeAs::from('')->wrap(false)->toArray();
 ```
 
 ---
