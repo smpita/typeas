@@ -2,12 +2,12 @@
 
 namespace Smpita\TypeAs\Concerns\Fluent;
 
-use Smpita\TypeAs\Fluent\Strict;
+use Smpita\TypeAs\Fluent\NonNullable;
 
 trait DelegatesFluent
 {
-    public static function from(mixed $value): Strict
+    public static function from(mixed $value): NonNullable
     {
-        return Strict::new()->from($value);
+        return NonNullable::new()->from($value);
     }
 }

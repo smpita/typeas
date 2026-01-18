@@ -119,11 +119,21 @@ $string = TypeAs::from($mixed)->toString();
 
 Chain `nullable()` for nullable returns.
 
+Note: moving between `NonNullable` and `Nullable` returns instances a new class.
+
 ```php
 use Smpita\TypeAs\TypeAs;
 
 $nullableArray = TypeAs::from($mixed)
     ->nullable()
+    ->toArray();
+```
+
+```php
+use Smpita\TypeAs\TypeAs;
+
+$array = $typeAsNullableInstance
+    ->nonNullable()
     ->toArray();
 ```
 
@@ -172,6 +182,7 @@ TypeAs::array('', null, null, false);
 TypeAs::from('')->noWrap()->toArray();
 TypeAs::from('')->wrap(false)->toArray();
 ```
+
 # Copying
 
 ```php

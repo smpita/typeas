@@ -11,11 +11,11 @@ use Smpita\TypeAs\Contracts\FloatResolver;
 use Smpita\TypeAs\Contracts\IntResolver;
 use Smpita\TypeAs\Contracts\StringResolver;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
-use Smpita\TypeAs\Fluent\Strict;
+use Smpita\TypeAs\Fluent\NonNullable;
 use Smpita\TypeAs\TypeAs;
 use stdClass;
 
-class StrictTest extends TestCase
+class NonNullableTest extends TestCase
 {
     protected function tearDown(): void
     {
@@ -27,20 +27,20 @@ class StrictTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_strict_can_create_a_new_instance(): void
+    public function test_non_nullable_can_create_a_new_instance(): void
     {
-        $this->assertInstanceOf(Strict::class, Strict::new());
+        $this->assertInstanceOf(NonNullable::class, NonNullable::new());
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_strict_can_copy_to_a_new_instance(): void
+    public function test_non_nullable_can_copy_to_a_new_instance(): void
     {
-        $instance = Strict::new()
+        $instance = NonNullable::new()
             ->from($this->faker->word())
             ->default($this->faker->word())
-            ->using(new FluentStrictArrayResolverStub())
+            ->using(new FluentNonNullableArrayResolverStub())
             ->noWrap();
 
         $assignment = $instance;
@@ -64,278 +64,278 @@ class StrictTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_strict_can_use_fluent_array_default(): void
+    public function test_non_nullable_can_use_fluent_array_default(): void
     {
         $default = [$this->faker->word];
 
         $this->assertSame(
             $default,
-            Strict::new()->from(null)->default($default)->toArray(),
+            NonNullable::new()->from(null)->default($default)->toArray(),
         );
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_strict_can_array_wrap(): void
+    public function test_non_nullable_can_array_wrap(): void
     {
         $string = $this->faker->sentence();
 
-        $this->assertSame([$string], Strict::new()->from($string)->wrap()->toArray());
+        $this->assertSame([$string], NonNullable::new()->from($string)->wrap()->toArray());
 
         $this->expectException(TypeAsResolutionException::class);
-        Strict::new()->from($string)->wrap(enabled: false)->toArray();
+        NonNullable::new()->from($string)->wrap(enabled: false)->toArray();
 
         $this->expectException(TypeAsResolutionException::class);
-        Strict::new()->from($string)->noWrap()->toArray();
+        NonNullable::new()->from($string)->noWrap()->toArray();
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_strict_can_use_fluent_array_resolver(): void
+    public function test_non_nullable_can_use_fluent_array_resolver(): void
     {
-        $resolver = new FluentStrictArrayResolverStub();
+        $resolver = new FluentNonNullableArrayResolverStub();
 
         $this->assertSame(
             $resolver->resolve('test'),
-            Strict::new()->from('test')->using($resolver)->toArray(),
+            NonNullable::new()->from('test')->using($resolver)->toArray(),
         );
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_strict_can_use_the_global_array_resolver(): void
+    public function test_non_nullable_can_use_the_global_array_resolver(): void
     {
-        $resolver = new FluentStrictArrayResolverStub();
+        $resolver = new FluentNonNullableArrayResolverStub();
         TypeAs::setArrayResolver($resolver);
 
         $this->assertSame(
             $resolver->resolve('test'),
-            Strict::new()->from('test')->toArray(),
+            NonNullable::new()->from('test')->toArray(),
         );
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_strict_can_use_fluent_bool_default(): void
+    public function test_non_nullable_can_use_fluent_bool_default(): void
     {
         $default = false;
 
         $this->assertSame(
             $default,
-            Strict::new()->from(null)->default($default)->toBool(),
+            NonNullable::new()->from(null)->default($default)->toBool(),
         );
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_strict_can_use_fluent_bool_resolver(): void
+    public function test_non_nullable_can_use_fluent_bool_resolver(): void
     {
-        $resolver = new FluentStrictBoolResolverStub();
+        $resolver = new FluentNonNullableBoolResolverStub();
 
         $this->assertSame(
             $resolver->resolve('test'),
-            Strict::new()->from('test')->using($resolver)->toBool(),
+            NonNullable::new()->from('test')->using($resolver)->toBool(),
         );
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_strict_can_use_the_global_bool_resolver(): void
+    public function test_non_nullable_can_use_the_global_bool_resolver(): void
     {
-        $resolver = new FluentStrictBoolResolverStub();
+        $resolver = new FluentNonNullableBoolResolverStub();
         TypeAs::setBoolResolver($resolver);
 
         $this->assertSame(
             $resolver->resolve('test'),
-            Strict::new()->from('test')->toBool(),
+            NonNullable::new()->from('test')->toBool(),
         );
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_strict_can_use_fluent_filter_bool_default(): void
+    public function test_non_nullable_can_use_fluent_filter_bool_default(): void
     {
         $default = false;
 
         $this->assertSame(
             $default,
-            Strict::new()->from(null)->default($default)->toFilterBool(),
+            NonNullable::new()->from(null)->default($default)->toFilterBool(),
         );
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_strict_can_use_fluent_class_default(): void
+    public function test_non_nullable_can_use_fluent_class_default(): void
     {
         $default = new stdClass();
 
         $this->assertSame(
             $default,
-            Strict::new()->from(null)->default($default)->toClass(stdClass::class),
+            NonNullable::new()->from(null)->default($default)->toClass(stdClass::class),
         );
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_strict_can_use_fluent_class_resolver(): void
+    public function test_non_nullable_can_use_fluent_class_resolver(): void
     {
-        $resolver = new FluentStrictClassResolverStub();
+        $resolver = new FluentNonNullableClassResolverStub();
 
         $this->assertEqualsCanonicalizing(
             $resolver->resolve(ClassStub::class, 'test'),
-            Strict::new()->from('test')->using($resolver)->toClass(ClassStub::class),
+            NonNullable::new()->from('test')->using($resolver)->toClass(ClassStub::class),
         );
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_strict_can_use_global_class_resolver(): void
+    public function test_non_nullable_can_use_global_class_resolver(): void
     {
-        $resolver = new FluentStrictClassResolverStub();
+        $resolver = new FluentNonNullableClassResolverStub();
         TypeAs::setClassResolver($resolver);
 
         $this->assertEqualsCanonicalizing(
             $resolver->resolve(ClassStub::class, 'test'),
-            Strict::new()->from('test')->toClass(ClassStub::class),
+            NonNullable::new()->from('test')->toClass(ClassStub::class),
         );
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_strict_can_use_fluent_float_default(): void
+    public function test_non_nullable_can_use_fluent_float_default(): void
     {
         $default = $this->faker->randomFloat();
 
         $this->assertSame(
             $default,
-            Strict::new()->from(null)->default($default)->toFloat(),
+            NonNullable::new()->from(null)->default($default)->toFloat(),
         );
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_strict_can_use_fluent_float_resolver(): void
+    public function test_non_nullable_can_use_fluent_float_resolver(): void
     {
-        $resolver = new FluentStrictFloatResolverStub();
+        $resolver = new FluentNonNullableFloatResolverStub();
 
         $this->assertSame(
             $resolver->resolve('test'),
-            Strict::new()->from('test')->using($resolver)->toFloat(),
+            NonNullable::new()->from('test')->using($resolver)->toFloat(),
         );
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_strict_can_use_global_float_resolver(): void
+    public function test_non_nullable_can_use_global_float_resolver(): void
     {
-        $resolver = new FluentStrictFloatResolverStub();
+        $resolver = new FluentNonNullableFloatResolverStub();
         TypeAs::setFloatResolver($resolver);
 
         $this->assertSame(
             $resolver->resolve('test'),
-            Strict::new()->from('test')->toFloat(),
+            NonNullable::new()->from('test')->toFloat(),
         );
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_strict_can_use_fluent_int_default(): void
+    public function test_non_nullable_can_use_fluent_int_default(): void
     {
         $default = $this->faker->randomNumber(4);
 
         $this->assertSame(
             $default,
-            Strict::new()->from(null)->default($default)->toInt(),
+            NonNullable::new()->from(null)->default($default)->toInt(),
         );
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_strict_can_use_fluent_int_resolver(): void
+    public function test_non_nullable_can_use_fluent_int_resolver(): void
     {
-        $resolver = new FluentStrictIntResolverStub();
+        $resolver = new FluentNonNullableIntResolverStub();
 
         $this->assertSame(
             $resolver->resolve('test'),
-            Strict::new()->from('test')->using($resolver)->toInt(),
+            NonNullable::new()->from('test')->using($resolver)->toInt(),
         );
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_strict_can_use_global_int_resolver(): void
+    public function test_non_nullable_can_use_global_int_resolver(): void
     {
-        $resolver = new FluentStrictIntResolverStub();
+        $resolver = new FluentNonNullableIntResolverStub();
         TypeAs::setIntResolver($resolver);
 
         $this->assertSame(
             $resolver->resolve('test'),
-            Strict::new()->from('test')->toInt(),
+            NonNullable::new()->from('test')->toInt(),
         );
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_strict_can_use_fluent_string_default(): void
+    public function test_non_nullable_can_use_fluent_string_default(): void
     {
         $default = $this->faker->sentence();
 
         $this->assertSame(
             $default,
-            Strict::new()->from(null)->default($default)->toString(),
+            NonNullable::new()->from(null)->default($default)->toString(),
         );
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_strict_can_use_fluent_string_resolver(): void
+    public function test_non_nullable_can_use_fluent_string_resolver(): void
     {
-        $resolver = new FluentStrictStringResolverStub();
+        $resolver = new FluentNonNullableStringResolverStub();
 
         $this->assertSame(
             $resolver->resolve('test'),
-            Strict::new()->from('test')->using($resolver)->toString(),
+            NonNullable::new()->from('test')->using($resolver)->toString(),
         );
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_strict_can_use_global_string_resolver(): void
+    public function test_non_nullable_can_use_global_string_resolver(): void
     {
-        $resolver = new FluentStrictStringResolverStub();
+        $resolver = new FluentNonNullableStringResolverStub();
         TypeAs::setStringResolver($resolver);
 
         $this->assertSame(
             $resolver->resolve('test'),
-            Strict::new()->from('test')->toString(),
+            NonNullable::new()->from('test')->toString(),
         );
     }
 }
 
-class FluentStrictClassStub
+class FluentNonNullableClassStub
 {
 }
 
-class FluentStrictArrayResolverStub implements ArrayResolver
+class FluentNonNullableArrayResolverStub implements ArrayResolver
 {
     /** @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException */
     public function resolve(mixed $value, ?array $default = null, ?bool $wrap = true): array
@@ -344,7 +344,7 @@ class FluentStrictArrayResolverStub implements ArrayResolver
     }
 }
 
-class FluentStrictBoolResolverStub implements BoolResolver
+class FluentNonNullableBoolResolverStub implements BoolResolver
 {
     /** @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException */
     public function resolve(mixed $value, ?bool $default = null): bool
@@ -353,7 +353,7 @@ class FluentStrictBoolResolverStub implements BoolResolver
     }
 }
 
-class FluentStrictClassResolverStub implements ClassResolver
+class FluentNonNullableClassResolverStub implements ClassResolver
 {
     /**
      * @template TClass of object
@@ -374,7 +374,7 @@ class FluentStrictClassResolverStub implements ClassResolver
     }
 }
 
-class FluentStrictFloatResolverStub implements FloatResolver
+class FluentNonNullableFloatResolverStub implements FloatResolver
 {
     /** @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException */
     public function resolve(mixed $value, ?float $default = null): float
@@ -383,7 +383,7 @@ class FluentStrictFloatResolverStub implements FloatResolver
     }
 }
 
-class FluentStrictIntResolverStub implements IntResolver
+class FluentNonNullableIntResolverStub implements IntResolver
 {
     /** @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException */
     public function resolve(mixed $value, ?int $default = null): int
@@ -392,7 +392,7 @@ class FluentStrictIntResolverStub implements IntResolver
     }
 }
 
-class FluentStrictStringResolverStub implements StringResolver
+class FluentNonNullableStringResolverStub implements StringResolver
 {
     /** @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException */
     public function resolve(mixed $value, ?string $default = null): string

@@ -12,7 +12,7 @@ use Smpita\TypeAs\Contracts\StringResolver;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\TypeAs;
 
-class Strict
+class NonNullable
 {
     use HandlesFluentCalls;
 

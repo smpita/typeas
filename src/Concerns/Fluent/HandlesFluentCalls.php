@@ -15,7 +15,7 @@ use Smpita\TypeAs\Contracts\NullableIntResolver;
 use Smpita\TypeAs\Contracts\NullableStringResolver;
 use Smpita\TypeAs\Contracts\StringResolver;
 use Smpita\TypeAs\Fluent\Nullable;
-use Smpita\TypeAs\Fluent\Strict;
+use Smpita\TypeAs\Fluent\NonNullable;
 
 trait HandlesFluentCalls
 {
@@ -83,9 +83,9 @@ trait HandlesFluentCalls
         return $this->wrap(false);
     }
 
-    public function strict(): Strict
+    public function nonNullable(): NonNullable
     {
-        return (new Strict())
+        return (new NonNullable())
             ->from($this->fromValue)
             ->default($this->defaultTo)
             ->using($this->resolveUsing)

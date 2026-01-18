@@ -5,7 +5,7 @@ namespace Smpita\TypeAs\Tests;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Fluent\Nullable;
-use Smpita\TypeAs\Fluent\Strict;
+use Smpita\TypeAs\Fluent\NonNullable;
 use Smpita\TypeAs\TypeAs;
 
 class FluentTest extends TestCase
@@ -20,9 +20,9 @@ class FluentTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_can_create_a_strict_instance(): void
+    public function test_can_create_a_non_nullable_instance(): void
     {
-        $this->assertInstanceOf(Strict::class, TypeAs::from('test'));
+        $this->assertInstanceOf(NonNullable::class, TypeAs::from('test'));
     }
 
     #[Test]
@@ -36,8 +36,8 @@ class FluentTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_can_create_a_strict_instance_from_a_nullable_instance(): void
+    public function test_can_create_a_non_nullable_instance_from_a_nullable_instance(): void
     {
-        $this->assertInstanceOf(Strict::class, TypeAs::from('test')->nullable()->strict());
+        $this->assertInstanceOf(NonNullable::class, TypeAs::from('test')->nullable()->nonNullable());
     }
 }

@@ -123,7 +123,7 @@ Trait methods common to Strict and Nullable
 ```php
 new(): self
 copy(): self
-strict(): Strict
+nonNullable(): NonNullable
 nullable(): Nullable
 
 from(mixed $value): self
@@ -132,6 +132,7 @@ using(null|ArrayResolver|NullableArrayResolver|BoolResolver|NullableBoolResolver
 wrap(bool $enabled = true): self
 noWrap(): self // Inverse wrapper of wrap()
 ```
+
 #### `\Smpita\TypeAs\Fluent\Strict`
 
 ```php
