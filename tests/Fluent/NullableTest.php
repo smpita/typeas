@@ -12,6 +12,7 @@ use Smpita\TypeAs\Contracts\NullableIntResolver;
 use Smpita\TypeAs\Contracts\NullableStringResolver;
 use Smpita\TypeAs\Fluent\Nullable;
 use Smpita\TypeAs\TypeAs;
+use stdClass;
 
 class NullableTest extends TestCase
 {
@@ -20,6 +21,27 @@ class NullableTest extends TestCase
         TypeAs::useDefaultResolvers();
 
         parent::tearDown();
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_nullable_can_create_a_new_instance(): void
+    {
+        $this->assertInstanceOf(Nullable::class, Nullable::new());
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_nullable_can_use_fluent_array_default(): void
+    {
+        $default = [$this->faker->word];
+
+        $this->assertSame(
+            $default,
+            Nullable::new()->from(null)->default($default)->toArray(),
+        );
     }
 
     #[Test]
@@ -66,6 +88,19 @@ class NullableTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
+    public function test_nullable_can_use_fluent_bool_default(): void
+    {
+        $default = true;
+
+        $this->assertSame(
+            $default,
+            Nullable::new()->from(null)->default($default)->toBool(),
+        );
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
     public function test_nullable_can_use_fluent_bool_resolver(): void
     {
         $resolver = new FluentNullableBoolResolverStub();
@@ -87,6 +122,19 @@ class NullableTest extends TestCase
         $this->assertSame(
             $resolver->resolve('test'),
             Nullable::new()->from('test')->toBool(),
+        );
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_nullable_can_use_fluent_class_default(): void
+    {
+        $default = new stdClass();
+
+        $this->assertSame(
+            $default,
+            Nullable::new()->from(null)->default($default)->toClass(stdClass::class),
         );
     }
 
@@ -120,6 +168,19 @@ class NullableTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
+    public function test_nullable_can_use_fluent_float_default(): void
+    {
+        $default = $this->faker->randomFloat();
+
+        $this->assertSame(
+            $default,
+            Nullable::new()->from(null)->default($default)->toFloat(),
+        );
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
     public function test_nullable_can_use_fluent_float_resolver(): void
     {
         $resolver = new FluentNullableFloatResolverStub();
@@ -147,6 +208,19 @@ class NullableTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
+    public function test_nullable_can_use_fluent_int_default(): void
+    {
+        $default = $this->faker->randomNumber(4);
+
+        $this->assertSame(
+            $default,
+            Nullable::new()->from(null)->default($default)->toInt(),
+        );
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
     public function test_nullable_can_use_fluent_int_resolver(): void
     {
         $resolver = new FluentNullableIntResolverStub();
@@ -168,6 +242,19 @@ class NullableTest extends TestCase
         $this->assertSame(
             $resolver->resolve('test'),
             Nullable::new()->from('test')->toInt(),
+        );
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_nullable_can_use_fluent_string_default(): void
+    {
+        $default = $this->faker->sentence();
+
+        $this->assertSame(
+            $default,
+            Nullable::new()->from(null)->default($default)->toString(),
         );
     }
 
