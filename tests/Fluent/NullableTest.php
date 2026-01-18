@@ -2,17 +2,18 @@
 
 namespace Smpita\TypeAs\Tests;
 
-use PHPUnit\Framework\Attributes\Group;
+use stdClass;
+use Smpita\TypeAs\TypeAs;
+use Smpita\TypeAs\Fluent\Nullable;
+use Smpita\TypeAs\Fluent\TypeConfig;
 use PHPUnit\Framework\Attributes\Test;
-use Smpita\TypeAs\Contracts\NullableArrayResolver;
+use PHPUnit\Framework\Attributes\Group;
+use Smpita\TypeAs\Contracts\NullableIntResolver;
 use Smpita\TypeAs\Contracts\NullableBoolResolver;
+use Smpita\TypeAs\Contracts\NullableArrayResolver;
 use Smpita\TypeAs\Contracts\NullableClassResolver;
 use Smpita\TypeAs\Contracts\NullableFloatResolver;
-use Smpita\TypeAs\Contracts\NullableIntResolver;
 use Smpita\TypeAs\Contracts\NullableStringResolver;
-use Smpita\TypeAs\Fluent\Nullable;
-use Smpita\TypeAs\TypeAs;
-use stdClass;
 
 class NullableTest extends TestCase
 {
@@ -58,6 +59,23 @@ class NullableTest extends TestCase
         $this->assertEquals($instance, $assignment);
         $this->assertNotEquals($instance, $copy);
         $this->assertNotEquals($instance, $clone);
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_non_nullable_import_a_type_config(): void
+    {
+        $string = $this->faker->word();
+
+        $config = new TypeConfig(
+            fromValue: $string,
+            arrayWrap: true,
+        );
+
+        $this->assertSame([$string], Nullable::make($config)->toArray());
+
+        $this->assertSame([$string], (new Nullable)->import($config)->toArray());
     }
 
     #[Test]

@@ -67,17 +67,16 @@ class NonNullableTest extends TestCase
     #[Group('typeas')]
     public function test_non_nullable_import_a_type_config(): void
     {
-        $this->assertIsArray(NonNullable::make()->from('text')->toArray());
-        // $string = $this->faker->word();
+        $string = $this->faker->word();
 
-        // $config = new TypeConfig(
-        //     fromValue: $string,
-        //     arrayWrap: null,
-        // );
+        $config = new TypeConfig(
+            fromValue: $string,
+            arrayWrap: true,
+        );
 
-        // $this->assertSame([$string], NonNullable::make($config)->toArray());
+        $this->assertSame([$string], NonNullable::make($config)->toArray());
 
-        // $this->assertSame([$string], (new NonNullable)->import($config)->toArray());
+        $this->assertSame([$string], (new NonNullable)->import($config)->toArray());
     }
 
     #[Test]
