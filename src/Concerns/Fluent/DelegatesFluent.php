@@ -4,7 +4,7 @@ namespace Smpita\TypeAs\Concerns\Fluent;
 
 use Smpita\TypeAs\Fluent\Strict;
 
-trait FluentResolver
+trait DelegatesFluent
 {
     public static function from(mixed $value): Strict
     {

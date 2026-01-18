@@ -2,7 +2,7 @@
 
 namespace Smpita\TypeAs;
 
-use Smpita\TypeAs\Concerns\Fluent\FluentResolver;
+use Smpita\TypeAs\Concerns\Fluent\DelegatesFluent;
 use Smpita\TypeAs\Concerns\Resolvers\Base\ResolvesArrays;
 use Smpita\TypeAs\Concerns\Resolvers\Base\ResolvesBools;
 use Smpita\TypeAs\Concerns\Resolvers\Base\ResolvesClasses;
@@ -13,7 +13,7 @@ use Smpita\TypeAs\Concerns\Resolvers\Extensions\ResolvesFilterBools;
 
 class TypeAs
 {
-    use FluentResolver;
+    use DelegatesFluent;
     use ResolvesArrays;
     use ResolvesBools;
     use ResolvesClasses;
