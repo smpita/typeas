@@ -13,6 +13,7 @@ use Smpita\TypeAs\Contracts\StringResolver;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Fluent\Strict;
 use Smpita\TypeAs\TypeAs;
+use stdClass;
 
 class StrictTest extends TestCase
 {
@@ -21,6 +22,43 @@ class StrictTest extends TestCase
         TypeAs::useDefaultResolvers();
 
         parent::tearDown();
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_strict_can_create_a_new_instance(): void
+    {
+        $this->assertInstanceOf(Strict::class, Strict::new());
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_strict_can_use_fluent_array_default(): void
+    {
+        $default = [$this->faker->word];
+
+        $this->assertSame(
+            $default,
+            Strict::new()->from(null)->default($default)->toArray(),
+        );
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_strict_can_array_wrap(): void
+    {
+        $string = $this->faker->sentence();
+
+        $this->assertSame([$string], Strict::new()->from($string)->wrap()->toArray());
+
+        $this->expectException(TypeAsResolutionException::class);
+        Strict::new()->from($string)->wrap(enabled: false)->toArray();
+
+        $this->expectException(TypeAsResolutionException::class);
+        Strict::new()->from($string)->noWrap()->toArray();
     }
 
     #[Test]
@@ -53,17 +91,14 @@ class StrictTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_strict_can_array_wrap(): void
+    public function test_strict_can_use_fluent_bool_default(): void
     {
-        $string = $this->faker->sentence();
+        $default = false;
 
-        $this->assertSame([$string], Strict::new()->from($string)->wrap()->toArray());
-
-        $this->expectException(TypeAsResolutionException::class);
-        Strict::new()->from($string)->wrap(enabled: false)->toArray();
-
-        $this->expectException(TypeAsResolutionException::class);
-        Strict::new()->from($string)->noWrap()->toArray();
+        $this->assertSame(
+            $default,
+            Strict::new()->from(null)->default($default)->toBool(),
+        );
     }
 
     #[Test]
@@ -90,6 +125,19 @@ class StrictTest extends TestCase
         $this->assertSame(
             $resolver->resolve('test'),
             Strict::new()->from('test')->toBool(),
+        );
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_strict_can_use_fluent_class_default(): void
+    {
+        $default = new stdClass();
+
+        $this->assertSame(
+            $default,
+            Strict::new()->from(null)->default($default)->toClass(stdClass::class),
         );
     }
 
@@ -123,6 +171,19 @@ class StrictTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
+    public function test_strict_can_use_fluent_float_default(): void
+    {
+        $default = $this->faker->randomFloat();
+
+        $this->assertSame(
+            $default,
+            Strict::new()->from(null)->default($default)->toFloat(),
+        );
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
     public function test_strict_can_use_fluent_float_resolver(): void
     {
         $resolver = new FluentStrictFloatResolverStub();
@@ -150,6 +211,19 @@ class StrictTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
+    public function test_strict_can_use_fluent_int_default(): void
+    {
+        $default = $this->faker->randomNumber(4);
+
+        $this->assertSame(
+            $default,
+            Strict::new()->from(null)->default($default)->toInt(),
+        );
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
     public function test_strict_can_use_fluent_int_resolver(): void
     {
         $resolver = new FluentStrictIntResolverStub();
@@ -171,6 +245,19 @@ class StrictTest extends TestCase
         $this->assertSame(
             $resolver->resolve('test'),
             Strict::new()->from('test')->toInt(),
+        );
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_strict_can_use_fluent_string_default(): void
+    {
+        $default = $this->faker->sentence();
+
+        $this->assertSame(
+            $default,
+            Strict::new()->from(null)->default($default)->toString(),
         );
     }
 
