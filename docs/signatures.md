@@ -122,13 +122,15 @@ Smpita\TypeAs::setNullableStringResolver(?\Smpita\TypeAs\Contracts\NullableStrin
 Trait methods common to Strict and Nullable
 ```php
 new(): self
+copy(): self
+strict(): Strict
+nullable(): Nullable
+
 from(mixed $value): self
 default(mixed $default): self
 using(null|ArrayResolver|NullableArrayResolver|BoolResolver|NullableBoolResolver|ClassResolver|NullableClassResolver|FloatResolver|NullableFloatResolver|IntResolver|NullableIntResolver|StringResolver|NullableStringResolver $resolver): self
 wrap(bool $enabled = true): self
 noWrap(): self // Inverse wrapper of wrap()
-strict(): Strict
-nullable(): Nullable
 ```
 #### `\Smpita\TypeAs\Fluent\Strict`
 

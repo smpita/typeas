@@ -172,7 +172,17 @@ TypeAs::array('', null, null, false);
 TypeAs::from('')->noWrap()->toArray();
 TypeAs::from('')->wrap(false)->toArray();
 ```
+# Copying
 
+```php
+use Smpita\TypeAs\TypeAs;
+
+$instance = TypeAs::->from($mixed);
+
+$assignment = $instance; // $assignment mutates when $instance changes.
+$copy = $instance->copy(); // $copy is unaffected by changes to $instance.
+$clone = clone $instance; // $clone is unaffected by changes to $instance.
+```
 ---
 
 ## Extensions
