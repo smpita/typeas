@@ -183,17 +183,37 @@ TypeAs::from('')->noWrap()->toArray();
 TypeAs::from('')->wrap(false)->toArray();
 ```
 
-# Copying
+### Copying
 
 ```php
 use Smpita\TypeAs\TypeAs;
 
-$instance = TypeAs::->from($mixed);
+$instance = TypeAs::from($mixed);
 
 $assignment = $instance; // $assignment mutates when $instance changes.
 $copy = $instance->copy(); // $copy is unaffected by changes to $instance.
 $clone = clone $instance; // $clone is unaffected by changes to $instance.
 ```
+
+### Importing
+
+```php
+use Smpita\TypeAs\Fluent\TypeConfig;
+
+$config = new TypeConfig(
+    fromValue: $mixed,
+    defaultTo: $default,
+    resolveUsing: $resolver,
+    arrayWrap: null,
+);
+
+$nonNullable = NonNullable::new($config);
+$nonNullable = (new NonNullable())->import($config);
+
+$nullable = Nullable::new($config);
+$nullable = (new Nullable())->import($config);
+```
+
 ---
 
 ## Extensions

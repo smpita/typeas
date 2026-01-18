@@ -121,7 +121,8 @@ Smpita\TypeAs::setNullableStringResolver(?\Smpita\TypeAs\Contracts\NullableStrin
 #### `\Smpita\TypeAs\Concerns\Fluent\HandlesFluentCalls`
 Trait methods common to Strict and Nullable
 ```php
-new(): self
+new(?\Smpita\TypeAs\Fluent\TypeConfig $config = null): self
+import(\Smpita\TypeAs\Fluent\TypeConfig $config): self
 copy(): self
 nonNullable(): NonNullable
 nullable(): Nullable

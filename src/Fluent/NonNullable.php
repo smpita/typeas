@@ -22,10 +22,10 @@ class NonNullable
     public function toArray(): array
     {
         return TypeAs::array(
-            value: $this->fromValue,
-            default: TypeAs::nullableArray($this->defaultTo, wrap: false),
-            resolver: TypeAs::nullableClass(ArrayResolver::class, $this->resolveUsing),
-            wrap: $this->arrayWrap,
+            value: $this->config->fromValue,
+            default: TypeAs::nullableArray($this->config->defaultTo, wrap: false),
+            resolver: TypeAs::nullableClass(ArrayResolver::class, $this->config->resolveUsing),
+            wrap: $this->config->arrayWrap,
         );
     }
 
@@ -35,9 +35,9 @@ class NonNullable
     public function toBool(): bool
     {
         return TypeAs::bool(
-            value: $this->fromValue,
-            default: TypeAs::nullableBool($this->defaultTo),
-            resolver: TypeAs::nullableClass(BoolResolver::class, $this->resolveUsing)
+            value: $this->config->fromValue,
+            default: TypeAs::nullableBool($this->config->defaultTo),
+            resolver: TypeAs::nullableClass(BoolResolver::class, $this->config->resolveUsing)
         );
     }
 
@@ -47,8 +47,8 @@ class NonNullable
     public function toFilterBool(): ?bool
     {
         return TypeAs::filterBool(
-            value: $this->fromValue,
-            default: TypeAs::nullableBool($this->defaultTo),
+            value: $this->config->fromValue,
+            default: TypeAs::nullableBool($this->config->defaultTo),
         );
     }
 
@@ -64,9 +64,9 @@ class NonNullable
     {
         return TypeAs::class(
             class: $class,
-            value: $this->fromValue,
-            default: TypeAs::nullableClass(class: $class, value: $this->defaultTo),
-            resolver: TypeAs::nullableClass(class: ClassResolver::class, value: $this->resolveUsing)
+            value: $this->config->fromValue,
+            default: TypeAs::nullableClass(class: $class, value: $this->config->defaultTo),
+            resolver: TypeAs::nullableClass(class: ClassResolver::class, value: $this->config->resolveUsing)
         );
     }
 
@@ -76,9 +76,9 @@ class NonNullable
     public function toFloat(): float
     {
         return TypeAs::float(
-            value: $this->fromValue,
-            default: TypeAs::nullableFloat($this->defaultTo),
-            resolver: TypeAs::nullableClass(FloatResolver::class, $this->resolveUsing)
+            value: $this->config->fromValue,
+            default: TypeAs::nullableFloat($this->config->defaultTo),
+            resolver: TypeAs::nullableClass(FloatResolver::class, $this->config->resolveUsing)
         );
     }
 
@@ -88,9 +88,9 @@ class NonNullable
     public function toInt(): int
     {
         return TypeAs::int(
-            value: $this->fromValue,
-            default: TypeAs::nullableInt($this->defaultTo),
-            resolver: TypeAs::nullableClass(IntResolver::class, $this->resolveUsing)
+            value: $this->config->fromValue,
+            default: TypeAs::nullableInt($this->config->defaultTo),
+            resolver: TypeAs::nullableClass(IntResolver::class, $this->config->resolveUsing)
         );
     }
 
@@ -100,9 +100,9 @@ class NonNullable
     public function toString(): string
     {
         return TypeAs::string(
-            value: $this->fromValue,
-            default: TypeAs::nullableString($this->defaultTo),
-            resolver: TypeAs::nullableClass(StringResolver::class, $this->resolveUsing)
+            value: $this->config->fromValue,
+            default: TypeAs::nullableString($this->config->defaultTo),
+            resolver: TypeAs::nullableClass(StringResolver::class, $this->config->resolveUsing)
         );
     }
 }
