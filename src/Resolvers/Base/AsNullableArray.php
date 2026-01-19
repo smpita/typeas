@@ -12,6 +12,7 @@ class AsNullableArray extends Resolver implements NullableArrayResolver
         $array = match (gettype($value)) {
             'array' => $value,
             'object' => $this->fromObject($value),
+            'NULL' => $default,
             default => null,
         };
 
