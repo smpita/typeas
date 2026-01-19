@@ -76,16 +76,13 @@ class NullableTest extends TestCase
     #[Group('typeas')]
     public function test_non_nullable_import_a_type_config(): void
     {
-        $string = $this->faker->word();
-
         $config = new TypeConfig(
-            fromValue: $string,
-            arrayWrap: true,
+            fromValue: $this->faker->word(),
         );
 
-        $this->assertSame([$string], Nullable::make($config)->toArray());
+        $this->assertSame($config, Nullable::make($config)->config());
 
-        $this->assertSame([$string], (new Nullable())->import($config)->toArray());
+        $this->assertSame($config, (new Nullable())->import($config)->config());
     }
 
     #[Test]
