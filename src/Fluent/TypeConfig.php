@@ -27,7 +27,7 @@ class TypeConfig
             |IntResolver|NullableIntResolver
             |StringResolver|NullableStringResolver
             |null $resolveUsing = null,
-        public ?bool $arrayWrap = null,
+        public ?bool $arrayWrap = true,
     ) {
     }
 }
