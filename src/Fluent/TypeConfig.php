@@ -15,7 +15,7 @@ use Smpita\TypeAs\Contracts\NullableIntResolver;
 use Smpita\TypeAs\Contracts\NullableStringResolver;
 use Smpita\TypeAs\Contracts\StringResolver;
 
-class TypeConfig
+final class TypeConfig
 {
     public function __construct(
         public mixed $fromValue = null,
