@@ -197,9 +197,22 @@ $copy = $instance->copy(); // $copy is unaffected by changes to $instance.
 $clone = clone $instance; // $clone is unaffected by changes to $instance.
 ```
 
-### Importing
+### Accessing the config
 
 ```php
+use Smpita\TypeAs\Fluent\Nullable;
+use Smpita\TypeAs\Fluent\NonNullable;
+
+// Returns \Smpita\TypeAs\Fluent\TypeConfig
+$config = NonNullable::make()->config();
+$config = Nullable::make()->config();
+```
+
+### Importing a config
+
+```php
+use Smpita\TypeAs\Fluent\Nullable;
+use Smpita\TypeAs\Fluent\NonNullable;
 use Smpita\TypeAs\Fluent\TypeConfig;
 
 $config = new TypeConfig(

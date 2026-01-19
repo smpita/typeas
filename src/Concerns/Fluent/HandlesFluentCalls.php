@@ -41,14 +41,14 @@ trait HandlesFluentCalls
 
     public function from(mixed $value): self
     {
-        $this->config->fromValue = $value;
+        $this->config()->fromValue = $value;
 
         return $this;
     }
 
     public function default(mixed $default): self
     {
-        $this->config->defaultTo = $default;
+        $this->config()->defaultTo = $default;
 
         return $this;
     }
@@ -62,14 +62,14 @@ trait HandlesFluentCalls
         |StringResolver|NullableStringResolver
         |null $resolver
     ): self {
-        $this->config->resolveUsing = $resolver;
+        $this->config()->resolveUsing = $resolver;
 
         return $this;
     }
 
     public function wrap(?bool $enabled = true): self
     {
-        $this->config->arrayWrap = $enabled;
+        $this->config()->arrayWrap = $enabled;
 
         return $this;
     }
@@ -77,6 +77,11 @@ trait HandlesFluentCalls
     public function noWrap(): self
     {
         return $this->wrap(false);
+    }
+
+    public function config(): TypeConfig
+    {
+        return $this->config ??= new TypeConfig();
     }
 
     public function import(TypeConfig $config): self

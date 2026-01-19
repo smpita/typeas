@@ -65,6 +65,16 @@ class NonNullableTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
+    public function test_non_nullable_can_create_a_config(): void
+    {
+        $this->assertInstanceOf(TypeConfig::class, NonNullable::make()->config());
+
+        $this->assertInstanceOf(TypeConfig::class, (new NonNullable())->config());
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
     public function test_non_nullable_import_a_type_config(): void
     {
         $string = $this->faker->word();

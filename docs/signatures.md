@@ -122,10 +122,11 @@ Smpita\TypeAs::setNullableStringResolver(?\Smpita\TypeAs\Contracts\NullableStrin
 Trait methods common to Strict and Nullable
 ```php
 make(?\Smpita\TypeAs\Fluent\TypeConfig $config = null): self
-import(\Smpita\TypeAs\Fluent\TypeConfig $config): self
 copy(): self
-nonNullable(): NonNullable
-nullable(): Nullable
+import(\Smpita\TypeAs\Fluent\TypeConfig $config): self
+config(): \Smpita\TypeAs\Fluent\TypeConfig
+nonNullable(): \Smpita\TypeAs\Fluent\NonNullable
+nullable(): \Smpita\TypeAs\Fluent\Nullable
 
 from(mixed $value): self
 default(mixed $default): self
