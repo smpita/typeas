@@ -75,6 +75,8 @@ $nullableInt = TypeAs::nullableInt($mixed);
 $nullableString = TypeAs::nullableString($mixed);
 ```
 
+### Defaults
+
 To suppress throwing exceptions, provide a default.
 
 ```php
@@ -95,7 +97,29 @@ $nullableClass = TypeAs::nullableClass(Expected::class, $mixed, new StdClass());
 $nullableFloat = TypeAs::nullableFloat($mixed, 0.0);
 $nullableInt = TypeAs::nullableInt($mixed, 0);
 $nullableString = TypeAs::nullableString($mixed, '');
+
+// As a named parameter
+$array = TypeAs::array(value: $mixed, default: []);
 ```
+
+### Array Wrapping
+
+[SIGNATURES#array](docs/signatures.md#array)
+
+By default, `array()` will wrap non-iterables similar to `(array) $mixed` instead of throwing exceptions.
+
+```php
+use Smpita\TypeAs\TypeAs;
+
+TypeAs::array('example'); // returns ['example']
+TypeAs::array(['example']); // returns ['example']
+
+/**
+ * Disable array wrapping to get exceptions.
+ * These throw \Smpita\TypeAs\TypeAsResolutionException
+ */
+TypeAs::array('', wrap: false);
+TypeAs::array('', null, null, false);
 
 ### Fluent Syntax
 
@@ -163,24 +187,9 @@ $array = TypeAs::from($mixed)
     ->toArray();
 ```
 
-### Array Wrapping
-
-[SIGNATURES#array](docs/signatures.md#array)
-
-By default, `array()` will wrap non-iterables similar to `(array) $mixed` instead of throwing exceptions.
+### Wrapping
 
 ```php
-use Smpita\TypeAs\TypeAs;
-
-TypeAs::array('example'); // returns ['example']
-TypeAs::array(['example']); // returns ['example']
-
-/**
- * Disable array wrapping to get exceptions.
- * These throw \Smpita\TypeAs\TypeAsResolutionException
- */
-TypeAs::array('', wrap: false);
-TypeAs::array('', null, null, false);
 TypeAs::from('')->noWrap()->toArray();
 TypeAs::from('')->wrap(false)->toArray();
 ```
