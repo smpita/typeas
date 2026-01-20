@@ -291,18 +291,16 @@ class TypeAsTest extends TestCase
         $setResolverMethod = 'set'.ucfirst($key);
         TypeAs::getInstance()->$setResolverMethod($resolver);
 
-        $value = new ReflectionClass(TypeAs::getInstance())
-            ->getProperty($key)
-            ->getValue(TypeAs::getInstance());
+        $prop = new ReflectionClass(TypeAs::getInstance())->getProperty($key);
+        $value = $prop->getValue(TypeAs::getInstance());
 
         $this->assertNotNull($value);
         $this->assertSame($resolver, $value);
 
         TypeAs::useDefaultResolvers();
 
-        $value = new ReflectionClass(TypeAs::getInstance())
-            ->getProperty($key)
-            ->getValue(TypeAs::getInstance());
+        $prop = new ReflectionClass(TypeAs::getInstance())->getProperty($key);
+        $value = $prop->getValue(TypeAs::getInstance());
 
         $this->assertNull($value);
     }
