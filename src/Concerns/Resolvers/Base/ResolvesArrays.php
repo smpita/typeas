@@ -10,34 +10,34 @@ use Smpita\TypeAs\Resolvers\Base\AsNullableArray;
 
 trait ResolvesArrays
 {
-    protected static ?ArrayResolver $arrayResolver = null;
+    protected ?ArrayResolver $arrayResolver = null;
 
-    protected static ?NullableArrayResolver $nullableArrayResolver = null;
+    protected ?NullableArrayResolver $nullableArrayResolver = null;
 
     /**
      * @throws TypeAsResolutionException
      */
-    public static function array(mixed $value, ?array $default = null, ?ArrayResolver $resolver = null, ?bool $wrap = true): array
+    public function array(mixed $value, ?array $default = null, ?ArrayResolver $resolver = null, ?bool $wrap = true): array
     {
-        $resolver ??= static::$arrayResolver ?? new AsArray();
+        $resolver ??= $this->arrayResolver ??= new AsArray();
+
+        return $resolver->resolve(value: $value, default: $default, wrap: $wrap);
+    }
+
+    public function nullableArray(mixed $value, ?array $default = null, ?NullableArrayResolver $resolver = null, ?bool $wrap = true): ?array
+    {
+        $resolver ??= $this->nullableArrayResolver ??= new AsNullableArray();
 
         return $resolver->resolve($value, $default, $wrap);
     }
 
-    public static function nullableArray(mixed $value, ?array $default = null, ?NullableArrayResolver $resolver = null, ?bool $wrap = true): ?array
+    public function setArrayResolver(?ArrayResolver $resolver): void
     {
-        $resolver ??= static::$nullableArrayResolver ?? new AsNullableArray();
-
-        return $resolver->resolve($value, $default, $wrap);
+        $this->arrayResolver = $resolver;
     }
 
-    public static function setArrayResolver(?ArrayResolver $resolver): void
+    public function setNullableArrayResolver(?NullableArrayResolver $resolver): void
     {
-        static::$arrayResolver = $resolver;
-    }
-
-    public static function setNullableArrayResolver(?NullableArrayResolver $resolver): void
-    {
-        static::$nullableArrayResolver = $resolver;
+        $this->nullableArrayResolver = $resolver;
     }
 }

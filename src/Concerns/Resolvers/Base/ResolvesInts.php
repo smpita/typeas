@@ -10,34 +10,34 @@ use Smpita\TypeAs\Resolvers\Base\AsNullableInt;
 
 trait ResolvesInts
 {
-    protected static ?IntResolver $intResolver = null;
+    protected ?IntResolver $intResolver = null;
 
-    protected static ?NullableIntResolver $nullableIntResolver = null;
+    protected ?NullableIntResolver $nullableIntResolver = null;
 
     /**
      * @throws TypeAsResolutionException
      */
-    public static function int(mixed $value, ?int $default = null, ?IntResolver $resolver = null): int
+    public function int(mixed $value, ?int $default = null, ?IntResolver $resolver = null): int
     {
-        $resolver ??= static::$intResolver ?? new AsInt();
+        $resolver ??= $this->intResolver ??= new AsInt();
 
         return $resolver->resolve($value, $default);
     }
 
-    public static function nullableInt(mixed $value, ?int $default = null, ?NullableIntResolver $resolver = null): ?int
+    public function nullableInt(mixed $value, ?int $default = null, ?NullableIntResolver $resolver = null): ?int
     {
-        $resolver ??= static::$nullableIntResolver ?? new AsNullableInt();
+        $resolver ??= $this->nullableIntResolver ??= new AsNullableInt();
 
         return $resolver->resolve($value, $default);
     }
 
-    public static function setIntResolver(?IntResolver $resolver): void
+    public function setIntResolver(?IntResolver $resolver): void
     {
-        static::$intResolver = $resolver;
+        $this->intResolver = $resolver;
     }
 
-    public static function setNullableIntResolver(?NullableIntResolver $resolver): void
+    public function setNullableIntResolver(?NullableIntResolver $resolver): void
     {
-        static::$nullableIntResolver = $resolver;
+        $this->nullableIntResolver = $resolver;
     }
 }

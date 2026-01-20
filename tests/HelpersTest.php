@@ -35,17 +35,17 @@ class HelpersTest extends TestCase
         return [
             'truthy_1' => [1],
             'truthy_1_0' => [1.0],
-            'truthy_1_string' => ["1"],
-            'truthy_string' => ["true"],
-            'truthy_yes' => ["yes"],
-            'truthy_on' => ["on"],
+            'truthy_1_string' => ['1'],
+            'truthy_string' => ['true'],
+            'truthy_yes' => ['yes'],
+            'truthy_on' => ['on'],
             'falsy_0' => [0],
             'falsy_0_0' => [0.0],
-            'falsy_0_string' => ["0"],
-            'falsy_string' => ["false"],
-            'falsy_no' => ["no"],
-            'falsy_off' => ["off"],
-            'falsy_empty' => [""],
+            'falsy_0_string' => ['0'],
+            'falsy_string' => ['false'],
+            'falsy_no' => ['no'],
+            'falsy_off' => ['off'],
+            'falsy_empty' => [''],
         ];
     }
 

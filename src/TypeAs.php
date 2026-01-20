@@ -2,37 +2,26 @@
 
 namespace Smpita\TypeAs;
 
-use Smpita\TypeAs\Concerns\Resolvers\Base\ResolvesInts;
-use Smpita\TypeAs\Concerns\Resolvers\Base\ResolvesBools;
-use Smpita\TypeAs\Concerns\Resolvers\Base\ResolvesArrays;
-use Smpita\TypeAs\Concerns\Resolvers\Base\ResolvesFloats;
-use Smpita\TypeAs\Concerns\Resolvers\Base\ResolvesClasses;
-use Smpita\TypeAs\Concerns\Resolvers\Base\ResolvesStrings;
-use Smpita\TypeAs\Concerns\Resolvers\Extensions\ResolvesFilterBools;
+use Smpita\TypeAs\Concerns\StaticDelegation\Base\ForwardsArray;
+use Smpita\TypeAs\Concerns\StaticDelegation\Base\ForwardsBool;
+use Smpita\TypeAs\Concerns\StaticDelegation\Base\ForwardsClass;
+use Smpita\TypeAs\Concerns\StaticDelegation\Base\ForwardsFloat;
+use Smpita\TypeAs\Concerns\StaticDelegation\Base\ForwardsInt;
+use Smpita\TypeAs\Concerns\StaticDelegation\Base\ForwardsString;
+use Smpita\TypeAs\Concerns\StaticDelegation\Extensions\ForwardsFilterBool;
+use Smpita\TypeAs\Concerns\Instance\HandlesTypeFactory;
 
+/**
+ * @see \Smpita\TypeAs\TypeFactory
+ */
 class TypeAs
 {
-    use ResolvesArrays;
-    use ResolvesBools;
-    use ResolvesFilterBools;
-    use ResolvesClasses;
-    use ResolvesFloats;
-    use ResolvesInts;
-    use ResolvesStrings;
-
-    public static function useDefaultResolvers(): void
-    {
-        self::setNullableArrayResolver(null);
-        self::setNullableBoolResolver(null);
-        self::setNullableClassResolver(null);
-        self::setNullableFloatResolver(null);
-        self::setNullableIntResolver(null);
-        self::setNullableStringResolver(null);
-        self::setArrayResolver(null);
-        self::setBoolResolver(null);
-        self::setClassResolver(null);
-        self::setFloatResolver(null);
-        self::setIntResolver(null);
-        self::setStringResolver(null);
-    }
+    use ForwardsArray;
+    use ForwardsBool;
+    use ForwardsClass;
+    use ForwardsFilterBool;
+    use ForwardsFloat;
+    use ForwardsInt;
+    use ForwardsString;
+    use HandlesTypeFactory;
 }

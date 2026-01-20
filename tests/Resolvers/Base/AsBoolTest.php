@@ -2,10 +2,10 @@
 
 namespace Smpita\TypeAs\Tests\Resolvers\Base;
 
-use Smpita\TypeAs\TypeAs;
-use Smpita\TypeAs\Tests\TestCase;
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
+use Smpita\TypeAs\Tests\TestCase;
+use Smpita\TypeAs\TypeAs;
 
 class AsBoolTest extends TestCase
 {

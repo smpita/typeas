@@ -10,9 +10,9 @@ use Smpita\TypeAs\Resolvers\Base\AsNullableClass;
 
 trait ResolvesClasses
 {
-    protected static ?ClassResolver $classResolver = null;
+    protected ?ClassResolver $classResolver = null;
 
-    protected static ?NullableClassResolver $nullableClassResolver = null;
+    protected ?NullableClassResolver $nullableClassResolver = null;
 
     /**
      * @template TClass of object
@@ -23,9 +23,9 @@ trait ResolvesClasses
      *
      * @throws TypeAsResolutionException
      */
-    public static function class(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null)
+    public function class(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null)
     {
-        $resolver ??= static::$classResolver ?? new AsClass();
+        $resolver ??= $this->classResolver ??= new AsClass();
 
         return $resolver->resolve($class, $value, $default);
     }
@@ -37,20 +37,20 @@ trait ResolvesClasses
      * @param  TClass  $default
      * @return TClass|null
      */
-    public static function nullableClass(string $class, mixed $value, ?object $default = null, ?NullableClassResolver $resolver = null)
+    public function nullableClass(string $class, mixed $value, ?object $default = null, ?NullableClassResolver $resolver = null)
     {
-        $resolver ??= static::$nullableClassResolver ?? new AsNullableClass();
+        $resolver ??= $this->nullableClassResolver ??= new AsNullableClass();
 
         return $resolver->resolve($class, $value, $default);
     }
 
-    public static function setClassResolver(?ClassResolver $resolver): void
+    public function setClassResolver(?ClassResolver $resolver): void
     {
-        static::$classResolver = $resolver;
+        $this->classResolver = $resolver;
     }
 
-    public static function setNullableClassResolver(?NullableClassResolver $resolver): void
+    public function setNullableClassResolver(?NullableClassResolver $resolver): void
     {
-        static::$nullableClassResolver = $resolver;
+        $this->nullableClassResolver = $resolver;
     }
 }

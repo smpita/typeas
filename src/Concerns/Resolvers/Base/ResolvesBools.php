@@ -2,42 +2,42 @@
 
 namespace Smpita\TypeAs\Concerns\Resolvers\Base;
 
-use Smpita\TypeAs\Resolvers\Base\AsBool;
 use Smpita\TypeAs\Contracts\BoolResolver;
-use Smpita\TypeAs\Resolvers\Base\AsNullableBool;
 use Smpita\TypeAs\Contracts\NullableBoolResolver;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
+use Smpita\TypeAs\Resolvers\Base\AsBool;
+use Smpita\TypeAs\Resolvers\Base\AsNullableBool;
 
 trait ResolvesBools
 {
-    protected static ?BoolResolver $boolResolver = null;
+    protected ?BoolResolver $boolResolver = null;
 
-    protected static ?NullableBoolResolver $nullableBoolResolver = null;
+    protected ?NullableBoolResolver $nullableBoolResolver = null;
 
     /**
      * @throws TypeAsResolutionException
      */
-    public static function bool(mixed $value, ?bool $default = null, ?BoolResolver $resolver = null): bool
+    public function bool(mixed $value, ?bool $default = null, ?BoolResolver $resolver = null): bool
     {
-        $resolver ??= static::$boolResolver ?? new AsBool();
+        $resolver ??= $this->boolResolver ??= new AsBool();
 
         return $resolver->resolve($value, $default);
     }
 
-    public static function nullableBool(mixed $value, ?bool $default = null, ?NullableBoolResolver $resolver = null): ?bool
+    public function nullableBool(mixed $value, ?bool $default = null, ?NullableBoolResolver $resolver = null): ?bool
     {
-        $resolver ??= static::$nullableBoolResolver ?? new AsNullableBool();
+        $resolver ??= $this->nullableBoolResolver ??= new AsNullableBool();
 
         return $resolver->resolve($value, $default);
     }
 
-    public static function setBoolResolver(?BoolResolver $resolver): void
+    public function setBoolResolver(?BoolResolver $resolver): void
     {
-        static::$boolResolver = $resolver;
+        $this->boolResolver = $resolver;
     }
 
-    public static function setNullableBoolResolver(?NullableBoolResolver $resolver): void
+    public function setNullableBoolResolver(?NullableBoolResolver $resolver): void
     {
-        static::$nullableBoolResolver = $resolver;
+        $this->nullableBoolResolver = $resolver;
     }
 }
