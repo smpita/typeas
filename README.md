@@ -22,7 +22,8 @@ Easily type your `mixed` signatures. Perfect for static analysis!
 - [Quick Start](#quick-start)
   - [Installation](#installation)
   - [Resolving Types](#resolving-types)
-  - [Caveats](#caveats)
+  - [Fluent Syntax](#fluent-syntax)
+  - [Array Wrapping](#array-wrapping)
   - [Official Extensions](#official-extensions)
   - [Custom Resolvers](#custom-resolvers)
   - [Helpers](#helpers)
@@ -74,6 +75,8 @@ $nullableInt = TypeAs::nullableInt($mixed);
 $nullableString = TypeAs::nullableString($mixed);
 ```
 
+### Defaults
+
 To suppress throwing exceptions, provide a default.
 
 ```php
@@ -94,9 +97,12 @@ $nullableClass = TypeAs::nullableClass(Expected::class, $mixed, new StdClass());
 $nullableFloat = TypeAs::nullableFloat($mixed, 0.0);
 $nullableInt = TypeAs::nullableInt($mixed, 0);
 $nullableString = TypeAs::nullableString($mixed, '');
+
+// As a named parameter
+$array = TypeAs::array(value: $mixed, default: []);
 ```
 
-### Caveats
+### Array Wrapping
 
 [SIGNATURES#array](docs/signatures.md#array)
 
@@ -108,9 +114,128 @@ use Smpita\TypeAs\TypeAs;
 TypeAs::array('example'); // returns ['example']
 TypeAs::array(['example']); // returns ['example']
 
-// Disable wrapping to get exceptions.
-TypeAs::array('', wrap: false); // throws \Smpita\TypeAs\TypeAsResolutionException
-TypeAs::array('', null, null, false); // throws \Smpita\TypeAs\TypeAsResolutionException
+/**
+ * Disable array wrapping to get exceptions.
+ * These throw \Smpita\TypeAs\TypeAsResolutionException
+ */
+TypeAs::array('', wrap: false);
+TypeAs::array('', null, null, false);
+
+### Fluent Syntax
+
+As a convenience, TypeAs supports fluent syntax.
+The `NonNullable` and `Nullable` fluent classes wrap the base TypeAs methods.
+In performance critical environments, the [standard methods](#resolving-types) are recommended.
+
+#### Basic Usage
+
+```php
+use Smpita\TypeAs\TypeAs;
+
+$array = TypeAs::type($mixed)->asArray();
+$bool = TypeAs::type($mixed)->asBool();
+$filterBool = TypeAs::type($mixed)->asFilterBool()
+$class = TypeAs::type($mixed)->asClass(Expected::class);
+$float = TypeAs::type($mixed)->asFloat();
+$int = TypeAs::type($mixed)->asInt();
+$string = TypeAs::type($mixed)->asString();
+```
+
+#### Nullable
+
+Chain `nullable()` for nullable returns.
+
+Note: Moving between `NonNullable` and `Nullable` returns a new instance of the associated class.
+
+```php
+use Smpita\TypeAs\TypeAs;
+
+$nullableArray = TypeAs::type($mixed)
+    ->nullable()
+    ->asArray();
+```
+
+```php
+use Smpita\TypeAs\TypeAs;
+
+$array = $typeAsNullableInstance
+    ->nonNullable()
+    ->asArray();
+```
+
+#### Custom Resolver
+
+Chain `using()` to resolve using a [Custom Resolver](#custom-resolvers).
+
+```php
+use Smpita\TypeAs\TypeAs;
+
+$array = TypeAs::type($mixed)
+    ->using(new CustomArrayResolver())
+    ->asArray();
+```
+
+#### Defaults
+
+Chain `default()` to specify a default.
+
+```php
+use Smpita\TypeAs\TypeAs;
+
+$array = TypeAs::type($mixed)
+    ->default([])
+    ->asArray();
+```
+
+### Wrapping
+
+```php
+TypeAs::type('')->noWrap()->asArray();
+TypeAs::type('')->wrap(false)->asArray();
+```
+
+### Copying
+
+```php
+use Smpita\TypeAs\TypeAs;
+
+$instance = TypeAs::type($mixed);
+
+$assignment = $instance; // $assignment mutates when $instance changes.
+$copy = $instance->copy(); // $copy is unaffected by changes to $instance.
+$clone = clone $instance; // $clone is unaffected by changes to $instance.
+```
+
+### Accessing the config
+
+```php
+use Smpita\TypeAs\Fluent\Nullable;
+use Smpita\TypeAs\Fluent\NonNullable;
+
+// Returns \Smpita\TypeAs\Fluent\TypeConfig
+$config = NonNullable::make()->config();
+$config = Nullable::make()->config();
+```
+
+### Importing a config
+
+```php
+use Smpita\TypeAs\Fluent\Nullable;
+use Smpita\TypeAs\Fluent\NonNullable;
+use Smpita\TypeAs\Fluent\TypeConfig;
+
+$config = new TypeConfig(
+    fromValue: $mixed,
+    defaultTo: $default,
+    resolveUsing: $resolver,
+    arrayWrap: null,
+);
+
+$nonNullable = NonNullable::make($config);
+$nonNullable = (new NonNullable())->import($config);
+
+$nullable = Nullable::make($config);
+$nullable = (new Nullable())->import($config);
 ```
 
 ---
@@ -303,22 +428,10 @@ $nullableString = TypeAs::nullableString($mixed, null, new \Smpita\TypeAs\Resolv
 
 [SIGNATURES#helpers](docs/signatures.md#helpers)
 
-```php
-use function Smpita\TypeAs\asArray;
-use function Smpita\TypeAs\asBool;
-use function Smpita\TypeAs\asFilterBool;
-use function Smpita\TypeAs\asClass;
-use function Smpita\TypeAs\asFloat;
-use function Smpita\TypeAs\asInt;
-use function Smpita\TypeAs\asString;
-use function Smpita\TypeAs\asNullableArray;
-use function Smpita\TypeAs\asNullableBool;
-use function Smpita\TypeAs\asNullableFilterBool;
-use function Smpita\TypeAs\asNullableClass;
-use function Smpita\TypeAs\asNullableFloat;
-use function Smpita\TypeAs\asNullableInt;
-use function Smpita\TypeAs\asNullableString;
+### Global
 
+```php
+// Standard Helpers
 $array = asArray($mixed);
 $bool = asBool($mixed);
 $filterBool = asFilterBool($mixed);
@@ -333,8 +446,32 @@ $nullableClass = asNullableClass(Target::class, $mixed);
 $nullableFloat = asNullableFloat($mixed);
 $nullableInt = asNullableInt($mixed);
 $nullableString = asNullableString($mixed);
+
+// Fluent Helpers
+$type = type($mixed);
 ```
 
+### Local
+
+Each global helper has a local counterpart you can import if the global helper collides with another global method.
+
+```php
+use function Smpita\TypeAs\asArray as TypeAsArray;
+use function Smpita\TypeAs\asBool as TypeAsBool;
+use function Smpita\TypeAs\asFilterBool as TypeAsFilterBool;
+use function Smpita\TypeAs\asClass as TypeAsClass;
+use function Smpita\TypeAs\asFloat as TypeAsFloat
+use function Smpita\TypeAs\asInt as TypeAsInt;
+use function Smpita\TypeAs\asString as TypeAsString;
+use function Smpita\TypeAs\asNullableArray as TypeAsNullableArray;
+use function Smpita\TypeAs\asNullableBool as TypeAsNullableBool;
+use function Smpita\TypeAs\asNullableFilterBool as TypeAsNullableFilterBool;
+use function Smpita\TypeAs\asNullableClass as TypeAsNullableClass;
+use function Smpita\TypeAs\asNullableFloat as TypeAsNullableFloat;
+use function Smpita\TypeAs\asNullableInt as TypeAsNullableInt;
+use function Smpita\TypeAs\asNullableString as TypeAsNullableString;
+use function Smpita\TypeAs\type as TypeAsType;
+```
 ---
 
 ## Deprecations

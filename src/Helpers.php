@@ -15,6 +15,12 @@ use Smpita\TypeAs\Contracts\NullableIntResolver;
 use Smpita\TypeAs\Contracts\NullableStringResolver;
 use Smpita\TypeAs\Contracts\StringResolver;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
+use Smpita\TypeAs\Fluent\NonNullable;
+
+function type(mixed $value): NonNullable
+{
+    return TypeAs::type($value);
+}
 
 /**
  * @throws TypeAsResolutionException

@@ -110,6 +110,55 @@ Smpita\TypeAs::setStringResolver(?\Smpita\TypeAs\Contracts\StringResolver $resol
 Smpita\TypeAs::setNullableStringResolver(?\Smpita\TypeAs\Contracts\NullableStringResolver $resolver): void
 ```
 
+### Fluent
+
+#### TypeAs
+
+```php
+\Smpita\TypeAs\TypeAs::type($mixed): NonNullable
+```
+
+#### `\Smpita\TypeAs\Concerns\Fluent\HandlesFluentCalls`
+Trait methods common to NonNullable and Nullable
+```php
+make(?\Smpita\TypeAs\Fluent\TypeConfig $config = null): self
+copy(): self
+import(\Smpita\TypeAs\Fluent\TypeConfig $config): self
+config(): \Smpita\TypeAs\Fluent\TypeConfig
+nonNullable(): \Smpita\TypeAs\Fluent\NonNullable
+nullable(): \Smpita\TypeAs\Fluent\Nullable
+
+type(mixed $value): self
+default(mixed $default): self
+using(null|ArrayResolver|NullableArrayResolver|BoolResolver|NullableBoolResolver|ClassResolver|NullableClassResolver|FloatResolver|NullableFloatResolver|IntResolver|NullableIntResolver|StringResolver|NullableStringResolver $resolver): self
+wrap(bool $enabled = true): self
+noWrap(): self // Inverse wrapper of wrap()
+```
+
+#### `\Smpita\TypeAs\Fluent\NonNullable`
+
+```php
+asArray(): array
+asBool(): bool
+asFilterBool(): bool
+asClass(string $class): object
+asFloat(): float
+asInt(): int
+asString(): string
+```
+
+#### `\Smpita\TypeAs\Fluent\Nullable`
+
+```php
+asArray(): ?array
+asBool(): ?bool
+asFilterBool(): ?bool
+asClass(string $class): ?object
+asFloat(): ?float
+asInt(): ?int
+asString(): ?string
+```
+
 ### Helpers
 
 #### Array
