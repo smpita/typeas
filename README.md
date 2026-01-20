@@ -122,13 +122,15 @@ TypeAs::array('example', wrap: false);
 TypeAs::array('example', null, null, false);
 ```
 
-### Fluent Syntax
+---
+
+## Fluent Syntax
 
 As a convenience, TypeAs supports fluent syntax.
 The `NonNullable` and `Nullable` fluent classes wrap the base TypeAs methods.
 In performance critical environments, the [standard methods](#resolving-types) are recommended.
 
-#### Basic Usage
+### Basic Usage
 
 ```php
 use Smpita\TypeAs\TypeAs;
@@ -142,7 +144,7 @@ $int = TypeAs::type($mixed)->asInt();
 $string = TypeAs::type($mixed)->asString();
 ```
 
-#### Nullable
+### Nullable
 
 Chain `nullable()` for nullable returns.
 
@@ -164,7 +166,7 @@ $array = $typeAsNullableInstance
     ->asArray();
 ```
 
-#### Custom Resolver
+### Custom Resolver
 
 Chain `using()` to resolve using a [Custom Resolver](#custom-resolvers).
 
@@ -176,7 +178,7 @@ $array = TypeAs::type($mixed)
     ->asArray();
 ```
 
-#### Defaults
+### Defaults
 
 Chain `default()` to specify a default.
 
