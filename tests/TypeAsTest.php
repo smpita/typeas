@@ -288,23 +288,21 @@ class TypeAsTest extends TestCase
     #[DataProvider('resolverProvider')]
     public function test_can_reset_resolvers(string $key, mixed $resolver): void
     {
-        $service = TypeAs::getInstance();
-
         $setResolverMethod = 'set'.ucfirst($key);
-        $service->$setResolverMethod($resolver);
+        TypeAs::getInstance()->$setResolverMethod($resolver);
 
-        $value = new ReflectionClass($service)
+        $value = new ReflectionClass(TypeAs::getInstance())
             ->getProperty($key)
-            ->getValue($service);
+            ->getValue(TypeAs::getInstance());
 
         $this->assertNotNull($value);
         $this->assertSame($resolver, $value);
 
         TypeAs::useDefaultResolvers();
 
-        $value = new ReflectionClass($service)
+        $value = new ReflectionClass(TypeAs::getInstance())
             ->getProperty($key)
-            ->getValue($service);
+            ->getValue(TypeAs::getInstance());
 
         $this->assertNull($value);
     }
