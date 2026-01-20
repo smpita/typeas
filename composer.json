@@ -29,7 +29,8 @@
             "Smpita\\TypeAs\\": "src/"
         },
         "files": [
-            "src/Helpers.php"
+            "src/Helpers.php",
+            "src/GlobalHelpers.php"
         ]
     },
     "autoload-dev": {
