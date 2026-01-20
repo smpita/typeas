@@ -1,10 +1,10 @@
 <?php
 
-namespace Smpita\TypeAs\Concerns\Fluent;
+namespace Smpita\TypeAs\Concerns\StaticDelegation\Fluent;
 
 use Smpita\TypeAs\Fluent\NonNullable;
 
-trait DelegatesFluent
+trait ForwardsNonNullable
 {
     public static function from(mixed $value): NonNullable
     {
