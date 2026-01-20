@@ -2,6 +2,7 @@
 
 namespace Smpita\TypeAs\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use ReflectionClass;
@@ -284,44 +285,46 @@ class TypeAsTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_can_reset_resolvers(): void
+    #[DataProvider('resolverProvider')]
+    public function test_can_reset_resolvers(string $key, mixed $resolver): void
     {
-        $resolvers = [
-            'nullableArrayResolver' => new NullableArrayResolverStub(),
-            'nullableBoolResolver' => new NullableBoolResolverStub(),
-            'nullableClassResolver' => new NullableClassResolverStub(),
-            'nullableFloatResolver' => new NullableFloatResolverStub(),
-            'nullableIntResolver' => new NullableIntResolverStub(),
-            'nullableStringResolver' => new NullableStringResolverStub(),
-            'arrayResolver' => new ArrayResolverStub(),
-            'boolResolver' => new BoolResolverStub(),
-            'classResolver' => new ClassResolverStub(),
-            'floatResolver' => new FloatResolverStub(),
-            'intResolver' => new IntResolverStub(),
-            'stringResolver' => new StringResolverStub(),
-        ];
-
         $service = TypeAs::getInstance();
 
-        foreach ($resolvers as $key => $resolver) {
-            $setResolverMethod = 'set'.ucfirst($key);
-            $service->$setResolverMethod($resolver); // @phpstan-ignore-line
+        $setResolverMethod = 'set'.ucfirst($key);
+        $service->$setResolverMethod($resolver);
 
-            $value = new ReflectionClass($service)
-                ->getProperty($key)
-                ->getValue($service);
+        $value = new ReflectionClass($service)
+            ->getProperty($key)
+            ->getValue($service);
 
-            $this->assertNotNull($value);
-            $this->assertSame($resolver, $value);
+        $this->assertNotNull($value);
+        $this->assertSame($resolver, $value);
 
-            TypeAs::useDefaultResolvers();
+        TypeAs::useDefaultResolvers();
 
-            $value = new ReflectionClass($service)
-                ->getProperty($key)
-                ->getValue($service);
+        $value = new ReflectionClass($service)
+            ->getProperty($key)
+            ->getValue($service);
 
-            $this->assertNull($value);
-        }
+        $this->assertNull($value);
+    }
+
+    public static function resolverProvider(): array
+    {
+        return [
+            ['nullableArrayResolver', new NullableArrayResolverStub()],
+            ['nullableBoolResolver', new NullableBoolResolverStub()],
+            ['nullableClassResolver', new NullableClassResolverStub()],
+            ['nullableFloatResolver', new NullableFloatResolverStub()],
+            ['nullableIntResolver', new NullableIntResolverStub()],
+            ['nullableStringResolver', new NullableStringResolverStub()],
+            ['arrayResolver', new ArrayResolverStub()],
+            ['boolResolver', new BoolResolverStub()],
+            ['classResolver', new ClassResolverStub()],
+            ['floatResolver', new FloatResolverStub()],
+            ['intResolver', new IntResolverStub()],
+            ['stringResolver', new StringResolverStub()],
+        ];
     }
 }
 
