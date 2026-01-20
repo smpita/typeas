@@ -301,20 +301,26 @@ class TypeAsTest extends TestCase
             'stringResolver' => new StringResolverStub(),
         ];
 
-        $service = new TypeAs();
+        $service = TypeAs::getInstance();
 
         foreach ($resolvers as $key => $resolver) {
             $setResolverMethod = 'set'.ucfirst($key);
             $service->$setResolverMethod($resolver); // @phpstan-ignore-line
 
-            $reflection = new ReflectionClass($service);
+            $value = new ReflectionClass($service)
+                ->getProperty($key)
+                ->getValue($service);
 
-            $this->assertNotNull($reflection->getStaticPropertyValue($key));
-            $this->assertSame($resolver, $reflection->getStaticPropertyValue($key));
+            $this->assertNotNull($value);
+            $this->assertSame($resolver, $value);
 
             TypeAs::useDefaultResolvers();
-            $this->assertNull($reflection->getStaticPropertyValue($key));
 
+            $value = new ReflectionClass($service)
+                ->getProperty($key)
+                ->getValue($service);
+
+            $this->assertNull($value);
         }
     }
 }
