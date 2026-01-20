@@ -2,14 +2,14 @@
 
 namespace Smpita\TypeAs\Concerns\Instance\Base;
 
-use Smpita\TypeAs\Concerns\Instance\HandlesTypeAsService;
+use Smpita\TypeAs\Concerns\Instance\HandlesTypeFactory;
 use Smpita\TypeAs\Contracts\IntResolver;
 use Smpita\TypeAs\Contracts\NullableIntResolver;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
 trait ForwardsIntStatics
 {
-    use HandlesTypeAsService;
+    use HandlesTypeFactory;
 
     /**
      * @throws TypeAsResolutionException

@@ -2,12 +2,12 @@
 
 namespace Smpita\TypeAs\Concerns\Instance\Extensions;
 
-use Smpita\TypeAs\Concerns\Instance\HandlesTypeAsService;
+use Smpita\TypeAs\Concerns\Instance\HandlesTypeFactory;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
 trait ForwardsFilterBoolStatics
 {
-    use HandlesTypeAsService;
+    use HandlesTypeFactory;
 
     /**
      * @throws TypeAsResolutionException

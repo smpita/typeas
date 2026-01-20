@@ -10,7 +10,7 @@ use Smpita\TypeAs\Concerns\Resolvers\Base\ResolvesInts;
 use Smpita\TypeAs\Concerns\Resolvers\Base\ResolvesStrings;
 use Smpita\TypeAs\Concerns\Resolvers\Extensions\ResolvesFilterBools;
 
-class TypeAsService
+class TypeFactory
 {
     use ResolvesArrays;
     use ResolvesBools;

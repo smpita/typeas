@@ -2,14 +2,14 @@
 
 namespace Smpita\TypeAs\Concerns\Instance\Base;
 
-use Smpita\TypeAs\Concerns\Instance\HandlesTypeAsService;
+use Smpita\TypeAs\Concerns\Instance\HandlesTypeFactory;
 use Smpita\TypeAs\Contracts\ClassResolver;
 use Smpita\TypeAs\Contracts\NullableClassResolver;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
 trait ForwardsClassStatics
 {
-    use HandlesTypeAsService;
+    use HandlesTypeFactory;
 
     /**
      * @template TClass of object

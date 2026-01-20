@@ -2,19 +2,19 @@
 
 namespace Smpita\TypeAs\Concerns\Instance;
 
-use Smpita\TypeAs\TypeAsService;
+use Smpita\TypeAs\TypeFactory;
 
-trait HandlesTypeAsService
+trait HandlesTypeFactory
 {
-    protected static TypeAsService $instance;
+    protected static TypeFactory $instance;
 
     public static function useDefaultResolvers(): void
     {
         static::getInstance()->useDefaultResolvers();
     }
 
-    public static function getInstance(): TypeAsService
+    public static function getInstance(): TypeFactory
     {
-        return static::$instance ??= new TypeAsService();
+        return static::$instance ??= new TypeFactory();
     }
 }

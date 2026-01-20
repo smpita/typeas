@@ -2,14 +2,14 @@
 
 namespace Smpita\TypeAs\Concerns\Instance\Base;
 
-use Smpita\TypeAs\Concerns\Instance\HandlesTypeAsService;
+use Smpita\TypeAs\Concerns\Instance\HandlesTypeFactory;
 use Smpita\TypeAs\Contracts\ArrayResolver;
 use Smpita\TypeAs\Contracts\NullableArrayResolver;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
 trait ForwardsArrayStatics
 {
-    use HandlesTypeAsService;
+    use HandlesTypeFactory;
 
     /**
      * @throws TypeAsResolutionException

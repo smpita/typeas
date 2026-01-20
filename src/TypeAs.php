@@ -9,10 +9,10 @@ use Smpita\TypeAs\Concerns\Instance\Base\ForwardsFloatStatics;
 use Smpita\TypeAs\Concerns\Instance\Base\ForwardsIntStatics;
 use Smpita\TypeAs\Concerns\Instance\Base\ForwardsStringStatics;
 use Smpita\TypeAs\Concerns\Instance\Extensions\ForwardsFilterBoolStatics;
-use Smpita\TypeAs\Concerns\Instance\HandlesTypeAsService;
+use Smpita\TypeAs\Concerns\Instance\HandlesTypeFactory;
 
 /**
- * @see \Smpita\TypeAs\TypeAsService
+ * @see \Smpita\TypeAs\TypeFactory
  */
 class TypeAs
 {
@@ -23,5 +23,5 @@ class TypeAs
     use ForwardsFloatStatics;
     use ForwardsIntStatics;
     use ForwardsStringStatics;
-    use HandlesTypeAsService;
+    use HandlesTypeFactory;
 }

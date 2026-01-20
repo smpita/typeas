@@ -2,14 +2,14 @@
 
 namespace Smpita\TypeAs\Concerns\Instance\Base;
 
-use Smpita\TypeAs\Concerns\Instance\HandlesTypeAsService;
+use Smpita\TypeAs\Concerns\Instance\HandlesTypeFactory;
 use Smpita\TypeAs\Contracts\FloatResolver;
 use Smpita\TypeAs\Contracts\NullableFloatResolver;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
 trait ForwardsFloatStatics
 {
-    use HandlesTypeAsService;
+    use HandlesTypeFactory;
 
     /**
      * @throws TypeAsResolutionException
