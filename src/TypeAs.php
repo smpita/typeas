@@ -2,13 +2,13 @@
 
 namespace Smpita\TypeAs;
 
-use Smpita\TypeAs\Concerns\Instance\Base\ForwardsArrayStatics;
-use Smpita\TypeAs\Concerns\Instance\Base\ForwardsBoolStatics;
-use Smpita\TypeAs\Concerns\Instance\Base\ForwardsClassStatics;
-use Smpita\TypeAs\Concerns\Instance\Base\ForwardsFloatStatics;
-use Smpita\TypeAs\Concerns\Instance\Base\ForwardsIntStatics;
-use Smpita\TypeAs\Concerns\Instance\Base\ForwardsStringStatics;
-use Smpita\TypeAs\Concerns\Instance\Extensions\ForwardsFilterBoolStatics;
+use Smpita\TypeAs\Concerns\Statics\Base\ForwardsArrayStatics;
+use Smpita\TypeAs\Concerns\Statics\Base\ForwardsBoolStatics;
+use Smpita\TypeAs\Concerns\Statics\Base\ForwardsClassStatics;
+use Smpita\TypeAs\Concerns\Statics\Base\ForwardsFloatStatics;
+use Smpita\TypeAs\Concerns\Statics\Base\ForwardsIntStatics;
+use Smpita\TypeAs\Concerns\Statics\Base\ForwardsStringStatics;
+use Smpita\TypeAs\Concerns\Statics\Extensions\ForwardsFilterBoolStatics;
 use Smpita\TypeAs\Concerns\Instance\HandlesTypeFactory;
 
 /**

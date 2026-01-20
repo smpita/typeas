@@ -1,6 +1,6 @@
 <?php
 
-namespace Smpita\TypeAs\Concerns\Instance\Base;
+namespace Smpita\TypeAs\Concerns\Statics\Base;
 
 use Smpita\TypeAs\Concerns\Instance\HandlesTypeFactory;
 use Smpita\TypeAs\Contracts\FloatResolver;

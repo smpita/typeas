@@ -1,6 +1,6 @@
 <?php
 
-namespace Smpita\TypeAs\Concerns\Instance\Extensions;
+namespace Smpita\TypeAs\Concerns\Statics\Extensions;
 
 use Smpita\TypeAs\Concerns\Instance\HandlesTypeFactory;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
