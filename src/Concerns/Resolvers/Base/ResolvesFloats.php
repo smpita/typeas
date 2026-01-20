@@ -10,34 +10,34 @@ use Smpita\TypeAs\Resolvers\Base\AsNullableFloat;
 
 trait ResolvesFloats
 {
-    protected static ?FloatResolver $floatResolver = null;
+    protected ?FloatResolver $floatResolver = null;
 
-    protected static ?NullableFloatResolver $nullableFloatResolver = null;
+    protected ?NullableFloatResolver $nullableFloatResolver = null;
 
     /**
      * @throws TypeAsResolutionException
      */
-    public static function float(mixed $value, ?float $default = null, ?FloatResolver $resolver = null): float
+    public function float(mixed $value, ?float $default = null, ?FloatResolver $resolver = null): float
     {
-        $resolver ??= static::$floatResolver ?? new AsFloat();
+        $resolver ??= $this->floatResolver ??= new AsFloat;
 
         return $resolver->resolve($value, $default);
     }
 
-    public static function nullableFloat(mixed $value, ?float $default = null, ?NullableFloatResolver $resolver = null): ?float
+    public function nullableFloat(mixed $value, ?float $default = null, ?NullableFloatResolver $resolver = null): ?float
     {
-        $resolver ??= static::$nullableFloatResolver ?? new AsNullableFloat();
+        $resolver ??= $this->nullableFloatResolver ??= new AsNullableFloat;
 
         return $resolver->resolve($value, $default);
     }
 
-    public static function setFloatResolver(?FloatResolver $resolver): void
+    public function setFloatResolver(?FloatResolver $resolver): void
     {
-        static::$floatResolver = $resolver;
+        $this->floatResolver = $resolver;
     }
 
-    public static function setNullableFloatResolver(?NullableFloatResolver $resolver): void
+    public function setNullableFloatResolver(?NullableFloatResolver $resolver): void
     {
-        static::$nullableFloatResolver = $resolver;
+        $this->nullableFloatResolver = $resolver;
     }
 }

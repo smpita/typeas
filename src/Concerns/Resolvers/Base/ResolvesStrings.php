@@ -10,34 +10,34 @@ use Smpita\TypeAs\Resolvers\Base\AsString;
 
 trait ResolvesStrings
 {
-    protected static ?StringResolver $stringResolver = null;
+    protected ?StringResolver $stringResolver = null;
 
-    protected static ?NullableStringResolver $nullableStringResolver = null;
+    protected ?NullableStringResolver $nullableStringResolver = null;
 
     /**
      * @throws TypeAsResolutionException
      */
-    public static function string(mixed $value, ?string $default = null, ?StringResolver $resolver = null): string
+    public function string(mixed $value, ?string $default = null, ?StringResolver $resolver = null): string
     {
-        $resolver ??= static::$stringResolver ?? new AsString();
+        $resolver ??= $this->stringResolver ??= new AsString;
 
         return $resolver->resolve($value, $default);
     }
 
-    public static function nullableString(mixed $value, ?string $default = null, ?NullableStringResolver $resolver = null): ?string
+    public function nullableString(mixed $value, ?string $default = null, ?NullableStringResolver $resolver = null): ?string
     {
-        $resolver ??= static::$nullableStringResolver ?? new AsNullableString();
+        $resolver ??= $this->nullableStringResolver ??= new AsNullableString;
 
         return $resolver->resolve($value, $default);
     }
 
-    public static function setStringResolver(?StringResolver $resolver): void
+    public function setStringResolver(?StringResolver $resolver): void
     {
-        static::$stringResolver = $resolver;
+        $this->stringResolver = $resolver;
     }
 
-    public static function setNullableStringResolver(?NullableStringResolver $resolver): void
+    public function setNullableStringResolver(?NullableStringResolver $resolver): void
     {
-        static::$nullableStringResolver = $resolver;
+        $this->nullableStringResolver = $resolver;
     }
 }

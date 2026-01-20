@@ -13,6 +13,6 @@ class AsFilterBool extends Resolver implements BoolResolver
      */
     public function resolve(mixed $value, ?bool $default = null): bool
     {
-        return (new AsNullableFilterBool())->resolve($value, $default) ?? $this->throwResolutionException($value);
+        return (new AsNullableFilterBool)->resolve($value, $default) ?? $this->throwResolutionException($value);
     }
 }
