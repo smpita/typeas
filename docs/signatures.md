@@ -115,11 +115,11 @@ Smpita\TypeAs::setNullableStringResolver(?\Smpita\TypeAs\Contracts\NullableStrin
 #### TypeAs
 
 ```php
-\Smpita\TypeAs\TypeAs::type($mixed): Strict
+\Smpita\TypeAs\TypeAs::type($mixed): NonNullable
 ```
 
 #### `\Smpita\TypeAs\Concerns\Fluent\HandlesFluentCalls`
-Trait methods common to Strict and Nullable
+Trait methods common to NonNullable and Nullable
 ```php
 make(?\Smpita\TypeAs\Fluent\TypeConfig $config = null): self
 copy(): self
@@ -135,7 +135,7 @@ wrap(bool $enabled = true): self
 noWrap(): self // Inverse wrapper of wrap()
 ```
 
-#### `\Smpita\TypeAs\Fluent\Strict`
+#### `\Smpita\TypeAs\Fluent\NonNullable`
 
 ```php
 asArray(): array
