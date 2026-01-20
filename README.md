@@ -132,13 +132,13 @@ In performance critical environments, the [standard methods](#resolving-types) a
 ```php
 use Smpita\TypeAs\TypeAs;
 
-$array = TypeAs::type($mixed)->toArray();
-$bool = TypeAs::type($mixed)->toBool();
-$filterBool = TypeAs::type($mixed)->toFilterBool()
-$class = TypeAs::type($mixed)->toClass(Expected::class);
-$float = TypeAs::type($mixed)->toFloat();
-$int = TypeAs::type($mixed)->toInt();
-$string = TypeAs::type($mixed)->toString();
+$array = TypeAs::type($mixed)->asArray();
+$bool = TypeAs::type($mixed)->asBool();
+$filterBool = TypeAs::type($mixed)->asFilterBool()
+$class = TypeAs::type($mixed)->asClass(Expected::class);
+$float = TypeAs::type($mixed)->asFloat();
+$int = TypeAs::type($mixed)->asInt();
+$string = TypeAs::type($mixed)->asString();
 ```
 
 #### Nullable
@@ -152,7 +152,7 @@ use Smpita\TypeAs\TypeAs;
 
 $nullableArray = TypeAs::type($mixed)
     ->nullable()
-    ->toArray();
+    ->asArray();
 ```
 
 ```php
@@ -160,7 +160,7 @@ use Smpita\TypeAs\TypeAs;
 
 $array = $typeAsNullableInstance
     ->nonNullable()
-    ->toArray();
+    ->asArray();
 ```
 
 #### Custom Resolver
@@ -172,7 +172,7 @@ use Smpita\TypeAs\TypeAs;
 
 $array = TypeAs::type($mixed)
     ->using(new CustomArrayResolver())
-    ->toArray();
+    ->asArray();
 ```
 
 #### Defaults
@@ -184,14 +184,14 @@ use Smpita\TypeAs\TypeAs;
 
 $array = TypeAs::type($mixed)
     ->default([])
-    ->toArray();
+    ->asArray();
 ```
 
 ### Wrapping
 
 ```php
-TypeAs::type('')->noWrap()->toArray();
-TypeAs::type('')->wrap(false)->toArray();
+TypeAs::type('')->noWrap()->asArray();
+TypeAs::type('')->wrap(false)->asArray();
 ```
 
 ### Copying

@@ -9,7 +9,7 @@ class Nullable
 {
     use HandlesFluentCalls;
 
-    public function toArray(): ?array
+    public function asArray(): ?array
     {
         return TypeAs::nullableArray(
             value: $this->config()->fromValue,
@@ -19,7 +19,7 @@ class Nullable
         );
     }
 
-    public function toBool(): ?bool
+    public function asBool(): ?bool
     {
         return TypeAs::nullableBool(
             value: $this->config()->fromValue,
@@ -28,7 +28,7 @@ class Nullable
         );
     }
 
-    public function toFilterBool(): ?bool
+    public function asFilterBool(): ?bool
     {
         return TypeAs::nullableFilterBool(
             value: $this->config()->fromValue,
@@ -42,7 +42,7 @@ class Nullable
      * @param  class-string<TClass>  $class
      * @return TClass|null
      */
-    public function toClass(string $class)
+    public function asClass(string $class)
     {
         return TypeAs::nullableClass(
             class: $class,
@@ -52,7 +52,7 @@ class Nullable
         );
     }
 
-    public function toFloat(): ?float
+    public function asFloat(): ?float
     {
         return TypeAs::nullableFloat(
             value: $this->config()->fromValue,
@@ -61,7 +61,7 @@ class Nullable
         );
     }
 
-    public function toInt(): ?int
+    public function asInt(): ?int
     {
         return TypeAs::nullableInt(
             value: $this->config()->fromValue,
@@ -70,7 +70,7 @@ class Nullable
         );
     }
 
-    public function toString(): ?string
+    public function asString(): ?string
     {
         return TypeAs::nullableString(
             value: $this->config()->fromValue,

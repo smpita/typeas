@@ -138,25 +138,25 @@ noWrap(): self // Inverse wrapper of wrap()
 #### `\Smpita\TypeAs\Fluent\Strict`
 
 ```php
-toArray(): array
-toBool(): bool
-toFilterBool(): bool
-toClass(string $class): object
-toFloat(): float
-toInt(): int
-toString(): string
+asArray(): array
+asBool(): bool
+asFilterBool(): bool
+asClass(string $class): object
+asFloat(): float
+asInt(): int
+asString(): string
 ```
 
 #### `\Smpita\TypeAs\Fluent\Nullable`
 
 ```php
-toArray(): ?array
-toBool(): ?bool
-toFilterBool(): ?bool
-toClass(string $class): ?object
-toFloat(): ?float
-toInt(): ?int
-toString(): ?string
+asArray(): ?array
+asBool(): ?bool
+asFilterBool(): ?bool
+asClass(string $class): ?object
+asFloat(): ?float
+asInt(): ?int
+asString(): ?string
 ```
 
 ### Helpers

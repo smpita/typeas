@@ -13,7 +13,7 @@ class NonNullable
     /**
      * @throws TypeAsResolutionException
      */
-    public function toArray(): array
+    public function asArray(): array
     {
         return TypeAs::array(
             value: $this->config()->fromValue,
@@ -26,7 +26,7 @@ class NonNullable
     /**
      * @throws TypeAsResolutionException
      */
-    public function toBool(): bool
+    public function asBool(): bool
     {
         return TypeAs::bool(
             value: $this->config()->fromValue,
@@ -38,7 +38,7 @@ class NonNullable
     /**
      * @throws TypeAsResolutionException
      */
-    public function toFilterBool(): ?bool
+    public function asFilterBool(): ?bool
     {
         return TypeAs::filterBool(
             value: $this->config()->fromValue,
@@ -54,7 +54,7 @@ class NonNullable
      *
      * @throws TypeAsResolutionException
      */
-    public function toClass(string $class)
+    public function asClass(string $class)
     {
         return TypeAs::class(
             class: $class,
@@ -67,7 +67,7 @@ class NonNullable
     /**
      * @throws TypeAsResolutionException
      */
-    public function toFloat(): float
+    public function asFloat(): float
     {
         return TypeAs::float(
             value: $this->config()->fromValue,
@@ -79,7 +79,7 @@ class NonNullable
     /**
      * @throws TypeAsResolutionException
      */
-    public function toInt(): int
+    public function asInt(): int
     {
         return TypeAs::int(
             value: $this->config()->fromValue,
@@ -91,7 +91,7 @@ class NonNullable
     /**
      * @throws TypeAsResolutionException
      */
-    public function toString(): string
+    public function asString(): string
     {
         return TypeAs::string(
             value: $this->config()->fromValue,
