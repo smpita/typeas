@@ -20,13 +20,18 @@ final class TypeConfig
     public function __construct(
         public mixed $fromValue = null,
         public mixed $defaultTo = null,
-        public ArrayResolver|NullableArrayResolver
-            |BoolResolver|NullableBoolResolver
-            |ClassResolver|NullableClassResolver
-            |FloatResolver|NullableFloatResolver
-            |IntResolver|NullableIntResolver
-            |StringResolver|NullableStringResolver
-            |null $resolveUsing = null,
+        public ?ArrayResolver $arrayResolver = null,
+        public ?NullableArrayResolver $nullableArrayResolver = null,
+        public ?BoolResolver $boolResolver = null,
+        public ?NullableBoolResolver $nullableBoolResolver = null,
+        public ?ClassResolver $classResolver = null,
+        public ?NullableClassResolver $nullableClassResolver = null,
+        public ?FloatResolver $floatResolver = null,
+        public ?NullableFloatResolver $nullableFloatResolver = null,
+        public ?IntResolver $intResolver = null,
+        public ?NullableIntResolver $nullableIntResolver = null,
+        public ?StringResolver $stringResolver = null,
+        public ?NullableStringResolver $nullableStringResolver = null,
         public ?bool $arrayWrap = true,
     ) {
     }

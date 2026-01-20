@@ -3,12 +3,6 @@
 namespace Smpita\TypeAs\Fluent;
 
 use Smpita\TypeAs\Concerns\Fluent\HandlesFluentCalls;
-use Smpita\TypeAs\Contracts\ArrayResolver;
-use Smpita\TypeAs\Contracts\BoolResolver;
-use Smpita\TypeAs\Contracts\ClassResolver;
-use Smpita\TypeAs\Contracts\FloatResolver;
-use Smpita\TypeAs\Contracts\IntResolver;
-use Smpita\TypeAs\Contracts\StringResolver;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\TypeAs;
 
@@ -24,7 +18,7 @@ class NonNullable
         return TypeAs::array(
             value: $this->config()->fromValue,
             default: TypeAs::nullableArray($this->config()->defaultTo, wrap: false),
-            resolver: TypeAs::nullableClass(ArrayResolver::class, $this->config()->resolveUsing),
+            resolver: $this->config()->arrayResolver,
             wrap: $this->config()->arrayWrap,
         );
     }
@@ -37,7 +31,7 @@ class NonNullable
         return TypeAs::bool(
             value: $this->config()->fromValue,
             default: TypeAs::nullableBool($this->config()->defaultTo),
-            resolver: TypeAs::nullableClass(BoolResolver::class, $this->config()->resolveUsing)
+            resolver: $this->config()->boolResolver,
         );
     }
 
@@ -66,7 +60,7 @@ class NonNullable
             class: $class,
             value: $this->config()->fromValue,
             default: TypeAs::nullableClass(class: $class, value: $this->config()->defaultTo),
-            resolver: TypeAs::nullableClass(class: ClassResolver::class, value: $this->config()->resolveUsing)
+            resolver: $this->config()->classResolver,
         );
     }
 
@@ -78,7 +72,7 @@ class NonNullable
         return TypeAs::float(
             value: $this->config()->fromValue,
             default: TypeAs::nullableFloat($this->config()->defaultTo),
-            resolver: TypeAs::nullableClass(FloatResolver::class, $this->config()->resolveUsing)
+            resolver: $this->config()->floatResolver,
         );
     }
 
@@ -90,7 +84,7 @@ class NonNullable
         return TypeAs::int(
             value: $this->config()->fromValue,
             default: TypeAs::nullableInt($this->config()->defaultTo),
-            resolver: TypeAs::nullableClass(IntResolver::class, $this->config()->resolveUsing)
+            resolver: $this->config()->intResolver,
         );
     }
 
@@ -102,7 +96,7 @@ class NonNullable
         return TypeAs::string(
             value: $this->config()->fromValue,
             default: TypeAs::nullableString($this->config()->defaultTo),
-            resolver: TypeAs::nullableClass(StringResolver::class, $this->config()->resolveUsing)
+            resolver: $this->config()->stringResolver,
         );
     }
 }

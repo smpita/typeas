@@ -62,7 +62,33 @@ trait HandlesFluentCalls
         |StringResolver|NullableStringResolver
         |null $resolver
     ): self {
-        $this->config()->resolveUsing = $resolver;
+        match(true) {
+            $resolver instanceof ArrayResolver
+                => $this->config()->arrayResolver = $resolver,
+            $resolver instanceof NullableArrayResolver
+                => $this->config()->nullableArrayResolver = $resolver,
+            $resolver instanceof BoolResolver
+                => $this->config()->boolResolver = $resolver,
+            $resolver instanceof NullableBoolResolver
+                => $this->config()->nullableBoolResolver = $resolver,
+            $resolver instanceof ClassResolver
+                => $this->config()->classResolver = $resolver,
+            $resolver instanceof NullableClassResolver
+                => $this->config()->nullableClassResolver = $resolver,
+            $resolver instanceof FloatResolver
+                => $this->config()->floatResolver = $resolver,
+            $resolver instanceof NullableFloatResolver
+                => $this->config()->nullableFloatResolver = $resolver,
+            $resolver instanceof IntResolver
+                => $this->config()->intResolver = $resolver,
+            $resolver instanceof NullableIntResolver
+                => $this->config()->nullableIntResolver = $resolver,
+            $resolver instanceof StringResolver
+                => $this->config()->stringResolver = $resolver,
+            $resolver instanceof NullableStringResolver
+                => $this->config()->nullableStringResolver = $resolver,
+            default => $this->useDefaultResolvers(),
+        };
 
         return $this;
     }
@@ -99,5 +125,21 @@ trait HandlesFluentCalls
     public function nullable(): Nullable
     {
         return Nullable::make($this->config);
+    }
+
+    protected function useDefaultResolvers(): void
+    {
+        $this->config()->nullableArrayResolver = null;
+        $this->config()->nullableBoolResolver = null;
+        $this->config()->nullableClassResolver = null;
+        $this->config()->nullableFloatResolver = null;
+        $this->config()->nullableIntResolver = null;
+        $this->config()->nullableStringResolver = null;
+        $this->config()->arrayResolver = null;
+        $this->config()->boolResolver = null;
+        $this->config()->classResolver = null;
+        $this->config()->floatResolver = null;
+        $this->config()->intResolver = null;
+        $this->config()->stringResolver = null;
     }
 }
