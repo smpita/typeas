@@ -2,14 +2,23 @@
 
 namespace Smpita\TypeAs\Tests;
 
-use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\Group;
-use PHPUnit\Framework\Attributes\Test;
-use Smpita\TypeAs\TypeAs;
 use stdClass;
+use Smpita\TypeAs\TypeAs;
+use Smpita\TypeAs\Fluent\NonNullable;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class HelpersTest extends TestCase
 {
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_use_global_type_helper(): void
+    {
+        $this->assertInstanceOf(NonNullable::class, \Smpita\TypeAs\type(null));
+    }
+
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]

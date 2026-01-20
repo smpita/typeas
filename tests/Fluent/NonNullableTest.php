@@ -39,7 +39,7 @@ class NonNullableTest extends TestCase
     public function test_non_nullable_can_copy_to_a_new_instance(): void
     {
         $instance = NonNullable::make()
-            ->from($this->faker->word())
+            ->type($this->faker->word())
             ->default($this->faker->word())
             ->using(new FluentNonNullableArrayResolverStub())
             ->noWrap();
@@ -52,7 +52,7 @@ class NonNullableTest extends TestCase
         $this->assertEquals($instance, $copy);
         $this->assertEquals($instance, $clone);
 
-        $instance->from(null)
+        $instance->type(null)
             ->default(null)
             ->using(null)
             ->wrap();
@@ -95,7 +95,7 @@ class NonNullableTest extends TestCase
 
         $this->assertSame(
             $default,
-            NonNullable::make()->from(null)->default($default)->toArray(),
+            NonNullable::make()->type(null)->default($default)->toArray(),
         );
     }
 
@@ -106,13 +106,13 @@ class NonNullableTest extends TestCase
     {
         $string = $this->faker->sentence();
 
-        $this->assertSame([$string], NonNullable::make()->from($string)->wrap()->toArray());
+        $this->assertSame([$string], NonNullable::make()->type($string)->wrap()->toArray());
 
         $this->expectException(TypeAsResolutionException::class);
-        NonNullable::make()->from($string)->wrap(enabled: false)->toArray();
+        NonNullable::make()->type($string)->wrap(enabled: false)->toArray();
 
         $this->expectException(TypeAsResolutionException::class);
-        NonNullable::make()->from($string)->noWrap()->toArray();
+        NonNullable::make()->type($string)->noWrap()->toArray();
     }
 
     #[Test]
@@ -124,7 +124,7 @@ class NonNullableTest extends TestCase
 
         $this->assertSame(
             $resolver->resolve('test'),
-            NonNullable::make()->from('test')->using($resolver)->toArray(),
+            NonNullable::make()->type('test')->using($resolver)->toArray(),
         );
     }
 
@@ -138,7 +138,7 @@ class NonNullableTest extends TestCase
 
         $this->assertSame(
             $resolver->resolve('test'),
-            NonNullable::make()->from('test')->toArray(),
+            NonNullable::make()->type('test')->toArray(),
         );
     }
 
@@ -151,7 +151,7 @@ class NonNullableTest extends TestCase
 
         $this->assertSame(
             $default,
-            NonNullable::make()->from(null)->default($default)->toBool(),
+            NonNullable::make()->type(null)->default($default)->toBool(),
         );
     }
 
@@ -164,7 +164,7 @@ class NonNullableTest extends TestCase
 
         $this->assertSame(
             $resolver->resolve('test'),
-            NonNullable::make()->from('test')->using($resolver)->toBool(),
+            NonNullable::make()->type('test')->using($resolver)->toBool(),
         );
     }
 
@@ -178,7 +178,7 @@ class NonNullableTest extends TestCase
 
         $this->assertSame(
             $resolver->resolve('test'),
-            NonNullable::make()->from('test')->toBool(),
+            NonNullable::make()->type('test')->toBool(),
         );
     }
 
@@ -191,7 +191,7 @@ class NonNullableTest extends TestCase
 
         $this->assertSame(
             $default,
-            NonNullable::make()->from(null)->default($default)->toFilterBool(),
+            NonNullable::make()->type(null)->default($default)->toFilterBool(),
         );
     }
 
@@ -204,7 +204,7 @@ class NonNullableTest extends TestCase
 
         $this->assertSame(
             $default,
-            NonNullable::make()->from(null)->default($default)->toClass(stdClass::class),
+            NonNullable::make()->type(null)->default($default)->toClass(stdClass::class),
         );
     }
 
@@ -217,7 +217,7 @@ class NonNullableTest extends TestCase
 
         $this->assertEqualsCanonicalizing(
             $resolver->resolve(ClassStub::class, 'test'),
-            NonNullable::make()->from('test')->using($resolver)->toClass(ClassStub::class),
+            NonNullable::make()->type('test')->using($resolver)->toClass(ClassStub::class),
         );
     }
 
@@ -231,7 +231,7 @@ class NonNullableTest extends TestCase
 
         $this->assertEqualsCanonicalizing(
             $resolver->resolve(ClassStub::class, 'test'),
-            NonNullable::make()->from('test')->toClass(ClassStub::class),
+            NonNullable::make()->type('test')->toClass(ClassStub::class),
         );
     }
 
@@ -244,7 +244,7 @@ class NonNullableTest extends TestCase
 
         $this->assertSame(
             $default,
-            NonNullable::make()->from(null)->default($default)->toFloat(),
+            NonNullable::make()->type(null)->default($default)->toFloat(),
         );
     }
 
@@ -257,7 +257,7 @@ class NonNullableTest extends TestCase
 
         $this->assertSame(
             $resolver->resolve('test'),
-            NonNullable::make()->from('test')->using($resolver)->toFloat(),
+            NonNullable::make()->type('test')->using($resolver)->toFloat(),
         );
     }
 
@@ -271,7 +271,7 @@ class NonNullableTest extends TestCase
 
         $this->assertSame(
             $resolver->resolve('test'),
-            NonNullable::make()->from('test')->toFloat(),
+            NonNullable::make()->type('test')->toFloat(),
         );
     }
 
@@ -284,7 +284,7 @@ class NonNullableTest extends TestCase
 
         $this->assertSame(
             $default,
-            NonNullable::make()->from(null)->default($default)->toInt(),
+            NonNullable::make()->type(null)->default($default)->toInt(),
         );
     }
 
@@ -297,7 +297,7 @@ class NonNullableTest extends TestCase
 
         $this->assertSame(
             $resolver->resolve('test'),
-            NonNullable::make()->from('test')->using($resolver)->toInt(),
+            NonNullable::make()->type('test')->using($resolver)->toInt(),
         );
     }
 
@@ -311,7 +311,7 @@ class NonNullableTest extends TestCase
 
         $this->assertSame(
             $resolver->resolve('test'),
-            NonNullable::make()->from('test')->toInt(),
+            NonNullable::make()->type('test')->toInt(),
         );
     }
 
@@ -324,7 +324,7 @@ class NonNullableTest extends TestCase
 
         $this->assertSame(
             $default,
-            NonNullable::make()->from(null)->default($default)->toString(),
+            NonNullable::make()->type(null)->default($default)->toString(),
         );
     }
 
@@ -337,7 +337,7 @@ class NonNullableTest extends TestCase
 
         $this->assertSame(
             $resolver->resolve('test'),
-            NonNullable::make()->from('test')->using($resolver)->toString(),
+            NonNullable::make()->type('test')->using($resolver)->toString(),
         );
     }
 
@@ -351,7 +351,7 @@ class NonNullableTest extends TestCase
 
         $this->assertSame(
             $resolver->resolve('test'),
-            NonNullable::make()->from('test')->toString(),
+            NonNullable::make()->type('test')->toString(),
         );
     }
 }

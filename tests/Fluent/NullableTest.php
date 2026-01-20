@@ -38,7 +38,7 @@ class NullableTest extends TestCase
     public function test_nullable_can_copy_to_a_new_instance(): void
     {
         $instance = Nullable::make()
-            ->from($this->faker->word())
+            ->type($this->faker->word())
             ->default($this->faker->word())
             ->using(new FluentNullableArrayResolverStub())
             ->noWrap();
@@ -51,7 +51,7 @@ class NullableTest extends TestCase
         $this->assertEquals($instance, $copy);
         $this->assertEquals($instance, $clone);
 
-        $instance->from(null)
+        $instance->type(null)
             ->default(null)
             ->using(null)
             ->wrap();
@@ -94,7 +94,7 @@ class NullableTest extends TestCase
 
         $this->assertSame(
             $default,
-            Nullable::make()->from(null)->default($default)->toArray(),
+            Nullable::make()->type(null)->default($default)->toArray(),
         );
     }
 
@@ -107,7 +107,7 @@ class NullableTest extends TestCase
 
         $this->assertSame(
             $resolver->resolve('test'),
-            Nullable::make()->from('test')->using($resolver)->toArray(),
+            Nullable::make()->type('test')->using($resolver)->toArray(),
         );
     }
 
@@ -121,7 +121,7 @@ class NullableTest extends TestCase
 
         $this->assertSame(
             $resolver->resolve('test'),
-            Nullable::make()->from('test')->toArray(),
+            Nullable::make()->type('test')->toArray(),
         );
     }
 
@@ -132,11 +132,11 @@ class NullableTest extends TestCase
     {
         $string = $this->faker->sentence();
 
-        $this->assertSame([$string], Nullable::make()->from($string)->wrap()->toArray());
+        $this->assertSame([$string], Nullable::make()->type($string)->wrap()->toArray());
 
-        $this->assertNull(Nullable::make()->from($string)->wrap(enabled: false)->toArray());
+        $this->assertNull(Nullable::make()->type($string)->wrap(enabled: false)->toArray());
 
-        $this->assertNull(Nullable::make()->from($string)->noWrap()->toArray());
+        $this->assertNull(Nullable::make()->type($string)->noWrap()->toArray());
     }
 
     #[Test]
@@ -148,7 +148,7 @@ class NullableTest extends TestCase
 
         $this->assertSame(
             $default,
-            Nullable::make()->from(null)->default($default)->toBool(),
+            Nullable::make()->type(null)->default($default)->toBool(),
         );
     }
 
@@ -161,7 +161,7 @@ class NullableTest extends TestCase
 
         $this->assertSame(
             $resolver->resolve('test'),
-            Nullable::make()->from('test')->using($resolver)->toBool(),
+            Nullable::make()->type('test')->using($resolver)->toBool(),
         );
     }
 
@@ -175,7 +175,7 @@ class NullableTest extends TestCase
 
         $this->assertSame(
             $resolver->resolve('test'),
-            Nullable::make()->from('test')->toBool(),
+            Nullable::make()->type('test')->toBool(),
         );
     }
 
@@ -188,7 +188,7 @@ class NullableTest extends TestCase
 
         $this->assertSame(
             $default,
-            Nullable::make()->from(null)->default($default)->toFilterBool(),
+            Nullable::make()->type(null)->default($default)->toFilterBool(),
         );
     }
 
@@ -201,7 +201,7 @@ class NullableTest extends TestCase
 
         $this->assertSame(
             $default,
-            Nullable::make()->from(null)->default($default)->toClass(stdClass::class),
+            Nullable::make()->type(null)->default($default)->toClass(stdClass::class),
         );
     }
 
@@ -214,7 +214,7 @@ class NullableTest extends TestCase
 
         $this->assertEqualsCanonicalizing(
             $resolver->resolve(ClassStub::class, 'test'),
-            Nullable::make()->from('test')->using($resolver)->toClass(ClassStub::class),
+            Nullable::make()->type('test')->using($resolver)->toClass(ClassStub::class),
         );
     }
 
@@ -228,7 +228,7 @@ class NullableTest extends TestCase
 
         $this->assertEqualsCanonicalizing(
             $resolver->resolve(ClassStub::class, 'test'),
-            Nullable::make()->from('test')->toClass(ClassStub::class),
+            Nullable::make()->type('test')->toClass(ClassStub::class),
         );
     }
 
@@ -241,7 +241,7 @@ class NullableTest extends TestCase
 
         $this->assertSame(
             $default,
-            Nullable::make()->from(null)->default($default)->toFloat(),
+            Nullable::make()->type(null)->default($default)->toFloat(),
         );
     }
 
@@ -254,7 +254,7 @@ class NullableTest extends TestCase
 
         $this->assertSame(
             $resolver->resolve('test'),
-            Nullable::make()->from('test')->using($resolver)->toFloat(),
+            Nullable::make()->type('test')->using($resolver)->toFloat(),
         );
     }
 
@@ -268,7 +268,7 @@ class NullableTest extends TestCase
 
         $this->assertSame(
             $resolver->resolve('test'),
-            Nullable::make()->from('test')->toFloat(),
+            Nullable::make()->type('test')->toFloat(),
         );
     }
 
@@ -281,7 +281,7 @@ class NullableTest extends TestCase
 
         $this->assertSame(
             $default,
-            Nullable::make()->from(null)->default($default)->toInt(),
+            Nullable::make()->type(null)->default($default)->toInt(),
         );
     }
 
@@ -294,7 +294,7 @@ class NullableTest extends TestCase
 
         $this->assertSame(
             $resolver->resolve('test'),
-            Nullable::make()->from('test')->using($resolver)->toInt(),
+            Nullable::make()->type('test')->using($resolver)->toInt(),
         );
     }
 
@@ -308,7 +308,7 @@ class NullableTest extends TestCase
 
         $this->assertSame(
             $resolver->resolve('test'),
-            Nullable::make()->from('test')->toInt(),
+            Nullable::make()->type('test')->toInt(),
         );
     }
 
@@ -321,7 +321,7 @@ class NullableTest extends TestCase
 
         $this->assertSame(
             $default,
-            Nullable::make()->from(null)->default($default)->toString(),
+            Nullable::make()->type(null)->default($default)->toString(),
         );
     }
 
@@ -334,7 +334,7 @@ class NullableTest extends TestCase
 
         $this->assertSame(
             $resolver->resolve('test'),
-            Nullable::make()->from('test')->using($resolver)->toString(),
+            Nullable::make()->type('test')->using($resolver)->toString(),
         );
     }
 
@@ -348,7 +348,7 @@ class NullableTest extends TestCase
 
         $this->assertSame(
             $resolver->resolve('test'),
-            Nullable::make()->from('test')->toString(),
+            Nullable::make()->type('test')->toString(),
         );
     }
 }

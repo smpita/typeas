@@ -22,7 +22,7 @@ class FluentTest extends TestCase
     #[Group('typeas')]
     public function test_can_create_a_non_nullable_instance(): void
     {
-        $this->assertInstanceOf(NonNullable::class, TypeAs::from('test'));
+        $this->assertInstanceOf(NonNullable::class, TypeAs::type('test'));
     }
 
     #[Test]
@@ -30,7 +30,7 @@ class FluentTest extends TestCase
     #[Group('typeas')]
     public function test_can_create_a_nullable_instance(): void
     {
-        $this->assertInstanceOf(Nullable::class, TypeAs::from('test')->nullable());
+        $this->assertInstanceOf(Nullable::class, TypeAs::type('test')->nullable());
     }
 
     #[Test]
@@ -38,6 +38,6 @@ class FluentTest extends TestCase
     #[Group('typeas')]
     public function test_can_create_a_non_nullable_instance_from_a_nullable_instance(): void
     {
-        $this->assertInstanceOf(NonNullable::class, TypeAs::from('test')->nullable()->nonNullable());
+        $this->assertInstanceOf(NonNullable::class, TypeAs::type('test')->nullable()->nonNullable());
     }
 }

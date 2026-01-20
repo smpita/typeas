@@ -6,8 +6,8 @@ use Smpita\TypeAs\Fluent\NonNullable;
 
 trait ForwardsNonNullable
 {
-    public static function from(mixed $value): NonNullable
+    public static function type(mixed $value): NonNullable
     {
-        return NonNullable::make()->from($value);
+        return NonNullable::make()->type($value);
     }
 }

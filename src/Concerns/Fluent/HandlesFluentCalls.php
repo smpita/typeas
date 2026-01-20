@@ -39,7 +39,7 @@ trait HandlesFluentCalls
         return clone $this;
     }
 
-    public function from(mixed $value): self
+    public function type(mixed $value): self
     {
         $this->config()->fromValue = $value;
 
