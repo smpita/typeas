@@ -115,7 +115,7 @@ Smpita\TypeAs::setNullableStringResolver(?\Smpita\TypeAs\Contracts\NullableStrin
 #### TypeAs
 
 ```php
-\Smpita\TypeAs\TypeAs::from($mixed): Strict
+\Smpita\TypeAs\TypeAs::type($mixed): Strict
 ```
 
 #### `\Smpita\TypeAs\Concerns\Fluent\HandlesFluentCalls`
@@ -128,7 +128,7 @@ config(): \Smpita\TypeAs\Fluent\TypeConfig
 nonNullable(): \Smpita\TypeAs\Fluent\NonNullable
 nullable(): \Smpita\TypeAs\Fluent\Nullable
 
-from(mixed $value): self
+type(mixed $value): self
 default(mixed $default): self
 using(null|ArrayResolver|NullableArrayResolver|BoolResolver|NullableBoolResolver|ClassResolver|NullableClassResolver|FloatResolver|NullableFloatResolver|IntResolver|NullableIntResolver|StringResolver|NullableStringResolver $resolver): self
 wrap(bool $enabled = true): self
