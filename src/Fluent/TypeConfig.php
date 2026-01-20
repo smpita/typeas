@@ -35,4 +35,20 @@ final class TypeConfig
         public ?bool $arrayWrap = true,
     ) {
     }
+
+    public function resetResolvers(): void
+    {
+        $this->nullableArrayResolver = null;
+        $this->nullableBoolResolver = null;
+        $this->nullableClassResolver = null;
+        $this->nullableFloatResolver = null;
+        $this->nullableIntResolver = null;
+        $this->nullableStringResolver = null;
+        $this->arrayResolver = null;
+        $this->boolResolver = null;
+        $this->classResolver = null;
+        $this->floatResolver = null;
+        $this->intResolver = null;
+        $this->stringResolver = null;
+    }
 }

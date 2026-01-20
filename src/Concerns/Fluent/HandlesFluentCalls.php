@@ -63,7 +63,7 @@ trait HandlesFluentCalls
         |null $resolver
     ): self {
         match(true) {
-            is_null($resolver) => $this->useDefaultResolvers(),
+            is_null($resolver) => $this->config()->resetResolvers(),
             $resolver instanceof ArrayResolver
                 => $this->config()->arrayResolver = $resolver,
             $resolver instanceof NullableArrayResolver
@@ -125,21 +125,5 @@ trait HandlesFluentCalls
     public function nullable(): Nullable
     {
         return Nullable::make($this->config);
-    }
-
-    protected function useDefaultResolvers(): void
-    {
-        $this->config()->nullableArrayResolver = null;
-        $this->config()->nullableBoolResolver = null;
-        $this->config()->nullableClassResolver = null;
-        $this->config()->nullableFloatResolver = null;
-        $this->config()->nullableIntResolver = null;
-        $this->config()->nullableStringResolver = null;
-        $this->config()->arrayResolver = null;
-        $this->config()->boolResolver = null;
-        $this->config()->classResolver = null;
-        $this->config()->floatResolver = null;
-        $this->config()->intResolver = null;
-        $this->config()->stringResolver = null;
     }
 }
