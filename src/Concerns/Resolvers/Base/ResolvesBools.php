@@ -19,14 +19,14 @@ trait ResolvesBools
      */
     public function bool(mixed $value, ?bool $default = null, ?BoolResolver $resolver = null): bool
     {
-        $resolver ??= $this->boolResolver ??= new AsBool;
+        $resolver ??= $this->boolResolver ??= new AsBool();
 
         return $resolver->resolve($value, $default);
     }
 
     public function nullableBool(mixed $value, ?bool $default = null, ?NullableBoolResolver $resolver = null): ?bool
     {
-        $resolver ??= $this->nullableBoolResolver ??= new AsNullableBool;
+        $resolver ??= $this->nullableBoolResolver ??= new AsNullableBool();
 
         return $resolver->resolve($value, $default);
     }

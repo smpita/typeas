@@ -15,6 +15,6 @@ trait HandlesTypeAsService
 
     public static function getInstance(): TypeAsService
     {
-        return static::$instance ??= new TypeAsService;
+        return static::$instance ??= new TypeAsService();
     }
 }

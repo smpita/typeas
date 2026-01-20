@@ -19,14 +19,14 @@ trait ResolvesStrings
      */
     public function string(mixed $value, ?string $default = null, ?StringResolver $resolver = null): string
     {
-        $resolver ??= $this->stringResolver ??= new AsString;
+        $resolver ??= $this->stringResolver ??= new AsString();
 
         return $resolver->resolve($value, $default);
     }
 
     public function nullableString(mixed $value, ?string $default = null, ?NullableStringResolver $resolver = null): ?string
     {
-        $resolver ??= $this->nullableStringResolver ??= new AsNullableString;
+        $resolver ??= $this->nullableStringResolver ??= new AsNullableString();
 
         return $resolver->resolve($value, $default);
     }

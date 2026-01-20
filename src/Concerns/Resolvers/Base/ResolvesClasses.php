@@ -25,7 +25,7 @@ trait ResolvesClasses
      */
     public function class(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null)
     {
-        $resolver ??= $this->classResolver ??= new AsClass;
+        $resolver ??= $this->classResolver ??= new AsClass();
 
         return $resolver->resolve($class, $value, $default);
     }
@@ -39,7 +39,7 @@ trait ResolvesClasses
      */
     public function nullableClass(string $class, mixed $value, ?object $default = null, ?NullableClassResolver $resolver = null)
     {
-        $resolver ??= $this->nullableClassResolver ??= new AsNullableClass;
+        $resolver ??= $this->nullableClassResolver ??= new AsNullableClass();
 
         return $resolver->resolve($class, $value, $default);
     }
