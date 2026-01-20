@@ -63,6 +63,7 @@ trait HandlesFluentCalls
         |null $resolver
     ): self {
         match(true) {
+            is_null($resolver) => $this->useDefaultResolvers(),
             $resolver instanceof ArrayResolver
                 => $this->config()->arrayResolver = $resolver,
             $resolver instanceof NullableArrayResolver
@@ -87,7 +88,6 @@ trait HandlesFluentCalls
                 => $this->config()->stringResolver = $resolver,
             $resolver instanceof NullableStringResolver
                 => $this->config()->nullableStringResolver = $resolver,
-            default => $this->useDefaultResolvers(),
         };
 
         return $this;
