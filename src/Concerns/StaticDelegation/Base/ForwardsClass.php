@@ -1,13 +1,13 @@
 <?php
 
-namespace Smpita\TypeAs\Concerns\Statics\Base;
+namespace Smpita\TypeAs\Concerns\StaticDelegation\Base;
 
 use Smpita\TypeAs\Concerns\Instance\HandlesTypeFactory;
 use Smpita\TypeAs\Contracts\ClassResolver;
 use Smpita\TypeAs\Contracts\NullableClassResolver;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
-trait ForwardsClassStatics
+trait ForwardsClass
 {
     use HandlesTypeFactory;
 

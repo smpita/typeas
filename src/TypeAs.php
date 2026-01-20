@@ -2,13 +2,13 @@
 
 namespace Smpita\TypeAs;
 
-use Smpita\TypeAs\Concerns\Statics\Base\ForwardsArrayStatics;
-use Smpita\TypeAs\Concerns\Statics\Base\ForwardsBoolStatics;
-use Smpita\TypeAs\Concerns\Statics\Base\ForwardsClassStatics;
-use Smpita\TypeAs\Concerns\Statics\Base\ForwardsFloatStatics;
-use Smpita\TypeAs\Concerns\Statics\Base\ForwardsIntStatics;
-use Smpita\TypeAs\Concerns\Statics\Base\ForwardsStringStatics;
-use Smpita\TypeAs\Concerns\Statics\Extensions\ForwardsFilterBoolStatics;
+use Smpita\TypeAs\Concerns\StaticDelegation\Base\ForwardsArray;
+use Smpita\TypeAs\Concerns\StaticDelegation\Base\ForwardsBool;
+use Smpita\TypeAs\Concerns\StaticDelegation\Base\ForwardsClass;
+use Smpita\TypeAs\Concerns\StaticDelegation\Base\ForwardsFloat;
+use Smpita\TypeAs\Concerns\StaticDelegation\Base\ForwardsInt;
+use Smpita\TypeAs\Concerns\StaticDelegation\Base\ForwardsString;
+use Smpita\TypeAs\Concerns\StaticDelegation\Extensions\ForwardsFilterBool;
 use Smpita\TypeAs\Concerns\Instance\HandlesTypeFactory;
 
 /**
@@ -16,12 +16,12 @@ use Smpita\TypeAs\Concerns\Instance\HandlesTypeFactory;
  */
 class TypeAs
 {
-    use ForwardsArrayStatics;
-    use ForwardsBoolStatics;
-    use ForwardsClassStatics;
-    use ForwardsFilterBoolStatics;
-    use ForwardsFloatStatics;
-    use ForwardsIntStatics;
-    use ForwardsStringStatics;
+    use ForwardsArray;
+    use ForwardsBool;
+    use ForwardsClass;
+    use ForwardsFilterBool;
+    use ForwardsFloat;
+    use ForwardsInt;
+    use ForwardsString;
     use HandlesTypeFactory;
 }

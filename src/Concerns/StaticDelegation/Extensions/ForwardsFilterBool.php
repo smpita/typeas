@@ -1,11 +1,11 @@
 <?php
 
-namespace Smpita\TypeAs\Concerns\Statics\Extensions;
+namespace Smpita\TypeAs\Concerns\StaticDelegation\Extensions;
 
 use Smpita\TypeAs\Concerns\Instance\HandlesTypeFactory;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
-trait ForwardsFilterBoolStatics
+trait ForwardsFilterBool
 {
     use HandlesTypeFactory;
 
