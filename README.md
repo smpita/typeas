@@ -118,8 +118,9 @@ TypeAs::array(['example']); // returns ['example']
  * Disable array wrapping to get exceptions.
  * These throw \Smpita\TypeAs\TypeAsResolutionException
  */
-TypeAs::array('', wrap: false);
-TypeAs::array('', null, null, false);
+TypeAs::array('example', wrap: false);
+TypeAs::array('example', null, null, false);
+```
 
 ### Fluent Syntax
 
