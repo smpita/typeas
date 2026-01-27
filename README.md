@@ -27,6 +27,7 @@ Easily type your `mixed` signatures. Perfect for static analysis!
   - [Official Extensions](#official-extensions)
   - [Custom Resolvers](#custom-resolvers)
   - [Helpers](#helpers)
+- [Upgrade Guide](docs/upgrading.md)
 - [Deprecations](#deprecations)
 - [Testing](#testing)
 - [Changelog](#changelog)
@@ -479,7 +480,7 @@ use function Smpita\TypeAs\type as TypeAsType;
 
 ## Deprecations
 
-Please see [SIGNATURES#deprecations](docs/signatures.md#deprecations) if you encounter a breaking change.
+Please see the [Upgrade Guide](docs/upgrading.md) and [SIGNATURES#deprecations](docs/signatures.md#deprecations) if you encounter a breaking change.
 
 ---
 

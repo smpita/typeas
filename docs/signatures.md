@@ -219,6 +219,8 @@ asString(): ?string
 
 See [Resolving](#Resolving) for current signatures.
 
+See the [Upgrade Guide](upgrading.md#Upgrading) for tips on how to handle deprecations.
+
 #### Array
 
 ```php
