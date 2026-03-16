@@ -27,7 +27,7 @@ jobs:
           echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
       - name: Install composer dependencies
-        uses: ramsey/composer-install@v3
+        uses: ramsey/composer-install@v4
 
       - name: Run tests with coverage
         run: vendor/bin/phpunit --coverage-cobertura=coverage.xml
