@@ -142,8 +142,36 @@ class AsArrayTest extends TestCase
 
         $this->assertIsArray($test(TypeAs::array($this->faker->sentence())));
     }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_handle_custom_exceptions(): void
+    {
+        $customErrorMessage = 'custom error message';
+        $customException = TestException::class;
+
+        $this->expectException($customException);
+        $this->expectExceptionMessage($customErrorMessage);
+
+        // onError lets us throw a custom exception and message
+        TypeAs::onError($customErrorMessage, $customException)->array(null, wrap: false);
+
+        $standardErrorMessage = 'Resolution error converting NULL [TypeFactory]';
+        $standardException = TypeAsResolutionException::class;
+
+        // But it does not override the default exception message
+        $this->expectException($standardException);
+        $this->expectExceptionMessage($standardErrorMessage);
+
+        TypeAs::array(null, wrap: false);
+
+    }
 }
 
+class TestException extends TypeAsResolutionException
+{
+}
 class ArrayableStub
 {
     public function __construct(public array $value)
