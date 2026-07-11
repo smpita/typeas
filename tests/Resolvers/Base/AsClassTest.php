@@ -5,6 +5,8 @@ namespace Smpita\TypeAs\Tests\Resolvers\Base;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
+use Smpita\TypeAs\Tests\Stubs\Objects\ChildClassStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\ParentClassStub;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
 use StdClass;
@@ -16,7 +18,7 @@ class AsClassTest extends TestCase
     #[Group('typeas')]
     public function test_can_type_classes(): void
     {
-        $this->assertInstanceOf(ParentStub::class, TypeAs::class(ParentStub::class, new ParentStub()));
+        $this->assertInstanceOf(ParentClassStub::class, TypeAs::class(ParentClassStub::class, new ParentClassStub()));
     }
 
     #[Test]
@@ -24,7 +26,7 @@ class AsClassTest extends TestCase
     #[Group('typeas')]
     public function test_can_infer_from_children_classes(): void
     {
-        $this->assertInstanceOf(ParentStub::class, TypeAs::class(ParentStub::class, new ChildStub()));
+        $this->assertInstanceOf(ParentClassStub::class, TypeAs::class(ParentClassStub::class, new ChildClassStub()));
     }
 
     #[Test]
@@ -34,7 +36,7 @@ class AsClassTest extends TestCase
     {
         $this->expectException(TypeAsResolutionException::class);
 
-        TypeAs::class(ChildStub::class, new ParentStub());
+        TypeAs::class(ChildClassStub::class, new ParentClassStub());
     }
 
     #[Test]
@@ -44,7 +46,7 @@ class AsClassTest extends TestCase
     {
         $this->expectException(TypeAsResolutionException::class);
 
-        TypeAs::class(ParentStub::class, ParentStub::class);
+        TypeAs::class(ParentClassStub::class, ParentClassStub::class);
     }
 
     #[Test]
@@ -52,7 +54,7 @@ class AsClassTest extends TestCase
     #[Group('typeas')]
     public function test_will_not_throw_exception_with_defaults(): void
     {
-        $this->assertInstanceOf(StdClass::class, TypeAs::class(ChildStub::class, new ParentStub(), new StdClass()));
+        $this->assertInstanceOf(StdClass::class, TypeAs::class(ChildClassStub::class, new ParentClassStub(), new StdClass()));
     }
 
     #[Test]
@@ -60,16 +62,8 @@ class AsClassTest extends TestCase
     #[Group('typeas')]
     public function test_can_pass_static_analysis(): void
     {
-        $test = fn (ParentStub $value) => $value;
+        $test = fn (ParentClassStub $value) => $value;
 
-        $this->assertInstanceOf(ChildStub::class, $test(TypeAs::class(ChildStub::class, new ChildStub())));
+        $this->assertInstanceOf(ChildClassStub::class, $test(TypeAs::class(ChildClassStub::class, new ChildClassStub())));
     }
-}
-
-class ParentStub
-{
-}
-
-class ChildStub extends ParentStub
-{
 }

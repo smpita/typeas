@@ -4,8 +4,6 @@ namespace Smpita\TypeAs\Tests\Resolvers\Base;
 
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
-use Smpita\TypeAs\Contracts\BoolResolver;
-use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
 
@@ -95,13 +93,5 @@ class AsNullableBoolTest extends TestCase
         $test = fn (?bool $value) => $value;
 
         $this->assertIsBool($test(TypeAs::nullableBool($this->faker->randomFloat())));
-    }
-}
-
-class FakeNullableBoolResolverStub implements BoolResolver
-{
-    public function resolve(mixed $value, ?bool $default = null): bool
-    {
-        throw new TypeAsResolutionException();
     }
 }

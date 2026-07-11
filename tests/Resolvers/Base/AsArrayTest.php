@@ -7,6 +7,9 @@ use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
+use Smpita\TypeAs\Tests\Stubs\Objects\ArrayableStub;
+use Smpita\TypeAs\Tests\Stubs\Exceptions\CustomExceptionStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\MagicArrayableStub;
 
 class AsArrayTest extends TestCase
 {
@@ -149,7 +152,7 @@ class AsArrayTest extends TestCase
     public function test_can_handle_custom_exceptions(): void
     {
         $customErrorMessage = 'custom error message';
-        $customException = TestException::class;
+        $customException = CustomExceptionStub::class;
 
         $this->expectException($customException);
         $this->expectExceptionMessage($customErrorMessage);
@@ -165,33 +168,5 @@ class AsArrayTest extends TestCase
         $this->expectExceptionMessage($standardErrorMessage);
 
         TypeAs::array(null, wrap: false);
-
-    }
-}
-
-class TestException extends TypeAsResolutionException
-{
-}
-class ArrayableStub
-{
-    public function __construct(public array $value)
-    {
-    }
-
-    public function toArray(): array
-    {
-        return $this->value;
-    }
-}
-
-class MagicArrayableStub
-{
-    public function __construct(public array $value)
-    {
-    }
-
-    public function __toArray(): array
-    {
-        return $this->value;
     }
 }

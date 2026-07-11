@@ -5,6 +5,8 @@ namespace Smpita\TypeAs\Tests\Resolvers\Base;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
+use Smpita\TypeAs\Tests\Stubs\Objects\MagicStringableStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\StringableStub;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
 
@@ -56,7 +58,7 @@ class AsStringTest extends TestCase
     {
         $value = $this->faker->word();
 
-        $this->assertSame($value, TypeAs::string(new NullableStringableStub($value)));
+        $this->assertSame($value, TypeAs::string(new StringableStub($value)));
     }
 
     #[Test]
@@ -82,7 +84,7 @@ class AsStringTest extends TestCase
     {
         $value = $this->faker->word();
 
-        $this->assertSame($value, TypeAs::string(new MagicNullableStringableStub($value)));
+        $this->assertSame($value, TypeAs::string(new MagicStringableStub($value)));
     }
 
     #[Test]
@@ -101,29 +103,5 @@ class AsStringTest extends TestCase
         $test = fn (?string $value) => $value;
 
         $this->assertIsString($test(TypeAs::string($this->faker->randomNumber())));
-    }
-}
-
-class NullableStringableStub
-{
-    public function __construct(public string $value)
-    {
-    }
-
-    public function toString(): string
-    {
-        return $this->value;
-    }
-}
-
-class MagicNullableStringableStub
-{
-    public function __construct(public string $value)
-    {
-    }
-
-    public function __toString(): string
-    {
-        return $this->value;
     }
 }

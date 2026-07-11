@@ -4,17 +4,17 @@ namespace Smpita\TypeAs\Tests;
 
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
-use Smpita\TypeAs\Contracts\ArrayResolver;
-use Smpita\TypeAs\Contracts\BoolResolver;
-use Smpita\TypeAs\Contracts\ClassResolver;
-use Smpita\TypeAs\Contracts\FloatResolver;
-use Smpita\TypeAs\Contracts\IntResolver;
-use Smpita\TypeAs\Contracts\StringResolver;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Fluent\NonNullable;
 use Smpita\TypeAs\Fluent\TypeConfig;
+use Smpita\TypeAs\Tests\Stubs\Objects\ParentClassStub;
+use Smpita\TypeAs\Tests\Stubs\Resolvers\ArrayResolverStub;
+use Smpita\TypeAs\Tests\Stubs\Resolvers\BoolResolverStub;
+use Smpita\TypeAs\Tests\Stubs\Resolvers\ClassResolverStub;
+use Smpita\TypeAs\Tests\Stubs\Resolvers\FloatResolverStub;
+use Smpita\TypeAs\Tests\Stubs\Resolvers\IntResolverStub;
+use Smpita\TypeAs\Tests\Stubs\Resolvers\StringResolverStub;
 use Smpita\TypeAs\TypeAs;
-use stdClass;
 
 class NonNullableTest extends TestCase
 {
@@ -41,7 +41,7 @@ class NonNullableTest extends TestCase
         $instance = NonNullable::make()
             ->type($this->faker->word())
             ->default($this->faker->word())
-            ->using(new FluentNonNullableArrayResolverStub())
+            ->using(new ArrayResolverStub())
             ->noWrap();
 
         $assignment = $instance;
@@ -120,7 +120,7 @@ class NonNullableTest extends TestCase
     #[Group('typeas')]
     public function test_non_nullable_can_use_fluent_array_resolver(): void
     {
-        $resolver = new FluentNonNullableArrayResolverStub();
+        $resolver = new ArrayResolverStub();
 
         $this->assertSame(
             $resolver->resolve('test'),
@@ -133,7 +133,7 @@ class NonNullableTest extends TestCase
     #[Group('typeas')]
     public function test_non_nullable_can_use_the_global_array_resolver(): void
     {
-        $resolver = new FluentNonNullableArrayResolverStub();
+        $resolver = new ArrayResolverStub();
         TypeAs::setArrayResolver($resolver);
 
         $this->assertSame(
@@ -160,7 +160,7 @@ class NonNullableTest extends TestCase
     #[Group('typeas')]
     public function test_non_nullable_can_use_fluent_bool_resolver(): void
     {
-        $resolver = new FluentNonNullableBoolResolverStub();
+        $resolver = new BoolResolverStub();
 
         $this->assertSame(
             $resolver->resolve('test'),
@@ -173,7 +173,7 @@ class NonNullableTest extends TestCase
     #[Group('typeas')]
     public function test_non_nullable_can_use_the_global_bool_resolver(): void
     {
-        $resolver = new FluentNonNullableBoolResolverStub();
+        $resolver = new BoolResolverStub();
         TypeAs::setBoolResolver($resolver);
 
         $this->assertSame(
@@ -200,11 +200,11 @@ class NonNullableTest extends TestCase
     #[Group('typeas')]
     public function test_non_nullable_can_use_fluent_class_default(): void
     {
-        $default = new stdClass();
+        $default = new ParentClassStub();
 
         $this->assertSame(
             $default,
-            NonNullable::make()->type(null)->default($default)->asClass(stdClass::class),
+            NonNullable::make()->type(null)->default($default)->asClass(ParentClassStub::class),
         );
     }
 
@@ -213,11 +213,11 @@ class NonNullableTest extends TestCase
     #[Group('typeas')]
     public function test_non_nullable_can_use_fluent_class_resolver(): void
     {
-        $resolver = new FluentNonNullableClassResolverStub();
+        $resolver = new ClassResolverStub();
 
         $this->assertEqualsCanonicalizing(
-            $resolver->resolve(ClassStub::class, 'test'),
-            NonNullable::make()->type('test')->using($resolver)->asClass(ClassStub::class),
+            $resolver->resolve(ParentClassStub::class, 'test'),
+            NonNullable::make()->type('test')->using($resolver)->asClass(ParentClassStub::class),
         );
     }
 
@@ -226,12 +226,12 @@ class NonNullableTest extends TestCase
     #[Group('typeas')]
     public function test_non_nullable_can_use_global_class_resolver(): void
     {
-        $resolver = new FluentNonNullableClassResolverStub();
+        $resolver = new ClassResolverStub();
         TypeAs::setClassResolver($resolver);
 
         $this->assertEqualsCanonicalizing(
-            $resolver->resolve(ClassStub::class, 'test'),
-            NonNullable::make()->type('test')->asClass(ClassStub::class),
+            $resolver->resolve(ParentClassStub::class, 'test'),
+            NonNullable::make()->type('test')->asClass(ParentClassStub::class),
         );
     }
 
@@ -253,7 +253,7 @@ class NonNullableTest extends TestCase
     #[Group('typeas')]
     public function test_non_nullable_can_use_fluent_float_resolver(): void
     {
-        $resolver = new FluentNonNullableFloatResolverStub();
+        $resolver = new FloatResolverStub();
 
         $this->assertSame(
             $resolver->resolve('test'),
@@ -266,7 +266,7 @@ class NonNullableTest extends TestCase
     #[Group('typeas')]
     public function test_non_nullable_can_use_global_float_resolver(): void
     {
-        $resolver = new FluentNonNullableFloatResolverStub();
+        $resolver = new FloatResolverStub();
         TypeAs::setFloatResolver($resolver);
 
         $this->assertSame(
@@ -293,7 +293,7 @@ class NonNullableTest extends TestCase
     #[Group('typeas')]
     public function test_non_nullable_can_use_fluent_int_resolver(): void
     {
-        $resolver = new FluentNonNullableIntResolverStub();
+        $resolver = new IntResolverStub();
 
         $this->assertSame(
             $resolver->resolve('test'),
@@ -306,7 +306,7 @@ class NonNullableTest extends TestCase
     #[Group('typeas')]
     public function test_non_nullable_can_use_global_int_resolver(): void
     {
-        $resolver = new FluentNonNullableIntResolverStub();
+        $resolver = new IntResolverStub();
         TypeAs::setIntResolver($resolver);
 
         $this->assertSame(
@@ -333,7 +333,7 @@ class NonNullableTest extends TestCase
     #[Group('typeas')]
     public function test_non_nullable_can_use_fluent_string_resolver(): void
     {
-        $resolver = new FluentNonNullableStringResolverStub();
+        $resolver = new StringResolverStub();
 
         $this->assertSame(
             $resolver->resolve('test'),
@@ -346,82 +346,12 @@ class NonNullableTest extends TestCase
     #[Group('typeas')]
     public function test_non_nullable_can_use_global_string_resolver(): void
     {
-        $resolver = new FluentNonNullableStringResolverStub();
+        $resolver = new StringResolverStub();
         TypeAs::setStringResolver($resolver);
 
         $this->assertSame(
             $resolver->resolve('test'),
             NonNullable::make()->type('test')->asString(),
         );
-    }
-}
-
-class FluentNonNullableClassStub
-{
-}
-
-class FluentNonNullableArrayResolverStub implements ArrayResolver
-{
-    /** @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException */
-    public function resolve(mixed $value, ?array $default = null, ?bool $wrap = true): array
-    {
-        return [];
-    }
-}
-
-class FluentNonNullableBoolResolverStub implements BoolResolver
-{
-    /** @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException */
-    public function resolve(mixed $value, ?bool $default = null): bool
-    {
-        return false;
-    }
-}
-
-class FluentNonNullableClassResolverStub implements ClassResolver
-{
-    /**
-     * @template TClass of object
-     *
-     * @param  class-string<TClass>  $class
-     * @param  TClass  $default
-     * @return TClass
-     *
-     * @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException
-     */
-    public function resolve(string $class, mixed $value, ?object $default = null)
-    {
-        if (class_exists($class)) {
-            return new $class();
-        }
-
-        throw new TypeAsResolutionException();
-    }
-}
-
-class FluentNonNullableFloatResolverStub implements FloatResolver
-{
-    /** @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException */
-    public function resolve(mixed $value, ?float $default = null): float
-    {
-        return 0.0;
-    }
-}
-
-class FluentNonNullableIntResolverStub implements IntResolver
-{
-    /** @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException */
-    public function resolve(mixed $value, ?int $default = null): int
-    {
-        return 0;
-    }
-}
-
-class FluentNonNullableStringResolverStub implements StringResolver
-{
-    /** @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException */
-    public function resolve(mixed $value, ?string $default = null): string
-    {
-        return '';
     }
 }

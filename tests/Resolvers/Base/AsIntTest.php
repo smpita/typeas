@@ -5,6 +5,8 @@ namespace Smpita\TypeAs\Tests\Resolvers\Base;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
+use Smpita\TypeAs\Tests\Stubs\Objects\IntegerableStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\MagicIntegerableStub;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
 
@@ -111,29 +113,5 @@ class AsIntTest extends TestCase
         $test = fn (int $value) => $value;
 
         $this->assertIsInt($test(TypeAs::int($this->faker->randomFloat())));
-    }
-}
-
-class IntegerableStub
-{
-    public function __construct(public int $value)
-    {
-    }
-
-    public function toInteger(): int
-    {
-        return $this->value;
-    }
-}
-
-class MagicIntegerableStub
-{
-    public function __construct(public int $value)
-    {
-    }
-
-    public function __toInteger(): int
-    {
-        return $this->value;
     }
 }

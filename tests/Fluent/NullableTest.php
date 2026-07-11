@@ -2,18 +2,18 @@
 
 namespace Smpita\TypeAs\Tests;
 
-use stdClass;
-use Smpita\TypeAs\TypeAs;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Fluent\Nullable;
 use Smpita\TypeAs\Fluent\TypeConfig;
-use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\Attributes\Group;
-use Smpita\TypeAs\Contracts\ArrayResolver;
-use Smpita\TypeAs\Contracts\BoolResolver;
-use Smpita\TypeAs\Contracts\ClassResolver;
-use Smpita\TypeAs\Contracts\FloatResolver;
-use Smpita\TypeAs\Contracts\IntResolver;
-use Smpita\TypeAs\Contracts\StringResolver;
+use Smpita\TypeAs\Tests\Stubs\Objects\ParentClassStub;
+use Smpita\TypeAs\Tests\Stubs\Resolvers\NullableArrayResolverStub;
+use Smpita\TypeAs\Tests\Stubs\Resolvers\NullableBoolResolverStub;
+use Smpita\TypeAs\Tests\Stubs\Resolvers\NullableClassResolverStub;
+use Smpita\TypeAs\Tests\Stubs\Resolvers\NullableFloatResolverStub;
+use Smpita\TypeAs\Tests\Stubs\Resolvers\NullableIntResolverStub;
+use Smpita\TypeAs\Tests\Stubs\Resolvers\NullableStringResolverStub;
+use Smpita\TypeAs\TypeAs;
 
 class NullableTest extends TestCase
 {
@@ -40,7 +40,7 @@ class NullableTest extends TestCase
         $instance = Nullable::make()
             ->type($this->faker->word())
             ->default($this->faker->word())
-            ->using(new FluentNullableArrayResolverStub())
+            ->using(new NullableArrayResolverStub())
             ->noWrap();
 
         $assignment = $instance;
@@ -103,7 +103,7 @@ class NullableTest extends TestCase
     #[Group('typeas')]
     public function test_nullable_can_use_fluent_array_resolver(): void
     {
-        $resolver = new FluentNullableArrayResolverStub();
+        $resolver = new NullableArrayResolverStub();
 
         $this->assertSame(
             $resolver->resolve('test'),
@@ -116,7 +116,7 @@ class NullableTest extends TestCase
     #[Group('typeas')]
     public function test_nullable_can_use_the_global_array_resolver(): void
     {
-        $resolver = new FluentNullableArrayResolverStub();
+        $resolver = new NullableArrayResolverStub();
         TypeAs::setArrayResolver($resolver);
 
         $this->assertSame(
@@ -157,7 +157,7 @@ class NullableTest extends TestCase
     #[Group('typeas')]
     public function test_nullable_can_use_fluent_bool_resolver(): void
     {
-        $resolver = new FluentNullableBoolResolverStub();
+        $resolver = new NullableBoolResolverStub();
 
         $this->assertSame(
             $resolver->resolve('test'),
@@ -170,7 +170,7 @@ class NullableTest extends TestCase
     #[Group('typeas')]
     public function test_nullable_can_use_the_global_bool_resolver(): void
     {
-        $resolver = new FluentNullableBoolResolverStub();
+        $resolver = new NullableBoolResolverStub();
         TypeAs::setBoolResolver($resolver);
 
         $this->assertSame(
@@ -197,11 +197,11 @@ class NullableTest extends TestCase
     #[Group('typeas')]
     public function test_nullable_can_use_fluent_class_default(): void
     {
-        $default = new stdClass();
+        $default = new ParentClassStub();
 
         $this->assertSame(
             $default,
-            Nullable::make()->type(null)->default($default)->asClass(stdClass::class),
+            Nullable::make()->type(null)->default($default)->asClass(ParentClassStub::class),
         );
     }
 
@@ -210,11 +210,11 @@ class NullableTest extends TestCase
     #[Group('typeas')]
     public function test_nullable_can_use_fluent_class_resolver(): void
     {
-        $resolver = new FluentNullableClassResolverStub();
+        $resolver = new NullableClassResolverStub();
 
         $this->assertEqualsCanonicalizing(
-            $resolver->resolve(ClassStub::class, 'test'),
-            Nullable::make()->type('test')->using($resolver)->asClass(ClassStub::class),
+            $resolver->resolve(ParentClassStub::class, 'test'),
+            Nullable::make()->type('test')->using($resolver)->asClass(ParentClassStub::class),
         );
     }
 
@@ -223,12 +223,12 @@ class NullableTest extends TestCase
     #[Group('typeas')]
     public function test_nullable_can_use_global_class_resolver(): void
     {
-        $resolver = new FluentNullableClassResolverStub();
+        $resolver = new NullableClassResolverStub();
         TypeAs::setClassResolver($resolver);
 
         $this->assertEqualsCanonicalizing(
-            $resolver->resolve(ClassStub::class, 'test'),
-            Nullable::make()->type('test')->asClass(ClassStub::class),
+            $resolver->resolve(ParentClassStub::class, 'test'),
+            Nullable::make()->type('test')->asClass(ParentClassStub::class),
         );
     }
 
@@ -250,7 +250,7 @@ class NullableTest extends TestCase
     #[Group('typeas')]
     public function test_nullable_can_use_fluent_float_resolver(): void
     {
-        $resolver = new FluentNullableFloatResolverStub();
+        $resolver = new NullableFloatResolverStub();
 
         $this->assertSame(
             $resolver->resolve('test'),
@@ -263,7 +263,7 @@ class NullableTest extends TestCase
     #[Group('typeas')]
     public function test_nullable_can_use_global_float_resolver(): void
     {
-        $resolver = new FluentNullableFloatResolverStub();
+        $resolver = new NullableFloatResolverStub();
         TypeAs::setFloatResolver($resolver);
 
         $this->assertSame(
@@ -290,7 +290,7 @@ class NullableTest extends TestCase
     #[Group('typeas')]
     public function test_nullable_can_use_fluent_int_resolver(): void
     {
-        $resolver = new FluentNullableIntResolverStub();
+        $resolver = new NullableIntResolverStub();
 
         $this->assertSame(
             $resolver->resolve('test'),
@@ -303,7 +303,7 @@ class NullableTest extends TestCase
     #[Group('typeas')]
     public function test_nullable_can_use_global_int_resolver(): void
     {
-        $resolver = new FluentNullableIntResolverStub();
+        $resolver = new NullableIntResolverStub();
         TypeAs::setIntResolver($resolver);
 
         $this->assertSame(
@@ -330,7 +330,7 @@ class NullableTest extends TestCase
     #[Group('typeas')]
     public function test_nullable_can_use_fluent_string_resolver(): void
     {
-        $resolver = new FluentNullableStringResolverStub();
+        $resolver = new NullableStringResolverStub();
 
         $this->assertSame(
             $resolver->resolve('test'),
@@ -343,71 +343,12 @@ class NullableTest extends TestCase
     #[Group('typeas')]
     public function test_nullable_can_use_global_string_resolver(): void
     {
-        $resolver = new FluentNullableStringResolverStub();
+        $resolver = new NullableStringResolverStub();
         TypeAs::setStringResolver($resolver);
 
         $this->assertSame(
             $resolver->resolve('test'),
             Nullable::make()->type('test')->asString(),
         );
-    }
-}
-
-class FluentNullableClassStub
-{
-}
-
-class FluentNullableArrayResolverStub implements ArrayResolver
-{
-    public function resolve(mixed $value, ?array $default = null, ?bool $wrap = true): ?array
-    {
-        return null;
-    }
-}
-
-class FluentNullableBoolResolverStub implements BoolResolver
-{
-    public function resolve(mixed $value, ?bool $default = null): ?bool
-    {
-        return null;
-    }
-}
-
-class FluentNullableClassResolverStub implements ClassResolver
-{
-    /**
-     * @template TClass of object
-     *
-     * @param  class-string<TClass>  $class
-     * @param  TClass  $default
-     * @return TClass|null
-     */
-    public function resolve(string $class, mixed $value, ?object $default = null)
-    {
-        return null;
-    }
-}
-
-class FluentNullableFloatResolverStub implements FloatResolver
-{
-    public function resolve(mixed $value, ?float $default = null): ?float
-    {
-        return null;
-    }
-}
-
-class FluentNullableIntResolverStub implements IntResolver
-{
-    public function resolve(mixed $value, ?int $default = null): ?int
-    {
-        return null;
-    }
-}
-
-class FluentNullableStringResolverStub implements StringResolver
-{
-    public function resolve(mixed $value, ?string $default = null): ?string
-    {
-        return null;
     }
 }

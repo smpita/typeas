@@ -5,6 +5,8 @@ namespace Smpita\TypeAs\Tests\Resolvers\Base;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
+use Smpita\TypeAs\Tests\Stubs\Objects\FloatableStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\MagicFloatableStub;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
 
@@ -108,29 +110,5 @@ class AsFloatTest extends TestCase
         $test = fn (float $value) => $value;
 
         $this->assertIsFloat($test(TypeAs::float($this->faker->randomNumber())));
-    }
-}
-
-class FloatableStub
-{
-    public function __construct(public float $value)
-    {
-    }
-
-    public function toFloat(): float
-    {
-        return $this->value;
-    }
-}
-
-class MagicFloatableStub
-{
-    public function __construct(public float $value)
-    {
-    }
-
-    public function __toFloat(): float
-    {
-        return $this->value;
     }
 }

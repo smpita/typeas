@@ -2,12 +2,12 @@
 
 namespace Smpita\TypeAs\Tests;
 
-use stdClass;
 use Smpita\TypeAs\TypeAs;
 use Smpita\TypeAs\Fluent\NonNullable;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Smpita\TypeAs\Tests\Stubs\Objects\ParentClassStub;
 
 class GlobalHelpersTest extends TestCase
 {
@@ -99,9 +99,9 @@ class GlobalHelpersTest extends TestCase
     #[Group('typeas')]
     public function test_can_use_global_class_helper(): void
     {
-        $mixed = new HelperStub();
+        $mixed = new ParentClassStub();
 
-        $this->assertSame(TypeAs::class(stdClass::class, $mixed), \asClass(stdClass::class, $mixed));
+        $this->assertSame(TypeAs::class(ParentClassStub::class, $mixed), \asClass(ParentClassStub::class, $mixed));
     }
 
     #[Test]
@@ -109,9 +109,9 @@ class GlobalHelpersTest extends TestCase
     #[Group('typeas')]
     public function test_can_use_global_nullable_class_helper(): void
     {
-        $mixed = new HelperStub();
+        $mixed = new ParentClassStub();
 
-        $this->assertSame(TypeAs::nullableClass(stdClass::class, $mixed), \asNullableClass(stdClass::class, $mixed));
+        $this->assertSame(TypeAs::nullableClass(ParentClassStub::class, $mixed), \asNullableClass(ParentClassStub::class, $mixed));
     }
 
     #[Test]
@@ -173,8 +173,4 @@ class GlobalHelpersTest extends TestCase
 
         $this->assertSame(TypeAs::string($mixed), \asString($mixed));
     }
-}
-
-class GlobalHelperStub extends stdClass
-{
 }

@@ -6,6 +6,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
+use Smpita\TypeAs\Tests\Stubs\Objects\FilterBoolStub;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
 
@@ -170,23 +171,5 @@ class AsFilterBoolTest extends TestCase
         $test = fn (bool $value) => $value;
 
         $this->assertSame($expected, $test(TypeAs::filterBool($truthy)));
-    }
-}
-
-class FilterBoolStub
-{
-    public function __invoke(): bool
-    {
-        return true;
-    }
-
-    public function __toBool(): bool
-    {
-        return true;
-    }
-
-    public function toBool(): bool
-    {
-        return true;
     }
 }

@@ -4,6 +4,8 @@ namespace Smpita\TypeAs\Tests\Resolvers\Base;
 
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
+use Smpita\TypeAs\Tests\Stubs\Objects\FloatableStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\MagicFloatableStub;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
 
@@ -48,7 +50,7 @@ class AsNullableFloatTest extends TestCase
     {
         $value = $this->faker->randomFloat();
 
-        $this->assertSame($value, TypeAs::nullableFloat(new NullableFloatableStub($value)));
+        $this->assertSame($value, TypeAs::nullableFloat(new FloatableStub($value)));
     }
 
     #[Test]
@@ -58,7 +60,7 @@ class AsNullableFloatTest extends TestCase
     {
         $value = $this->faker->randomFloat();
 
-        $this->assertSame($value, TypeAs::nullableFloat(new MagicNullableFloatableStub($value)));
+        $this->assertSame($value, TypeAs::nullableFloat(new MagicFloatableStub($value)));
     }
 
     #[Test]
@@ -103,29 +105,5 @@ class AsNullableFloatTest extends TestCase
         $test = fn (?float $value) => $value;
 
         $this->assertIsFloat($test(TypeAs::nullableFloat($this->faker->randomNumber())));
-    }
-}
-
-class NullableFloatableStub
-{
-    public function __construct(public float $value)
-    {
-    }
-
-    public function toFloat(): float
-    {
-        return $this->value;
-    }
-}
-
-class MagicNullableFloatableStub
-{
-    public function __construct(public float $value)
-    {
-    }
-
-    public function __toFloat(): float
-    {
-        return $this->value;
     }
 }

@@ -5,6 +5,7 @@ namespace Smpita\TypeAs\Tests\Resolvers\Extensions;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
+use Smpita\TypeAs\Tests\Stubs\Objects\FilterBoolStub;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
 
@@ -59,7 +60,7 @@ class AsNullableFilterBoolTest extends TestCase
     #[Group('extensions')]
     public function test_will_return_null_on_objects(): void
     {
-        $this->assertNull(TypeAs::nullableFilterBool(new NullableFilterBoolStub()));
+        $this->assertNull(TypeAs::nullableFilterBool(new FilterBoolStub()));
     }
 
     #[Test]
@@ -139,22 +140,5 @@ class AsNullableFilterBoolTest extends TestCase
         $test = fn (?bool $value) => $value;
 
         $this->assertSame($expected, $test(TypeAs::nullableFilterBool($truthy)));
-    }
-}
-class NullableFilterBoolStub
-{
-    public function __invoke(): ?bool
-    {
-        return true;
-    }
-
-    public function __toBool(): ?bool
-    {
-        return true;
-    }
-
-    public function toBool(): ?bool
-    {
-        return true;
     }
 }
