@@ -21,14 +21,14 @@ trait ResolvesStrings
     {
         $resolver ??= $this->stringResolver ??= new AsString();
 
-        return $resolver->resolve($value, $default) ?? static::throwResolutionException($value);
+        return $resolver->resolve(value: $value, default: $default) ?? static::throwResolutionException($value);
     }
 
     public function nullableString(mixed $value, ?string $default = null, ?StringResolver $resolver = null): ?string
     {
         $resolver ??= $this->stringResolver ??= new AsNullableString();
 
-        return $resolver->resolve($value, $default);
+        return $resolver->resolve(value: $value, default: $default);
     }
 
     public function setStringResolver(?StringResolver $resolver): void
