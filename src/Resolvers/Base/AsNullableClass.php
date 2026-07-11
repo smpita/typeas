@@ -3,9 +3,9 @@
 namespace Smpita\TypeAs\Resolvers\Base;
 
 use Smpita\TypeAs\Abstracts\Resolver;
-use Smpita\TypeAs\Contracts\NullableClassResolver;
+use Smpita\TypeAs\Contracts\ClassResolver;
 
-class AsNullableClass extends Resolver implements NullableClassResolver
+class AsNullableClass extends Resolver implements ClassResolver
 {
     /**
      * @template TClass of object

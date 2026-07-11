@@ -22,12 +22,6 @@ class TypeFactory
 
     public function useDefaultResolvers(): void
     {
-        $this->setNullableArrayResolver(null);
-        $this->setNullableBoolResolver(null);
-        $this->setNullableClassResolver(null);
-        $this->setNullableFloatResolver(null);
-        $this->setNullableIntResolver(null);
-        $this->setNullableStringResolver(null);
         $this->setArrayResolver(null);
         $this->setBoolResolver(null);
         $this->setClassResolver(null);

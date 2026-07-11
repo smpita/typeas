@@ -4,7 +4,6 @@ namespace Smpita\TypeAs\Resolvers\Base;
 
 use Smpita\TypeAs\Abstracts\Resolver;
 use Smpita\TypeAs\Contracts\ClassResolver;
-use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
 class AsClass extends Resolver implements ClassResolver
 {
@@ -13,12 +12,10 @@ class AsClass extends Resolver implements ClassResolver
      *
      * @param  class-string<TClass>  $class
      * @param  TClass  $default
-     * @return TClass
-     *
-     * @throws TypeAsResolutionException
+     * @return TClass|null
      */
-    public function resolve(string $class, mixed $value, ?object $default = null): object
+    public function resolve(string $class, mixed $value, ?object $default = null): ?object
     {
-        return (new AsNullableClass())->resolve($class, $value, $default) ?? $this->throwResolutionException($value);
+        return (new AsNullableClass())->resolve($class, $value, $default);
     }
 }

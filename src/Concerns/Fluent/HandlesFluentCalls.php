@@ -11,12 +11,6 @@ use Smpita\TypeAs\Contracts\ArrayResolver;
 use Smpita\TypeAs\Contracts\ClassResolver;
 use Smpita\TypeAs\Contracts\FloatResolver;
 use Smpita\TypeAs\Contracts\StringResolver;
-use Smpita\TypeAs\Contracts\NullableIntResolver;
-use Smpita\TypeAs\Contracts\NullableBoolResolver;
-use Smpita\TypeAs\Contracts\NullableArrayResolver;
-use Smpita\TypeAs\Contracts\NullableClassResolver;
-use Smpita\TypeAs\Contracts\NullableFloatResolver;
-use Smpita\TypeAs\Contracts\NullableStringResolver;
 
 trait HandlesFluentCalls
 {
@@ -54,40 +48,28 @@ trait HandlesFluentCalls
     }
 
     public function using(
-        ArrayResolver|NullableArrayResolver
-        |BoolResolver|NullableBoolResolver
-        |ClassResolver|NullableClassResolver
-        |FloatResolver|NullableFloatResolver
-        |IntResolver|NullableIntResolver
-        |StringResolver|NullableStringResolver
+        ArrayResolver
+        |BoolResolver
+        |ClassResolver
+        |FloatResolver
+        |IntResolver
+        |StringResolver
         |null $resolver
     ): self {
         match(true) {
             is_null($resolver) => $this->config()->resetResolvers(),
             $resolver instanceof ArrayResolver
                 => $this->config()->arrayResolver = $resolver,
-            $resolver instanceof NullableArrayResolver
-                => $this->config()->nullableArrayResolver = $resolver,
             $resolver instanceof BoolResolver
                 => $this->config()->boolResolver = $resolver,
-            $resolver instanceof NullableBoolResolver
-                => $this->config()->nullableBoolResolver = $resolver,
             $resolver instanceof ClassResolver
                 => $this->config()->classResolver = $resolver,
-            $resolver instanceof NullableClassResolver
-                => $this->config()->nullableClassResolver = $resolver,
             $resolver instanceof FloatResolver
                 => $this->config()->floatResolver = $resolver,
-            $resolver instanceof NullableFloatResolver
-                => $this->config()->nullableFloatResolver = $resolver,
             $resolver instanceof IntResolver
                 => $this->config()->intResolver = $resolver,
-            $resolver instanceof NullableIntResolver
-                => $this->config()->nullableIntResolver = $resolver,
             $resolver instanceof StringResolver
                 => $this->config()->stringResolver = $resolver,
-            $resolver instanceof NullableStringResolver
-                => $this->config()->nullableStringResolver = $resolver,
         };
 
         return $this;

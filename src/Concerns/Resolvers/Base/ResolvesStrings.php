@@ -2,7 +2,7 @@
 
 namespace Smpita\TypeAs\Concerns\Resolvers\Base;
 
-use Smpita\TypeAs\Contracts\NullableStringResolver;
+use Smpita\TypeAs\Concerns\ThrowsTypeAsResolutionExceptions;
 use Smpita\TypeAs\Contracts\StringResolver;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Resolvers\Base\AsNullableString;
@@ -10,9 +10,9 @@ use Smpita\TypeAs\Resolvers\Base\AsString;
 
 trait ResolvesStrings
 {
-    protected ?StringResolver $stringResolver = null;
+    use ThrowsTypeAsResolutionExceptions;
 
-    protected ?NullableStringResolver $nullableStringResolver = null;
+    protected ?StringResolver $stringResolver = null;
 
     /**
      * @throws TypeAsResolutionException
@@ -21,12 +21,12 @@ trait ResolvesStrings
     {
         $resolver ??= $this->stringResolver ??= new AsString();
 
-        return $resolver->resolve($value, $default);
+        return $resolver->resolve($value, $default) ?? static::throwResolutionException($value);
     }
 
-    public function nullableString(mixed $value, ?string $default = null, ?NullableStringResolver $resolver = null): ?string
+    public function nullableString(mixed $value, ?string $default = null, ?StringResolver $resolver = null): ?string
     {
-        $resolver ??= $this->nullableStringResolver ??= new AsNullableString();
+        $resolver ??= $this->stringResolver ??= new AsNullableString();
 
         return $resolver->resolve($value, $default);
     }
@@ -34,10 +34,5 @@ trait ResolvesStrings
     public function setStringResolver(?StringResolver $resolver): void
     {
         $this->stringResolver = $resolver;
-    }
-
-    public function setNullableStringResolver(?NullableStringResolver $resolver): void
-    {
-        $this->nullableStringResolver = $resolver;
     }
 }

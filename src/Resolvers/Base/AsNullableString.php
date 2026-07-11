@@ -3,9 +3,8 @@
 namespace Smpita\TypeAs\Resolvers\Base;
 
 use Smpita\TypeAs\Abstracts\Resolver;
-use Smpita\TypeAs\Contracts\NullableStringResolver;
-
-class AsNullableString extends Resolver implements NullableStringResolver
+use Smpita\TypeAs\Contracts\StringResolver;
+class AsNullableString extends Resolver implements StringResolver
 {
     public function resolve(mixed $value, ?string $default = null): ?string
     {

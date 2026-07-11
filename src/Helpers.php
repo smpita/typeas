@@ -7,12 +7,6 @@ use Smpita\TypeAs\Contracts\BoolResolver;
 use Smpita\TypeAs\Contracts\ClassResolver;
 use Smpita\TypeAs\Contracts\FloatResolver;
 use Smpita\TypeAs\Contracts\IntResolver;
-use Smpita\TypeAs\Contracts\NullableArrayResolver;
-use Smpita\TypeAs\Contracts\NullableBoolResolver;
-use Smpita\TypeAs\Contracts\NullableClassResolver;
-use Smpita\TypeAs\Contracts\NullableFloatResolver;
-use Smpita\TypeAs\Contracts\NullableIntResolver;
-use Smpita\TypeAs\Contracts\NullableStringResolver;
 use Smpita\TypeAs\Contracts\StringResolver;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Fluent\NonNullable;
@@ -30,7 +24,7 @@ function asArray(mixed $value, ?array $default = null, ?ArrayResolver $resolver 
     return TypeAs::array($value, $default, $resolver, $wrap);
 }
 
-function asNullableArray(mixed $value, ?array $default = null, ?NullableArrayResolver $resolver = null, ?bool $wrap = true): ?array
+function asNullableArray(mixed $value, ?array $default = null, ?ArrayResolver $resolver = null, ?bool $wrap = true): ?array
 {
     return TypeAs::nullableArray($value, $default, $resolver, $wrap);
 }
@@ -43,7 +37,7 @@ function asBool(mixed $value, ?bool $default = null, ?BoolResolver $resolver = n
     return TypeAs::bool($value, $default, $resolver);
 }
 
-function asNullableBool(mixed $value, ?bool $default = null, ?NullableBoolResolver $resolver = null): ?bool
+function asNullableBool(mixed $value, ?bool $default = null, ?BoolResolver $resolver = null): ?bool
 {
     return TypeAs::nullableBool($value, $default, $resolver);
 }
@@ -79,7 +73,7 @@ function asClass(string $class, mixed $value, ?object $default = null, ?ClassRes
  * @param  TClass  $default
  * @return TClass|null
  */
-function asNullableClass(string $class, mixed $value, ?object $default = null, ?NullableClassResolver $resolver = null)
+function asNullableClass(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null)
 {
     return TypeAs::nullableClass($class, $value, $default, $resolver);
 }
@@ -92,7 +86,7 @@ function asFloat(mixed $value, ?float $default = null, ?FloatResolver $resolver 
     return TypeAs::float($value, $default, $resolver);
 }
 
-function asNullableFloat(mixed $value, ?float $default = null, ?NullableFloatResolver $resolver = null): ?float
+function asNullableFloat(mixed $value, ?float $default = null, ?FloatResolver $resolver = null): ?float
 {
     return TypeAs::nullableFloat($value, $default, $resolver);
 }
@@ -105,12 +99,12 @@ function asInt(mixed $value, ?int $default = null, ?IntResolver $resolver = null
     return TypeAs::int($value, $default, $resolver);
 }
 
-function asNullableInt(mixed $value, ?int $default = null, ?NullableIntResolver $resolver = null): ?int
+function asNullableInt(mixed $value, ?int $default = null, ?IntResolver $resolver = null): ?int
 {
     return TypeAs::nullableInt($value, $default, $resolver);
 }
 
-function asNullableString(mixed $value, ?string $default = null, ?NullableStringResolver $resolver = null): ?string
+function asNullableString(mixed $value, ?string $default = null, ?StringResolver $resolver = null): ?string
 {
     return TypeAs::nullableString($value, $default, $resolver);
 }

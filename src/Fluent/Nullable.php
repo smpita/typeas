@@ -14,7 +14,7 @@ class Nullable
         return TypeAs::nullableArray(
             value: $this->config()->fromValue,
             default: TypeAs::nullableArray($this->config()->defaultTo, wrap: false),
-            resolver: $this->config()->nullableArrayResolver,
+            resolver: $this->config()->arrayResolver,
             wrap: $this->config()->arrayWrap,
         );
     }
@@ -24,7 +24,7 @@ class Nullable
         return TypeAs::nullableBool(
             value: $this->config()->fromValue,
             default: TypeAs::nullableBool($this->config()->defaultTo),
-            resolver: $this->config()->nullableBoolResolver,
+            resolver: $this->config()->boolResolver,
         );
     }
 
@@ -48,7 +48,7 @@ class Nullable
             class: $class,
             value: $this->config()->fromValue,
             default: TypeAs::nullableClass(class: $class, value: $this->config()->defaultTo),
-            resolver: $this->config()->nullableClassResolver,
+            resolver: $this->config()->classResolver,
         );
     }
 
@@ -57,7 +57,7 @@ class Nullable
         return TypeAs::nullableFloat(
             value: $this->config()->fromValue,
             default: TypeAs::nullableFloat($this->config()->defaultTo),
-            resolver: $this->config()->nullableFloatResolver,
+            resolver: $this->config()->floatResolver,
         );
     }
 
@@ -66,7 +66,7 @@ class Nullable
         return TypeAs::nullableInt(
             value: $this->config()->fromValue,
             default: TypeAs::nullableInt($this->config()->defaultTo),
-            resolver: $this->config()->nullableIntResolver,
+            resolver: $this->config()->intResolver,
         );
     }
 
@@ -75,7 +75,7 @@ class Nullable
         return TypeAs::nullableString(
             value: $this->config()->fromValue,
             default: TypeAs::nullableString($this->config()->defaultTo),
-            resolver: $this->config()->nullableStringResolver,
+            resolver: $this->config()->stringResolver,
         );
     }
 }

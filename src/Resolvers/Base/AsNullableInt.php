@@ -3,9 +3,9 @@
 namespace Smpita\TypeAs\Resolvers\Base;
 
 use Smpita\TypeAs\Abstracts\Resolver;
-use Smpita\TypeAs\Contracts\NullableIntResolver;
+use Smpita\TypeAs\Contracts\IntResolver;
 
-class AsNullableInt extends Resolver implements NullableIntResolver
+class AsNullableInt extends Resolver implements IntResolver
 {
     public function resolve(mixed $value, ?int $default = null): ?int
     {

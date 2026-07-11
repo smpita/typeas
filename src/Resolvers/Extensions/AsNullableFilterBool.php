@@ -3,9 +3,9 @@
 namespace Smpita\TypeAs\Resolvers\Extensions;
 
 use Smpita\TypeAs\Abstracts\Resolver;
-use Smpita\TypeAs\Contracts\NullableBoolResolver;
+use Smpita\TypeAs\Contracts\BoolResolver;
 
-class AsNullableFilterBool extends Resolver implements NullableBoolResolver
+class AsNullableFilterBool extends Resolver implements BoolResolver
 {
     public function resolve(mixed $value, ?bool $default = null): ?bool
     {
