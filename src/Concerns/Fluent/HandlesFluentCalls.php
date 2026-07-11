@@ -2,15 +2,16 @@
 
 namespace Smpita\TypeAs\Concerns\Fluent;
 
-use Smpita\TypeAs\Fluent\Nullable;
-use Smpita\TypeAs\Fluent\TypeConfig;
-use Smpita\TypeAs\Fluent\NonNullable;
-use Smpita\TypeAs\Contracts\IntResolver;
-use Smpita\TypeAs\Contracts\BoolResolver;
 use Smpita\TypeAs\Contracts\ArrayResolver;
+use Smpita\TypeAs\Contracts\BoolResolver;
 use Smpita\TypeAs\Contracts\ClassResolver;
 use Smpita\TypeAs\Contracts\FloatResolver;
+use Smpita\TypeAs\Contracts\IntResolver;
 use Smpita\TypeAs\Contracts\StringResolver;
+use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
+use Smpita\TypeAs\Fluent\NonNullable;
+use Smpita\TypeAs\Fluent\Nullable;
+use Smpita\TypeAs\Fluent\TypeConfig;
 
 trait HandlesFluentCalls
 {
@@ -107,5 +108,16 @@ trait HandlesFluentCalls
     public function nullable(): Nullable
     {
         return Nullable::make($this->config);
+    }
+
+    /**
+     * @param class-string<TypeAsResolutionException>|null $exception
+     */
+    public function onError(?string $message = null, ?string $exception = null): self
+    {
+        $this->config()->throwMessage = $message;
+        $this->config()->throwException = $exception;
+
+        return $this;
     }
 }

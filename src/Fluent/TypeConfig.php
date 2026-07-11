@@ -8,9 +8,13 @@ use Smpita\TypeAs\Contracts\ClassResolver;
 use Smpita\TypeAs\Contracts\FloatResolver;
 use Smpita\TypeAs\Contracts\IntResolver;
 use Smpita\TypeAs\Contracts\StringResolver;
+use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
 final class TypeConfig
 {
+    /**
+     * @param class-string<TypeAsResolutionException>|null $throwException
+     */
     public function __construct(
         public mixed $fromValue = null,
         public mixed $defaultTo = null,
@@ -21,6 +25,8 @@ final class TypeConfig
         public ?IntResolver $intResolver = null,
         public ?StringResolver $stringResolver = null,
         public ?bool $arrayWrap = true,
+        public ?string $throwException = null,
+        public ?string $throwMessage = null,
     ) {
     }
 
