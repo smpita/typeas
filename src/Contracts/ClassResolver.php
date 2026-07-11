@@ -2,7 +2,6 @@
 
 namespace Smpita\TypeAs\Contracts;
 
-
 interface ClassResolver
 {
     /**
