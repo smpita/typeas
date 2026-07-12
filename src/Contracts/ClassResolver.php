@@ -2,18 +2,14 @@
 
 namespace Smpita\TypeAs\Contracts;
 
-use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
-
-interface ClassResolver
+interface ClassResolver extends TypeAsResolver
 {
     /**
      * @template TClass of object
      *
      * @param  class-string<TClass>  $class
      * @param  TClass  $default
-     * @return TClass
-     *
-     * @throws TypeAsResolutionException
+     * @return TClass|null
      */
     public function resolve(string $class, mixed $value, ?object $default = null);
 }

@@ -7,43 +7,31 @@ use Smpita\TypeAs\Contracts\BoolResolver;
 use Smpita\TypeAs\Contracts\ClassResolver;
 use Smpita\TypeAs\Contracts\FloatResolver;
 use Smpita\TypeAs\Contracts\IntResolver;
-use Smpita\TypeAs\Contracts\NullableArrayResolver;
-use Smpita\TypeAs\Contracts\NullableBoolResolver;
-use Smpita\TypeAs\Contracts\NullableClassResolver;
-use Smpita\TypeAs\Contracts\NullableFloatResolver;
-use Smpita\TypeAs\Contracts\NullableIntResolver;
-use Smpita\TypeAs\Contracts\NullableStringResolver;
 use Smpita\TypeAs\Contracts\StringResolver;
+use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
 final class TypeConfig
 {
+    /**
+     * @param class-string<TypeAsResolutionException>|null $throwException
+     */
     public function __construct(
         public mixed $fromValue = null,
         public mixed $defaultTo = null,
         public ?ArrayResolver $arrayResolver = null,
-        public ?NullableArrayResolver $nullableArrayResolver = null,
         public ?BoolResolver $boolResolver = null,
-        public ?NullableBoolResolver $nullableBoolResolver = null,
         public ?ClassResolver $classResolver = null,
-        public ?NullableClassResolver $nullableClassResolver = null,
         public ?FloatResolver $floatResolver = null,
-        public ?NullableFloatResolver $nullableFloatResolver = null,
         public ?IntResolver $intResolver = null,
-        public ?NullableIntResolver $nullableIntResolver = null,
         public ?StringResolver $stringResolver = null,
-        public ?NullableStringResolver $nullableStringResolver = null,
         public ?bool $arrayWrap = true,
+        public ?string $throwException = null,
+        public ?string $throwMessage = null,
     ) {
     }
 
     public function resetResolvers(): void
     {
-        $this->nullableArrayResolver = null;
-        $this->nullableBoolResolver = null;
-        $this->nullableClassResolver = null;
-        $this->nullableFloatResolver = null;
-        $this->nullableIntResolver = null;
-        $this->nullableStringResolver = null;
         $this->arrayResolver = null;
         $this->boolResolver = null;
         $this->classResolver = null;

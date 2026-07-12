@@ -6,6 +6,8 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
+use Smpita\TypeAs\Tests\Stubs\Exceptions\CustomExceptionStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\FilterBoolStub;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
 
@@ -171,22 +173,30 @@ class AsFilterBoolTest extends TestCase
 
         $this->assertSame($expected, $test(TypeAs::filterBool($truthy)));
     }
-}
 
-class FilterBoolStub
-{
-    public function __invoke(): bool
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_handle_custom_exceptions(): void
     {
-        return true;
-    }
+        $rng = $this->faker->sentence();
 
-    public function __toBool(): bool
-    {
-        return true;
-    }
+        $customMessage = 'resolved NULL with AsFilterBool ' . $rng;
+        $customException = CustomExceptionStub::class;
+        $this->expectException($customException);
+        $this->expectExceptionMessage($customMessage);
 
-    public function toBool(): bool
-    {
-        return true;
+        // throw a custom exception and message with sprintf formatting
+        $customErrorFormat = 'resolved %s with %s ' . $rng;
+        TypeAs::onError($customErrorFormat, $customException)
+            ->filterBool(null);
+
+        // it should not persist to the subsequent exception handling
+        $defaultMessage = 'Resolution error converting NULL [AsFilterBool]';
+        $defaultException = TypeAsResolutionException::class;
+        $this->expectException($defaultException);
+        $this->expectExceptionMessage($defaultMessage);
+
+        TypeAs::filterBool(null);
     }
 }

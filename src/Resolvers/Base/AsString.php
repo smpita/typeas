@@ -2,17 +2,30 @@
 
 namespace Smpita\TypeAs\Resolvers\Base;
 
-use Smpita\TypeAs\Abstracts\Resolver;
 use Smpita\TypeAs\Contracts\StringResolver;
-use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
-class AsString extends Resolver implements StringResolver
+class AsString implements StringResolver
 {
-    /**
-     * @throws TypeAsResolutionException
-     */
-    public function resolve(mixed $value, ?string $default = null): string
+    public function resolve(mixed $value, ?string $default = null): ?string
     {
-        return (new AsNullableString())->resolve($value, $default) ?? $this->throwResolutionException($value);
+        return match (gettype($value)) {
+            'string' => $value,
+            'object' => $this->fromObject($value),
+            'boolean', 'integer', 'double', 'resource' => strval($value),
+            default => null,
+        } ?? $default;
+    }
+
+    protected function fromObject(object $value): ?string
+    {
+        $muted = match (true) {
+            method_exists($value, '__toString') => $value->__toString(),
+            method_exists($value, 'toString') => $value->toString(),
+            default => null,
+        };
+
+        return is_string($muted)
+            ? $muted
+            : null;
     }
 }

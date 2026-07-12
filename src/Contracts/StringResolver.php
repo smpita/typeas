@@ -2,12 +2,7 @@
 
 namespace Smpita\TypeAs\Contracts;
 
-use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
-
-interface StringResolver
+interface StringResolver extends TypeAsResolver
 {
-    /**
-     * @throws TypeAsResolutionException
-     */
-    public function resolve(mixed $value, ?string $default = null): string;
+    public function resolve(mixed $value, ?string $default = null): ?string;
 }

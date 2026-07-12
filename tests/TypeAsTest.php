@@ -6,19 +6,19 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use ReflectionClass;
-use Smpita\TypeAs\Contracts\ArrayResolver;
-use Smpita\TypeAs\Contracts\BoolResolver;
-use Smpita\TypeAs\Contracts\ClassResolver;
-use Smpita\TypeAs\Contracts\FloatResolver;
-use Smpita\TypeAs\Contracts\IntResolver;
-use Smpita\TypeAs\Contracts\NullableArrayResolver;
-use Smpita\TypeAs\Contracts\NullableBoolResolver;
-use Smpita\TypeAs\Contracts\NullableClassResolver;
-use Smpita\TypeAs\Contracts\NullableFloatResolver;
-use Smpita\TypeAs\Contracts\NullableIntResolver;
-use Smpita\TypeAs\Contracts\NullableStringResolver;
-use Smpita\TypeAs\Contracts\StringResolver;
-use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
+use Smpita\TypeAs\Tests\Stubs\Objects\ParentClassStub;
+use Smpita\TypeAs\Tests\Stubs\Resolvers\ArrayResolverStub;
+use Smpita\TypeAs\Tests\Stubs\Resolvers\BoolResolverStub;
+use Smpita\TypeAs\Tests\Stubs\Resolvers\ClassResolverStub;
+use Smpita\TypeAs\Tests\Stubs\Resolvers\FloatResolverStub;
+use Smpita\TypeAs\Tests\Stubs\Resolvers\IntResolverStub;
+use Smpita\TypeAs\Tests\Stubs\Resolvers\NullableArrayResolverStub;
+use Smpita\TypeAs\Tests\Stubs\Resolvers\NullableBoolResolverStub;
+use Smpita\TypeAs\Tests\Stubs\Resolvers\NullableClassResolverStub;
+use Smpita\TypeAs\Tests\Stubs\Resolvers\NullableFloatResolverStub;
+use Smpita\TypeAs\Tests\Stubs\Resolvers\NullableIntResolverStub;
+use Smpita\TypeAs\Tests\Stubs\Resolvers\NullableStringResolverStub;
+use Smpita\TypeAs\Tests\Stubs\Resolvers\StringResolverStub;
 use Smpita\TypeAs\TypeAs;
 
 class TypeAsTest extends TestCase
@@ -67,7 +67,7 @@ class TypeAsTest extends TestCase
     public function test_can_set_nullable_array_resolver(): void
     {
         $resolver = new NullableArrayResolverStub();
-        TypeAs::setNullableArrayResolver($resolver);
+        TypeAs::setArrayResolver($resolver);
 
         $this->assertSame($resolver->resolve('test'), TypeAs::nullableArray('test'));
     }
@@ -109,7 +109,7 @@ class TypeAsTest extends TestCase
     public function test_can_set_nullable_bool_resolver(): void
     {
         $resolver = new NullableBoolResolverStub();
-        TypeAs::setNullableBoolResolver($resolver);
+        TypeAs::setBoolResolver($resolver);
 
         $this->assertSame($resolver->resolve('test'), TypeAs::nullableBool('test'));
     }
@@ -121,7 +121,7 @@ class TypeAsTest extends TestCase
     {
         $resolver = new ClassResolverStub();
 
-        $this->assertEqualsCanonicalizing($resolver->resolve(ClassStub::class, 'test'), TypeAs::class(ClassStub::class, 'test', null, $resolver));
+        $this->assertEqualsCanonicalizing($resolver->resolve(ParentClassStub::class, 'test'), TypeAs::class(ParentClassStub::class, 'test', null, $resolver));
     }
 
     #[Test]
@@ -132,7 +132,7 @@ class TypeAsTest extends TestCase
         $resolver = new ClassResolverStub();
         TypeAs::setClassResolver($resolver);
 
-        $this->assertEqualsCanonicalizing($resolver->resolve(ClassStub::class, 'test'), TypeAs::class(ClassStub::class, 'test'));
+        $this->assertEqualsCanonicalizing($resolver->resolve(ParentClassStub::class, 'test'), TypeAs::class(ParentClassStub::class, 'test'));
     }
 
     #[Test]
@@ -142,7 +142,7 @@ class TypeAsTest extends TestCase
     {
         $resolver = new NullableClassResolverStub();
 
-        $this->assertSame($resolver->resolve(ClassStub::class, 'test'), TypeAs::nullableClass(ClassStub::class, 'test', null, $resolver));
+        $this->assertSame($resolver->resolve(ParentClassStub::class, 'test'), TypeAs::nullableClass(ParentClassStub::class, 'test', null, $resolver));
     }
 
     #[Test]
@@ -151,9 +151,9 @@ class TypeAsTest extends TestCase
     public function test_can_set_nullable_class_resolver(): void
     {
         $resolver = new NullableClassResolverStub();
-        TypeAs::setNullableClassResolver($resolver);
+        TypeAs::setClassResolver($resolver);
 
-        $this->assertSame($resolver->resolve(ClassStub::class, 'test'), TypeAs::nullableClass(ClassStub::class, 'test'));
+        $this->assertSame($resolver->resolve(ParentClassStub::class, 'test'), TypeAs::nullableClass(ParentClassStub::class, 'test'));
     }
 
     #[Test]
@@ -193,7 +193,7 @@ class TypeAsTest extends TestCase
     public function test_can_set_nullable_float_resolver(): void
     {
         $resolver = new NullableFloatResolverStub();
-        TypeAs::setNullableFloatResolver($resolver);
+        TypeAs::setFloatResolver($resolver);
 
         $this->assertSame($resolver->resolve('test'), TypeAs::nullableFloat('test'));
     }
@@ -235,7 +235,7 @@ class TypeAsTest extends TestCase
     public function test_can_set_nullable_int_resolver(): void
     {
         $resolver = new NullableIntResolverStub();
-        TypeAs::setNullableIntResolver($resolver);
+        TypeAs::setIntResolver($resolver);
 
         $this->assertSame($resolver->resolve('test'), TypeAs::nullableInt('test'));
     }
@@ -277,7 +277,7 @@ class TypeAsTest extends TestCase
     public function test_can_set_nullable_string_resolver(): void
     {
         $resolver = new NullableStringResolverStub();
-        TypeAs::setNullableStringResolver($resolver);
+        TypeAs::setStringResolver($resolver);
 
         $this->assertSame($resolver->resolve('test'), TypeAs::nullableString('test'));
     }
@@ -310,12 +310,6 @@ class TypeAsTest extends TestCase
     public static function resolverProvider(): array
     {
         return [
-            ['nullableArrayResolver', new NullableArrayResolverStub()],
-            ['nullableBoolResolver', new NullableBoolResolverStub()],
-            ['nullableClassResolver', new NullableClassResolverStub()],
-            ['nullableFloatResolver', new NullableFloatResolverStub()],
-            ['nullableIntResolver', new NullableIntResolverStub()],
-            ['nullableStringResolver', new NullableStringResolverStub()],
             ['arrayResolver', new ArrayResolverStub()],
             ['boolResolver', new BoolResolverStub()],
             ['classResolver', new ClassResolverStub()],
@@ -323,130 +317,5 @@ class TypeAsTest extends TestCase
             ['intResolver', new IntResolverStub()],
             ['stringResolver', new StringResolverStub()],
         ];
-    }
-}
-
-class ClassStub
-{
-}
-
-class ArrayResolverStub implements ArrayResolver
-{
-    /** @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException */
-    public function resolve(mixed $value, ?array $default = null, ?bool $wrap = true): array
-    {
-        return [];
-    }
-}
-
-class BoolResolverStub implements BoolResolver
-{
-    /** @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException */
-    public function resolve(mixed $value, ?bool $default = null): bool
-    {
-        return false;
-    }
-}
-
-class ClassResolverStub implements ClassResolver
-{
-    /**
-     * @template TClass of object
-     *
-     * @param  class-string<TClass>  $class
-     * @param  TClass  $default
-     * @return TClass
-     *
-     * @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException
-     */
-    public function resolve(string $class, mixed $value, ?object $default = null)
-    {
-        if (class_exists($class)) {
-            return new $class();
-        }
-
-        throw new TypeAsResolutionException();
-    }
-}
-
-class FloatResolverStub implements FloatResolver
-{
-    /** @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException */
-    public function resolve(mixed $value, ?float $default = null): float
-    {
-        return 0.0;
-    }
-}
-
-class IntResolverStub implements IntResolver
-{
-    /** @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException */
-    public function resolve(mixed $value, ?int $default = null): int
-    {
-        return 0;
-    }
-}
-
-class StringResolverStub implements StringResolver
-{
-    /** @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException */
-    public function resolve(mixed $value, ?string $default = null): string
-    {
-        return '';
-    }
-}
-
-class NullableArrayResolverStub implements NullableArrayResolver
-{
-    public function resolve(mixed $value, ?array $default = null, ?bool $wrap = true): ?array
-    {
-        return null;
-    }
-}
-
-class NullableBoolResolverStub implements NullableBoolResolver
-{
-    public function resolve(mixed $value, ?bool $default = null): ?bool
-    {
-        return null;
-    }
-}
-
-class NullableClassResolverStub implements NullableClassResolver
-{
-    /**
-     * @template TClass of object
-     *
-     * @param  class-string<TClass>  $class
-     * @param  TClass  $default
-     * @return TClass|null
-     */
-    public function resolve(string $class, mixed $value, ?object $default = null)
-    {
-        return null;
-    }
-}
-
-class NullableFloatResolverStub implements NullableFloatResolver
-{
-    public function resolve(mixed $value, ?float $default = null): ?float
-    {
-        return null;
-    }
-}
-
-class NullableIntResolverStub implements NullableIntResolver
-{
-    public function resolve(mixed $value, ?int $default = null): ?int
-    {
-        return null;
-    }
-}
-
-class NullableStringResolverStub implements NullableStringResolver
-{
-    public function resolve(mixed $value, ?string $default = null): ?string
-    {
-        return null;
     }
 }

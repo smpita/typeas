@@ -3,16 +3,15 @@
 namespace Smpita\TypeAs\Concerns\Resolvers\Base;
 
 use Smpita\TypeAs\Contracts\IntResolver;
-use Smpita\TypeAs\Contracts\NullableIntResolver;
+use Smpita\TypeAs\Concerns\ThrowsTypeAsResolutionExceptions;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Resolvers\Base\AsInt;
-use Smpita\TypeAs\Resolvers\Base\AsNullableInt;
 
 trait ResolvesInts
 {
-    protected ?IntResolver $intResolver = null;
+    use ThrowsTypeAsResolutionExceptions;
 
-    protected ?NullableIntResolver $nullableIntResolver = null;
+    protected ?IntResolver $intResolver = null;
 
     /**
      * @throws TypeAsResolutionException
@@ -21,23 +20,18 @@ trait ResolvesInts
     {
         $resolver ??= $this->intResolver ??= new AsInt();
 
-        return $resolver->resolve($value, $default);
+        return $resolver->resolve(value: $value, default: $default) ?? static::throwResolutionException($value, $resolver);
     }
 
-    public function nullableInt(mixed $value, ?int $default = null, ?NullableIntResolver $resolver = null): ?int
+    public function nullableInt(mixed $value, ?int $default = null, ?IntResolver $resolver = null): ?int
     {
-        $resolver ??= $this->nullableIntResolver ??= new AsNullableInt();
+        $resolver ??= $this->intResolver ??= new AsInt();
 
-        return $resolver->resolve($value, $default);
+        return $resolver->resolve(value: $value, default: $default);
     }
 
     public function setIntResolver(?IntResolver $resolver): void
     {
         $this->intResolver = $resolver;
-    }
-
-    public function setNullableIntResolver(?NullableIntResolver $resolver): void
-    {
-        $this->nullableIntResolver = $resolver;
     }
 }

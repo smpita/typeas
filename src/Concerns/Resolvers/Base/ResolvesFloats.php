@@ -3,16 +3,15 @@
 namespace Smpita\TypeAs\Concerns\Resolvers\Base;
 
 use Smpita\TypeAs\Contracts\FloatResolver;
-use Smpita\TypeAs\Contracts\NullableFloatResolver;
+use Smpita\TypeAs\Concerns\ThrowsTypeAsResolutionExceptions;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Resolvers\Base\AsFloat;
-use Smpita\TypeAs\Resolvers\Base\AsNullableFloat;
 
 trait ResolvesFloats
 {
-    protected ?FloatResolver $floatResolver = null;
+    use ThrowsTypeAsResolutionExceptions;
 
-    protected ?NullableFloatResolver $nullableFloatResolver = null;
+    protected ?FloatResolver $floatResolver = null;
 
     /**
      * @throws TypeAsResolutionException
@@ -21,23 +20,18 @@ trait ResolvesFloats
     {
         $resolver ??= $this->floatResolver ??= new AsFloat();
 
-        return $resolver->resolve($value, $default);
+        return $resolver->resolve(value: $value, default: $default) ?? static::throwResolutionException($value, $resolver);
     }
 
-    public function nullableFloat(mixed $value, ?float $default = null, ?NullableFloatResolver $resolver = null): ?float
+    public function nullableFloat(mixed $value, ?float $default = null, ?FloatResolver $resolver = null): ?float
     {
-        $resolver ??= $this->nullableFloatResolver ??= new AsNullableFloat();
+        $resolver ??= $this->floatResolver ??= new AsFloat();
 
-        return $resolver->resolve($value, $default);
+        return $resolver->resolve(value: $value, default: $default);
     }
 
     public function setFloatResolver(?FloatResolver $resolver): void
     {
         $this->floatResolver = $resolver;
-    }
-
-    public function setNullableFloatResolver(?NullableFloatResolver $resolver): void
-    {
-        $this->nullableFloatResolver = $resolver;
     }
 }

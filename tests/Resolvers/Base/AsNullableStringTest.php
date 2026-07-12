@@ -4,6 +4,8 @@ namespace Smpita\TypeAs\Tests\Resolvers\Base;
 
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
+use Smpita\TypeAs\Tests\Stubs\Objects\MagicStringableStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\StringableStub;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
 
@@ -106,29 +108,5 @@ class AsNullableStringTest extends TestCase
         $test = fn (?string $value) => $value;
 
         $this->assertIsString($test(TypeAs::nullableString($this->faker->randomNumber())));
-    }
-}
-
-class StringableStub
-{
-    public function __construct(public string $value)
-    {
-    }
-
-    public function toString(): string
-    {
-        return $this->value;
-    }
-}
-
-class MagicStringableStub
-{
-    public function __construct(public string $value)
-    {
-    }
-
-    public function __toString(): string
-    {
-        return $this->value;
     }
 }

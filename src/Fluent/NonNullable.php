@@ -15,7 +15,10 @@ class NonNullable
      */
     public function asArray(): array
     {
-        return TypeAs::array(
+        return TypeAs::onError(
+            message: $this->config()->throwMessage,
+            exception: $this->config()->throwException,
+        )->array(
             value: $this->config()->fromValue,
             default: TypeAs::nullableArray($this->config()->defaultTo, wrap: false),
             resolver: $this->config()->arrayResolver,
@@ -28,7 +31,10 @@ class NonNullable
      */
     public function asBool(): bool
     {
-        return TypeAs::bool(
+        return TypeAs::onError(
+            message: $this->config()->throwMessage,
+            exception: $this->config()->throwException,
+        )->bool(
             value: $this->config()->fromValue,
             default: TypeAs::nullableBool($this->config()->defaultTo),
             resolver: $this->config()->boolResolver,
@@ -40,7 +46,10 @@ class NonNullable
      */
     public function asFilterBool(): ?bool
     {
-        return TypeAs::filterBool(
+        return TypeAs::onError(
+            message: $this->config()->throwMessage,
+            exception: $this->config()->throwException,
+        )->filterBool(
             value: $this->config()->fromValue,
             default: TypeAs::nullableBool($this->config()->defaultTo),
         );
@@ -56,7 +65,10 @@ class NonNullable
      */
     public function asClass(string $class)
     {
-        return TypeAs::class(
+        return TypeAs::onError(
+            message: $this->config()->throwMessage,
+            exception: $this->config()->throwException,
+        )->class(
             class: $class,
             value: $this->config()->fromValue,
             default: TypeAs::nullableClass(class: $class, value: $this->config()->defaultTo),
@@ -69,7 +81,10 @@ class NonNullable
      */
     public function asFloat(): float
     {
-        return TypeAs::float(
+        return TypeAs::onError(
+            message: $this->config()->throwMessage,
+            exception: $this->config()->throwException,
+        )->float(
             value: $this->config()->fromValue,
             default: TypeAs::nullableFloat($this->config()->defaultTo),
             resolver: $this->config()->floatResolver,
@@ -81,7 +96,10 @@ class NonNullable
      */
     public function asInt(): int
     {
-        return TypeAs::int(
+        return TypeAs::onError(
+            message: $this->config()->throwMessage,
+            exception: $this->config()->throwException,
+        )->int(
             value: $this->config()->fromValue,
             default: TypeAs::nullableInt($this->config()->defaultTo),
             resolver: $this->config()->intResolver,
@@ -93,7 +111,10 @@ class NonNullable
      */
     public function asString(): string
     {
-        return TypeAs::string(
+        return TypeAs::onError(
+            message: $this->config()->throwMessage,
+            exception: $this->config()->throwException,
+        )->string(
             value: $this->config()->fromValue,
             default: TypeAs::nullableString($this->config()->defaultTo),
             resolver: $this->config()->stringResolver,

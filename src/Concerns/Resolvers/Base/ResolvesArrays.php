@@ -2,17 +2,16 @@
 
 namespace Smpita\TypeAs\Concerns\Resolvers\Base;
 
+use Smpita\TypeAs\Concerns\ThrowsTypeAsResolutionExceptions;
 use Smpita\TypeAs\Contracts\ArrayResolver;
-use Smpita\TypeAs\Contracts\NullableArrayResolver;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Resolvers\Base\AsArray;
-use Smpita\TypeAs\Resolvers\Base\AsNullableArray;
 
 trait ResolvesArrays
 {
-    protected ?ArrayResolver $arrayResolver = null;
+    use ThrowsTypeAsResolutionExceptions;
 
-    protected ?NullableArrayResolver $nullableArrayResolver = null;
+    protected ?ArrayResolver $arrayResolver = null;
 
     /**
      * @throws TypeAsResolutionException
@@ -21,23 +20,18 @@ trait ResolvesArrays
     {
         $resolver ??= $this->arrayResolver ??= new AsArray();
 
-        return $resolver->resolve(value: $value, default: $default, wrap: $wrap);
+        return $resolver->resolve(value: $value, default: $default, wrap: $wrap) ?? static::throwResolutionException($value, $resolver);
     }
 
-    public function nullableArray(mixed $value, ?array $default = null, ?NullableArrayResolver $resolver = null, ?bool $wrap = true): ?array
+    public function nullableArray(mixed $value, ?array $default = null, ?ArrayResolver $resolver = null, ?bool $wrap = true): ?array
     {
-        $resolver ??= $this->nullableArrayResolver ??= new AsNullableArray();
+        $resolver ??= $this->arrayResolver ??= new AsArray();
 
-        return $resolver->resolve($value, $default, $wrap);
+        return $resolver->resolve(value: $value, default: $default, wrap: $wrap);
     }
 
     public function setArrayResolver(?ArrayResolver $resolver): void
     {
         $this->arrayResolver = $resolver;
-    }
-
-    public function setNullableArrayResolver(?NullableArrayResolver $resolver): void
-    {
-        $this->nullableArrayResolver = $resolver;
     }
 }

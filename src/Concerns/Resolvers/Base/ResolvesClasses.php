@@ -2,17 +2,16 @@
 
 namespace Smpita\TypeAs\Concerns\Resolvers\Base;
 
+use Smpita\TypeAs\Concerns\ThrowsTypeAsResolutionExceptions;
 use Smpita\TypeAs\Contracts\ClassResolver;
-use Smpita\TypeAs\Contracts\NullableClassResolver;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Resolvers\Base\AsClass;
-use Smpita\TypeAs\Resolvers\Base\AsNullableClass;
 
 trait ResolvesClasses
 {
-    protected ?ClassResolver $classResolver = null;
+    use ThrowsTypeAsResolutionExceptions;
 
-    protected ?NullableClassResolver $nullableClassResolver = null;
+    protected ?ClassResolver $classResolver = null;
 
     /**
      * @template TClass of object
@@ -27,7 +26,7 @@ trait ResolvesClasses
     {
         $resolver ??= $this->classResolver ??= new AsClass();
 
-        return $resolver->resolve($class, $value, $default);
+        return $resolver->resolve(class: $class, value: $value, default: $default) ?? static::throwResolutionException($value, $resolver);
     }
 
     /**
@@ -37,20 +36,15 @@ trait ResolvesClasses
      * @param  TClass  $default
      * @return TClass|null
      */
-    public function nullableClass(string $class, mixed $value, ?object $default = null, ?NullableClassResolver $resolver = null)
+    public function nullableClass(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null)
     {
-        $resolver ??= $this->nullableClassResolver ??= new AsNullableClass();
+        $resolver ??= $this->classResolver ??= new AsClass();
 
-        return $resolver->resolve($class, $value, $default);
+        return $resolver->resolve(class: $class, value: $value, default: $default);
     }
 
     public function setClassResolver(?ClassResolver $resolver): void
     {
         $this->classResolver = $resolver;
-    }
-
-    public function setNullableClassResolver(?NullableClassResolver $resolver): void
-    {
-        $this->nullableClassResolver = $resolver;
     }
 }

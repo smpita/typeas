@@ -2,20 +2,65 @@
 
 namespace Smpita\TypeAs\Concerns;
 
+use InvalidArgumentException;
+use Smpita\TypeAs\Contracts\TypeAsResolver;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
 trait ThrowsTypeAsResolutionExceptions
 {
     /**
-     * @return never
-     *
+     * @var class-string<TypeAsResolutionException>|null
+     */
+    protected ?string $throwException = null;
+
+    protected ?string $throwMessage = null;
+
+    /**
      * @throws TypeAsResolutionException
      */
-    protected static function throwResolutionException(mixed $value)
+    protected function throwResolutionException(mixed $value, TypeAsResolver $resolver): never
     {
         $type = is_object($value) ? get_class($value) : gettype($value);
-        $classname = basename(str_replace('\\', '/', static::class));
+        $classname = basename(str_replace('\\', '/', $resolver::class));
 
-        throw new TypeAsResolutionException("Resolution error converting $type [".$classname.']');
+        $message = sprintf($this->getThrowMessage(), $type, $classname);
+        $exception = $this->getThrowException();
+
+        if (is_null($exception) || ! is_subclass_of($exception, TypeAsResolutionException::class)) {
+            throw new TypeAsResolutionException($message);
+        }
+
+        throw new $exception($message);
+    }
+
+    public function getThrowMessage(): string
+    {
+        return $this->throwMessage ?? 'Resolution error converting %s [%s]';
+    }
+
+    /**
+     * @return class-string<TypeAsResolutionException>
+     */
+    public function getThrowException(): ?string
+    {
+        return $this->throwException;
+    }
+
+    public function setThrowMessage(?string $message = null): self
+    {
+        $this->throwMessage = $message;
+
+        return $this;
+    }
+
+    public function setThrowException(?string $exception = null): self
+    {
+        if (is_null($exception) || is_a($exception, TypeAsResolutionException::class, true)) {
+            $this->throwException = $exception;
+
+            return $this;
+        }
+
+        throw new InvalidArgumentException("Must extend TypeAsResolutionException: $exception");
     }
 }

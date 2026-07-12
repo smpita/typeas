@@ -2,17 +2,14 @@
 
 namespace Smpita\TypeAs\Resolvers\Base;
 
-use Smpita\TypeAs\Abstracts\Resolver;
 use Smpita\TypeAs\Contracts\BoolResolver;
-use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
-class AsBool extends Resolver implements BoolResolver
+class AsBool implements BoolResolver
 {
-    /**
-     * @throws TypeAsResolutionException
-     */
-    public function resolve(mixed $value, ?bool $default = null): bool
+    public function resolve(mixed $value, ?bool $default = null): ?bool
     {
-        return (new AsNullableBool())->resolve($value, $default) ?? $this->throwResolutionException($value);
+        return is_null($value)
+            ? $default
+            : boolval($value);
     }
 }

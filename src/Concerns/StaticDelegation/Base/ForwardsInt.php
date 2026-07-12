@@ -4,7 +4,6 @@ namespace Smpita\TypeAs\Concerns\StaticDelegation\Base;
 
 use Smpita\TypeAs\Concerns\Instance\HandlesTypeFactory;
 use Smpita\TypeAs\Contracts\IntResolver;
-use Smpita\TypeAs\Contracts\NullableIntResolver;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
 trait ForwardsInt
@@ -19,7 +18,7 @@ trait ForwardsInt
         return static::getInstance()->int(value: $value, default: $default, resolver: $resolver);
     }
 
-    public static function nullableInt(mixed $value, ?int $default = null, ?NullableIntResolver $resolver = null): ?int
+    public static function nullableInt(mixed $value, ?int $default = null, ?IntResolver $resolver = null): ?int
     {
         return static::getInstance()->nullableInt(value: $value, default: $default, resolver: $resolver);
     }
@@ -27,10 +26,5 @@ trait ForwardsInt
     public static function setIntResolver(?IntResolver $resolver): void
     {
         static::getInstance()->setIntResolver($resolver);
-    }
-
-    public static function setNullableIntResolver(?NullableIntResolver $resolver): void
-    {
-        static::getInstance()->setNullableIntResolver($resolver);
     }
 }

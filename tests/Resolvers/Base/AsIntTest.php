@@ -5,6 +5,9 @@ namespace Smpita\TypeAs\Tests\Resolvers\Base;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
+use Smpita\TypeAs\Tests\Stubs\Exceptions\CustomExceptionStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\IntegerableStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\MagicIntegerableStub;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
 
@@ -112,28 +115,64 @@ class AsIntTest extends TestCase
 
         $this->assertIsInt($test(TypeAs::int($this->faker->randomFloat())));
     }
-}
 
-class IntegerableStub
-{
-    public function __construct(public int $value)
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_handle_custom_exception_with_message(): void
     {
+        $rng = $this->faker->sentence();
+
+        $customMessage = 'resolved NULL with AsInt ' . $rng;
+        $customException = CustomExceptionStub::class;
+        $this->expectException($customException);
+        $this->expectExceptionMessage($customMessage);
+
+        // throw a custom exception and message with sprintf formatting
+        $customErrorFormat = 'resolved %s with %s ' . $rng;
+        TypeAs::onError($customErrorFormat, $customException)
+            ->int(null);
+
+        // it should not persist to the subsequent exception handling
+        $defaultMessage = 'Resolution error converting NULL [AsInt]';
+        $defaultException = TypeAsResolutionException::class;
+        $this->expectException($defaultException);
+        $this->expectExceptionMessage($defaultMessage);
+
+        TypeAs::int(null);
     }
 
-    public function toInteger(): int
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_handle_custom_exception_without_message(): void
     {
-        return $this->value;
-    }
-}
+        $defaultMessage = 'Resolution error converting NULL [AsInt]';
+        $customException = CustomExceptionStub::class;
+        $this->expectException($customException);
+        $this->expectExceptionMessage($defaultMessage);
 
-class MagicIntegerableStub
-{
-    public function __construct(public int $value)
-    {
+        // throw a custom exception
+        TypeAs::onError(exception: $customException)
+            ->int(null);
     }
 
-    public function __toInteger(): int
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_handle_custom_throw_message_without_exception(): void
     {
-        return $this->value;
+        $rng = $this->faker->sentence();
+
+        $customMessage = 'resolved NULL with AsInt ' . $rng;
+        $defaultException = TypeAsResolutionException::class;
+        $this->expectException($defaultException);
+        $this->expectExceptionMessage($customMessage);
+
+        // throw a custom message with sprintf formatting
+        $customErrorFormat = 'resolved %s with %s ' . $rng;
+        TypeAs::onError($customErrorFormat)
+            ->int(null);
     }
+
 }

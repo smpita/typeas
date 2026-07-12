@@ -4,6 +4,8 @@ namespace Smpita\TypeAs\Tests\Resolvers\Base;
 
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
+use Smpita\TypeAs\Tests\Stubs\Objects\ArrayableStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\MagicArrayableStub;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
 
@@ -43,7 +45,7 @@ class AsNullableArrayTest extends TestCase
     {
         $inner = [$this->faker->sentence()];
 
-        $this->assertSame($inner, TypeAs::nullableArray(new NullableArrayableStub($inner)));
+        $this->assertSame($inner, TypeAs::nullableArray(new ArrayableStub($inner)));
     }
 
     #[Test]
@@ -53,7 +55,7 @@ class AsNullableArrayTest extends TestCase
     {
         $inner = [$this->faker->sentence()];
 
-        $this->assertSame($inner, TypeAs::nullableArray(new MagicNullableArrayableStub($inner)));
+        $this->assertSame($inner, TypeAs::nullableArray(new MagicArrayableStub($inner)));
     }
 
     #[Test]
@@ -138,29 +140,5 @@ class AsNullableArrayTest extends TestCase
         $test = fn (?array $value) => $value;
 
         $this->assertIsArray($test(TypeAs::nullableArray($this->faker->sentence())));
-    }
-}
-
-class NullableArrayableStub
-{
-    public function __construct(public array $value)
-    {
-    }
-
-    public function toArray(): array
-    {
-        return $this->value;
-    }
-}
-
-class MagicNullableArrayableStub
-{
-    public function __construct(public array $value)
-    {
-    }
-
-    public function __toArray(): array
-    {
-        return $this->value;
     }
 }

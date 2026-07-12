@@ -5,6 +5,9 @@ namespace Smpita\TypeAs\Tests\Resolvers\Base;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
+use Smpita\TypeAs\Tests\Stubs\Exceptions\CustomExceptionStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\MagicStringableStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\StringableStub;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
 
@@ -56,7 +59,7 @@ class AsStringTest extends TestCase
     {
         $value = $this->faker->word();
 
-        $this->assertSame($value, TypeAs::string(new NullableStringableStub($value)));
+        $this->assertSame($value, TypeAs::string(new StringableStub($value)));
     }
 
     #[Test]
@@ -82,7 +85,7 @@ class AsStringTest extends TestCase
     {
         $value = $this->faker->word();
 
-        $this->assertSame($value, TypeAs::string(new MagicNullableStringableStub($value)));
+        $this->assertSame($value, TypeAs::string(new MagicStringableStub($value)));
     }
 
     #[Test]
@@ -102,28 +105,63 @@ class AsStringTest extends TestCase
 
         $this->assertIsString($test(TypeAs::string($this->faker->randomNumber())));
     }
-}
 
-class NullableStringableStub
-{
-    public function __construct(public string $value)
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_handle_custom_exception_with_message(): void
     {
+        $rng = $this->faker->sentence();
+
+        $customMessage = 'resolved NULL with AsString ' . $rng;
+        $customException = CustomExceptionStub::class;
+        $this->expectException($customException);
+        $this->expectExceptionMessage($customMessage);
+
+        // throw a custom exception and message with sprintf formatting
+        $customErrorFormat = 'resolved %s with %s ' . $rng;
+        TypeAs::onError($customErrorFormat, $customException)
+            ->string(null);
+
+        // it should not persist to the subsequent exception handling
+        $defaultMessage = 'Resolution error converting NULL [AsString]';
+        $defaultException = TypeAsResolutionException::class;
+        $this->expectException($defaultException);
+        $this->expectExceptionMessage($defaultMessage);
+
+        TypeAs::string(null);
     }
 
-    public function toString(): string
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_handle_custom_exception_without_message(): void
     {
-        return $this->value;
-    }
-}
+        $defaultMessage = 'Resolution error converting NULL [AsString]';
+        $customException = CustomExceptionStub::class;
+        $this->expectException($customException);
+        $this->expectExceptionMessage($defaultMessage);
 
-class MagicNullableStringableStub
-{
-    public function __construct(public string $value)
-    {
+        // throw a custom exception
+        TypeAs::onError(exception: $customException)
+            ->string(null);
     }
 
-    public function __toString(): string
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_handle_custom_throw_message_without_exception(): void
     {
-        return $this->value;
+        $rng = $this->faker->sentence();
+
+        $customMessage = 'resolved NULL with AsString ' . $rng;
+        $defaultException = TypeAsResolutionException::class;
+        $this->expectException($defaultException);
+        $this->expectExceptionMessage($customMessage);
+
+        // throw a custom message with sprintf formatting
+        $customErrorFormat = 'resolved %s with %s ' . $rng;
+        TypeAs::onError($customErrorFormat)
+            ->string(null);
     }
 }

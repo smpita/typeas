@@ -7,6 +7,9 @@ use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
+use Smpita\TypeAs\Tests\Stubs\Objects\ArrayableStub;
+use Smpita\TypeAs\Tests\Stubs\Exceptions\CustomExceptionStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\MagicArrayableStub;
 
 class AsArrayTest extends TestCase
 {
@@ -142,28 +145,63 @@ class AsArrayTest extends TestCase
 
         $this->assertIsArray($test(TypeAs::array($this->faker->sentence())));
     }
-}
 
-class ArrayableStub
-{
-    public function __construct(public array $value)
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_handle_custom_exception_with_message(): void
     {
+        $rng = $this->faker->sentence();
+
+        $customMessage = 'resolved NULL with AsArray ' . $rng;
+        $customException = CustomExceptionStub::class;
+        $this->expectException($customException);
+        $this->expectExceptionMessage($customMessage);
+
+        // throw a custom exception and message with sprintf formatting
+        $customErrorFormat = 'resolved %s with %s ' . $rng;
+        TypeAs::onError($customErrorFormat, $customException)
+            ->array(null, wrap: false);
+
+        // it should not persist to the subsequent exception handling
+        $defaultMessage = 'Resolution error converting NULL [AsArray]';
+        $defaultException = TypeAsResolutionException::class;
+        $this->expectException($defaultException);
+        $this->expectExceptionMessage($defaultMessage);
+
+        TypeAs::array(null, wrap: false);
     }
 
-    public function toArray(): array
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_handle_custom_exception_without_message(): void
     {
-        return $this->value;
-    }
-}
+        $defaultMessage = 'Resolution error converting NULL [AsArray]';
+        $customException = CustomExceptionStub::class;
+        $this->expectException($customException);
+        $this->expectExceptionMessage($defaultMessage);
 
-class MagicArrayableStub
-{
-    public function __construct(public array $value)
-    {
+        // throw a custom exception
+        TypeAs::onError(exception: $customException)
+            ->array(null, wrap: false);
     }
 
-    public function __toArray(): array
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_handle_custom_throw_message_without_exception(): void
     {
-        return $this->value;
+        $rng = $this->faker->sentence();
+
+        $customMessage = 'resolved NULL with AsArray ' . $rng;
+        $defaultException = TypeAsResolutionException::class;
+        $this->expectException($defaultException);
+        $this->expectExceptionMessage($customMessage);
+
+        // throw a custom message with sprintf formatting
+        $customErrorFormat = 'resolved %s with %s ' . $rng;
+        TypeAs::onError($customErrorFormat)
+            ->array(null, wrap: false);
     }
 }
