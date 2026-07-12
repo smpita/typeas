@@ -139,7 +139,7 @@ use Smpita\TypeAs\TypeAs;
 
 $array = TypeAs::type($mixed)->asArray();
 $bool = TypeAs::type($mixed)->asBool();
-$filterBool = TypeAs::type($mixed)->asFilterBool()
+$filterBool = TypeAs::type($mixed)->asFilterBool();
 $class = TypeAs::type($mixed)->asClass(Expected::class);
 $float = TypeAs::type($mixed)->asFloat();
 $int = TypeAs::type($mixed)->asInt();
