@@ -109,7 +109,7 @@ Smpita\TypeAs::setStringResolver(?\Smpita\TypeAs\Contracts\StringResolver $resol
 #### TypeAs
 
 ```php
-\Smpita\TypeAs\TypeAs::type($mixed): NonNullable
+\ Smpita\TypeAs\TypeAs::type($mixed): NonNullable
 \Smpita\TypeAs\TypeAs::type($mixed)->onError(?string $message = null, ?string $exception = null): NonNullable;
 ```
 
