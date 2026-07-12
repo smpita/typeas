@@ -7,7 +7,7 @@
 ```php
 Smpita\TypeAs::array(mixed $value, ?array $default = null, ?ArrayResolver $resolver = null, ?bool $wrap = true): array
 
-Smpita\TypeAs::nullableArray(mixed $value, ?array $default = null, ?NullableArrayResolver $resolver = null, ?bool $wrap = true): ?array
+Smpita\TypeAs::nullableArray(mixed $value, ?array $default = null, ?ArrayResolver $resolver = null, ?bool $wrap = true): ?array
 ```
 
 #### Boolean
@@ -15,7 +15,7 @@ Smpita\TypeAs::nullableArray(mixed $value, ?array $default = null, ?NullableArra
 ```php
 Smpita\TypeAs::bool(mixed $value, ?bool $default = null, ?BoolResolver $resolver = null): bool
 
-Smpita\TypeAs::nullableBool(mixed $value, ?bool $default = null, ?NullableBoolResolver $resolver = null): ?bool
+Smpita\TypeAs::nullableBool(mixed $value, ?bool $default = null, ?BoolResolver $resolver = null): ?bool
 
 Smpita\TypeAs::bool(mixed $value, ?bool $default = null): bool
 
@@ -27,15 +27,15 @@ Smpita\TypeAs::nullableBool(mixed $value, ?bool $default = null): ?bool
 ```php
 Smpita\TypeAs::class(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null): object
 
-Smpita\TypeAs::nullableClass(string $class, mixed $value, ?object $default = null, ?NullableClassResolver $resolver = null): ?object
+Smpita\TypeAs::nullableClass(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null): ?object
 ```
 
 #### Float
 
 ```php
-Smpita\TypeAs::float(mixed $value, ?float $default = null, >FloatResolver $resolver = null): float
+Smpita\TypeAs::float(mixed $value, ?float $default = null, ?FloatResolver $resolver = null): float
 
-Smpita\TypeAs::nullableFloat(mixed $value, ?float $default = null, ?NullableFloatResolver $resolver = null): ?float
+Smpita\TypeAs::nullableFloat(mixed $value, ?float $default = null, ?FloatResolver $resolver = null): ?float
 ```
 
 #### Integer
@@ -43,7 +43,7 @@ Smpita\TypeAs::nullableFloat(mixed $value, ?float $default = null, ?NullableFloa
 ```php
 Smpita\TypeAs::int(mixed $value, ?int $default = null, ?IntResolver $resolver = null): int
 
-Smpita\TypeAs::nullableInt(mixed $value, ?int $default = null, ?NullableIntResolver $resolver = null): ?int
+Smpita\TypeAs::nullableInt(mixed $value, ?int $default = null, ?IntResolver $resolver = null): ?int
 ```
 
 #### String
@@ -51,7 +51,13 @@ Smpita\TypeAs::nullableInt(mixed $value, ?int $default = null, ?NullableIntResol
 ```php
 Smpita\TypeAs::string(mixed $value, ?string $default = null, ?StringResolver $resolver = null): string
 
-Smpita\TypeAs::nullableString(mixed $value, ?string $default = null, ?NullableStringResolver $resolver = null): ?string
+Smpita\TypeAs::nullableString(mixed $value, ?string $default = null, ?StringResolver $resolver = null): ?string
+```
+
+### Custom exceptions
+
+```php
+Smpita\TypeAs::onError(?string $message = null, ?string $exception = null): TypeFactory
 ```
 
 ### Resolver registration
@@ -66,48 +72,36 @@ Smpita\TypeAs::useDefaultResolvers(): void
 
 ```php
 Smpita\TypeAs::setArrayResolver(?\Smpita\TypeAs\Contracts\ArrayResolver $resolver): void
-
-Smpita\TypeAs::setNullableArrayResolver(?\Smpita\TypeAs\Contracts\NullableArrayResolver $resolver): void
 ```
 
 #### Bool
 
 ```php
 Smpita\TypeAs::setBoolResolver(?\Smpita\TypeAs\Contracts\BoolResolver $resolver): void
-
-Smpita\TypeAs::setNullableBoolResolver(?\Smpita\TypeAs\Contracts\NullableBoolResolver $resolver): void
 ```
 
 #### Class
 
 ```php
 Smpita\TypeAs::setClassResolver(?\Smpita\TypeAs\Contracts\ClassResolver $resolver): void
-
-Smpita\TypeAs::setNullableClassResolver(?\Smpita\TypeAs\Contracts\NullableClassResolver $resolver): void
 ```
 
 #### Float
 
 ```php
 Smpita\TypeAs::setFloatResolver(?\Smpita\TypeAs\Contracts\FloatResolver $resolver): void
-
-Smpita\TypeAs::setNullableFloatResolver(?\Smpita\TypeAs\Contracts\NullableFloatResolver $resolver): void
 ```
 
 #### Int
 
 ```php
 Smpita\TypeAs::setIntResolver(?\Smpita\TypeAs\Contracts\IntResolver $resolver): void
-
-Smpita\TypeAs::setNullableIntResolver(?\Smpita\TypeAs\Contracts\NullableIntResolver $resolver): void
 ```
 
 #### String
 
 ```php
 Smpita\TypeAs::setStringResolver(?\Smpita\TypeAs\Contracts\StringResolver $resolver): void
-
-Smpita\TypeAs::setNullableStringResolver(?\Smpita\TypeAs\Contracts\NullableStringResolver $resolver): void
 ```
 
 ### Fluent
@@ -116,6 +110,7 @@ Smpita\TypeAs::setNullableStringResolver(?\Smpita\TypeAs\Contracts\NullableStrin
 
 ```php
 \Smpita\TypeAs\TypeAs::type($mixed): NonNullable
+\Smpita\TypeAs\TypeAs::type($mixed)->onError(?string $message = null, ?string $exception = null): NonNullable;
 ```
 
 #### `\Smpita\TypeAs\Concerns\Fluent\HandlesFluentCalls`
@@ -130,9 +125,11 @@ nullable(): \Smpita\TypeAs\Fluent\Nullable
 
 type(mixed $value): self
 default(mixed $default): self
-using(null|ArrayResolver|NullableArrayResolver|BoolResolver|NullableBoolResolver|ClassResolver|NullableClassResolver|FloatResolver|NullableFloatResolver|IntResolver|NullableIntResolver|StringResolver|NullableStringResolver $resolver): self
+using(null|ArrayResolver|BoolResolver|ClassResolver|FloatResolver|IntResolver|StringResolver $resolver): self
 wrap(bool $enabled = true): self
 noWrap(): self // Inverse wrapper of wrap()
+
+onError(?string $message = null, ?string $exception = null): self
 ```
 
 #### `\Smpita\TypeAs\Fluent\NonNullable`
@@ -166,15 +163,15 @@ asString(): ?string
 ```php
 \Smpita\TypeAs\asArray(mixed $value, ?array $default = null, ?ArrayResolver $resolver = null, ?bool $wrap = true): array
 
-\Smpita\TypeAs\asNullableArray(mixed $value, ?array $default = null, ?NullableArrayResolver $resolver = null, ?bool $wrap = true): ?array
+\Smpita\TypeAs\asNullableArray(mixed $value, ?array $default = null, ?ArrayResolver $resolver = null, ?bool $wrap = true): ?array
 ```
 
 #### Bool
 
 ```php
-\Smpita\TypeAs\asBool(mixed $value, ?bool $default = null, ?ArrayResolver $resolver = null): bool
+\Smpita\TypeAs\asBool(mixed $value, ?bool $default = null, ?BoolResolver $resolver = null): bool
 
-\Smpita\TypeAs\asNullableBool(mixed $value, ?bool $default = null, ?NullableBoolResolver $resolver = null): ?bool
+\Smpita\TypeAs\asNullableBool(mixed $value, ?bool $default = null, ?BoolResolver $resolver = null): ?bool
 
 \Smpita\TypeAs\asFilterBool(mixed $value, ?bool $default = null): bool
 
@@ -186,7 +183,7 @@ asString(): ?string
 ```php
 \Smpita\TypeAs\asClass(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null)
 
-\Smpita\TypeAs\asNullableClass(string $class, mixed $value, ?object $default = null, ?NullableClassResolver $resolver = null): ?object
+\Smpita\TypeAs\asNullableClass(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null): ?object
 ```
 
 #### Float
@@ -194,7 +191,7 @@ asString(): ?string
 ```php
 \Smpita\TypeAs\asFloat(mixed $value, ?float $default = null, ?FloatResolver $resolver = null): float
 
-\Smpita\TypeAs\asNullableFloat(mixed $value, ?float $default = null, ?NullableFloatResolver $resolver = null): ?float
+\Smpita\TypeAs\asNullableFloat(mixed $value, ?float $default = null, ?FloatResolver $resolver = null): ?float
 ```
 
 #### Int
@@ -202,15 +199,15 @@ asString(): ?string
 ```php
 \Smpita\TypeAs\asInt(mixed $value, ?int $default = null, ?IntResolver $resolver = null): int
 
-\Smpita\TypeAs\asNullableInt(mixed $value, ?int $default = null, ?NullableIntResolver $resolver = null): ?int
+\Smpita<TypeAs\asNullableInt(mixed $value, ?int $default = null, ?IntResolver $resolver = null): ?int
 ```
 
 #### String
 
 ```php
-\Smpita\TypeAs\asString(mixed $value, string ?$default = null, ?StringResolver $resolver = null): string
+\Smpita\TypeAs\asString(mixed $value, ?string $default = null, ?StringResolver $resolver = null): string
 
-\Smpita\TypeAs\asNullableString(mixed $value, ?string $default = null, ?NullableStringResolver $resolver = null): ?string
+\Smpita<TypeAs\asNullableString(mixed $value, ?string $default = null, ?StringResolver $resolver = null): ?string
 ```
 
 ---
@@ -221,14 +218,31 @@ See [Resolving](#Resolving) for current signatures.
 
 See the [Upgrade Guide](upgrading.md#Upgrading) for tips on how to handle deprecations.
 
+####
+```php
+// DEPRECATED in v5.0.0, UPDATED in v5.0.0
+
+Smpita\TypeAs::nullableArray(mixed $value, ?array $default = null, ?ArrayResolver $resolver = null, ?bool $wrap = true): ?array
+
+Smpita\TypeAs::nullableBool(mixed $value, ?bool $default = null, ?BoolResolver $resolver = null): ?bool
+
+Smpita\TypeAs::nullableClass(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null)//: ?object
+
+Smpita\TypeAs::nullableFloat(mixed $value, ?float $default = null, ?FloatResolver $resolver = null): ?float
+
+Smpita\TypeAs::nullableInt(mixed $value, ?int $default = null, ?IntResolver $resolver = null): ?int
+
+Smpita\TypeAs::nullableString(mixed $value, ?string $default = null, ?StringResolver $resolver = null): ?string
+```
+
 #### Array
 
 ```php
 // DEPRECATED in v4.0.0, UPDATED in v4.0.0
 
-Smpita\TypeAs::array(mixed $value, bool|array $wrap = true, ?ArrayResolver $resolver = null): array
+Smpita\TypeAs::array(mixed $value, ?array $default = null, bool|array $wrap = true, ?ArrayResolver $resolver = null): array
 
-Smpita\TypeAs::nullableArray(mixed $value, bool|array $wrap = true, ?NullableArrayResolver $resolver = null): ?array
+Smpita\TypeAs::nullableArray(mixed $value, ?array $default = null, bool|array $wrap = true, ?NullableArrayResolver $resolver = null): ?array
 ```
 
 #### Carbon

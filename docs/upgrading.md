@@ -3,6 +3,41 @@ When a breaking change must occur, it will be documented here as well as what to
 
 Reference: [Deprecations](signatures.md#deprecations)
 
+## v5.0.0
+
+### All nullable resolver interfaces removed
+```php
+// Replace
+class CustomResolver implements NullableBoolResolver {}
+
+// With
+class CustomResolver implements BoolResolver {}
+```
+
+Update method calls:
+- `setNullableArrayResolver()` -> `setArrayResolver()`
+- `setNullableBoolResolver()` -> `setBoolResolver()`
+- `setNullableClassResolver()` -> `setClassResolver()`
+- `setNullableFloatResolver()` -> `setFloatResolver()`
+- `setNullableIntResolver()` -> `setIntResolver()`
+- `setNullableStringResolver()` -> ` setStringResolver()`
+
+### Resolver method signature changes
+Return type-hint changed on resolver parameters:
+
+```php
+// Replace (nullable)
+public function resolve(mixed $value, ?bool $default = null): bool;
+
+// With (non-nullable)
+public function resolve(mixed $value, ?bool $default = null): ?bool;
+```
+
+### Removed Abstracts/Resolver.php base class
+- The deprecated `Abstracts/Resolver.php` base class is removed.
+- Throwing Exceptions has been removed as a resolvers concern.
+- Custom resolvers may return `null` to interact with exception handler, but must implement a `Smpita\TypeAs\Contracts` interface.
+
 ## v4.0.0
 
 If you disable array wrapping by using positional parameters, you will encounter a breaking change.

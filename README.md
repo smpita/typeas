@@ -24,6 +24,7 @@ Easily type your `mixed` signatures. Perfect for static analysis!
   - [Resolving Types](#resolving-types)
   - [Fluent Syntax](#fluent-syntax)
   - [Array Wrapping](#array-wrapping)
+  - [Custom Exceptions](#custom-exceptions)
   - [Official Extensions](#official-extensions)
   - [Custom Resolvers](#custom-resolvers)
   - [Helpers](#helpers)
@@ -241,7 +242,23 @@ $nonNullable = (new NonNullable())->import($config);
 $nullable = Nullable::make($config);
 $nullable = (new Nullable())->import($config);
 ```
+---
+### Custom Exceptions
 
+Use `onError()` to customize the throw message or exception:
+
+```php
+use Smpita\TypeAs\TypeAs;
+
+// Global configuration
+TypeAs::onError('Expected iterable, received %s', InvalidValueException::class)
+    ->array($mixed, $default);
+
+// Fluent API
+TypeAs::type($mixed)
+    ->onError('Expected array, got %s')
+    ->asArray();
+```
 ---
 
 ## Extensions
@@ -275,17 +292,14 @@ Simply implement the interface, then either register the resolver or use it in t
 
 ### Interfaces
 
--   `Smpita\TypeAs\Contracts\ArrayResolver`
--   `Smpita\TypeAs\Contracts\BoolResolver`
--   `Smpita\TypeAs\Contracts\ClassResolver`
--   `Smpita\TypeAs\Contracts\FloatResolver`
--   `Smpita\TypeAs\Contracts\IntResolver`
--   `Smpita\TypeAs\Contracts\StringResolver`
--   `Smpita\TypeAs\Contracts\NullableArrayResolver`
--   `Smpita\TypeAs\Contracts\NullableClassResolver`
--   `Smpita\TypeAs\Contracts\NullableFloatResolver`
--   `Smpita\TypeAs\Contracts\NullableIntResolver`
--   `Smpita\TypeAs\Contracts\NullableStringResolver`
+All resolvers extend the same interfaces. Non-nullable methods throw when `null` is returned by a resolver.
+
+- `Smpita\TypeAs\Contracts\ArrayResolver`
+- `Smpita\TypeAs\Contracts\BoolResolver`
+- `Smpita\TypeAs\Contracts\ClassResolver`
+- `Smpita\TypeAs\Contracts\FloatResolver`
+- `Smpita\TypeAs\Contracts\IntResolver`
+- `Smpita\TypeAs\Contracts\StringResolver`
 
 ### Creating Custom Resolvers
 
@@ -325,12 +339,6 @@ TypeAs::setClassResolver(new CustomClassResolver());
 TypeAs::setFloatResolver(new CustomFloatResolver());
 TypeAs::setIntResolver(new CustomIntResolver());
 TypeAs::setStringResolver(new CustomStringResolver());
-TypeAs::setNullableArrayResolver(new CustomNullableArrayResolver());
-TypeAs::setNullableBoolResolver(new CustomNullableBoolResolver());
-TypeAs::setNullableClassResolver(new CustomNullableClassResolver());
-TypeAs::setNullableFloatResolver(new CustomNullableFloatResolver());
-TypeAs::setNullableIntResolver(new CustomIntNullableResolver());
-TypeAs::setNullableStringResolver(new CustomNullableStringResolver());
 ```
 
 ### Unregistering Custom Resolvers
@@ -346,12 +354,6 @@ TypeAs::setClassResolver(null);
 TypeAs::setFloatResolver(null);
 TypeAs::setIntResolver(null);
 TypeAs::setStringResolver(null);
-TypeAs::setNullableArrayResolver(null);
-TypeAs::setNullableBoolResolver(null);
-TypeAs::setNullableClassResolver(null);
-TypeAs::setNullableFloatResolver(null);
-TypeAs::setNullableIntResolver(null);
-TypeAs::setNullableStringResolver(null);
 
 // Return all resolvers to default
 TypeAs::useDefaultResolvers();
@@ -360,39 +362,34 @@ TypeAs::useDefaultResolvers();
 #### Single use
 
 Inject a resolver to use it on a per call basis.
+
 ```php
 use Smpita\TypeAs\TypeAs;
 
+// Non-nullable methods
 $array = TypeAs::array($mixed, resolver: new CustomArrayResolver());
 $bool = TypeAs::bool($mixed, resolver: new CustomBoolResolver());
 $class = TypeAs::class(Expected::class, $mixed, resolver: new CustomClassResolver());
 $float = TypeAs::float($mixed, resolver: new CustomFloatResolver());
 $int = TypeAs::int($mixed, resolver: new CustomIntResolver());
 $string = TypeAs::string($mixed, resolver: new CustomStringResolver());
-$nullableArray = TypeAs::nullableArray($mixed, resolver: new CustomNullableArrayResolver());
-$nullableBool = TypeAs::nullableBool($mixed, resolver: new CustomNullableBoolResolver());
-$nullableClass = TypeAs::nullableClass(Expected::class, $mixed, resolver: new CustomNullableClassResolver());
-$nullableFloat = TypeAs::nullableFloat($mixed, resolver: new CustomNullableFloatResolver());
-$nullableInt = TypeAs::nullableInt($mixed, resolver: new CustomNullableIntResolver());
-$nullableString = TypeAs::nullableString($mixed, resolver: new CustomNullableStringResolver());
 
-// or
+// Nullable methods use same resolver interface
+$nullableArray = TypeAs::nullableArray($mixed, resolver: new CustomArrayResolver());
+$nullableBool = TypeAs::nullableBool($mixed, resolver: new CustomBoolResolver());
+$nullableClass = TypeAs::nullableClass(Expected::class, $mixed, resolver: new CustomClassResolver());
+$nullableFloat = TypeAs::nullableFloat($mixed, resolver: new CustomFloatResolver());
+$nullableInt = TypeAs::nullableInt($mixed, resolver: new CustomIntResolver());
+$nullableString = TypeAs::nullableString($mixed, resolver: new CustomStringResolver());
 
+// Or with positional params
 $array = TypeAs::array($mixed, null, new CustomArrayResolver());
-$bool = TypeAs::bool($mixed, null, new CustomBoolResolver());
-$class = TypeAs::class(Expected::class, $mixed, null, new CustomClassResolver());
-$float = TypeAs::float($mixed, null, new CustomFloatResolver());
-$int = TypeAs::int($mixed, null, new CustomIntResolver());
 $string = TypeAs::string($mixed, null, new CustomStringResolver());
-$nullableArray = TypeAs::nullableArray($mixed, null, new CustomNullableArrayResolver());
-$nullableBool = TypeAs::nullableBool($mixed, null, new CustomNullableBoolResolver());
-$nullableClass = TypeAs::nullableClass(Expected::class, $mixed, null, new CustomNullableClassResolver());
-$nullableFloat = TypeAs::nullableFloat($mixed, null, new CustomNullableFloatResolver());
-$nullableInt = TypeAs::nullableInt($mixed, null, new CustomNullableIntResolver());
-$nullableStTypeAs::nullableString($mixed, null, new CustomNullableStringResolver());
+$nullableArray = TypeAs::nullableArray($mixed, null, new CustomArrayResolver());
+$nullableString = TypeAs::nullableString($mixed, null, new CustomStringResolver());
 ```
 
-If you registered a custom resolver then want to use a default resolver on a per call basis, you must pass a default resolver.
+If you registered a custom resolver then want to use a default resolver on a per call basis, pass the default resolver class.
 
 ```php
 use Smpita\TypeAs\TypeAs;
@@ -403,27 +400,14 @@ $class = TypeAs::class(Expected::class, $mixed, resolver: \Smpita\TypeAs\Resolve
 $float = TypeAs::float($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsFloat());
 $int = TypeAs::int($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsInt());
 $string = TypeAs::string($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsString());
-$nullableArray = TypeAs::nullableArray($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsNullableArray());
-$nullableBool = TypeAs::nullableBool($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsNullableBool());
-$nullableClass = TypeAs::nullableClass(Expected::class, $mixed, resolver: new \Smpita\TypeAs\Resolvers\AsNullableClass());
-$nullableFloat = TypeAs::nullableFloat($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsNullableFloat());
-$nullableInt = TypeAs::nullableInt($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsNullableInt());
-$nullableString = TypeAs::nullableString($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsNullableString());
 
-// or
-
-$array = TypeAs::array($mixed, null, new \Smpita\TypeAs\Resolvers\AsArray());
-$bool = TypeAs::bool($mixed, null, new \Smpita\TypeAs\Resolvers\AsBool());
-$class = TypeAs::class(Expected::class, $mixed, null, \Smpita\TypeAs\Resolvers\AsClass());
-$float = TypeAs::float($mixed, null, new \Smpita\TypeAs\Resolvers\AsFloat());
-$int = TypeAs::int($mixed, null, new \Smpita\TypeAs\Resolvers\AsInt());
-$string = TypeAs::string($mixed, null, new \Smpita\TypeAs\Resolvers\AsString());
-$nullableArray = TypeAs::nullableArray($mixed, null, new \Smpita\TypeAs\Resolvers\AsNullableArray());
-$nullableBool = TypeAs::nullableBool($mixed, null, new \Smpita\TypeAs\Resolvers\AsNullableBool());
-$nullableClass = TypeAs::nullableClass(Expected::class, $mixed, null, new \Smpita\TypeAs\Resolvers\AsNullableClass());
-$nullableFloat = TypeAs::nullableFloat($mixed, null, new \Smpita\TypeAs\Resolvers\AsNullableFloat());
-$nullableInt = TypeAs::nullableInt($mixed, null, new \Smpita\TypeAs\Resolvers\AsNullableInt());
-$nullableString = TypeAs::nullableString($mixed, null, new \Smpita\TypeAs\Resolvers\AsNullableString());
+// Nullable methods use same resolver classes
+$nullableArray = TypeAs::nullableArray($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsArray());
+$nullableBool = TypeAs::nullableBool($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsBool());
+$nullableClass = TypeAs::nullableClass(Expected::class, $mixed, resolver: new \Smpita\TypeAs\Resolvers\AsClass());
+$nullableFloat = TypeAs::nullableFloat($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsFloat());
+$nullableInt = TypeAs::nullableInt($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsInt());
+$nullableString = TypeAs::nullableString($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsString());
 ```
 
 ---
