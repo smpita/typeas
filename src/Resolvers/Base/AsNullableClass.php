@@ -2,10 +2,9 @@
 
 namespace Smpita\TypeAs\Resolvers\Base;
 
-use Smpita\TypeAs\Abstracts\Resolver;
 use Smpita\TypeAs\Contracts\ClassResolver;
 
-class AsNullableClass extends Resolver implements ClassResolver
+class AsNullableClass implements ClassResolver
 {
     /**
      * @template TClass of object

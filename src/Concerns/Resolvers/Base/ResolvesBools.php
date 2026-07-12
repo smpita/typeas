@@ -21,7 +21,7 @@ trait ResolvesBools
     {
         $resolver ??= $this->boolResolver ??= new AsBool();
 
-        return $resolver->resolve(value: $value, default: $default) ?? static::throwResolutionException($value);
+        return $resolver->resolve(value: $value, default: $default) ?? static::throwResolutionException($value, $resolver);
     }
 
     public function nullableBool(mixed $value, ?bool $default = null, ?BoolResolver $resolver = null): ?bool

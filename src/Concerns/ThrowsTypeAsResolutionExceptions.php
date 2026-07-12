@@ -3,6 +3,7 @@
 namespace Smpita\TypeAs\Concerns;
 
 use InvalidArgumentException;
+use Smpita\TypeAs\Contracts\TypeAsResolver;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
 trait ThrowsTypeAsResolutionExceptions
@@ -17,10 +18,10 @@ trait ThrowsTypeAsResolutionExceptions
     /**
      * @throws TypeAsResolutionException
      */
-    protected function throwResolutionException(mixed $value): never
+    protected function throwResolutionException(mixed $value, TypeAsResolver $resolver): never
     {
         $type = is_object($value) ? get_class($value) : gettype($value);
-        $classname = basename(str_replace('\\', '/', static::class));
+        $classname = basename(str_replace('\\', '/', $resolver::class));
 
         $message = sprintf($this->getThrowMessage(), $type, $classname);
         $exception = $this->getThrowException();

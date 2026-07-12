@@ -21,7 +21,7 @@ trait ResolvesInts
     {
         $resolver ??= $this->intResolver ??= new AsInt();
 
-        return $resolver->resolve(value: $value, default: $default) ?? static::throwResolutionException($value);
+        return $resolver->resolve(value: $value, default: $default) ?? static::throwResolutionException($value, $resolver);
     }
 
     public function nullableInt(mixed $value, ?int $default = null, ?IntResolver $resolver = null): ?int

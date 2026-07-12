@@ -21,7 +21,7 @@ trait ResolvesFloats
     {
         $resolver ??= $this->floatResolver ??= new AsFloat();
 
-        return $resolver->resolve(value: $value, default: $default) ?? static::throwResolutionException($value);
+        return $resolver->resolve(value: $value, default: $default) ?? static::throwResolutionException($value, $resolver);
     }
 
     public function nullableFloat(mixed $value, ?float $default = null, ?FloatResolver $resolver = null): ?float

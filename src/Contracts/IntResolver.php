@@ -2,7 +2,7 @@
 
 namespace Smpita\TypeAs\Contracts;
 
-interface IntResolver
+interface IntResolver extends TypeAsResolver
 {
     public function resolve(mixed $value, ?int $default = null): ?int;
 }

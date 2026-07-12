@@ -5,6 +5,7 @@ namespace Smpita\TypeAs\Tests\Resolvers\Base;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
+use Smpita\TypeAs\Tests\Stubs\Exceptions\CustomExceptionStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\MagicStringableStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\StringableStub;
 use Smpita\TypeAs\Tests\TestCase;
@@ -103,5 +104,31 @@ class AsStringTest extends TestCase
         $test = fn (?string $value) => $value;
 
         $this->assertIsString($test(TypeAs::string($this->faker->randomNumber())));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_handle_custom_exceptions(): void
+    {
+        $rng = $this->faker->sentence();
+
+        $customMessage = 'resolved NULL with AsString ' . $rng;
+        $customException = CustomExceptionStub::class;
+        $this->expectException($customException);
+        $this->expectExceptionMessage($customMessage);
+
+        // throw a custom exception and message with sprintf formatting
+        $customErrorFormat = 'resolved %s with %s ' . $rng;
+        TypeAs::onError($customErrorFormat, $customException)
+            ->string(null);
+
+        // it should not persist to the subsequent exception handling
+        $defaultMessage = 'Resolution error converting NULL [AsString]';
+        $defaultException = TypeAsResolutionException::class;
+        $this->expectException($defaultException);
+        $this->expectExceptionMessage($defaultMessage);
+
+        TypeAs::string(null);
     }
 }

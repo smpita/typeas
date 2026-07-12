@@ -5,6 +5,7 @@ namespace Smpita\TypeAs\Tests\Resolvers\Base;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
+use Smpita\TypeAs\Tests\Stubs\Exceptions\CustomExceptionStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\ChildClassStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\ParentClassStub;
 use Smpita\TypeAs\Tests\TestCase;
@@ -65,5 +66,31 @@ class AsClassTest extends TestCase
         $test = fn (ParentClassStub $value) => $value;
 
         $this->assertInstanceOf(ChildClassStub::class, $test(TypeAs::class(ChildClassStub::class, new ChildClassStub())));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_handle_custom_exceptions(): void
+    {
+        $rng = $this->faker->sentence();
+
+        $customMessage = 'resolved NULL with AsClass ' . $rng;
+        $customException = CustomExceptionStub::class;
+        $this->expectException($customException);
+        $this->expectExceptionMessage($customMessage);
+
+        // throw a custom exception and message with sprintf formatting
+        $customErrorFormat = 'resolved %s with %s ' . $rng;
+        TypeAs::onError($customErrorFormat, $customException)
+            ->class(self::class, null);
+
+        // it should not persist to the subsequent exception handling
+        $defaultMessage = 'Resolution error converting NULL [AsClass]';
+        $defaultException = TypeAsResolutionException::class;
+        $this->expectException($defaultException);
+        $this->expectExceptionMessage($defaultMessage);
+
+        TypeAs::class(self::class, null);
     }
 }

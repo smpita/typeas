@@ -2,7 +2,7 @@
 
 namespace Smpita\TypeAs\Contracts;
 
-interface ClassResolver
+interface ClassResolver extends TypeAsResolver
 {
     /**
      * @template TClass of object

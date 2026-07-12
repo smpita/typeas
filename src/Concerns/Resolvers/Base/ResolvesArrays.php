@@ -21,7 +21,7 @@ trait ResolvesArrays
     {
         $resolver ??= $this->arrayResolver ??= new AsArray();
 
-        return $resolver->resolve(value: $value, default: $default, wrap: $wrap) ?? static::throwResolutionException($value);
+        return $resolver->resolve(value: $value, default: $default, wrap: $wrap) ?? static::throwResolutionException($value, $resolver);
     }
 
     public function nullableArray(mixed $value, ?array $default = null, ?ArrayResolver $resolver = null, ?bool $wrap = true): ?array

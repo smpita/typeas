@@ -27,7 +27,7 @@ trait ResolvesClasses
     {
         $resolver ??= $this->classResolver ??= new AsClass();
 
-        return $resolver->resolve(class: $class, value: $value, default: $default) ?? static::throwResolutionException($value);
+        return $resolver->resolve(class: $class, value: $value, default: $default) ?? static::throwResolutionException($value, $resolver);
     }
 
     /**

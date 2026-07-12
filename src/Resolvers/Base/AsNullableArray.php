@@ -2,10 +2,9 @@
 
 namespace Smpita\TypeAs\Resolvers\Base;
 
-use Smpita\TypeAs\Abstracts\Resolver;
 use Smpita\TypeAs\Contracts\ArrayResolver;
 
-class AsNullableArray extends Resolver implements ArrayResolver
+class AsNullableArray implements ArrayResolver
 {
     public function resolve(mixed $value, ?array $default = null, ?bool $wrap = true): ?array
     {

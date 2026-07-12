@@ -151,21 +151,23 @@ class AsArrayTest extends TestCase
     #[Group('typeas')]
     public function test_can_handle_custom_exceptions(): void
     {
-        $customErrorMessage = 'custom error message';
+        $rng = $this->faker->sentence();
+
+        $customMessage = 'resolved NULL with AsArray ' . $rng;
         $customException = CustomExceptionStub::class;
-
         $this->expectException($customException);
-        $this->expectExceptionMessage($customErrorMessage);
+        $this->expectExceptionMessage($customMessage);
 
-        // onError lets us throw a custom exception and message
-        TypeAs::onError($customErrorMessage, $customException)->array(null, wrap: false);
+        // throw a custom exception and message with sprintf formatting
+        $customErrorFormat = 'resolved %s with %s ' . $rng;
+        TypeAs::onError($customErrorFormat, $customException)
+            ->array(null, wrap: false);
 
-        $standardErrorMessage = 'Resolution error converting NULL [TypeFactory]';
-        $standardException = TypeAsResolutionException::class;
-
-        // But it does not override the default exception message
-        $this->expectException($standardException);
-        $this->expectExceptionMessage($standardErrorMessage);
+        // it should not persist to the subsequent exception handling
+        $defaultMessage = 'Resolution error converting NULL [AsArray]';
+        $defaultException = TypeAsResolutionException::class;
+        $this->expectException($defaultException);
+        $this->expectExceptionMessage($defaultMessage);
 
         TypeAs::array(null, wrap: false);
     }
