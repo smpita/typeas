@@ -2,12 +2,16 @@
 
 namespace Smpita\TypeAs\Concerns\Resolvers\Extensions;
 
+use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Resolvers\Extensions\AsFilterBool;
 use Smpita\TypeAs\Resolvers\Extensions\AsNullableFilterBool;
 use Smpita\TypeAs\TypeAs;
 
 trait ResolvesFilterBools
 {
+    /**
+     * @throws TypeAsResolutionException
+     */
     public static function filterBool(mixed $value, ?bool $default = null): bool
     {
         return TypeAs::bool($value, $default, new AsFilterBool());
