@@ -2,6 +2,7 @@
 
 namespace Smpita\TypeAs\Tests;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
@@ -546,5 +547,33 @@ class NonNullableTest extends TestCase
         $this->expectExceptionMessage($defaultMessage);
 
         $typeAs->asString();
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_set_throw_exception_throws_invalid_argument_for_invalid_class(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Must extend TypeAsResolutionException: Exception');
+
+        NonNullable::make()
+            ->type(null)
+            /**
+             * We must pass an invalid argument type to test the runtime enforcement
+             * @phpstan-ignore argument.type
+             */
+            ->onError(message: '', exception: \Exception::class)
+            ->asString();
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_set_throw_exception_accepts_null(): void
+    {
+        $result = NonNullable::make()->onError(message: '', exception: null);
+
+        $this->assertInstanceOf(NonNullable::class, $result);
     }
 }

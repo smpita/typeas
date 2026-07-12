@@ -26,7 +26,7 @@ trait ThrowsTypeAsResolutionExceptions
         $message = sprintf($this->getThrowMessage(), $type, $classname);
         $exception = $this->getThrowException();
 
-        if (is_a($exception, TypeAsResolutionException::class, true)) {
+        if (! is_null($exception) && is_a($exception, TypeAsResolutionException::class, true)) {
             throw new $exception($message);
         }
 
@@ -41,9 +41,9 @@ trait ThrowsTypeAsResolutionExceptions
     /**
      * @return class-string<TypeAsResolutionException>
      */
-    public function getThrowException(): string
+    public function getThrowException(): ?string
     {
-        return $this->throwException ?? TypeAsResolutionException::class;
+        return $this->throwException;
     }
 
     public function setThrowMessage(?string $message = null): self
@@ -55,12 +55,12 @@ trait ThrowsTypeAsResolutionExceptions
 
     public function setThrowException(?string $exception = null): self
     {
-        match (true) {
-            is_null($exception) => $this->throwException = null,
-            is_a($exception, TypeAsResolutionException::class, true) => $this->throwException = $exception,
-            default => throw new InvalidArgumentException("Must extend TypeAsResolutionException: $exception"),
-        };
+        if (is_null($exception) || is_a($exception, TypeAsResolutionException::class, true)) {
+            $this->throwException = $exception;
 
-        return $this;
+            return $this;
+        }
+
+        throw new InvalidArgumentException("Must extend TypeAsResolutionException: $exception");
     }
 }
