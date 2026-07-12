@@ -245,19 +245,31 @@ $nullable = (new Nullable())->import($config);
 ---
 ### Custom Exceptions
 
-Use `onError()` to customize the throw message or exception:
+Use `onError()` to customize the throw message or exception.
+- Exceptions must extend `Smpita\TypeAs\Exceptions\TypeAsResolutionException`
 
 ```php
 use Smpita\TypeAs\TypeAs;
 
-// Global configuration
-TypeAs::onError('Expected iterable, received %s', InvalidValueException::class)
-    ->array($mixed, $default);
+// Static API
+TypeAs::onError('Expected iterable, received %s', CustomResolutionException::class)
+    ->array($mixed);
 
 // Fluent API
 TypeAs::type($mixed)
-    ->onError('Expected array, got %s')
+    ->onError('Expected iterable, received %s', CustomResolutionException::class)
     ->asArray();
+```
+
+Both arguments are optional.
+
+```php
+// Custom message only
+onError('Expected iterable, received %s')
+
+// Custom Exception only
+onError(exception: CustomResolutionException::class)
+onError(null, CustomResolutionException::class)
 ```
 ---
 
