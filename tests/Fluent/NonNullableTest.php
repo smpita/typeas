@@ -7,6 +7,7 @@ use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Fluent\NonNullable;
 use Smpita\TypeAs\Fluent\TypeConfig;
+use Smpita\TypeAs\Tests\Stubs\Exceptions\CustomExceptionStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\ParentClassStub;
 use Smpita\TypeAs\Tests\Stubs\Resolvers\ArrayResolverStub;
 use Smpita\TypeAs\Tests\Stubs\Resolvers\BoolResolverStub;
@@ -353,5 +354,197 @@ class NonNullableTest extends TestCase
             $resolver->resolve('test'),
             NonNullable::make()->type('test')->asString(),
         );
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_as_array_can_handle_custom_exceptions(): void
+    {
+        $rng = $this->faker->sentence();
+        $typeAs = NonNullable::make()->type(null);
+
+        $customMessage = 'resolved NULL with AsArray ' . $rng;
+        $customException = CustomExceptionStub::class;
+        $this->expectException($customException);
+        $this->expectExceptionMessage($customMessage);
+
+        // throw a custom exception and message with sprintf formatting
+        $customErrorFormat = 'resolved %s with %s ' . $rng;
+        $typeAs->onError($customErrorFormat, $customException)
+            ->noWrap()
+            ->asArray();
+
+        // it should not persist to the subsequent exception handling
+        $defaultMessage = 'Resolution error converting NULL [AsArray]';
+        $defaultException = TypeAsResolutionException::class;
+        $this->expectException($defaultException);
+        $this->expectExceptionMessage($defaultMessage);
+
+        $typeAs
+            ->noWrap()
+            ->asArray();
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_as_bool_can_handle_custom_exceptions(): void
+    {
+        $rng = $this->faker->sentence();
+        $typeAs = NonNullable::make()->type(null);
+
+        $customMessage = 'resolved NULL with AsBool ' . $rng;
+        $customException = CustomExceptionStub::class;
+        $this->expectException($customException);
+        $this->expectExceptionMessage($customMessage);
+
+        // throw a custom exception and message with sprintf formatting
+        $customErrorFormat = 'resolved %s with %s ' . $rng;
+        $typeAs->onError($customErrorFormat, $customException)
+            ->asBool();
+
+        // it should not persist to the subsequent exception handling
+        $defaultMessage = 'Resolution error converting NULL [AsBool]';
+        $defaultException = TypeAsResolutionException::class;
+        $this->expectException($defaultException);
+        $this->expectExceptionMessage($defaultMessage);
+
+        $typeAs->asBool();
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_as_filter_bool_can_handle_custom_exceptions(): void
+    {
+        $rng = $this->faker->sentence();
+        $typeAs = NonNullable::make()->type(null);
+
+        $customMessage = 'resolved NULL with AsFilterBool ' . $rng;
+        $customException = CustomExceptionStub::class;
+        $this->expectException($customException);
+        $this->expectExceptionMessage($customMessage);
+
+        // throw a custom exception and message with sprintf formatting
+        $customErrorFormat = 'resolved %s with %s ' . $rng;
+        $typeAs->onError($customErrorFormat, $customException)
+            ->asFilterBool();
+
+        // it should not persist to the subsequent exception handling
+        $defaultMessage = 'Resolution error converting NULL [AsFilterBool]';
+        $defaultException = TypeAsResolutionException::class;
+        $this->expectException($defaultException);
+        $this->expectExceptionMessage($defaultMessage);
+
+        $typeAs->asFilterBool();
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_as_class_can_handle_custom_exceptions(): void
+    {
+        $rng = $this->faker->sentence();
+        $typeAs = NonNullable::make()->type(null);
+
+        $customMessage = 'resolved NULL with AsClass ' . $rng;
+        $customException = CustomExceptionStub::class;
+        $this->expectException($customException);
+        $this->expectExceptionMessage($customMessage);
+
+        // throw a custom exception and message with sprintf formatting
+        $customErrorFormat = 'resolved %s with %s ' . $rng;
+        $typeAs->onError($customErrorFormat, $customException)
+            ->asClass(self::class);
+
+        // it should not persist to the subsequent exception handling
+        $defaultMessage = 'Resolution error converting NULL [AsClass]';
+        $defaultException = TypeAsResolutionException::class;
+        $this->expectException($defaultException);
+        $this->expectExceptionMessage($defaultMessage);
+
+        $typeAs->asClass(self::class);
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_as_float_can_handle_custom_exceptions(): void
+    {
+        $rng = $this->faker->sentence();
+        $typeAs = NonNullable::make()->type(null);
+
+        $customMessage = 'resolved NULL with AsFloat ' . $rng;
+        $customException = CustomExceptionStub::class;
+        $this->expectException($customException);
+        $this->expectExceptionMessage($customMessage);
+
+        // throw a custom exception and message with sprintf formatting
+        $customErrorFormat = 'resolved %s with %s ' . $rng;
+        $typeAs->onError($customErrorFormat, $customException)
+            ->asFloat();
+
+        // it should not persist to the subsequent exception handling
+        $defaultMessage = 'Resolution error converting NULL [AsFloat]';
+        $defaultException = TypeAsResolutionException::class;
+        $this->expectException($defaultException);
+        $this->expectExceptionMessage($defaultMessage);
+
+        $typeAs->asFloat();
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_as_int_can_handle_custom_exceptions(): void
+    {
+        $rng = $this->faker->sentence();
+        $typeAs = NonNullable::make()->type(null);
+
+        $customMessage = 'resolved NULL with AsInt ' . $rng;
+        $customException = CustomExceptionStub::class;
+        $this->expectException($customException);
+        $this->expectExceptionMessage($customMessage);
+
+        // throw a custom exception and message with sprintf formatting
+        $customErrorFormat = 'resolved %s with %s ' . $rng;
+        $typeAs->onError($customErrorFormat, $customException)
+            ->asInt();
+
+        // it should not persist to the subsequent exception handling
+        $defaultMessage = 'Resolution error converting NULL [AsInt]';
+        $defaultException = TypeAsResolutionException::class;
+        $this->expectException($defaultException);
+        $this->expectExceptionMessage($defaultMessage);
+
+        $typeAs->asInt();
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_as_string_can_handle_custom_exceptions(): void
+    {
+        $rng = $this->faker->sentence();
+        $typeAs = NonNullable::make()->type(null);
+
+        $customMessage = 'resolved NULL with AsString ' . $rng;
+        $customException = CustomExceptionStub::class;
+        $this->expectException($customException);
+        $this->expectExceptionMessage($customMessage);
+
+        // throw a custom exception and message with sprintf formatting
+        $customErrorFormat = 'resolved %s with %s ' . $rng;
+        $typeAs->onError($customErrorFormat, $customException)
+            ->asString();
+
+        // it should not persist to the subsequent exception handling
+        $defaultMessage = 'Resolution error converting NULL [AsString]';
+        $defaultException = TypeAsResolutionException::class;
+        $this->expectException($defaultException);
+        $this->expectExceptionMessage($defaultMessage);
+
+        $typeAs->asString();
     }
 }

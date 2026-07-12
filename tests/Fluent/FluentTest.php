@@ -4,8 +4,8 @@ namespace Smpita\TypeAs\Tests;
 
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
-use Smpita\TypeAs\Fluent\Nullable;
 use Smpita\TypeAs\Fluent\NonNullable;
+use Smpita\TypeAs\Fluent\Nullable;
 use Smpita\TypeAs\TypeAs;
 
 class FluentTest extends TestCase
