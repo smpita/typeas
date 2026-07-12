@@ -26,11 +26,11 @@ trait ThrowsTypeAsResolutionExceptions
         $message = sprintf($this->getThrowMessage(), $type, $classname);
         $exception = $this->getThrowException();
 
-        if (! is_null($exception) && is_a($exception, TypeAsResolutionException::class, true)) {
-            throw new $exception($message);
+        if (is_null($exception) || ! is_subclass_of($exception, TypeAsResolutionException::class)) {
+            throw new TypeAsResolutionException($message);
         }
 
-        throw new TypeAsResolutionException($message);
+        throw new $exception($message);
     }
 
     public function getThrowMessage(): string
