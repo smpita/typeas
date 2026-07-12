@@ -8,6 +8,8 @@ class AsBool implements BoolResolver
 {
     public function resolve(mixed $value, ?bool $default = null): ?bool
     {
-        return (new AsNullableBool())->resolve($value, $default);
+        return is_null($value)
+            ? $default
+            : boolval($value);
     }
 }

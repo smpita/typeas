@@ -6,7 +6,6 @@ use Smpita\TypeAs\Contracts\BoolResolver;
 use Smpita\TypeAs\Concerns\ThrowsTypeAsResolutionExceptions;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Resolvers\Base\AsBool;
-use Smpita\TypeAs\Resolvers\Base\AsNullableBool;
 
 trait ResolvesBools
 {
@@ -26,7 +25,7 @@ trait ResolvesBools
 
     public function nullableBool(mixed $value, ?bool $default = null, ?BoolResolver $resolver = null): ?bool
     {
-        $resolver ??= $this->boolResolver ??= new AsNullableBool();
+        $resolver ??= $this->boolResolver ??= new AsBool();
 
         return $resolver->resolve(value: $value, default: $default);
     }

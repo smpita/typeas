@@ -8,6 +8,24 @@ class AsString implements StringResolver
 {
     public function resolve(mixed $value, ?string $default = null): ?string
     {
-        return (new AsNullableString())->resolve($value, $default);
+        return match (gettype($value)) {
+            'string' => $value,
+            'object' => $this->fromObject($value),
+            'boolean', 'integer', 'double', 'resource' => strval($value),
+            default => null,
+        } ?? $default;
+    }
+
+    protected function fromObject(object $value): ?string
+    {
+        $muted = match (true) {
+            method_exists($value, '__toString') => $value->__toString(),
+            method_exists($value, 'toString') => $value->toString(),
+            default => null,
+        };
+
+        return is_string($muted)
+            ? $muted
+            : null;
     }
 }

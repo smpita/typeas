@@ -6,7 +6,6 @@ use Smpita\TypeAs\Concerns\ThrowsTypeAsResolutionExceptions;
 use Smpita\TypeAs\Contracts\ClassResolver;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Resolvers\Base\AsClass;
-use Smpita\TypeAs\Resolvers\Base\AsNullableClass;
 
 trait ResolvesClasses
 {
@@ -39,7 +38,7 @@ trait ResolvesClasses
      */
     public function nullableClass(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null)
     {
-        $resolver ??= $this->classResolver ??= new AsNullableClass();
+        $resolver ??= $this->classResolver ??= new AsClass();
 
         return $resolver->resolve(class: $class, value: $value, default: $default);
     }

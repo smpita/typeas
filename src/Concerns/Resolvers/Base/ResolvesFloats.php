@@ -6,7 +6,6 @@ use Smpita\TypeAs\Contracts\FloatResolver;
 use Smpita\TypeAs\Concerns\ThrowsTypeAsResolutionExceptions;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Resolvers\Base\AsFloat;
-use Smpita\TypeAs\Resolvers\Base\AsNullableFloat;
 
 trait ResolvesFloats
 {
@@ -26,7 +25,7 @@ trait ResolvesFloats
 
     public function nullableFloat(mixed $value, ?float $default = null, ?FloatResolver $resolver = null): ?float
     {
-        $resolver ??= $this->floatResolver ??= new AsNullableFloat();
+        $resolver ??= $this->floatResolver ??= new AsFloat();
 
         return $resolver->resolve(value: $value, default: $default);
     }

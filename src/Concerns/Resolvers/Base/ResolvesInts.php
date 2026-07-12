@@ -6,7 +6,6 @@ use Smpita\TypeAs\Contracts\IntResolver;
 use Smpita\TypeAs\Concerns\ThrowsTypeAsResolutionExceptions;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Resolvers\Base\AsInt;
-use Smpita\TypeAs\Resolvers\Base\AsNullableInt;
 
 trait ResolvesInts
 {
@@ -26,7 +25,7 @@ trait ResolvesInts
 
     public function nullableInt(mixed $value, ?int $default = null, ?IntResolver $resolver = null): ?int
     {
-        $resolver ??= $this->intResolver ??= new AsNullableInt();
+        $resolver ??= $this->intResolver ??= new AsInt();
 
         return $resolver->resolve(value: $value, default: $default);
     }
