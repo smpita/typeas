@@ -199,7 +199,7 @@ asString(): ?string
 ```php
 \Smpita\TypeAs\asInt(mixed $value, ?int $default = null, ?IntResolver $resolver = null): int
 
-\Smpita<TypeAs\asNullableInt(mixed $value, ?int $default = null, ?IntResolver $resolver = null): ?int
+\Smpita\TypeAs\asNullableInt(mixed $value, ?int $default = null, ?IntResolver $resolver = null): ?int
 ```
 
 #### String
@@ -207,7 +207,7 @@ asString(): ?string
 ```php
 \Smpita\TypeAs\asString(mixed $value, ?string $default = null, ?StringResolver $resolver = null): string
 
-\Smpita<TypeAs\asNullableString(mixed $value, ?string $default = null, ?StringResolver $resolver = null): ?string
+\Smpita\TypeAs\asNullableString(mixed $value, ?string $default = null, ?StringResolver $resolver = null): ?string
 ```
 
 ---

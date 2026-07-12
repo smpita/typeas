@@ -460,7 +460,7 @@ use function Smpita\TypeAs\asArray as TypeAsArray;
 use function Smpita\TypeAs\asBool as TypeAsBool;
 use function Smpita\TypeAs\asFilterBool as TypeAsFilterBool;
 use function Smpita\TypeAs\asClass as TypeAsClass;
-use function Smpita\TypeAs\asFloat as TypeAsFloat
+use function Smpita\TypeAs\asFloat as TypeAsFloat;
 use function Smpita\TypeAs\asInt as TypeAsInt;
 use function Smpita\TypeAs\asString as TypeAsString;
 use function Smpita\TypeAs\asNullableArray as TypeAsNullableArray;
