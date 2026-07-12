@@ -119,7 +119,7 @@ class AsIntTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_can_handle_custom_exceptions(): void
+    public function test_can_handle_custom_exception_with_message(): void
     {
         $rng = $this->faker->sentence();
 
@@ -141,4 +141,38 @@ class AsIntTest extends TestCase
 
         TypeAs::int(null);
     }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_handle_custom_exception_without_message(): void
+    {
+        $defaultMessage = 'Resolution error converting NULL [AsInt]';
+        $customException = CustomExceptionStub::class;
+        $this->expectException($customException);
+        $this->expectExceptionMessage($defaultMessage);
+
+        // throw a custom exception
+        TypeAs::onError(exception: $customException)
+            ->int(null);
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_handle_custom_throw_message_without_exception(): void
+    {
+        $rng = $this->faker->sentence();
+
+        $customMessage = 'resolved NULL with AsInt ' . $rng;
+        $defaultException = TypeAsResolutionException::class;
+        $this->expectException($defaultException);
+        $this->expectExceptionMessage($customMessage);
+
+        // throw a custom message with sprintf formatting
+        $customErrorFormat = 'resolved %s with %s ' . $rng;
+        TypeAs::onError($customErrorFormat)
+            ->int(null);
+    }
+
 }

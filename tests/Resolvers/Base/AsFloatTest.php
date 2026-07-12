@@ -116,7 +116,7 @@ class AsFloatTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_can_handle_custom_exceptions(): void
+    public function test_can_handle_custom_exception_with_message(): void
     {
         $rng = $this->faker->sentence();
 
@@ -138,4 +138,38 @@ class AsFloatTest extends TestCase
 
         TypeAs::float(null);
     }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_handle_custom_exception_without_message(): void
+    {
+        $defaultMessage = 'Resolution error converting NULL [AsFloat]';
+        $customException = CustomExceptionStub::class;
+        $this->expectException($customException);
+        $this->expectExceptionMessage($defaultMessage);
+
+        // throw a custom exception
+        TypeAs::onError(exception: $customException)
+            ->float(null);
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_handle_custom_throw_message_without_exception(): void
+    {
+        $rng = $this->faker->sentence();
+
+        $customMessage = 'resolved NULL with AsFloat ' . $rng;
+        $defaultException = TypeAsResolutionException::class;
+        $this->expectException($defaultException);
+        $this->expectExceptionMessage($customMessage);
+
+        // throw a custom message with sprintf formatting
+        $customErrorFormat = 'resolved %s with %s ' . $rng;
+        TypeAs::onError($customErrorFormat)
+            ->float(null);
+    }
+
 }

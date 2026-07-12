@@ -563,7 +563,7 @@ class NonNullableTest extends TestCase
              * We must pass an invalid argument type to test the runtime enforcement
              * @phpstan-ignore argument.type
              */
-            ->onError(message: '', exception: \Exception::class)
+            ->onError(exception: \Exception::class)
             ->asString();
     }
 
@@ -572,7 +572,7 @@ class NonNullableTest extends TestCase
     #[Group('typeas')]
     public function test_set_throw_exception_accepts_null(): void
     {
-        $result = NonNullable::make()->onError(message: '', exception: null);
+        $result = NonNullable::make()->onError(exception: null);
 
         $this->assertInstanceOf(NonNullable::class, $result);
     }
