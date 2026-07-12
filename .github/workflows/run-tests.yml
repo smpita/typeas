@@ -36,7 +36,6 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl
           coverage: none
 
       - name: Setup problem matchers
@@ -73,7 +72,6 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl
           coverage: none
 
       - name: Setup problem matchers
