@@ -204,4 +204,24 @@ class AsArrayTest extends TestCase
         TypeAs::onError($customErrorFormat)
             ->array(null, wrap: false);
     }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_does_not_leak_custom_error_handling(): void
+    {
+        $customMessage = $this->faker->sentence();
+        $customException = CustomExceptionStub::class;
+        $defaultMessage = 'Resolution error converting NULL [AsArray]';
+        $defaultException = TypeAsResolutionException::class;
+
+        TypeAs::onError($customMessage, $customException)
+            ->array([]);
+
+        // it should not persist to the subsequent exception handling
+        $this->expectException($defaultException);
+        $this->expectExceptionMessage($defaultMessage);
+
+        TypeAs::array(null, wrap: false);
+    }
 }
