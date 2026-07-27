@@ -321,9 +321,9 @@ use Smpita\TypeAs\Contracts\StringResolver;
 class CustomStringResolver implements StringResolver
 {
     /**
-     * @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException
+     * Return null when unresolvable for default error handling.
      */
-    public function resolve(mixed $value, string $default = null): string
+    public function resolve(mixed $value, string $default = null): ?string
     {
         /**
          * Your logic here
@@ -428,6 +428,13 @@ $nullableString = TypeAs::nullableString($mixed, resolver: new \Smpita\TypeAs\Re
 
 [SIGNATURES#helpers](docs/signatures.md#helpers)
 
+Helpers follow standard signature patterns.
+
+```php
+asClass(class: $expected, value: $mixed, default: $default, resolver: $resolver);
+type($mixed)->default($default)->asClass($expected);
+```
+
 ### Global
 
 ```php
@@ -435,20 +442,20 @@ $nullableString = TypeAs::nullableString($mixed, resolver: new \Smpita\TypeAs\Re
 $array = asArray($mixed);
 $bool = asBool($mixed);
 $filterBool = asFilterBool($mixed);
-$class = asClass(Target::class, $mixed);
+$class = asClass(Expected::class, $mixed);
 $float = asFloat($mixed);
 $int = asInt($mixed);
 $string = asString($mixed);
 $nullableArray = asNullableArray($mixed);
 $nullableBool = asNullableBool($mixed);
 $nullableFilterBool = asNullableFilterBool($mixed);
-$nullableClass = asNullableClass(Target::class, $mixed);
+$nullableClass = asNullableClass(Expected::class, $mixed);
 $nullableFloat = asNullableFloat($mixed);
 $nullableInt = asNullableInt($mixed);
 $nullableString = asNullableString($mixed);
 
 // Fluent Helpers
-$type = type($mixed);
+$typed = type($mixed);
 ```
 
 ### Local
