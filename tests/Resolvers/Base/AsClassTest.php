@@ -126,4 +126,24 @@ class AsClassTest extends TestCase
         TypeAs::onError($customErrorFormat)
             ->class(self::class, null);
     }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_does_not_leak_custom_error_handling(): void
+    {
+        $customMessage = $this->faker->sentence();
+        $customException = CustomExceptionStub::class;
+        $defaultMessage = 'Resolution error converting NULL [AsClass]';
+        $defaultException = TypeAsResolutionException::class;
+
+        TypeAs::onError($customMessage, $customException)
+            ->class(ParentClassStub::class, new ParentClassStub());
+
+        // it should not persist to the subsequent exception handling
+        $this->expectException($defaultException);
+        $this->expectExceptionMessage($defaultMessage);
+
+        TypeAs::class(self::class, null);
+    }
 }

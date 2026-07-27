@@ -164,4 +164,24 @@ class AsStringTest extends TestCase
         TypeAs::onError($customErrorFormat)
             ->string(null);
     }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_does_not_leak_custom_error_handling(): void
+    {
+        $customMessage = $this->faker->sentence();
+        $customException = CustomExceptionStub::class;
+        $defaultMessage = 'Resolution error converting NULL [AsString]';
+        $defaultException = TypeAsResolutionException::class;
+
+        TypeAs::onError($customMessage, $customException)
+            ->string('');
+
+        // it should not persist to the subsequent exception handling
+        $this->expectException($defaultException);
+        $this->expectExceptionMessage($defaultMessage);
+
+        TypeAs::string(null);
+    }
 }

@@ -24,7 +24,7 @@ trait HandlesTypeFactory
      */
     public static function onError(?string $message = null, ?string $exception = null): TypeFactory
     {
-        return static::getInstance()
+        return (clone static::getInstance())
             ->setThrowMessage($message)
             ->setThrowException($exception);
     }
