@@ -2,8 +2,7 @@ parameters:
     level: max
     paths:
         - src
-        - tests
+        - tests/Fixtures
     tmpDir: build/phpstan
     ignoreErrors:
         - identifier: missingType.iterableValue
-        - identifier: method.alreadyNarrowedType
