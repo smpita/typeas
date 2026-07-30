@@ -6,7 +6,7 @@ namespace Smpita\TypeAs\Tests\Fixtures;
 
 use Smpita\TypeAs\TypeAs;
 
-class MixedToArray
+class MixedToBool
 {
     public mixed $data = false;
 
