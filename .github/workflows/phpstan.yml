@@ -12,19 +12,27 @@ on:
 
 jobs:
   phpstan:
-    name: phpstan
+    name: PHPStan ${{ matrix.phpstan }} (PHP ${{ matrix.php }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        phpstan: ['^1.0', '^2.0']
+        php: ['8.1', '8.2', '8.3', '8.4', '8.5']
     steps:
       - uses: actions/checkout@v7
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: ${{ matrix.php }}
           coverage: none
 
-      - name: Install composer dependencies
-        uses: ramsey/composer-install@v4
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction --ignore-platform-reqs
+
+      - name: Install specific PHPStan version
+        run: composer require --dev phpstan/phpstan:${{ matrix.phpstan }} --no-progress --no-interaction --ignore-platform-reqs
 
       - name: Run PHPStan
-        run: ./vendor/bin/phpstan --error-format=github
+        run: ./vendor/bin/phpstan --error-format=github analyse
