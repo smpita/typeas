@@ -12,7 +12,7 @@ on:
 
 jobs:
   phpstan:
-    name: PHPStan ${{ matrix.phpstan }} (PHP ${{ matrix.php }})
+    name: P${{ matrix.php }} - Stan:${{ matrix.phpstan }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
