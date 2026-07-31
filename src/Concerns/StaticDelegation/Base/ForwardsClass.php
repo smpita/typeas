@@ -30,8 +30,6 @@ trait ForwardsClass
      * @param  class-string<TClass>  $class
      * @param  TClass  $default
      * @return TClass|null
-     *
-     * @throws TypeAsResolutionException
      */
     public static function nullableClass(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null)
     {
