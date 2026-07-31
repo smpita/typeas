@@ -44,7 +44,7 @@ class NonNullable
     /**
      * @throws TypeAsResolutionException
      */
-    public function asFilterBool(): ?bool
+    public function asFilterBool(): bool
     {
         return TypeAs::onError(
             message: $this->config()->throwMessage,
