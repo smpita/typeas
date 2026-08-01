@@ -1,88 +1,59 @@
 ### Guaranteed type control for PHP
 
-- Use \Smpita\TypeAs\TypeAs to narrow types when handling mixed type signatures.
-- Avoid casts like (string) and (int). Use TypeAs::string() and TypeAs::int() and similar methods instead.
-- Use nullable methods like TypeAs::nullableArray() and TypeAs::nullableFloat() when a null is a feasible value.
-- Use TypeAs::filterBool() to apply FILTER_VALIDATE_BOOL rules instead of filter_var().
-- TypeAs::array() will wrap non-iterable values in an array. Use the wrap parameter to control this behavior, e.g. TypeAs::array($mixed, wrap: false).
-- Default values can be provided as the second parameter, or the third parameter for class, e.g. TypeAs::array($mixed, default: []) and TypeAs::class(Expected::class, $mixed, default: new Expected()).
-- Helpers like asArray(), asNullableArray(), asBool(), etc are available for all types but they need to be imported, e.g. use function Smpita\TypeAs\asArray;
-- A custom resolver that implements the appropriate Smpita\TypeAs\Contracts interface can be provided as the third parameter, e.g. TypeAs::array($mixed, resolver: new ArrayResolver()).
+- Use \Smpita\TypeAs\TypeAs to narrow types when handling mixed type signatures
+- Avoid PHP native casts like (string), (int), etc as they coerce null to values breaking nullable types
+- use TypeAs methods to selectively choose when to allow null and when to throw Exceptions
 
-@verbatim
-<code-snippet name="How to type as array" lang="php">
-$array = TypeAs::array($mixed);
-</code-snippet>
-@endverbatim
+#### Static API
 
-@verbatim
-<code-snippet name="How to type as nullable array" lang="php">
-$nullableArray = TypeAs::nullableArray($mixed);
-</code-snippet>
-@endverbatim
+- `array(mixed $value, ?array $default = null, ?ArrayResolver $resolver = null, ?bool $wrap = true)` → array
+- `bool(mixed $value, ?bool $default = null, ?BoolResolver $resolver = null)` → bool
+- `filterBool(mixed $value, ?bool $default = null)` → bool
+- `class(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null)` → object (TClass)
+- `float(mixed $value, ?float $default = null, ?FloatResolver $resolver = null)` → float
+- `int(mixed $value, ?int $default = null, ?IntResolver $resolver = null)` → int
+- `string(mixed $value, ?string $default = null, ?StringResolver $resolver = null)` → string
+- `nullableArray(mixed $value, ?array $default = null, ?ArrayResolver $resolver = null, ?bool $wrap = true)` → ?array
+- `nullableBool(mixed $value, ?bool $default = null, ?BoolResolver $resolver = null)` → ?bool
+- `nullableFilterBool(mixed $value, ?bool $default = null)` → ?bool
+- `nullableClass(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null)` → ?object (?TClass)
+- `nullableFloat(mixed $value, ?float $default = null, ?FloatResolver $resolver = null)` → ?float
+- `nullableInt(mixed $value, ?int $default = null, ?IntResolver $resolver = null)` → ?int
+- `nullableString(mixed $value, ?string $default = null, ?StringResolver $resolver = null)` → ?string
 
-@verbatim
-<code-snippet name="How to type as bool" lang="php">
-$bool = TypeAs::bool($mixed);
-</code-snippet>
-@endverbatim
+#### Fluent API
 
-@verbatim
-<code-snippet name="How to FILTER_VALIDATE_BOOL" lang="php">
-$filterBool = TypeAs::filterBool($mixed);
-</code-snippet>
-@endverbatim
+**Config methods on both NonNullable and Nullable:** `.default(mixed)`, `.using(Resolver|null)`, `.wrap(bool)`, `.noWrap()`, `.onError(?string $message, ?string $exception)`, `.config(): TypeConfig`.
 
-@verbatim
-<code-snippet name="How to type as nullable bool" lang="php">
-$nullableBool = TypeAs::nullableBool($mixed);
-</code-snippet>
-@endverbatim
+Start with `TypeAs::type($value)` or global helper `type($value)`, then:
 
-@verbatim
-<code-snippet name="How to type as class" lang="php">
-$class = TypeAs::class(Expected::class, $mixed);
-</code-snippet>
-@endverbatim
+- NonNullable: `asArray()`, `asBool()`, `asFilterBool()` → `bool`, `asClass(string $class)` → non-nullable, `asFloat()`, `asInt()`, `asString()`
+- Nullable (`->nullable()`): same methods return nullable types (`?array`, `?bool`, `?float`, `?int`, `?string`)
 
-@verbatim
-<code-snippet name="How to type as nullable class" lang="php">
-$nullableClass = TypeAs::nullableClass(Expected::class, $mixed);
-</code-snippet>
-@endverbatim
+#### Helpers
 
-@verbatim
-<code-snippet name="How to type as float" lang="php">
-$float = TypeAs::float($mixed);
-</code-snippet>
-@endverbatim
+Available with `use function` imports or globally:
 
-@verbatim
-<code-snippet name="How to type as nullable float" lang="php">
-$nullableFloat = TypeAs::nullableFloat($mixed);
-</code-snippet>
-@endverbatim
+- NonNullable: `use function Smpita\TypeAs\{asArray, asBool, asFilterBool, asClass, asFloat, asInt, asString};`
+- Nullable: `use function Smpita\TypeAs\{asNullableArray, asNullableBool, asNullableFilterBool, asNullableClass, asNullableFloat, asNullableInt, asNullableString};`
+- Fluent: `use function Smpita\TypeAs\type;`
 
-@verbatim
-<code-snippet name="How to type as int" lang="php">
-$int = TypeAs::int($mixed);
-</code-snippet>
-@endverbatim
+Gotchas (all APIs):
 
-@verbatim
-<code-snippet name="How to type as nullable int" lang="php">
-$nullableInt = TypeAs::nullableInt($mixed);
-</code-snippet>
-@endverbatim
+- NonNullable methods throw TypeAsResolutionException on failure
+- Nullable methods return null on failure instead of throwing
+- `*array*()`: `wrap` param controls non-iterable coercion (default: true)
+- `*class*()`: `class-string $class` param templates return and $default type
+- Methods without a `resolver` param are Extensions
+- Extension `filterBool()` and its variants use `FILTER_VALIDATE_BOOL`
 
-@verbatim
-<code-snippet name="How to type as string" lang="php">
-$string = TypeAs::string($mixed);
-</code-snippet>
-@endverbatim
+#### Examples
 
-@verbatim
-<code-snippet name="How to type as nullable string" lang="php">
-$nullableString = TypeAs::nullableString($mixed);
-</code-snippet>
-@endverbatim
+- Array with wrap control: `TypeAs::array($val, wrap: false)`
+- Custom resolver: `TypeAs::array($val, resolver: new CustomArrayResolver())`
+- Class resolution (throwing): `TypeAs::class(Expected::class, $val, default: new Expected(), resolver: new ClassResolver())`
+- Nullable variant: `TypeAs::nullableClass(Expected::class, $val)`
+
+#### Custom Error API
+
+Configure custom errors via chaining: `TypeAs::onError($message, $exception)->array($val)` returns a cloned TypeFactory with the error config; or fluent `->onError($msg, $class)` on any chain.
