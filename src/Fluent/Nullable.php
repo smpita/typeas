@@ -9,6 +9,13 @@ class Nullable
 {
     use HandlesFluentCalls;
 
+    public static function make(?TypeConfig $config = null): Nullable
+    {
+        $config ??= new TypeConfig();
+
+        return (new Nullable())->import($config);
+    }
+
     public function asArray(): ?array
     {
         return TypeAs::onError(

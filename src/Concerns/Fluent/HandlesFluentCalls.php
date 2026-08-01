@@ -22,13 +22,6 @@ trait HandlesFluentCalls
         $this->config = clone $this->config;
     }
 
-    public static function make(?TypeConfig $config = null): self
-    {
-        $config ??= new TypeConfig();
-
-        return (new self())->import($config);
-    }
-
     public function copy(): self
     {
         return clone $this;
