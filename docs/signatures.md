@@ -17,7 +17,7 @@ Smpita\TypeAs::bool(mixed $value, ?bool $default = null, ?BoolResolver $resolver
 
 Smpita\TypeAs::nullableBool(mixed $value, ?bool $default = null, ?BoolResolver $resolver = null): ?bool
 
-// Extension FILTER_VALIDATE_BOOL resolver
+// Extension using FILTER_VALIDATE_BOOL resolver
 Smpita\TypeAs::filterBool(mixed $value, ?bool $default = null): bool
 
 Smpita\TypeAs::nullableFilterBool(mixed $value, ?bool $default = null): ?bool
