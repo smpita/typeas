@@ -51,7 +51,7 @@ Gotchas (all APIs):
 
 - Array with wrap control: `TypeAs::array($val, wrap: false)`
 - Custom resolver: `TypeAs::array($val, resolver: new CustomArrayResolver())`
-- Class resolution (throwing): `TypeAs::class(Expected::class, $val, default: new Expected(), resolver: new ClassResolver())`
+- Class resolution: `TypeAs::class(Expected::class, $val, default: new Expected(), resolver: new ClassResolver())`
 - Nullable variant: `TypeAs::nullableClass(Expected::class, $val)`
 
 #### Custom Error API
