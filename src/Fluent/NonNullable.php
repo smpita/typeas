@@ -10,6 +10,13 @@ class NonNullable
 {
     use HandlesFluentCalls;
 
+    public static function make(?TypeConfig $config = null): NonNullable
+    {
+        $config ??= new TypeConfig();
+
+        return (new NonNullable())->import($config);
+    }
+
     /**
      * @throws TypeAsResolutionException
      */
