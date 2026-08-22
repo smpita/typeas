@@ -6,7 +6,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Tests\Stubs\Enums\IntBackedEnumStub;
-use Smpita\TypeAs\Tests\Stubs\Enums\StringBackedEnumStub;
 use Smpita\TypeAs\Tests\Stubs\Exceptions\CustomExceptionStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\IntableStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\IntegerableStub;
