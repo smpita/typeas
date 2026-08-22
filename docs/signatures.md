@@ -219,9 +219,11 @@ See [Resolving](#Resolving) for current signatures.
 
 See the [Upgrade Guide](upgrading.md#Upgrading) for tips on how to handle deprecations.
 
-####
+#### All / Multiple types
+
 ```php
 // DEPRECATED in v5.0.0, UPDATED in v5.0.0
+// Promoted nullable resolvers to primary resolvers
 
 Smpita\TypeAs::nullableArray(mixed $value, ?array $default = null, ?ArrayResolver $resolver = null, ?bool $wrap = true): ?array
 
@@ -240,6 +242,7 @@ Smpita\TypeAs::nullableString(mixed $value, ?string $default = null, ?StringReso
 
 ```php
 // DEPRECATED in v4.0.0, UPDATED in v4.0.0
+// Swapped order of $wrap and $resolver parameters
 
 Smpita\TypeAs::array(mixed $value, ?array $default = null, bool|array $wrap = true, ?ArrayResolver $resolver = null): array
 
@@ -250,14 +253,11 @@ Smpita\TypeAs::nullableArray(mixed $value, ?array $default = null, bool|array $w
 
 ```php
 // DEPRECATED in v2.5.0, REMOVED in v3.0.0
+// Removed Carbon feature
 
 Smpita\TypeAs::carbon(mixed $value, DateTimeZone|string|null $tz = null, Carbon $default = null, CarbonResolver $resolver = null): Carbon
 
-Smpita\TypeAs::nullableCarbon(mixed $value, DateTimeZone|string|null $tz = null, Carbon $default = null, NullableCarbonResolver $resolver = null): ?Carbon
-```
-
-```php
-// DEPRECATED in v2.5.0, REMOVED in v3.0.0
+Smpita\TypeAs::nullableCarbon(mixed $value, DateTimeZone|string|null $tz = null, Carbon $default = null, NullableCarbonResolver $resolver = null): ?
 
 Smpita\TypeAs::setCarbonResolver(?\Smpita\TypeAs\Contracts\CarbonResolver $resolver): void
 
@@ -268,6 +268,7 @@ Smpita\TypeAs::setNullableCarbonResolver(?\Smpita\TypeAs\Contracts\NullableCarbo
 
 ```php
 // DEPRECATED in v1.0.1, UPDATED in v2.0.0
+// Swapped order of $value and $class parameters
 
 \Smpita\TypeAs\asClass(mixed $value, string $class, object $default = null): object
 
