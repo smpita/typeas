@@ -29,8 +29,8 @@ class AsArray implements ArrayResolver
     protected function fromObject(object $value): ?array
     {
         $muted = match (true) {
-            method_exists($value, '__toArray') => $value->__toArray(),
-            method_exists($value, 'toArray') => $value->toArray(),
+            is_callable([$value, '__toArray']) => $value->__toArray(),
+            is_callable([$value, 'toArray']) => $value->toArray(),
             default => null,
         };
 

@@ -19,8 +19,8 @@ class AsFloat implements FloatResolver
     protected function fromObject(object $value): ?float
     {
         $muted = match (true) {
-            method_exists($value, '__toFloat') => $value->__toFloat(),
-            method_exists($value, 'toFloat') => $value->toFloat(),
+            is_callable([$value, '__toFloat']) => $value->__toFloat(),
+            is_callable([$value, 'toFloat']) => $value->toFloat(),
             default => null,
         };
 
