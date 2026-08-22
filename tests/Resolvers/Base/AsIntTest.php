@@ -80,8 +80,8 @@ class AsIntTest extends TestCase
     #[Group('typeas')]
     public function test_can_integerify_string_backed_enums(): void
     {
-        $this->assertSame(0, TypeAs::int(StringBackedEnumStub::One));
-        $this->assertSame(0, TypeAs::nullableInt(StringBackedEnumStub::Two));
+        $this->assertSame(1, TypeAs::int(StringBackedEnumStub::One));
+        $this->assertSame(2, TypeAs::nullableInt(StringBackedEnumStub::Two));
     }
 
     #[Test]
