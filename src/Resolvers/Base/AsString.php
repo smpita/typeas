@@ -19,8 +19,8 @@ class AsString implements StringResolver
     protected function fromObject(object $value): ?string
     {
         $muted = match (true) {
-            method_exists($value, '__toString') => $value->__toString(),
-            method_exists($value, 'toString') => $value->toString(),
+            is_callable([$value, '__toString']) => $value->__toString(),
+            is_callable([$value, 'toString']) => $value->toString(),
             default => null,
         };
 

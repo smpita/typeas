@@ -19,8 +19,8 @@ class AsInt implements IntResolver
     protected function fromObject(object $value): ?int
     {
         $muted = match (true) {
-            method_exists($value, '__toInteger') => $value->__toInteger(),
-            method_exists($value, 'toInteger') => $value->toInteger(),
+            is_callable([$value, '__toInteger']) => $value->__toInteger(),
+            is_callable([$value, 'toInteger']) => $value->toInteger(),
             default => null,
         };
 
