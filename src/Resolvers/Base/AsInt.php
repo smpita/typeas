@@ -2,6 +2,7 @@
 
 namespace Smpita\TypeAs\Resolvers\Base;
 
+use BackedEnum;
 use Smpita\TypeAs\Contracts\IntResolver;
 
 class AsInt implements IntResolver
@@ -19,6 +20,7 @@ class AsInt implements IntResolver
     protected function fromObject(object $value): ?int
     {
         $muted = match (true) {
+            $value instanceof BackedEnum => $value->value,
             is_callable([$value, '__toInteger']) => $value->__toInteger(),
             is_callable([$value, '__toInt']) => $value->__toInt(),
             is_callable([$value, 'toInteger']) => $value->toInteger(),

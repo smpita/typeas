@@ -5,6 +5,8 @@ namespace Smpita\TypeAs\Tests\Resolvers\Base;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
+use Smpita\TypeAs\Tests\Stubs\Enums\IntBackedEnumStub;
+use Smpita\TypeAs\Tests\Stubs\Enums\StringBackedEnumStub;
 use Smpita\TypeAs\Tests\Stubs\Exceptions\CustomExceptionStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\IntableStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\IntegerableStub;
@@ -62,6 +64,15 @@ class AsIntTest extends TestCase
         $value = $this->faker->randomNumber();
 
         $this->assertSame($value, TypeAs::int(new IntegerableStub($value)));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_integerify_int_backed_enums(): void
+    {
+        $this->assertSame(IntBackedEnumStub::One->value, TypeAs::int(IntBackedEnumStub::One));
+        $this->assertSame(IntBackedEnumStub::Two->value, TypeAs::nullableInt(IntBackedEnumStub::Two));
     }
 
     #[Test]

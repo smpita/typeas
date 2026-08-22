@@ -5,6 +5,8 @@ namespace Smpita\TypeAs\Tests\Resolvers\Base;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
+use Smpita\TypeAs\Tests\Stubs\Enums\IntBackedEnumStub;
+use Smpita\TypeAs\Tests\Stubs\Enums\StringBackedEnumStub;
 use Smpita\TypeAs\Tests\Stubs\Exceptions\CustomExceptionStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\MagicStringableStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\StringableStub;
@@ -86,6 +88,15 @@ class AsStringTest extends TestCase
         $value = $this->faker->word();
 
         $this->assertSame($value, TypeAs::string(new MagicStringableStub($value)));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_stringify_string_backed_enums(): void
+    {
+        $this->assertSame(StringBackedEnumStub::One->value, TypeAs::string(StringBackedEnumStub::One));
+        $this->assertSame(StringBackedEnumStub::Two->value, TypeAs::nullableString(StringBackedEnumStub::Two));
     }
 
     #[Test]
