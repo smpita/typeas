@@ -20,7 +20,7 @@ class AsInt implements IntResolver
     protected function fromObject(object $value): ?int
     {
         $muted = match (true) {
-            $value instanceof BackedEnum => $value->value,
+            $value instanceof BackedEnum => intval($value->value),
             is_callable([$value, '__toInteger']) => $value->__toInteger(),
             is_callable([$value, '__toInt']) => $value->__toInt(),
             is_callable([$value, 'toInteger']) => $value->toInteger(),

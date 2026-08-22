@@ -5,6 +5,7 @@ namespace Smpita\TypeAs\Tests\Resolvers\Base;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
+use Smpita\TypeAs\Tests\Stubs\Enums\IntBackedEnumStub;
 use Smpita\TypeAs\Tests\Stubs\Enums\StringBackedEnumStub;
 use Smpita\TypeAs\Tests\Stubs\Exceptions\CustomExceptionStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\MagicStringableStub;
@@ -96,6 +97,15 @@ class AsStringTest extends TestCase
     {
         $this->assertSame(StringBackedEnumStub::One->value, TypeAs::string(StringBackedEnumStub::One));
         $this->assertSame(StringBackedEnumStub::Two->value, TypeAs::nullableString(StringBackedEnumStub::Two));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_stringify_int_backed_enums(): void
+    {
+        $this->assertSame('1', TypeAs::string(IntBackedEnumStub::One));
+        $this->assertSame('2', TypeAs::nullableString(IntBackedEnumStub::Two));
     }
 
     #[Test]
