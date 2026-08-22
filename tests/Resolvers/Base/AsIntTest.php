@@ -6,6 +6,7 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Tests\Stubs\Enums\IntBackedEnumStub;
+use Smpita\TypeAs\Tests\Stubs\Enums\StringBackedEnumStub;
 use Smpita\TypeAs\Tests\Stubs\Exceptions\CustomExceptionStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\IntableStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\IntegerableStub;
@@ -72,6 +73,15 @@ class AsIntTest extends TestCase
     {
         $this->assertSame(IntBackedEnumStub::One->value, TypeAs::int(IntBackedEnumStub::One));
         $this->assertSame(IntBackedEnumStub::Two->value, TypeAs::nullableInt(IntBackedEnumStub::Two));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_integerify_string_backed_enums(): void
+    {
+        $this->assertSame(0, TypeAs::int(StringBackedEnumStub::One));
+        $this->assertSame(0, TypeAs::nullableInt(StringBackedEnumStub::Two));
     }
 
     #[Test]

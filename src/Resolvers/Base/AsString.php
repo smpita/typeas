@@ -20,7 +20,7 @@ class AsString implements StringResolver
     protected function fromObject(object $value): ?string
     {
         $muted = match (true) {
-            $value instanceof BackedEnum => $value->value,
+            $value instanceof BackedEnum => strval($value->value),
             is_callable([$value, '__toString']) => $value->__toString(),
             is_callable([$value, 'toString']) => $value->toString(),
             default => null,
