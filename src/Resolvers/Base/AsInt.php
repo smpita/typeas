@@ -20,7 +20,9 @@ class AsInt implements IntResolver
     {
         $muted = match (true) {
             is_callable([$value, '__toInteger']) => $value->__toInteger(),
+            is_callable([$value, '__toInt']) => $value->__toInt(),
             is_callable([$value, 'toInteger']) => $value->toInteger(),
+            is_callable([$value, 'toInt']) => $value->toInt(),
             default => null,
         };
 

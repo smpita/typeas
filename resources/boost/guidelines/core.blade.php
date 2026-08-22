@@ -20,7 +20,7 @@
 
 - Objects are resolved via `__to{Type}()` then `to{Type}()` methods
 - `__toString` is the only one PHP calls automatically (e.g. string interpolation); the rest are library conventions
-- **Exception:** `int` uses `__toInteger()`/`toInteger()` (not `__toInt()`/`toInt()`); `class` uses `is_a()` type check instead
+- **Exception:** `class` uses `is_a()` type check instead
 - If an object resolves via `__toArray()`/`toArray()` to an array, the resolved array is returned directly (not re-wrapped)
 
 ### Resolving
