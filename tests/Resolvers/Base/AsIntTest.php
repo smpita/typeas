@@ -6,7 +6,9 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Tests\Stubs\Exceptions\CustomExceptionStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\IntableStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\IntegerableStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\MagicIntableStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\MagicIntegerableStub;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
@@ -70,6 +72,26 @@ class AsIntTest extends TestCase
         $value = $this->faker->randomNumber();
 
         $this->assertSame($value, TypeAs::int(new MagicIntegerableStub($value)));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_integerify_magic_intable_objects(): void
+    {
+        $value = $this->faker->randomNumber();
+
+        $this->assertSame($value, TypeAs::int(new MagicIntableStub($value)));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_integerify_intable_objects(): void
+    {
+        $value = $this->faker->randomNumber();
+
+        $this->assertSame($value, TypeAs::int(new IntableStub($value)));
     }
 
     #[Test]
