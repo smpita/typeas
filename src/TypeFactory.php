@@ -25,6 +25,7 @@ class TypeFactory
         $this->setArrayResolver(null);
         $this->setBoolResolver(null);
         $this->setClassResolver(null);
+        $this->setFilterBoolResolver(null);
         $this->setFloatResolver(null);
         $this->setIntResolver(null);
         $this->setStringResolver(null);
