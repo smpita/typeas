@@ -4,8 +4,8 @@ namespace Smpita\TypeAs\Concerns\Resolvers\Base;
 
 use Smpita\TypeAs\Concerns\ThrowsTypeAsResolutionExceptions;
 use Smpita\TypeAs\Contracts\StringResolver;
+use Smpita\TypeAs\Config\ResolverVersion;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
-use Smpita\TypeAs\Resolvers\Base\AsString;
 
 trait ResolvesStrings
 {
@@ -18,14 +18,14 @@ trait ResolvesStrings
      */
     public function string(mixed $value, ?string $default = null, ?StringResolver $resolver = null): string
     {
-        $resolver ??= $this->stringResolver ??= new AsString();
+        $resolver ??= $this->stringResolver ??= ResolverVersion::default()->config()->stringResolver();
 
         return $resolver->resolve(value: $value, default: $default) ?? static::throwResolutionException($value, $resolver);
     }
 
     public function nullableString(mixed $value, ?string $default = null, ?StringResolver $resolver = null): ?string
     {
-        $resolver ??= $this->stringResolver ??= new AsString();
+        $resolver ??= $this->stringResolver ??= ResolverVersion::default()->config()->stringResolver();
 
         return $resolver->resolve(value: $value, default: $default);
     }

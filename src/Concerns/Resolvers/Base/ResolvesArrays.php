@@ -4,8 +4,8 @@ namespace Smpita\TypeAs\Concerns\Resolvers\Base;
 
 use Smpita\TypeAs\Concerns\ThrowsTypeAsResolutionExceptions;
 use Smpita\TypeAs\Contracts\ArrayResolver;
+use Smpita\TypeAs\Config\ResolverVersion;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
-use Smpita\TypeAs\Resolvers\Base\AsArray;
 
 trait ResolvesArrays
 {
@@ -18,14 +18,14 @@ trait ResolvesArrays
      */
     public function array(mixed $value, ?array $default = null, ?ArrayResolver $resolver = null, ?bool $wrap = true): array
     {
-        $resolver ??= $this->arrayResolver ??= new AsArray();
+        $resolver ??= $this->arrayResolver ??= ResolverVersion::default()->config()->arrayResolver();
 
         return $resolver->resolve(value: $value, default: $default, wrap: $wrap) ?? static::throwResolutionException($value, $resolver);
     }
 
     public function nullableArray(mixed $value, ?array $default = null, ?ArrayResolver $resolver = null, ?bool $wrap = true): ?array
     {
-        $resolver ??= $this->arrayResolver ??= new AsArray();
+        $resolver ??= $this->arrayResolver ??= ResolverVersion::default()->config()->arrayResolver();
 
         return $resolver->resolve(value: $value, default: $default, wrap: $wrap);
     }

@@ -4,8 +4,8 @@ namespace Smpita\TypeAs\Concerns\Resolvers\Base;
 
 use Smpita\TypeAs\Contracts\FloatResolver;
 use Smpita\TypeAs\Concerns\ThrowsTypeAsResolutionExceptions;
+use Smpita\TypeAs\Config\ResolverVersion;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
-use Smpita\TypeAs\Resolvers\Base\AsFloat;
 
 trait ResolvesFloats
 {
@@ -18,14 +18,14 @@ trait ResolvesFloats
      */
     public function float(mixed $value, ?float $default = null, ?FloatResolver $resolver = null): float
     {
-        $resolver ??= $this->floatResolver ??= new AsFloat();
+        $resolver ??= $this->floatResolver ??= ResolverVersion::default()->config()->floatResolver();
 
         return $resolver->resolve(value: $value, default: $default) ?? static::throwResolutionException($value, $resolver);
     }
 
     public function nullableFloat(mixed $value, ?float $default = null, ?FloatResolver $resolver = null): ?float
     {
-        $resolver ??= $this->floatResolver ??= new AsFloat();
+        $resolver ??= $this->floatResolver ??= ResolverVersion::default()->config()->floatResolver();
 
         return $resolver->resolve(value: $value, default: $default);
     }

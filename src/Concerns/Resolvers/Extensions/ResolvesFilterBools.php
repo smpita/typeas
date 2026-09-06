@@ -4,7 +4,7 @@ namespace Smpita\TypeAs\Concerns\Resolvers\Extensions;
 
 use Smpita\TypeAs\Concerns\Resolvers\Base\ResolvesBools;
 use Smpita\TypeAs\Contracts\BoolResolver;
-use Smpita\TypeAs\Enums\ResolverVersion;
+use Smpita\TypeAs\Config\ResolverVersion;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
 trait ResolvesFilterBools

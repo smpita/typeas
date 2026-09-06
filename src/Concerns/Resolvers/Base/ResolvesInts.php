@@ -2,10 +2,10 @@
 
 namespace Smpita\TypeAs\Concerns\Resolvers\Base;
 
-use Smpita\TypeAs\Contracts\IntResolver;
 use Smpita\TypeAs\Concerns\ThrowsTypeAsResolutionExceptions;
+use Smpita\TypeAs\Contracts\IntResolver;
+use Smpita\TypeAs\Config\ResolverVersion;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
-use Smpita\TypeAs\Resolvers\Base\AsInt;
 
 trait ResolvesInts
 {
@@ -18,14 +18,14 @@ trait ResolvesInts
      */
     public function int(mixed $value, ?int $default = null, ?IntResolver $resolver = null): int
     {
-        $resolver ??= $this->intResolver ??= new AsInt();
+        $resolver ??= $this->intResolver ??= ResolverVersion::default()->config()->intResolver();
 
         return $resolver->resolve(value: $value, default: $default) ?? static::throwResolutionException($value, $resolver);
     }
 
     public function nullableInt(mixed $value, ?int $default = null, ?IntResolver $resolver = null): ?int
     {
-        $resolver ??= $this->intResolver ??= new AsInt();
+        $resolver ??= $this->intResolver ??= ResolverVersion::default()->config()->intResolver();
 
         return $resolver->resolve(value: $value, default: $default);
     }
