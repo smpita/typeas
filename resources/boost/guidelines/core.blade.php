@@ -16,12 +16,32 @@
 | `int` | `nullableInt` | `(mixed $value, ?int $default = null, ?IntResolver $resolver = null)` | — |
 | `string` | `nullableString` | `(mixed $value, ?string $default = null, ?StringResolver $resolver = null)` | — |
 
+## Resolver Versions (V4 / V5)
+
+- TypeAs defaults to **V5** resolvers; legacy **V4** resolvers are available for upgrade migration.
+- Switch all resolvers: `ResolverVersion::V4->setResolvers()` or `ResolverVersion::V5->setResolvers()`.
+- Individual resolvers can be versioned too: `ResolverVersion::V4->set{Type}Resolver()`.
+- Definition classes `src/Config/Definitions/V4.php` and `V5.php` control each set.
+- Reset all resolvers to null (lazy-load active version defaults): `TypeAs::useDefaultResolvers()`. Call `->setResolvers()` on a version enum afterward to populate from that version.
+
+## Backed Enum Resolution
+
+- Passing a backed enum to `int`, `float`, `bool`, or `string` resolution resolves via `$enum->value` then casts.
+- Example: `asInt(MyEnum::Foo) // 1` if the backed value of `MyEnum::Foo` is `'1'`.
+
 ## Object Resolution
 
-- Objects are resolved via `__to{Type}()` then `to{Type}()` methods
-- `__toString` is the only one PHP calls automatically (e.g. string interpolation); the rest are library conventions
-- **Exception:** `class` uses `is_a()` type check instead
-- If an object resolves via `__toArray()`/`toArray()` to an array, the resolved array is returned directly (not re-wrapped)
+- Objects are resolved via `__to{Type}()` then `to{Type}()` methods.
+- Hunting order for int: `__toInteger`, `__toInt`, `toInteger`, `toInt`.
+- For all types the pattern is consistent: try `__to{Type}` first (dunder), then `to{Type}` (PascalCase).
+- Method calls are gated by `is_callable()` and `method_exists()`.
+- `__toString` is the only one PHP calls automatically (e.g. string interpolation); the rest are library conventions.
+- **Exception:** `class` uses `is_a()` type check instead.
+- If an object resolves via `__toArray()`/`toArray()` to an array, the resolved array is returned directly (not re-wrapped).
+
+### ResolvesMethods
+
+- Objects can expose a callable via `__toMethod` / `toMethod`; the resolved callable is returned as an object.
 
 ### Resolving
 

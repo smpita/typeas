@@ -10,7 +10,7 @@
 - Resolvers signal failure by returning `null`. Non-nullable methods convert that into a throw; nullable methods and defaults pass it through.
 - A resolver registered with `setXResolver()` serves both `x()` and `nullableX()` calls.
 - Backed enums resolve through their backing value (`$enum->value`), cast to the target type, during resolution.
-- Objects may hook resolution by implementing `__toArray`/`toArray`, `__toFloat`/`toFloat`, `__toInteger`/`__toInt`/`toInteger`/`toInt`, `__toString`/`toString`, or `__toBool`/`toBool`. Magic-method detection uses `is_callable()`, so `__call()`-based implementations are also honored.
+- Objects may hook resolution by implementing `__toArray`/`toArray`, `__toFloat`/`toFloat`, `__toInteger`/`__toInt`/`toInteger`/`toInt`, `__toString`/`toString`, or `__toBool`/`toBool`. Method calls are gated by `is_callable()`.
 - Use `onError(message, exception)` to customize the thrown message or swap in an exception that extends `TypeAsResolutionException`.
 
 #### Resolver Versions

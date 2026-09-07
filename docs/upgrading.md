@@ -27,12 +27,14 @@ Update method calls:
 
 ### Resolvers
 
+Nullable registration eliminated. One resolver per type serves both nullable and non-nullable methods. No `setNullableXResolver()` needed; those interfaces were removed entirely.
+
 See [Resolver Versions](signatures.md#resolver-versions) for resolver version switching reference.
 
 The resolvers received the following updates:
 - Scalar methods cast Enum values (e.g. `asFilterBool(Enum::Off) // false assuming backed value is 'off'`)
 - More consistent hunting for `__to{Type}` and `to{Type}`
-    - Method calling is now gated by `is_callable()` to ensure only public methods are called
+    - Method calls use `method_exists()` and `is_callable()` as gate.
 
 Resolver versions manage which set of resolvers TypeAs uses. TypeAs defaults to V5; switching to V4 restores legacy behavior via `src/Resolvers/Legacy/V4`.
 
@@ -97,7 +99,7 @@ Note: `ClassResolver::resolve()` has no native return type; the change is in its
 ### New conversion behavior
 - Backed enums resolve through their backing value (`$enum->value`), cast to the target type, during `int` and `string` resolution.
 - Objects implementing `__toBool()` or `toBool()` resolve through those methods during `bool` resolution.
-- Object magic-method detection now uses `is_callable()` instead of `method_exists()`, so `__call()`-based implementations of `__toArray`/`toArray`, `__toFloat`/`toFloat`, `__toInteger`/`__toInt`/`toInteger`/`toInt`, `__toString`/`toString`, and `__toBool`/`toBool` are honored.
+- Object magic-method detection uses `is_callable()` to gate method calls, ensuring only public methods are invoked.
 
 ### Custom error handling
 Use the new `onError()` to customize the thrown message or exception. See [Custom Exceptions](../README.md#custom-exceptions). Exceptions must extend `TypeAsResolutionException`.
