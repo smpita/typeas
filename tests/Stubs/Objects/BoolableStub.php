@@ -2,7 +2,7 @@
 
 namespace Smpita\TypeAs\Tests\Stubs\Objects;
 
-class FilterBoolStub
+class BoolableStub
 {
     public function __construct(public bool $value)
     {

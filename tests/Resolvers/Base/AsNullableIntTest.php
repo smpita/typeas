@@ -4,6 +4,8 @@ namespace Smpita\TypeAs\Tests\Resolvers\Base;
 
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
+use Smpita\TypeAs\Tests\Stubs\Enums\IntBackedEnumStub;
+use Smpita\TypeAs\Tests\Stubs\Enums\StringBackedEnumStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\IntegerableStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\MagicIntegerableStub;
 use Smpita\TypeAs\Tests\TestCase;
@@ -108,5 +110,23 @@ class AsNullableIntTest extends TestCase
         $test = fn (?int $value) => $value;
 
         $this->assertIsInt($test(TypeAs::nullableInt($this->faker->randomFloat())));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_nullable_backed_enum_int_returns_value(): void
+    {
+        $this->assertSame(0, TypeAs::nullableInt(IntBackedEnumStub::Zero));
+        $this->assertSame(1, TypeAs::nullableInt(IntBackedEnumStub::One));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_nullable_backed_enum_string_returns_value(): void
+    {
+        $this->assertSame(1, TypeAs::nullableInt(StringBackedEnumStub::One));
+        $this->assertSame(2, TypeAs::nullableInt(StringBackedEnumStub::Two));
     }
 }

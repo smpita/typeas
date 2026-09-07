@@ -6,10 +6,22 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
+use Smpita\TypeAs\Tests\Stubs\Enums\IntBackedEnumStub;
+use Smpita\TypeAs\Tests\Stubs\Enums\StringBackedEnumStub;
 use Smpita\TypeAs\Tests\Stubs\Exceptions\CustomExceptionStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\EdgeCases\BadCastableArrayStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\EdgeCases\BadCastableFloatStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\EdgeCases\BadCastableIntStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\EdgeCases\BadCastableStringStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\EdgeCases\BadMagicCastableArrayStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\EdgeCases\BadMagicCastableFloatStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\EdgeCases\BadMagicCastableIntStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\EdgeCases\BadMagicCastableStringStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\FilterBoolStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\MagicFilterBoolStub;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
+use stdClass;
 
 class AsFilterBoolTest extends TestCase
 {
@@ -69,11 +81,68 @@ class AsFilterBoolTest extends TestCase
     #[Group('smpita')]
     #[Group('typeas')]
     #[Group('extensions')]
-    public function test_will_throw_exceptions_on_objects(): void
+    public function test_can_boolify_backed_enums(): void
+    {
+        $this->assertTrue(TypeAs::filterBool(IntBackedEnumStub::One));
+        $this->assertTrue(TypeAs::filterBool(StringBackedEnumStub::One));
+        $this->assertTrue(TypeAs::filterBool(StringBackedEnumStub::True));
+        $this->assertTrue(TypeAs::filterBool(StringBackedEnumStub::Yes));
+        $this->assertTrue(TypeAs::filterBool(StringBackedEnumStub::On));
+        $this->assertFalse(TypeAs::filterBool(IntBackedEnumStub::Zero));
+        $this->assertFalse(TypeAs::filterBool(StringBackedEnumStub::Zero));
+        $this->assertFalse(TypeAs::filterBool(StringBackedEnumStub::False));
+        $this->assertFalse(TypeAs::filterBool(StringBackedEnumStub::No));
+        $this->assertFalse(TypeAs::filterBool(StringBackedEnumStub::Off));
+        $this->assertFalse(TypeAs::filterBool(StringBackedEnumStub::Empty));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    #[Group('extensions')]
+    public function test_can_boolify_magic_boolable_objects(): void
+    {
+        $this->assertTrue(TypeAs::filterBool(new MagicFilterBoolStub(true)));
+        $this->assertFalse(TypeAs::filterBool(new MagicFilterBoolStub(false)));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    #[Group('extensions')]
+    public function test_can_boolify_boolable_objects(): void
+    {
+        $this->assertTrue(TypeAs::filterBool(new FilterBoolStub(true)));
+        $this->assertFalse(TypeAs::filterBool(new FilterBoolStub(false)));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    #[Group('extensions')]
+    public function test_will_throw_exceptions_on_plain_objects(): void
     {
         $this->expectException(TypeAsResolutionException::class);
 
-        $this->assertTrue(TypeAs::filterBool(new FilterBoolStub()));
+        TypeAs::filterBool(new stdClass());
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    #[Group('extensions')]
+    public function test_will_use_defaults_when_boolable_objects_return_non_bools(): void
+    {
+        $default = false;
+
+        $object = new class () {
+            public function __toBool(): int
+            {
+                return 1;
+            }
+        };
+
+        $this->assertSame($default, TypeAs::nullableFilterBool($object, $default));
     }
 
     #[Test]
@@ -218,5 +287,30 @@ class AsFilterBoolTest extends TestCase
         $this->expectExceptionMessage($defaultMessage);
 
         TypeAs::filterBool(null);
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    #[Group('extensions')]
+    #[DataProvider('nonBoolToBoolStubs')]
+    public function test_will_return_null_when__to_bool_returns_non_bool(mixed $object): void
+    {
+        $this->assertNull(TypeAs::nullableFilterBool($object));
+    }
+
+    /** @return array<string, array{mixed}> */
+    public static function nonBoolToBoolStubs(): array
+    {
+        return [
+            '__array' => [new BadCastableArrayStub([1, 2, 3])],
+            '__int' => [new BadCastableIntStub(1)],
+            '__float' => [new BadCastableFloatStub(1.0)],
+            '__string' => [new BadCastableStringStub('yes')],
+            'array' => [new BadMagicCastableArrayStub([1, 2, 3])],
+            'int' => [new BadMagicCastableIntStub(1)],
+            'float' => [new BadMagicCastableFloatStub(1.0)],
+            'string' => [new BadMagicCastableStringStub('yes')],
+        ];
     }
 }

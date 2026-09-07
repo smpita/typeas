@@ -5,6 +5,8 @@ namespace Smpita\TypeAs\Tests\Resolvers\Base;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
+use Smpita\TypeAs\Tests\Stubs\Enums\IntBackedEnumStub;
+use Smpita\TypeAs\Tests\Stubs\Enums\StringBackedEnumStub;
 use Smpita\TypeAs\Tests\Stubs\Exceptions\CustomExceptionStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\FloatableStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\MagicFloatableStub;
@@ -57,6 +59,16 @@ class AsFloatTest extends TestCase
         $value = $this->faker->randomFloat();
 
         $this->assertSame($value, TypeAs::float(new FloatableStub($value)));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_floatify_backed_enums(): void
+    {
+        $this->assertSame(1.0, TypeAs::float(IntBackedEnumStub::One));
+        $this->assertSame(1.5, TypeAs::float(StringBackedEnumStub::OnePointFive));
+        $this->assertSame(2.0, TypeAs::nullableFloat(StringBackedEnumStub::Two));
     }
 
     #[Test]
@@ -190,6 +202,26 @@ class AsFloatTest extends TestCase
         $this->expectExceptionMessage($defaultMessage);
 
         TypeAs::float(null);
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_floatify_fopen_resource(): void
+    {
+        $resource = @fopen('php://memory', 'r');
+
+        if ($resource === false) {
+            $this->markTestSkipped('Unable to open php://memory resource');
+        }
+
+        try {
+            $result = TypeAs::float($resource);
+            $this->assertIsFloat($result);
+            $this->assertNotEquals(null, $result); // resolved successfully via floatval(resource)
+        } finally {
+            fclose($resource);
+        }
     }
 
 }

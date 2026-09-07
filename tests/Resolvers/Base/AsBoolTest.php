@@ -5,7 +5,11 @@ namespace Smpita\TypeAs\Tests\Resolvers\Base;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
+use Smpita\TypeAs\Tests\Stubs\Enums\IntBackedEnumStub;
+use Smpita\TypeAs\Tests\Stubs\Enums\StringBackedEnumStub;
 use Smpita\TypeAs\Tests\Stubs\Exceptions\CustomExceptionStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\BoolableStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\MagicBoolableStub;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
 
@@ -34,6 +38,52 @@ class AsBoolTest extends TestCase
     public function test_can_boolify_objects(): void
     {
         $this->assertTrue(TypeAs::bool(new \stdClass()));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_boolify_backed_enums(): void
+    {
+        $this->assertTrue(TypeAs::bool(IntBackedEnumStub::One));
+        $this->assertFalse(TypeAs::bool(IntBackedEnumStub::Zero));
+
+        $this->assertTrue(TypeAs::bool(StringBackedEnumStub::One));
+        $this->assertFalse(TypeAs::bool(StringBackedEnumStub::Zero));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_boolify_string_backed_enum_null_value(): void
+    {
+        $this->assertTrue(TypeAs::bool(StringBackedEnumStub::Null));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_boolify_string_backed_enum_empty(): void
+    {
+        $this->assertFalse(TypeAs::bool(StringBackedEnumStub::Empty));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_boolify_boolable_objects(): void
+    {
+        $this->assertTrue(TypeAs::bool(new BoolableStub(true)));
+        $this->assertFalse(TypeAs::bool(new BoolableStub(false)));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_boolify_magic_boolable_objects(): void
+    {
+        $this->assertTrue(TypeAs::bool(new MagicBoolableStub(true)));
+        $this->assertFalse(TypeAs::bool(new MagicBoolableStub(false)));
     }
 
     #[Test]

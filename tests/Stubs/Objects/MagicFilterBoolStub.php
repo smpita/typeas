@@ -2,13 +2,13 @@
 
 namespace Smpita\TypeAs\Tests\Stubs\Objects;
 
-class FilterBoolStub
+class MagicFilterBoolStub
 {
     public function __construct(public bool $value)
     {
     }
 
-    public function toBool(): bool
+    public function __toBool(): bool
     {
         return $this->value;
     }

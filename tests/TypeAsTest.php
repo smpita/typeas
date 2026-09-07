@@ -10,6 +10,7 @@ use Smpita\TypeAs\Tests\Stubs\Objects\ParentClassStub;
 use Smpita\TypeAs\Tests\Stubs\Resolvers\ArrayResolverStub;
 use Smpita\TypeAs\Tests\Stubs\Resolvers\BoolResolverStub;
 use Smpita\TypeAs\Tests\Stubs\Resolvers\ClassResolverStub;
+use Smpita\TypeAs\Tests\Stubs\Resolvers\FilterBoolResolverStub;
 use Smpita\TypeAs\Tests\Stubs\Resolvers\FloatResolverStub;
 use Smpita\TypeAs\Tests\Stubs\Resolvers\IntResolverStub;
 use Smpita\TypeAs\Tests\Stubs\Resolvers\NullableArrayResolverStub;
@@ -285,6 +286,27 @@ class TypeAsTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
+    public function test_can_use_inline_filter_bool_resolver(): void
+    {
+        $resolver = new FilterBoolResolverStub();
+
+        $this->assertSame($resolver->resolve('test'), TypeAs::filterBool('test', null, $resolver));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_set_filter_bool_resolver(): void
+    {
+        $resolver = new FilterBoolResolverStub();
+        TypeAs::setFilterBoolResolver($resolver);
+
+        $this->assertSame($resolver->resolve('test'), TypeAs::filterBool('test'));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
     #[DataProvider('resolverProvider')]
     public function test_can_reset_resolvers(string $key, mixed $resolver): void
     {
@@ -313,6 +335,7 @@ class TypeAsTest extends TestCase
             ['arrayResolver', new ArrayResolverStub()],
             ['boolResolver', new BoolResolverStub()],
             ['classResolver', new ClassResolverStub()],
+            ['filterBoolResolver', new FilterBoolResolverStub()],
             ['floatResolver', new FloatResolverStub()],
             ['intResolver', new IntResolverStub()],
             ['stringResolver', new StringResolverStub()],
