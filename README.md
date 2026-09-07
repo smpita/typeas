@@ -448,8 +448,6 @@ Objects may hook resolution by implementing magic `__to{Type}()` or regular `to{
 
 ### Switching Resolver Versions
 
-[UPGRADING#resolvers](docs/upgrading.md#resolvers)
-
 See [Resolver Versions](signatures.md#resolver-versions) for all methods:
 
 ```php

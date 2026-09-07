@@ -6,15 +6,15 @@
 
 ## Architecture
 
-| Non-nullable | Nullable | Factory method signature | Notes |
+| Non-nullable | Nullable | Factory method signature | Casts $backedenum->value | Cast methods | Notes |
 |---|---|---|---|
-| `array` | `nullableArray` | `(mixed $value, ?array $default = null, ?ArrayResolver $resolver = null, ?bool $wrap = true)` | See [Resolving](#resolving) for `$wrap` behavior |
-| `bool` | `nullableBool` | `(mixed $value, ?bool $default = null, ?BoolResolver $resolver = null)` | — |
-| `filterBool` | `nullableFilterBool` | `(mixed $value, ?bool $default = null)` | Bakes `FILTER_VALIDATE_BOOL` — no resolver param |
-| `class` | `nullableClass` | `(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null)` | First arg is class name, pushing default to 3rd position |
-| `float` | `nullableFloat` | `(mixed $value, ?float $default = null, ?FloatResolver $resolver = null)` | — |
-| `int` | `nullableInt` | `(mixed $value, ?int $default = null, ?IntResolver $resolver = null)` | — |
-| `string` | `nullableString` | `(mixed $value, ?string $default = null, ?StringResolver $resolver = null)` | — |
+| `array` | `nullableArray` | `(mixed $value, ?array $default = null, ?ArrayResolver $resolver = null, ?bool $wrap = true)` | no | `__toArray()`, `toArray()` | See [Resolving](#resolving) for `$wrap` behavior |
+| `bool` | `nullableBool` | `(mixed $value, ?bool $default = null, ?BoolResolver $resolver = null)` | yes | `__toBool()`, `toBool()` | — |
+| `filterBool` | `nullableFilterBool` | `(mixed $value, ?bool $default = null)` | yes | `__toBool()`, `toBool()` | Bakes `FILTER_VALIDATE_BOOL` — no resolver param |
+| `class` | `nullableClass` | `(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null)` | no | n/a | First arg is class name, pushing default to 3rd position |
+| `float` | `nullableFloat` | `(mixed $value, ?float $default = null, ?FloatResolver $resolver = null)` | yes | `__toFloat()`, `toFloat()` | — |
+| `int` | `nullableInt` | `(mixed $value, ?int $default = null, ?IntResolver $resolver = null)` | yes | `__toInteger()`, `__toInt`, `toInteger()`, `toInt()` | — |
+| `string` | `nullableString` | `(mixed $value, ?string $default = null, ?StringResolver $resolver = null)` | yes | `__toString()`, `toString()` | — |
 
 ## Resolver Versions (V4 / V5)
 
@@ -41,7 +41,7 @@
 
 ### ResolvesMethods
 
-- Objects can expose a callable via `__toMethod` / `toMethod`; the resolved callable is returned as an object.
+- Objects can expose a callable via `__toMethod` / `toMethod`; the resolved callable is returned.
 
 ### Resolving
 
