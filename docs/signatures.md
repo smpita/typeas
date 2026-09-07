@@ -2,6 +2,46 @@
 
 ### Resolving
 
+#### Conventions
+
+- Non-nullable methods throw `\Smpita\TypeAs\Exceptions\TypeAsResolutionException` when the value cannot be resolved.
+- Nullable methods never throw; they return `null` instead.
+- Providing a `default` suppresses throwing: the default is returned when the value cannot be resolved.
+- Resolvers signal failure by returning `null`. Non-nullable methods convert that into a throw; nullable methods and defaults pass it through.
+- A resolver registered with `setXResolver()` serves both `x()` and `nullableX()` calls.
+- Backed enums resolve through their backing value (`$enum->value`), cast to the target type, during resolution.
+- Objects may hook resolution by implementing `__toArray`/`toArray`, `__toFloat`/`toFloat`, `__toInteger`/`__toInt`/`toInteger`/`toInt`, `__toString`/`toString`, or `__toBool`/`toBool`. Magic-method detection uses `is_callable()`, so `__call()`-based implementations are also honored.
+- Use `onError(message, exception)` to customize the thrown message or swap in an exception that extends `TypeAsResolutionException`.
+
+#### Resolver Versions
+
+```php
+use Smpita\TypeAs\Config\ResolverVersion;
+
+// Returns ResolverVersion::V5
+ResolverVersion::default();
+
+// Switch resolver set
+ResolverVersion::V4->setResolvers();
+ResolverVersion::V5->setResolvers();
+
+// Individual resolver switching
+ResolverVersion::V4->setBoolResolver();
+ResolverVersion::V5->setFilterBoolResolver();
+```
+
+#### ResolverVersion Enum helpers
+```
+config(): \Smpita\TypeAs\Data\ResolverConfig
+setResolvers(): void
+setArrayResolver(): void
+setBoolResolver(): void
+setClassResolver(): void
+setFloatResolver(): void
+setIntResolver(): void
+setStringResolver(): void
+```
+
 #### Array
 
 ```php
@@ -97,6 +137,12 @@ Smpita\TypeAs::setFloatResolver(?\Smpita\TypeAs\Contracts\FloatResolver $resolve
 
 ```php
 Smpita\TypeAs::setIntResolver(?\Smpita\TypeAs\Contracts\IntResolver $resolver): void
+```
+
+#### FilterBool
+
+```php
+Smpita\TypeAs::setFilterBoolResolver(?\Smpita\TypeAs\Contracts\BoolResolver $resolver): void
 ```
 
 #### String

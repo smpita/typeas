@@ -27,6 +27,7 @@ Easily type your `mixed` signatures. Perfect for static analysis!
   - [Custom Exceptions](#custom-exceptions)
   - [Official Extensions](#official-extensions)
   - [Custom Resolvers](#custom-resolvers)
+  - [Enum / Object Resolution](#enum-object-resolution)
   - [Helpers](#helpers)
 - [Upgrade Guide](docs/upgrading.md)
 - [Deprecations](#deprecations)
@@ -242,7 +243,9 @@ $nonNullable = (new NonNullable())->import($config);
 $nullable = Nullable::make($config);
 $nullable = (new Nullable())->import($config);
 ```
+
 ---
+
 ### Custom Exceptions
 
 Use `onError()` to customize the throw message or exception.
@@ -271,6 +274,7 @@ onError('Expected iterable, received %s')
 onError(exception: CustomResolutionException::class)
 onError(null, CustomResolutionException::class)
 ```
+
 ---
 
 ## Extensions
@@ -281,7 +285,7 @@ Extensions are created by passing a custom resolver to a function.
 
 ```php
  /**
-  * @see \Smpita\TypeAs\Resolvers\Extensions\AsNullableFilterBool
+  * @see \Smpita\TypeAs\Resolvers\Extensions\AsFilterBool
   *
   * Uses FILTER_VALIDATE_BOOL
   * https://www.php.net/manual/en/filter.constants.php#constant.filter-validate-bool
@@ -323,7 +327,7 @@ class CustomStringResolver implements StringResolver
     /**
      * Return null when unresolvable for default error handling.
      */
-    public function resolve(mixed $value, string $default = null): ?string
+    public function resolve(mixed $value, ?string $default = null): ?string
     {
         /**
          * Your logic here
@@ -420,6 +424,48 @@ $nullableClass = TypeAs::nullableClass(Expected::class, $mixed, resolver: new \S
 $nullableFloat = TypeAs::nullableFloat($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsFloat());
 $nullableInt = TypeAs::nullableInt($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsInt());
 $nullableString = TypeAs::nullableString($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsString());
+```
+
+---
+
+## Enum / Object Resolution
+
+[SIGNATURES#resolving](docs/signatures.md#resolving)
+
+Backed enums resolve through their backing value then cast to the target type.
+
+Objects may hook resolution by implementing magic `__to{Type}()` or regular `to{Type}()` methods.
+
+| Resolver | Methods Tried |
+|---|---|
+| AsArray | `__toArray`, `toArray` |
+| AsBool | `__toBool`, `toBool` |
+| AsFilterBool | `__toBool`, `toBool` |
+| AsClass | n/a |
+| AsFloat | `__toFloat`, `toFloat` |
+| AsInt | `__toInteger`, `__toInt`, `toInteger`, `toInt` |
+| AsString | `__toString`, `toString` |
+
+### Switching Resolver Versions
+
+[UPGRADING#resolvers](docs/upgrading.md#resolvers)
+
+See [Resolver Versions](signatures.md#resolver-versions) for all methods:
+
+```php
+use Smpita\TypeAs\Config\ResolverVersion;
+
+// Get Default Resolver Version
+ResolverVersion::default(); // ResolverVersion::V5
+
+// Register V4 resolvers
+ResolverVersion::V4->setResolvers();
+
+// Register V5 resolvers
+ResolverVersion::V5->setResolvers();
+
+// Reset Resolver Registry
+\Smpita\TypeAs\TypeAs::useDefaultResolvers();
 ```
 
 ---
