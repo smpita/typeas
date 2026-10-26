@@ -25,6 +25,6 @@ trait ForwardsBool
 
     public static function setBoolResolver(?BoolResolver $resolver): void
     {
-        static::getInstance()->setBoolResolver($resolver);
+        static::getInstance()->resolvers()->setBoolResolver($resolver);
     }
 }

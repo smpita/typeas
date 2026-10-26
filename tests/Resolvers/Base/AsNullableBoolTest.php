@@ -4,6 +4,9 @@ namespace Smpita\TypeAs\Tests\Resolvers\Base;
 
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
+use Smpita\TypeAs\Tests\Stubs\Enums\IntBackedEnumStub;
+use Smpita\TypeAs\Tests\Stubs\Enums\StringBackedEnumStub;
+use Smpita\TypeAs\Tests\Stubs\Objects\BoolableStub;
 use Smpita\TypeAs\Tests\TestCase;
 use Smpita\TypeAs\TypeAs;
 
@@ -88,10 +91,37 @@ class AsNullableBoolTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
+    public function test_can_boolify_boolable_objects(): void
+    {
+        $this->assertTrue(TypeAs::nullableBool(new BoolableStub(true)));
+        $this->assertFalse(TypeAs::nullableBool(new BoolableStub(false)));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
     public function test_can_pass_static_analysis(): void
     {
         $test = fn (?bool $value) => $value;
 
         $this->assertIsBool($test(TypeAs::nullableBool($this->faker->randomFloat())));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_nullable_bool_backed_enum_int(): void
+    {
+        $this->assertFalse(TypeAs::nullableBool(IntBackedEnumStub::Zero));
+        $this->assertTrue(TypeAs::nullableBool(IntBackedEnumStub::One));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_nullable_bool_backed_enum_string(): void
+    {
+        $this->assertFalse(TypeAs::nullableBool(StringBackedEnumStub::Zero));
+        $this->assertTrue(TypeAs::nullableBool(StringBackedEnumStub::One));
     }
 }

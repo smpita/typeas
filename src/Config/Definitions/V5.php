@@ -9,7 +9,7 @@ use Smpita\TypeAs\Resolvers\Base\AsClass;
 use Smpita\TypeAs\Resolvers\Base\AsFloat;
 use Smpita\TypeAs\Resolvers\Base\AsInt;
 use Smpita\TypeAs\Resolvers\Base\AsString;
-use Smpita\TypeAs\Resolvers\Extensions\AsFilterBool;
+use Smpita\TypeAs\Resolvers\Base\AsFilterBool;
 
 class V5
 {
@@ -21,10 +21,10 @@ class V5
             arrayResolverClass: AsArray::class,
             boolResolverClass: AsBool::class,
             classResolverClass: AsClass::class,
+            filterBoolResolverClass: AsFilterBool::class,
             floatResolverClass: AsFloat::class,
             intResolverClass: AsInt::class,
             stringResolverClass: AsString::class,
-            filterBoolResolverClass: AsFilterBool::class,
         );
     }
 }

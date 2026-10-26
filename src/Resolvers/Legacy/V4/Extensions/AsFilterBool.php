@@ -2,9 +2,9 @@
 
 namespace Smpita\TypeAs\Resolvers\Legacy\V4\Extensions;
 
-use Smpita\TypeAs\Contracts\BoolResolver;
+use Smpita\TypeAs\Contracts\FilterBoolResolver;
 
-class AsFilterBool implements BoolResolver
+class AsFilterBool implements FilterBoolResolver
 {
     public function resolve(mixed $value, ?bool $default = null): ?bool
     {

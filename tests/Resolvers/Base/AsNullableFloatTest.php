@@ -4,6 +4,8 @@ namespace Smpita\TypeAs\Tests\Resolvers\Base;
 
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
+use Smpita\TypeAs\Tests\Stubs\Enums\IntBackedEnumStub;
+use Smpita\TypeAs\Tests\Stubs\Enums\StringBackedEnumStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\FloatableStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\MagicFloatableStub;
 use Smpita\TypeAs\Tests\TestCase;
@@ -105,5 +107,22 @@ class AsNullableFloatTest extends TestCase
         $test = fn (?float $value) => $value;
 
         $this->assertIsFloat($test(TypeAs::nullableFloat($this->faker->randomNumber())));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_floatify_backed_enums(): void
+    {
+        $this->assertSame(1.0, TypeAs::nullableFloat(IntBackedEnumStub::One));
+        $this->assertSame(2.0, TypeAs::nullableFloat(IntBackedEnumStub::Two));
+        $this->assertSame(0.0, TypeAs::nullableFloat(IntBackedEnumStub::Zero));
+
+        $this->assertSame(1.0, TypeAs::nullableFloat(StringBackedEnumStub::One));
+        $this->assertSame(2.0, TypeAs::nullableFloat(StringBackedEnumStub::Two));
+        $this->assertSame(1.5, TypeAs::nullableFloat(StringBackedEnumStub::OnePointFive));
+        $this->assertSame(0.0, TypeAs::nullableFloat(StringBackedEnumStub::Zero));
+
+        $this->assertNull(TypeAs::nullableFloat(new \StdClass()));
     }
 }

@@ -5,6 +5,7 @@ namespace Smpita\TypeAs\Concerns\Fluent;
 use Smpita\TypeAs\Contracts\ArrayResolver;
 use Smpita\TypeAs\Contracts\BoolResolver;
 use Smpita\TypeAs\Contracts\ClassResolver;
+use Smpita\TypeAs\Contracts\FilterBoolResolver;
 use Smpita\TypeAs\Contracts\FloatResolver;
 use Smpita\TypeAs\Contracts\IntResolver;
 use Smpita\TypeAs\Contracts\StringResolver;
@@ -45,25 +46,28 @@ trait HandlesFluentCalls
         ArrayResolver
         |BoolResolver
         |ClassResolver
+        |FilterBoolResolver
         |FloatResolver
         |IntResolver
         |StringResolver
         |null $resolver
     ): self {
         match(true) {
-            is_null($resolver) => $this->config()->resetResolvers(),
+            is_null($resolver) => $this->config()->useDefaultResolvers(),
             $resolver instanceof ArrayResolver
-                => $this->config()->arrayResolver = $resolver,
+                => $this->config()->resolvers()->setArrayResolver($resolver),
             $resolver instanceof BoolResolver
-                => $this->config()->boolResolver = $resolver,
+                => $this->config()->resolvers()->setBoolResolver($resolver),
             $resolver instanceof ClassResolver
-                => $this->config()->classResolver = $resolver,
+                => $this->config()->resolvers()->setClassResolver($resolver),
+            $resolver instanceof FilterBoolResolver
+                => $this->config()->resolvers()->setFilterBoolResolver($resolver),
             $resolver instanceof FloatResolver
-                => $this->config()->floatResolver = $resolver,
+                => $this->config()->resolvers()->setFloatResolver($resolver),
             $resolver instanceof IntResolver
-                => $this->config()->intResolver = $resolver,
+                => $this->config()->resolvers()->setIntResolver($resolver),
             $resolver instanceof StringResolver
-                => $this->config()->stringResolver = $resolver,
+                => $this->config()->resolvers()->setStringResolver($resolver),
         };
 
         return $this;

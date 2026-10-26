@@ -20,11 +20,11 @@ class V4
         return self::$config ??= new ResolverConfig(
             arrayResolverClass: AsArray::class,
             boolResolverClass: AsBool::class,
+            filterBoolResolverClass: AsFilterBool::class,
             classResolverClass: AsClass::class,
             floatResolverClass: AsFloat::class,
             intResolverClass: AsInt::class,
             stringResolverClass: AsString::class,
-            filterBoolResolverClass: AsFilterBool::class,
         );
     }
 }

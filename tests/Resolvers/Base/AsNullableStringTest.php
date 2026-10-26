@@ -4,6 +4,8 @@ namespace Smpita\TypeAs\Tests\Resolvers\Base;
 
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
+use Smpita\TypeAs\Tests\Stubs\Enums\IntBackedEnumStub;
+use Smpita\TypeAs\Tests\Stubs\Enums\StringBackedEnumStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\MagicStringableStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\StringableStub;
 use Smpita\TypeAs\Tests\TestCase;
@@ -108,5 +110,22 @@ class AsNullableStringTest extends TestCase
         $test = fn (?string $value) => $value;
 
         $this->assertIsString($test(TypeAs::nullableString($this->faker->randomNumber())));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_stringify_backed_enums(): void
+    {
+        $this->assertSame('1', TypeAs::nullableString(IntBackedEnumStub::One));
+        $this->assertSame('2', TypeAs::nullableString(IntBackedEnumStub::Two));
+        $this->assertSame('0', TypeAs::nullableString(IntBackedEnumStub::Zero));
+
+        $this->assertSame('1', TypeAs::nullableString(StringBackedEnumStub::One));
+        $this->assertSame('2', TypeAs::nullableString(StringBackedEnumStub::Two));
+        $this->assertSame('1.5', TypeAs::nullableString(StringBackedEnumStub::OnePointFive));
+        $this->assertSame('0', TypeAs::nullableString(StringBackedEnumStub::Zero));
+
+        $this->assertNull(TypeAs::nullableString(new \StdClass()));
     }
 }

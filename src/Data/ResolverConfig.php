@@ -5,6 +5,7 @@ namespace Smpita\TypeAs\Data;
 use Smpita\TypeAs\Contracts\ArrayResolver;
 use Smpita\TypeAs\Contracts\BoolResolver;
 use Smpita\TypeAs\Contracts\ClassResolver;
+use Smpita\TypeAs\Contracts\FilterBoolResolver;
 use Smpita\TypeAs\Contracts\FloatResolver;
 use Smpita\TypeAs\Contracts\IntResolver;
 use Smpita\TypeAs\Contracts\StringResolver;
@@ -18,14 +19,14 @@ final class ResolverConfig
         public string $boolResolverClass,
         /** @var class-string<ClassResolver> */
         public string $classResolverClass,
+        /** @var class-string<FilterBoolResolver> */
+        public string $filterBoolResolverClass,
         /** @var class-string<FloatResolver> */
         public string $floatResolverClass,
         /** @var class-string<IntResolver> */
         public string $intResolverClass,
         /** @var class-string<StringResolver> */
         public string $stringResolverClass,
-        /** @var class-string<BoolResolver> */
-        public string $filterBoolResolverClass,
     ) {
     }
 
@@ -59,7 +60,7 @@ final class ResolverConfig
         return new $this->stringResolverClass();
     }
 
-    public function filterBoolResolver(): BoolResolver
+    public function filterBoolResolver(): FilterBoolResolver
     {
         return new $this->filterBoolResolverClass();
     }

@@ -25,6 +25,6 @@ trait ForwardsArray
 
     public static function setArrayResolver(?ArrayResolver $resolver): void
     {
-        static::getInstance()->setArrayResolver($resolver);
+        static::getInstance()->resolvers()->setArrayResolver($resolver);
     }
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace Smpita\TypeAs\Resolvers\Extensions;
+namespace Smpita\TypeAs\Resolvers\Base;
 
 use BackedEnum;
 use Smpita\TypeAs\Concerns\Resolvers\Object\ResolvesMethods;
-use Smpita\TypeAs\Contracts\BoolResolver;
+use Smpita\TypeAs\Contracts\FilterBoolResolver;
 
-class AsFilterBool implements BoolResolver
+class AsFilterBool implements FilterBoolResolver
 {
     use ResolvesMethods;
 
