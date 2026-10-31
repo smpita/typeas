@@ -27,12 +27,12 @@ Easily type your `mixed` signatures. Perfect for static analysis!
   - [Custom Exceptions](#custom-exceptions)
   - [Official Extensions](#official-extensions)
   - [Custom Resolvers](#custom-resolvers)
+  - [Enum / Object Resolution](#enum-object-resolution)
   - [Helpers](#helpers)
 - [Upgrade Guide](docs/upgrading.md)
 - [Deprecations](#deprecations)
 - [Testing](#testing)
 - [Changelog](#changelog)
-- [Contributing](#contributing)
 - [Security Vulnerabilities](#security-vulnerabilities)
 - [Credits](#credits)
 - [License](#license)
@@ -232,7 +232,6 @@ use Smpita\TypeAs\Fluent\TypeConfig;
 $config = new TypeConfig(
     fromValue: $mixed,
     defaultTo: $default,
-    resolveUsing: $resolver,
     arrayWrap: null,
 );
 
@@ -242,7 +241,9 @@ $nonNullable = (new NonNullable())->import($config);
 $nullable = Nullable::make($config);
 $nullable = (new Nullable())->import($config);
 ```
+
 ---
+
 ### Custom Exceptions
 
 Use `onError()` to customize the throw message or exception.
@@ -271,6 +272,7 @@ onError('Expected iterable, received %s')
 onError(exception: CustomResolutionException::class)
 onError(null, CustomResolutionException::class)
 ```
+
 ---
 
 ## Extensions
@@ -281,7 +283,7 @@ Extensions are created by passing a custom resolver to a function.
 
 ```php
  /**
-  * @see \Smpita\TypeAs\Resolvers\Extensions\AsNullableFilterBool
+  * @see \Smpita\TypeAs\Resolvers\Base\AsFilterBool
   *
   * Uses FILTER_VALIDATE_BOOL
   * https://www.php.net/manual/en/filter.constants.php#constant.filter-validate-bool
@@ -308,6 +310,7 @@ All resolvers extend the same interfaces. Non-nullable methods throw when `null`
 
 - `Smpita\TypeAs\Contracts\ArrayResolver`
 - `Smpita\TypeAs\Contracts\BoolResolver`
+- `Smpita\TypeAs\Contracts\FilterBoolResolver`
 - `Smpita\TypeAs\Contracts\ClassResolver`
 - `Smpita\TypeAs\Contracts\FloatResolver`
 - `Smpita\TypeAs\Contracts\IntResolver`
@@ -323,7 +326,7 @@ class CustomStringResolver implements StringResolver
     /**
      * Return null when unresolvable for default error handling.
      */
-    public function resolve(mixed $value, string $default = null): ?string
+    public function resolve(mixed $value, ?string $default = null): ?string
     {
         /**
          * Your logic here
@@ -363,6 +366,7 @@ use Smpita\TypeAs\TypeAs;
 TypeAs::setArrayResolver(null);
 TypeAs::setBoolResolver(null);
 TypeAs::setClassResolver(null);
+TypeAs::setFilterBoolResolver(null);
 TypeAs::setFloatResolver(null);
 TypeAs::setIntResolver(null);
 TypeAs::setStringResolver(null);
@@ -382,6 +386,7 @@ use Smpita\TypeAs\TypeAs;
 $array = TypeAs::array($mixed, resolver: new CustomArrayResolver());
 $bool = TypeAs::bool($mixed, resolver: new CustomBoolResolver());
 $class = TypeAs::class(Expected::class, $mixed, resolver: new CustomClassResolver());
+$filterBool = TypeAs::filterBool($mixed, resolver: new CustomFilterBoolResolver());
 $float = TypeAs::float($mixed, resolver: new CustomFloatResolver());
 $int = TypeAs::int($mixed, resolver: new CustomIntResolver());
 $string = TypeAs::string($mixed, resolver: new CustomStringResolver());
@@ -390,6 +395,7 @@ $string = TypeAs::string($mixed, resolver: new CustomStringResolver());
 $nullableArray = TypeAs::nullableArray($mixed, resolver: new CustomArrayResolver());
 $nullableBool = TypeAs::nullableBool($mixed, resolver: new CustomBoolResolver());
 $nullableClass = TypeAs::nullableClass(Expected::class, $mixed, resolver: new CustomClassResolver());
+$nullableBool = TypeAs::nullableFilterBool($mixed, resolver: new CustomFilterBoolResolver());
 $nullableFloat = TypeAs::nullableFloat($mixed, resolver: new CustomFloatResolver());
 $nullableInt = TypeAs::nullableInt($mixed, resolver: new CustomIntResolver());
 $nullableString = TypeAs::nullableString($mixed, resolver: new CustomStringResolver());
@@ -409,6 +415,7 @@ use Smpita\TypeAs\TypeAs;
 $array = TypeAs::array($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsArray());
 $bool = TypeAs::bool($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsBool());
 $class = TypeAs::class(Expected::class, $mixed, resolver: \Smpita\TypeAs\Resolvers\AsClass());
+$bool = TypeAs::filterBool($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsFilterBool());
 $float = TypeAs::float($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsFloat());
 $int = TypeAs::int($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsInt());
 $string = TypeAs::string($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsString());
@@ -417,9 +424,50 @@ $string = TypeAs::string($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsString
 $nullableArray = TypeAs::nullableArray($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsArray());
 $nullableBool = TypeAs::nullableBool($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsBool());
 $nullableClass = TypeAs::nullableClass(Expected::class, $mixed, resolver: new \Smpita\TypeAs\Resolvers\AsClass());
+$nullableFilterBool = TypeAs::nullableBool($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsFilterBool());
 $nullableFloat = TypeAs::nullableFloat($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsFloat());
 $nullableInt = TypeAs::nullableInt($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsInt());
 $nullableString = TypeAs::nullableString($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsString());
+```
+
+---
+
+## Enum / Object Resolution
+
+[SIGNATURES#resolving](docs/signatures.md#resolving)
+
+Backed enums resolve through their backing value then cast to the target type.
+
+Objects may hook resolution by implementing magic `__to{Type}()` or regular `to{Type}()` methods.
+
+| Resolver | Methods Tried |
+|---|---|
+| AsArray | `__toArray`, `toArray` |
+| AsBool | `__toBool`, `toBool` |
+| AsFilterBool | `__toBool`, `toBool` |
+| AsClass | n/a |
+| AsFloat | `__toFloat`, `toFloat` |
+| AsInt | `__toInteger`, `__toInt`, `toInteger`, `toInt` |
+| AsString | `__toString`, `toString` |
+
+### Switching Resolver Versions
+
+See [Resolver Versions](docs/signatures.md#resolver-versions) for all methods:
+
+```php
+use Smpita\TypeAs\Config\ResolverVersion;
+
+// Get Default Resolver Version
+ResolverVersion::default(); // ResolverVersion::V5
+
+// Register V4 resolvers
+ResolverVersion::V4->setResolvers();
+
+// Register V5 resolvers
+ResolverVersion::V5->setResolvers();
+
+// Reset Resolver Registry
+\Smpita\TypeAs\TypeAs::useDefaultResolvers();
 ```
 
 ---
@@ -432,7 +480,7 @@ Helpers follow standard signature patterns.
 
 ```php
 asClass(class: $expected, value: $mixed, default: $default, resolver: $resolver);
-type($mixed)->default($default)->asClass($expected);
+type($mixed)->default($default)->asClass($class);
 ```
 
 ### Global
@@ -499,18 +547,14 @@ composer test
 
 Please see [RELEASES](https://github.com/smpita/typeas/releases) for more information on what has changed recently.
 
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
 ## Security Vulnerabilities
 
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+Please review [our security policy](https://github.com/smpita/typeas/security/advisories/new) on how to report security vulnerabilities.
 
 ## Credits
 
 -   [Sean Pearce](https://github.com/smpita)
--   [All Contributors](../../contributors)
+-   [All Contributors](https://github.com/smpita/typeas/graphs/contributors)
 
 ## License
 

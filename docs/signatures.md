@@ -2,6 +2,47 @@
 
 ### Resolving
 
+#### Conventions
+
+- Non-nullable methods throw `\Smpita\TypeAs\Exceptions\TypeAsResolutionException` when the value cannot be resolved.
+- Nullable methods never throw; they return `null` instead.
+- Providing a `default` suppresses throwing: the default is returned when the value cannot be resolved.
+- Resolvers signal failure by returning `null`. Non-nullable methods convert that into a throw; nullable methods and defaults pass it through.
+- A resolver registered with `setXResolver()` serves both `x()` and `nullableX()` calls.
+- Backed enums resolve through their backing value (`$enum->value`), cast to the target type, during resolution.
+- Objects may hook resolution by implementing `__toArray`/`toArray`, `__toFloat`/`toFloat`, `__toInteger`/`__toInt`/`toInteger`/`toInt`, `__toString`/`toString`, or `__toBool`/`toBool`. Method calls are gated by `is_callable()`.
+- Use `onError(message, exception)` to customize the thrown message or swap in an exception that extends `TypeAsResolutionException`.
+
+#### Resolver Versions
+
+```php
+use Smpita\TypeAs\Config\ResolverVersion;
+
+// Returns ResolverVersion::V5
+ResolverVersion::default();
+
+// Switch resolver set
+ResolverVersion::V4->setResolvers();
+ResolverVersion::V5->setResolvers();
+
+// Individual resolver switching
+ResolverVersion::V4->setBoolResolver();
+ResolverVersion::V5->setFilterBoolResolver();
+```
+
+#### ResolverVersion Enum helpers
+```
+config(): \Smpita\TypeAs\Data\ResolverConfig
+setResolvers(): void
+setArrayResolver(): void
+setBoolResolver(): void
+setClassResolver(): void
+setFloatResolver(): void
+setIntResolver(): void
+setStringResolver(): void
+setFilterBoolResolver(): void
+```
+
 #### Array
 
 ```php
@@ -18,9 +59,9 @@ Smpita\TypeAs::bool(mixed $value, ?bool $default = null, ?BoolResolver $resolver
 Smpita\TypeAs::nullableBool(mixed $value, ?bool $default = null, ?BoolResolver $resolver = null): ?bool
 
 // Extension using FILTER_VALIDATE_BOOL resolver
-Smpita\TypeAs::filterBool(mixed $value, ?bool $default = null): bool
+Smpita\TypeAs::filterBool(mixed $value, ?bool $default = null, ?FilterBoolResolver $resolver = null): bool
 
-Smpita\TypeAs::nullableFilterBool(mixed $value, ?bool $default = null): ?bool
+Smpita\TypeAs::nullableFilterBool(mixed $value, ?bool $default = null, ?FilterBoolResolver $resolver = null): ?bool
 ```
 
 #### Class
@@ -99,6 +140,12 @@ Smpita\TypeAs::setFloatResolver(?\Smpita\TypeAs\Contracts\FloatResolver $resolve
 Smpita\TypeAs::setIntResolver(?\Smpita\TypeAs\Contracts\IntResolver $resolver): void
 ```
 
+#### FilterBool
+
+```php
+Smpita\TypeAs::setFilterBoolResolver(?\Smpita\TypeAs\Contracts\FilterBoolResolver $resolver): void
+```
+
 #### String
 
 ```php
@@ -174,9 +221,9 @@ asString(): ?string
 
 \Smpita\TypeAs\asNullableBool(mixed $value, ?bool $default = null, ?BoolResolver $resolver = null): ?bool
 
-\Smpita\TypeAs\asFilterBool(mixed $value, ?bool $default = null): bool
+\Smpita\TypeAs\asFilterBool(mixed $value, ?bool $default = null, ?FilterBoolResolver $resolver = null): bool
 
-\Smpita\TypeAs\asNullableFilterBool(mixed $value, ?bool $default = null): ?bool
+\Smpita\TypeAs\asNullableFilterBool(mixed $value, ?bool $default = null, ?FilterBoolResolver $resolver = null): ?bool
 ```
 
 #### Class
@@ -229,7 +276,7 @@ Smpita\TypeAs::nullableArray(mixed $value, ?array $default = null, ?ArrayResolve
 
 Smpita\TypeAs::nullableBool(mixed $value, ?bool $default = null, ?BoolResolver $resolver = null): ?bool
 
-Smpita\TypeAs::nullableClass(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null)//: ?object
+Smpita\TypeAs::nullableClass(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null): ?object
 
 Smpita\TypeAs::nullableFloat(mixed $value, ?float $default = null, ?FloatResolver $resolver = null): ?float
 
