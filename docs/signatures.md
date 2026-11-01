@@ -37,10 +37,10 @@ setResolvers(): void
 setArrayResolver(): void
 setBoolResolver(): void
 setClassResolver(): void
+setFilterBoolResolver(): void
 setFloatResolver(): void
 setIntResolver(): void
 setStringResolver(): void
-setFilterBoolResolver(): void
 ```
 
 #### Array
