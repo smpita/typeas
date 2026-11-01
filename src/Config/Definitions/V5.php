@@ -2,6 +2,7 @@
 
 namespace Smpita\TypeAs\Config\Definitions;
 
+use Smpita\TypeAs\Contracts\ResolverConfigDefinition;
 use Smpita\TypeAs\Data\ResolverConfig;
 use Smpita\TypeAs\Resolvers\Base\AsArray;
 use Smpita\TypeAs\Resolvers\Base\AsBool;
@@ -11,7 +12,7 @@ use Smpita\TypeAs\Resolvers\Base\AsInt;
 use Smpita\TypeAs\Resolvers\Base\AsString;
 use Smpita\TypeAs\Resolvers\Base\AsFilterBool;
 
-class V5
+class V5 implements ResolverConfigDefinition
 {
     private static ResolverConfig $config;
 

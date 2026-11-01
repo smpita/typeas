@@ -4,6 +4,7 @@ namespace Smpita\TypeAs\Config;
 
 use Smpita\TypeAs\Config\Definitions\V4;
 use Smpita\TypeAs\Config\Definitions\V5;
+use Smpita\TypeAs\Contracts\ResolverConfigDefinition;
 use Smpita\TypeAs\Data\ResolverConfig;
 use Smpita\TypeAs\TypeAs;
 
@@ -17,9 +18,17 @@ enum ResolverVersion: string
         return self::V5;
     }
 
+    /**
+     * @return class-string<ResolverConfigDefinition>
+     */
+    public function definition(): string
+    {
+        return $this->value;
+    }
+
     public function config(): ResolverConfig
     {
-        return ($this->value)::config();
+        return $this->definition()::config();
     }
 
     public function setResolvers(): void
@@ -27,10 +36,10 @@ enum ResolverVersion: string
         $this->setArrayResolver();
         $this->setBoolResolver();
         $this->setClassResolver();
+        $this->setFilterBoolResolver();
         $this->setFloatResolver();
         $this->setIntResolver();
         $this->setStringResolver();
-        $this->setFilterBoolResolver();
     }
 
     public function setArrayResolver(): void
@@ -54,6 +63,13 @@ enum ResolverVersion: string
         TypeAs::setClassResolver($resolver);
     }
 
+    public function setFilterBoolResolver(): void
+    {
+        $resolver = $this->config()->filterBoolResolver();
+
+        TypeAs::setFilterBoolResolver($resolver);
+    }
+
     public function setFloatResolver(): void
     {
         $resolver = $this->config()->floatResolver();
@@ -73,12 +89,5 @@ enum ResolverVersion: string
         $resolver = $this->config()->stringResolver();
 
         TypeAs::setStringResolver($resolver);
-    }
-
-    public function setFilterBoolResolver(): void
-    {
-        $resolver = $this->config()->filterBoolResolver();
-
-        TypeAs::setFilterBoolResolver($resolver);
     }
 }
