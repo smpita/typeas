@@ -4,6 +4,8 @@ namespace Smpita\TypeAs\Tests\Resolvers\Base;
 
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
+use Smpita\TypeAs\Tests\Stubs\Enums\IntBackedEnumStub;
+use Smpita\TypeAs\Tests\Stubs\Enums\StringBackedEnumStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\ArrayableStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\MagicArrayableStub;
 use Smpita\TypeAs\Tests\TestCase;
@@ -130,6 +132,23 @@ class AsNullableArrayTest extends TestCase
         $array = [$this->faker->sentence()];
 
         $this->assertSame($array, TypeAs::nullableArray($array));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_arrayify_backed_enums(): void
+    {
+        $this->assertSame([IntBackedEnumStub::One], TypeAs::nullableArray(IntBackedEnumStub::One));
+        $this->assertSame([StringBackedEnumStub::One], TypeAs::nullableArray(StringBackedEnumStub::One));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_nullable_array_backed_enum_wrap_false_returns_null(): void
+    {
+        $this->assertNull(TypeAs::nullableArray(IntBackedEnumStub::One, wrap: false));
     }
 
     #[Test]

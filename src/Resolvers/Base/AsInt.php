@@ -3,14 +3,18 @@
 namespace Smpita\TypeAs\Resolvers\Base;
 
 use BackedEnum;
+use Smpita\TypeAs\Concerns\Resolvers\Object\ResolvesMethods;
 use Smpita\TypeAs\Contracts\IntResolver;
 
 class AsInt implements IntResolver
 {
+    use ResolvesMethods;
+
     public function resolve(mixed $value, ?int $default = null): ?int
     {
         return match (gettype($value)) {
             'integer' => $value,
+            'NULL' => $default,
             'boolean', 'string', 'double', 'resource' => intval($value),
             'object' => $this->fromObject($value),
             default => null,
@@ -19,17 +23,14 @@ class AsInt implements IntResolver
 
     protected function fromObject(object $value): ?int
     {
-        $muted = match (true) {
-            $value instanceof BackedEnum => intval($value->value),
-            is_callable([$value, '__toInteger']) => $value->__toInteger(),
-            is_callable([$value, '__toInt']) => $value->__toInt(),
-            is_callable([$value, 'toInteger']) => $value->toInteger(),
-            is_callable([$value, 'toInt']) => $value->toInt(),
-            default => null,
-        };
+        if ($value instanceof BackedEnum) {
+            return intval($value->value);
+        }
 
-        return is_int($muted)
-            ? $muted
+        $resolved = $this->resolveMethods($value, ['__toInteger', '__toInt', 'toInteger', 'toInt']);
+
+        return is_int($resolved)
+            ? $resolved
             : null;
     }
 }

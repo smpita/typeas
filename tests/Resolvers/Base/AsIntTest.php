@@ -87,6 +87,15 @@ class AsIntTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
+    public function test_can_integerify_backed_enum_float_value(): void
+    {
+        // String '1.5' -> intval -> 1 (decimal truncated)
+        $this->assertSame(1, TypeAs::int(StringBackedEnumStub::OnePointFive));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
     public function test_can_integerify_magic_integerable_objects(): void
     {
         $value = $this->faker->randomNumber();

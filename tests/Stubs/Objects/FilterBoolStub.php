@@ -4,18 +4,12 @@ namespace Smpita\TypeAs\Tests\Stubs\Objects;
 
 class FilterBoolStub
 {
-    public function __invoke(): bool
+    public function __construct(public bool $value)
     {
-        return true;
-    }
-
-    public function __toBool(): bool
-    {
-        return true;
     }
 
     public function toBool(): bool
     {
-        return true;
+        return $this->value;
     }
 }

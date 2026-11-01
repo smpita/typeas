@@ -3,14 +3,18 @@
 namespace Smpita\TypeAs\Resolvers\Base;
 
 use BackedEnum;
+use Smpita\TypeAs\Concerns\Resolvers\Object\ResolvesMethods;
 use Smpita\TypeAs\Contracts\StringResolver;
 
 class AsString implements StringResolver
 {
+    use ResolvesMethods;
+
     public function resolve(mixed $value, ?string $default = null): ?string
     {
         return match (gettype($value)) {
             'string' => $value,
+            'NULL' => $default,
             'object' => $this->fromObject($value),
             'boolean', 'integer', 'double', 'resource' => strval($value),
             default => null,
@@ -19,15 +23,14 @@ class AsString implements StringResolver
 
     protected function fromObject(object $value): ?string
     {
-        $muted = match (true) {
-            $value instanceof BackedEnum => strval($value->value),
-            is_callable([$value, '__toString']) => $value->__toString(),
-            is_callable([$value, 'toString']) => $value->toString(),
-            default => null,
-        };
+        if ($value instanceof BackedEnum) {
+            return strval($value->value);
+        }
 
-        return is_string($muted)
-            ? $muted
+        $resolved = $this->resolveMethods($value, ['__toString', 'toString']);
+
+        return is_string($resolved)
+            ? $resolved
             : null;
     }
 }

@@ -25,6 +25,6 @@ trait ForwardsFloat
 
     public static function setFloatResolver(?FloatResolver $resolver): void
     {
-        static::getInstance()->setFloatResolver($resolver);
+        static::getInstance()->resolvers()->setFloatResolver($resolver);
     }
 }

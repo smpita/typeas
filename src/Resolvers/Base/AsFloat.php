@@ -2,14 +2,19 @@
 
 namespace Smpita\TypeAs\Resolvers\Base;
 
+use BackedEnum;
+use Smpita\TypeAs\Concerns\Resolvers\Object\ResolvesMethods;
 use Smpita\TypeAs\Contracts\FloatResolver;
 
 class AsFloat implements FloatResolver
 {
+    use ResolvesMethods;
+
     public function resolve(mixed $value, ?float $default = null): ?float
     {
         return match (gettype($value)) {
             'double' => $value,
+            'NULL' => $default,
             'object' => $this->fromObject($value),
             'boolean', 'string', 'integer', 'resource' => floatval($value),
             default => null,
@@ -18,14 +23,14 @@ class AsFloat implements FloatResolver
 
     protected function fromObject(object $value): ?float
     {
-        $muted = match (true) {
-            is_callable([$value, '__toFloat']) => $value->__toFloat(),
-            is_callable([$value, 'toFloat']) => $value->toFloat(),
-            default => null,
-        };
+        if ($value instanceof BackedEnum) {
+            return floatval($value->value);
+        }
 
-        return is_float($muted)
-            ? $muted
+        $resolved = $this->resolveMethods($value, ['__toFloat', 'toFloat']);
+
+        return is_float($resolved)
+            ? $resolved
             : null;
     }
 }

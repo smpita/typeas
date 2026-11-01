@@ -5,11 +5,13 @@ namespace Smpita\TypeAs\Tests\Resolvers\Base;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
+use Smpita\TypeAs\Tests\Stubs\Enums\IntBackedEnumStub;
+use Smpita\TypeAs\Tests\Stubs\Enums\StringBackedEnumStub;
 use Smpita\TypeAs\Tests\TestCase;
-use Smpita\TypeAs\TypeAs;
 use Smpita\TypeAs\Tests\Stubs\Objects\ArrayableStub;
 use Smpita\TypeAs\Tests\Stubs\Exceptions\CustomExceptionStub;
 use Smpita\TypeAs\Tests\Stubs\Objects\MagicArrayableStub;
+use Smpita\TypeAs\TypeAs;
 
 class AsArrayTest extends TestCase
 {
@@ -94,6 +96,58 @@ class AsArrayTest extends TestCase
     {
         $string = $this->faker->sentence();
         $this->assertSame([$string], TypeAs::array($string));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_arrayify_int_backed_enums(): void
+    {
+        // BackedEnum without array conversion -> wrapped as [enum]
+        $this->assertSame([IntBackedEnumStub::One], TypeAs::array(IntBackedEnumStub::One));
+        $this->assertSame([IntBackedEnumStub::Zero], TypeAs::array(IntBackedEnumStub::Zero));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_arrayify_string_backed_enums(): void
+    {
+        // BackedEnum without array conversion -> wrapped as [enum]
+        $this->assertSame([StringBackedEnumStub::One], TypeAs::array(StringBackedEnumStub::One));
+        $this->assertSame([StringBackedEnumStub::Two], TypeAs::array(StringBackedEnumStub::Two));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_arrayify_enums_with_wrapping_disabled(): void
+    {
+        // BackedEnum without array conversion + wrap=false -> null for nullable, throw for non-nullable
+        $this->assertNull(TypeAs::nullableArray(IntBackedEnumStub::One, wrap: false));
+        $this->assertNull(TypeAs::nullableArray(StringBackedEnumStub::One, wrap: false));
+
+        $this->expectException(TypeAsResolutionException::class);
+        TypeAs::array(IntBackedEnumStub::One, wrap: false);
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_arrayify_wraps_arrayable_with_wrap_true(): void
+    {
+        $inner = [$this->faker->sentence()];
+        $this->assertSame($inner, TypeAs::array(new ArrayableStub($inner), wrap: true));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_arrayify_returns_arrayable_result_with_wrap_false(): void
+    {
+        $inner = [$this->faker->sentence()];
+        // Arrayable object's toArray is called even with wrap=false
+        $this->assertSame($inner, TypeAs::array(new ArrayableStub($inner), wrap: false));
     }
 
     #[Test]

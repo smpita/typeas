@@ -1,13 +1,14 @@
 <?php
 
 use Smpita\TypeAs\TypeAs;
-use Smpita\TypeAs\Fluent\NonNullable;
-use Smpita\TypeAs\Contracts\IntResolver;
-use Smpita\TypeAs\Contracts\BoolResolver;
 use Smpita\TypeAs\Contracts\ArrayResolver;
+use Smpita\TypeAs\Contracts\BoolResolver;
 use Smpita\TypeAs\Contracts\ClassResolver;
+use Smpita\TypeAs\Contracts\FilterBoolResolver;
 use Smpita\TypeAs\Contracts\FloatResolver;
+use Smpita\TypeAs\Contracts\IntResolver;
 use Smpita\TypeAs\Contracts\StringResolver;
+use Smpita\TypeAs\Fluent\NonNullable;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 
 if (!function_exists('type')) {
@@ -52,16 +53,16 @@ if (!function_exists('asNullableBool')) {
 }
 
 if (!function_exists('asFilterBool')) {
-    function asFilterBool(mixed $value, ?bool $default = null): bool
+    function asFilterBool(mixed $value, ?bool $default = null, ?FilterBoolResolver $resolver = null): bool
     {
-        return TypeAs::filterBool($value, $default);
+        return TypeAs::filterBool($value, $default, $resolver);
     }
 }
 
 if (!function_exists('asNullableFilterBool')) {
-    function asNullableFilterBool(mixed $value, ?bool $default = null): ?bool
+    function asNullableFilterBool(mixed $value, ?bool $default = null, ?FilterBoolResolver $resolver = null): ?bool
     {
-        return TypeAs::nullableFilterBool($value, $default);
+        return TypeAs::nullableFilterBool($value, $default, $resolver);
     }
 }
 

@@ -38,6 +38,6 @@ trait ForwardsClass
 
     public static function setClassResolver(?ClassResolver $resolver): void
     {
-        static::getInstance()->setClassResolver($resolver);
+        static::getInstance()->resolvers()->setClassResolver($resolver);
     }
 }
