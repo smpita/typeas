@@ -4,7 +4,6 @@ namespace Smpita\TypeAs\Tests\Resolvers\V4;
 
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
-use Smpita\TypeAs\Tests\Resolvers\V4\V4TestCase;
 use Smpita\TypeAs\TypeAs;
 
 class NullStringTest extends V4TestCase

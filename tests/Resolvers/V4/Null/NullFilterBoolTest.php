@@ -5,7 +5,6 @@ namespace Smpita\TypeAs\Tests\Resolvers\V4;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
-use Smpita\TypeAs\Tests\Resolvers\V4\V4TestCase;
 use Smpita\TypeAs\Tests\Testing\Stubs\Enums\StringBackedEnumStub;
 use Smpita\TypeAs\Tests\Testing\Stubs\Objects\EdgeCases\BadCastableArrayStub;
 use Smpita\TypeAs\Tests\Testing\Stubs\Objects\EdgeCases\BadCastableFloatStub;

@@ -5,7 +5,6 @@ namespace Smpita\TypeAs\Tests\Resolvers\V4;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
-use Smpita\TypeAs\Tests\Resolvers\V4\V4TestCase;
 use Smpita\TypeAs\TypeAs;
 
 class FilterBoolExceptionTest extends V4TestCase
