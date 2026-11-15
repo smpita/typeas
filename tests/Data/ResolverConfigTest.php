@@ -4,21 +4,15 @@ namespace Smpita\TypeAs\Tests\Data;
 
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
+use Smpita\TypeAs\Config\ResolverVersion;
 use Smpita\TypeAs\Contracts\ArrayResolver;
-use Smpita\TypeAs\Contracts\FilterBoolResolver;
 use Smpita\TypeAs\Contracts\BoolResolver;
 use Smpita\TypeAs\Contracts\ClassResolver;
+use Smpita\TypeAs\Contracts\FilterBoolResolver;
 use Smpita\TypeAs\Contracts\FloatResolver;
 use Smpita\TypeAs\Contracts\IntResolver;
 use Smpita\TypeAs\Contracts\StringResolver;
 use Smpita\TypeAs\Data\ResolverConfig;
-use Smpita\TypeAs\Resolvers\V5\AsArray;
-use Smpita\TypeAs\Resolvers\V5\AsBool;
-use Smpita\TypeAs\Resolvers\V5\AsClass;
-use Smpita\TypeAs\Resolvers\V5\AsFloat;
-use Smpita\TypeAs\Resolvers\V5\AsInt;
-use Smpita\TypeAs\Resolvers\V5\AsString;
-use Smpita\TypeAs\Resolvers\V5\AsFilterBool;
 use Smpita\TypeAs\Tests\TestCase;
 
 class ResolverConfigTest extends TestCase
@@ -26,25 +20,17 @@ class ResolverConfigTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_constructor_accepts_all_resolver_class_strings(): void
+    public function test_config_properties_have_correct_interfaces(): void
     {
-        $config = new ResolverConfig(
-            arrayResolverClass: AsArray::class,
-            boolResolverClass: AsBool::class,
-            classResolverClass: AsClass::class,
-            floatResolverClass: AsFloat::class,
-            intResolverClass: AsInt::class,
-            stringResolverClass: AsString::class,
-            filterBoolResolverClass: AsFilterBool::class,
-        );
+        $config = $this->config();
 
-        $this->assertSame(AsArray::class, $config->arrayResolverClass);
-        $this->assertSame(AsBool::class, $config->boolResolverClass);
-        $this->assertSame(AsClass::class, $config->classResolverClass);
-        $this->assertSame(AsFloat::class, $config->floatResolverClass);
-        $this->assertSame(AsInt::class, $config->intResolverClass);
-        $this->assertSame(AsString::class, $config->stringResolverClass);
-        $this->assertSame(AsFilterBool::class, $config->filterBoolResolverClass);
+        $this->assertClassStringImplements(ArrayResolver::class, $config->arrayResolverClass);
+        $this->assertClassStringImplements(BoolResolver::class, $config->boolResolverClass);
+        $this->assertClassStringImplements(ClassResolver::class, $config->classResolverClass);
+        $this->assertClassStringImplements(FilterBoolResolver::class, $config->filterBoolResolverClass);
+        $this->assertClassStringImplements(FloatResolver::class, $config->floatResolverClass);
+        $this->assertClassStringImplements(IntResolver::class, $config->intResolverClass);
+        $this->assertClassStringImplements(StringResolver::class, $config->stringResolverClass);
     }
 
     #[Test]
@@ -52,20 +38,9 @@ class ResolverConfigTest extends TestCase
     #[Group('typeas')]
     public function test_arrayResolver_returns_new_array_resolver_instance(): void
     {
-        $config = new ResolverConfig(
-            arrayResolverClass: AsArray::class,
-            boolResolverClass: AsBool::class,
-            classResolverClass: AsClass::class,
-            floatResolverClass: AsFloat::class,
-            intResolverClass: AsInt::class,
-            stringResolverClass: AsString::class,
-            filterBoolResolverClass: AsFilterBool::class,
-        );
-
-        $resolver = $config->arrayResolver();
+        $resolver = $this->config()->arrayResolver();
 
         $this->assertInstanceOf(ArrayResolver::class, $resolver);
-        $this->assertInstanceOf(AsArray::class, $resolver);
     }
 
     #[Test]
@@ -73,20 +48,9 @@ class ResolverConfigTest extends TestCase
     #[Group('typeas')]
     public function test_boolResolver_returns_new_bool_resolver_instance(): void
     {
-        $config = new ResolverConfig(
-            arrayResolverClass: AsArray::class,
-            boolResolverClass: AsBool::class,
-            classResolverClass: AsClass::class,
-            floatResolverClass: AsFloat::class,
-            intResolverClass: AsInt::class,
-            stringResolverClass: AsString::class,
-            filterBoolResolverClass: AsFilterBool::class,
-        );
-
-        $resolver = $config->boolResolver();
+        $resolver = $this->config()->boolResolver();
 
         $this->assertInstanceOf(BoolResolver::class, $resolver);
-        $this->assertInstanceOf(AsBool::class, $resolver);
     }
 
     #[Test]
@@ -94,83 +58,9 @@ class ResolverConfigTest extends TestCase
     #[Group('typeas')]
     public function test_classResolver_returns_new_class_resolver_instance(): void
     {
-        $config = new ResolverConfig(
-            arrayResolverClass: AsArray::class,
-            boolResolverClass: AsBool::class,
-            classResolverClass: AsClass::class,
-            floatResolverClass: AsFloat::class,
-            intResolverClass: AsInt::class,
-            stringResolverClass: AsString::class,
-            filterBoolResolverClass: AsFilterBool::class,
-        );
-
-        $resolver = $config->classResolver();
+        $resolver = $this->config()->classResolver();
 
         $this->assertInstanceOf(ClassResolver::class, $resolver);
-        $this->assertInstanceOf(AsClass::class, $resolver);
-    }
-
-    #[Test]
-    #[Group('smpita')]
-    #[Group('typeas')]
-    public function test_floatResolver_returns_new_float_resolver_instance(): void
-    {
-        $config = new ResolverConfig(
-            arrayResolverClass: AsArray::class,
-            boolResolverClass: AsBool::class,
-            classResolverClass: AsClass::class,
-            floatResolverClass: AsFloat::class,
-            intResolverClass: AsInt::class,
-            stringResolverClass: AsString::class,
-            filterBoolResolverClass: AsFilterBool::class,
-        );
-
-        $resolver = $config->floatResolver();
-
-        $this->assertInstanceOf(FloatResolver::class, $resolver);
-        $this->assertInstanceOf(AsFloat::class, $resolver);
-    }
-
-    #[Test]
-    #[Group('smpita')]
-    #[Group('typeas')]
-    public function test_intResolver_returns_new_int_resolver_instance(): void
-    {
-        $config = new ResolverConfig(
-            arrayResolverClass: AsArray::class,
-            boolResolverClass: AsBool::class,
-            classResolverClass: AsClass::class,
-            floatResolverClass: AsFloat::class,
-            intResolverClass: AsInt::class,
-            stringResolverClass: AsString::class,
-            filterBoolResolverClass: AsFilterBool::class,
-        );
-
-        $resolver = $config->intResolver();
-
-        $this->assertInstanceOf(IntResolver::class, $resolver);
-        $this->assertInstanceOf(AsInt::class, $resolver);
-    }
-
-    #[Test]
-    #[Group('smpita')]
-    #[Group('typeas')]
-    public function test_stringResolver_returns_new_string_resolver_instance(): void
-    {
-        $config = new ResolverConfig(
-            arrayResolverClass: AsArray::class,
-            boolResolverClass: AsBool::class,
-            classResolverClass: AsClass::class,
-            floatResolverClass: AsFloat::class,
-            intResolverClass: AsInt::class,
-            stringResolverClass: AsString::class,
-            filterBoolResolverClass: AsFilterBool::class,
-        );
-
-        $resolver = $config->stringResolver();
-
-        $this->assertInstanceOf(StringResolver::class, $resolver);
-        $this->assertInstanceOf(AsString::class, $resolver);
     }
 
     #[Test]
@@ -178,20 +68,39 @@ class ResolverConfigTest extends TestCase
     #[Group('typeas')]
     public function test_filterBoolResolver_returns_new_bool_resolver_instance(): void
     {
-        $config = new ResolverConfig(
-            arrayResolverClass: AsArray::class,
-            boolResolverClass: AsBool::class,
-            classResolverClass: AsClass::class,
-            floatResolverClass: AsFloat::class,
-            intResolverClass: AsInt::class,
-            stringResolverClass: AsString::class,
-            filterBoolResolverClass: AsFilterBool::class,
-        );
-
-        $resolver = $config->filterBoolResolver();
+        $resolver = $this->config()->filterBoolResolver();
 
         $this->assertInstanceOf(FilterBoolResolver::class, $resolver);
-        $this->assertInstanceOf(AsFilterBool::class, $resolver);
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_floatResolver_returns_new_float_resolver_instance(): void
+    {
+        $resolver = $this->config()->floatResolver();
+
+        $this->assertInstanceOf(FloatResolver::class, $resolver);
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_intResolver_returns_new_int_resolver_instance(): void
+    {
+        $resolver = $this->config()->intResolver();
+
+        $this->assertInstanceOf(IntResolver::class, $resolver);
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_stringResolver_returns_new_string_resolver_instance(): void
+    {
+        $resolver = $this->config()->stringResolver();
+
+        $this->assertInstanceOf(StringResolver::class, $resolver);
     }
 
     #[Test]
@@ -199,15 +108,7 @@ class ResolverConfigTest extends TestCase
     #[Group('typeas')]
     public function test_same_factory_returns_distinct_instances(): void
     {
-        $config = new ResolverConfig(
-            arrayResolverClass: AsArray::class,
-            boolResolverClass: AsBool::class,
-            classResolverClass: AsClass::class,
-            floatResolverClass: AsFloat::class,
-            intResolverClass: AsInt::class,
-            stringResolverClass: AsString::class,
-            filterBoolResolverClass: AsFilterBool::class,
-        );
+        $config = $this->config();
 
         $this->assertNotSame(
             $config->arrayResolver(),
@@ -245,27 +146,28 @@ class ResolverConfigTest extends TestCase
         );
     }
 
-    #[Test]
-    #[Group('smpita')]
-    #[Group('typeas')]
-    public function test_property_accessors_return_original_class_strings(): void
+    private function config(): ResolverConfig
     {
-        $config = new ResolverConfig(
-            arrayResolverClass: AsArray::class,
-            boolResolverClass: AsBool::class,
-            classResolverClass: AsClass::class,
-            floatResolverClass: AsFloat::class,
-            intResolverClass: AsInt::class,
-            stringResolverClass: AsString::class,
-            filterBoolResolverClass: AsFilterBool::class,
+        return ResolverVersion::default()->config();
+    }
+
+    /**
+     * @template T of object
+     * @param class-string<T> $expected
+     * @phpstan-assert class-string<T> $actual
+     */
+    protected function assertClassStringImplements(string $expected, mixed $actual, string $message = ''): void
+    {
+        $this->assertIsString($actual, $message);
+
+        $this->assertTrue(
+            class_exists($actual),
+            $message ?: "Failed asserting that '$actual' is an existing class."
         );
 
-        $this->assertSame(AsArray::class, $config->arrayResolverClass);
-        $this->assertSame(AsBool::class, $config->boolResolverClass);
-        $this->assertSame(AsClass::class, $config->classResolverClass);
-        $this->assertSame(AsFloat::class, $config->floatResolverClass);
-        $this->assertSame(AsInt::class, $config->intResolverClass);
-        $this->assertSame(AsString::class, $config->stringResolverClass);
-        $this->assertSame(AsFilterBool::class, $config->filterBoolResolverClass);
+        $this->assertTrue(
+            is_a($actual, $expected, true),
+            $message ?: "Failed asserting that '$actual' implements '$expected'."
+        );
     }
 }

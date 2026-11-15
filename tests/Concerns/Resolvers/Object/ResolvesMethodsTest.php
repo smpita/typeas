@@ -4,12 +4,8 @@ namespace Smpita\TypeAs\Tests\Concerns\Resolvers\Object;
 
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
-use Smpita\TypeAs\Tests\Testing\Stubs\Objects\EdgeCases\NotCallableStub;
-use Smpita\TypeAs\Tests\Testing\Stubs\Objects\MethodObjectStub;
-use Smpita\TypeAs\Tests\Testing\Stubs\Objects\MethodObjectStubWithNonCallableFirst;
-use Smpita\TypeAs\Tests\Testing\Stubs\Objects\NullReturning;
-use Smpita\TypeAs\Tests\Testing\Stubs\Objects\OnlySecond;
 use Smpita\TypeAs\Tests\Testing\Stubs\Objects\ResolvesMethodsStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Objects\MultiStub;
 use Smpita\TypeAs\Tests\TestCase;
 
 class ResolvesMethodsTest extends TestCase
@@ -19,10 +15,11 @@ class ResolvesMethodsTest extends TestCase
     #[Group('typeas')]
     public function test_resolveMethod_returns_value_for_callable_public_method(): void
     {
+        $value = $this->faker->sentence();
         $stub = new ResolvesMethodsStub();
-        $object = new MethodObjectStub(['hello' => 'world']);
+        $object = new MultiStub($value);
 
-        $this->assertSame('world', $stub->resolveMethod($object, 'hello'));
+        $this->assertSame($value, $stub->resolveMethod($object, 'toString'));
     }
 
     #[Test]
@@ -31,7 +28,7 @@ class ResolvesMethodsTest extends TestCase
     public function test_resolveMethod_returns_null_when_method_does_not_exist(): void
     {
         $stub = new ResolvesMethodsStub();
-        $object = new MethodObjectStub();
+        $object = new MultiStub();
 
         $this->assertNull($stub->resolveMethod($object, 'nonExistent'));
     }
@@ -42,11 +39,10 @@ class ResolvesMethodsTest extends TestCase
     public function test_resolveMethod_returns_null_when_method_exists_but_is_not_callable(): void
     {
         $stub = new ResolvesMethodsStub();
+        $object = new MultiStub();
 
-        $this->assertNull($stub->resolveMethod(new NotCallableStub(), '__toArray'));
-        $this->assertNull($stub->resolveMethod(new NotCallableStub(), 'toArray'));
-        $this->assertNull($stub->resolveMethod(new NotCallableStub(), '__toBool'));
-        $this->assertNull($stub->resolveMethod(new NotCallableStub(), 'toBool'));
+        $this->assertNull($stub->resolveMethod($object, 'protected'));
+        $this->assertNull($stub->resolveMethod($object, 'private'));
     }
 
     #[Test]
@@ -54,32 +50,52 @@ class ResolvesMethodsTest extends TestCase
     #[Group('typeas')]
     public function test_resolveMethods_returns_first_callable_result(): void
     {
-        $object = new MethodObjectStub(['first' => 'first', 'second' => 'second']);
+        $value = $this->faker->randomNumber();
         $stub = new ResolvesMethodsStub();
+        $object = new MultiStub($value);
 
-        $this->assertSame('first', $stub->resolveMethods($object, ['first', 'second']));
+        $toIntFirst = $stub->resolveMethods($object, ['toInt', 'toString']);
+        $toStringFirst = $stub->resolveMethods($object, ['toString', 'toInt']);
+
+        $this->assertIsInt($toIntFirst);
+        $this->assertIsNotString($toIntFirst);
+        $this->assertSame((int) $value, $toIntFirst);
+
+        $this->assertIsString($toStringFirst);
+        $this->assertIsNotInt($toStringFirst);
+        $this->assertSame((string) $value, $toStringFirst);
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_resolveMethods_skips_non_callable_and_returns_second(): void
+    public function test_resolveMethods_skips_non_callable_and_returns_callable(): void
     {
-        $object = new MethodObjectStubWithNonCallableFirst();
+        $value = $this->faker->sentence();
         $stub = new ResolvesMethodsStub();
+        $object = new MultiStub($value);
 
-        $this->assertSame('second', $stub->resolveMethods($object, ['first', 'second']));
+        $resolved = $stub->resolveMethods($object, ['protected', 'private', 'toString']);
+
+        $this->assertSame($value, $resolved);
+        $this->assertNotSame(MultiStub::PROTECTED_VALUE, $resolved);
+        $this->assertNotSame(MultiStub::PRIVATE_VALUE, $resolved);
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_resolveMethods_skips_nonexistent_method_and_returns_second(): void
+    public function test_resolveMethods_skips_nonexistent_method_and_returns_callable(): void
     {
-        $object = new OnlySecond();
+        $value = $this->faker->sentence();
         $stub = new ResolvesMethodsStub();
+        $object = new MultiStub($value);
 
-        $this->assertSame('second', $stub->resolveMethods($object, ['first', 'second']));
+        $resolved = $stub->resolveMethods($object, ['nonExistent', 'toString']);
+
+        $this->assertSame($value, $resolved);
+        $this->assertNotSame(MultiStub::PROTECTED_VALUE, $resolved);
+        $this->assertNotSame(MultiStub::PRIVATE_VALUE, $resolved);
     }
 
     #[Test]
@@ -87,10 +103,16 @@ class ResolvesMethodsTest extends TestCase
     #[Group('typeas')]
     public function test_resolveMethods_returns_null_when_no_methods_are_callable(): void
     {
+        $value = $this->faker->sentence();
         $stub = new ResolvesMethodsStub();
-        $object = new NotCallableStub();
+        $object = new MultiStub($value);
 
-        $this->assertNull($stub->resolveMethods($object, ['toInt', 'toString']));
+        $resolved = $stub->resolveMethods($object, ['nonExistent', 'protected', 'private']);
+
+        $this->assertNull($resolved);
+        $this->assertNotSame($value, $resolved);
+        $this->assertNotSame(MultiStub::PROTECTED_VALUE, $resolved);
+        $this->assertNotSame(MultiStub::PRIVATE_VALUE, $resolved);
     }
 
     #[Test]
@@ -98,10 +120,14 @@ class ResolvesMethodsTest extends TestCase
     #[Group('typeas')]
     public function test_resolveMethods_returns_null_when_all_methods_return_null(): void
     {
-        $object = new NullReturning();
+        $value = $this->faker->sentence();
         $stub = new ResolvesMethodsStub();
+        $object = new MultiStub($value);
 
-        $this->assertNull($stub->resolveMethods($object, ['first', 'second']));
+        $resolved = $stub->resolveMethods($object, ['__toNull', 'toNull']);
+
+        $this->assertNull($resolved);
+        $this->assertNotSame($value, $resolved);
     }
 
     #[Test]
@@ -109,58 +135,28 @@ class ResolvesMethodsTest extends TestCase
     #[Group('typeas')]
     public function test_resolveMethod_returns_non_null_result_from_callable_method(): void
     {
+        $value = $this->faker->sentence();
         $stub = new ResolvesMethodsStub();
-        $object = new MethodObjectStub(['getValue' => 42]);
+        $object = new MultiStub($value);
 
-        $this->assertSame(42, $stub->resolveMethod($object, 'getValue'));
+        $resolved = $stub->resolveMethods($object, ['toString']);
+
+        $this->assertSame($value, $resolved);
+        $this->assertNotNull($resolved);
     }
 
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
-    public function test_resolveMethods_precedence_first_callble_wins(): void
+    public function test_resolveMethods_without_methods_names_returns_null(): void
     {
-        $object = new MethodObjectStub(['first' => 'first', 'second' => 'second', 'third' => 'third']);
+        $value = $this->faker->sentence();
         $stub = new ResolvesMethodsStub();
+        $object = new MultiStub($value);
 
-        $this->assertSame('third', $stub->resolveMethods($object, ['third', 'first', 'second']));
-    }
+        $resolved = $stub->resolveMethods($object, []);
 
-    #[Test]
-    #[Group('smpita')]
-    #[Group('typeas')]
-    public function test_resolveMethod_works_with_not_callable_stub(): void
-    {
-        $stub = new ResolvesMethodsStub();
-        $notCallable = new NotCallableStub();
-
-        $this->assertNull($stub->resolveMethod($notCallable, 'toInt'));
-        $this->assertNull($stub->resolveMethod($notCallable, '__toInt'));
-        $this->assertNull($stub->resolveMethod($notCallable, 'toInteger'));
-        $this->assertNull($stub->resolveMethod($notCallable, '__toFloat'));
-    }
-
-    #[Test]
-    #[Group('smpita')]
-    #[Group('typeas')]
-    public function test_resolveMethods_all_public_methods_exist_and_callable(): void
-    {
-        $object = new MethodObjectStub(['methodA' => 'a', 'methodB' => 'b', 'methodC' => 'c']);
-        $stub = new ResolvesMethodsStub();
-
-        $this->assertSame('a', $stub->resolveMethods($object, ['methodA', 'methodB', 'methodC']));
-        $this->assertSame('b', $stub->resolveMethods($object, ['notExists', 'methodB', 'methodC']));
-        $this->assertSame('c', $stub->resolveMethods($object, ['notExists', 'alsoNot', 'methodC']));
-    }
-
-    #[Test]
-    #[Group('smpita')]
-    #[Group('typeas')]
-    public function test_resolveMethods_with_empty_methods_array_returns_null(): void
-    {
-        $stub = new ResolvesMethodsStub();
-        $object = new MethodObjectStub();
-
-        $this->assertNull($stub->resolveMethods($object, []));
+        $this->assertNull($resolved);
+        $this->assertNotSame($value, $resolved);
     }
 }

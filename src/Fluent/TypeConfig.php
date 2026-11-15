@@ -22,6 +22,6 @@ final class TypeConfig
         public ?string $throwException = null,
         public ?string $throwMessage = null,
     ) {
-        $this->resolvers ??= $resolvers ??= TypeAs::getInstance()->resolvers();
+        $this->resolvers ??= $resolvers ?? TypeAs::getInstance()->resolvers();
     }
 }

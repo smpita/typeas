@@ -4,7 +4,10 @@ namespace Smpita\TypeAs\Tests\Testing\Stubs\Objects;
 
 class MultiStub
 {
-    public function __construct(public mixed $value)
+    public const string PROTECTED_VALUE = 'protected';
+    public const string PRIVATE_VALUE = 'private';
+
+    public function __construct(public mixed $value = null)
     {
     }
 
@@ -76,5 +79,15 @@ class MultiStub
     public function toNull(): mixed
     {
         return null;
+    }
+
+    protected function protected(): string
+    {
+        return self::PROTECTED_VALUE;
+    }
+
+    private function private(): string
+    {
+        return self::PRIVATE_VALUE;
     }
 }
