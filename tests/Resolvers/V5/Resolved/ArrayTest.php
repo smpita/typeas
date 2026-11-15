@@ -8,8 +8,8 @@ use Smpita\TypeAs\Tests\Resolvers\V5\V5TestCase;
 use Smpita\TypeAs\Tests\Testing\Stubs\Enums\IntBackedEnumStub;
 use Smpita\TypeAs\Tests\Testing\Stubs\Enums\StringBackedEnumStub;
 use Smpita\TypeAs\Tests\Testing\Stubs\Objects\ArrayableStub;
-use Smpita\TypeAs\Tests\Testing\Stubs\Objects\EdgeCases\NotCallableStub;
 use Smpita\TypeAs\Tests\Testing\Stubs\Objects\MagicArrayableStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Objects\EdgeCases\NotCallableStub;
 use Smpita\TypeAs\TypeAs;
 
 class ArrayTest extends V5TestCase

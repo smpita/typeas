@@ -2,10 +2,13 @@
 
 namespace Smpita\TypeAs\Resolvers\V4;
 
+use Smpita\TypeAs\Concerns\Resolvers\Object\ResolvesMethods;
 use Smpita\TypeAs\Contracts\IntResolver;
 
 class AsInt implements IntResolver
 {
+    use ResolvesMethods;
+
     public function resolve(mixed $value, ?int $default = null): ?int
     {
         return match (gettype($value)) {
@@ -18,14 +21,10 @@ class AsInt implements IntResolver
 
     protected function fromObject(object $value): ?int
     {
-        $muted = match (true) {
-            method_exists($value, '__toInteger') => $value->__toInteger(),
-            method_exists($value, 'toInteger') => $value->toInteger(),
-            default => null,
-        };
+        $resolved = $this->resolveMethods($value, ['__toInteger', 'toInteger']);
 
-        return is_int($muted)
-            ? $muted
+        return is_int($resolved)
+            ? $resolved
             : null;
     }
 }

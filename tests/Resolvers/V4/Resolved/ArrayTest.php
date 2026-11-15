@@ -9,6 +9,7 @@ use Smpita\TypeAs\Tests\Testing\Stubs\Enums\IntBackedEnumStub;
 use Smpita\TypeAs\Tests\Testing\Stubs\Enums\StringBackedEnumStub;
 use Smpita\TypeAs\Tests\Testing\Stubs\Objects\ArrayableStub;
 use Smpita\TypeAs\Tests\Testing\Stubs\Objects\MagicArrayableStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Objects\EdgeCases\NotCallableStub;
 use Smpita\TypeAs\TypeAs;
 
 class ArrayTest extends V4TestCase
@@ -154,6 +155,17 @@ class ArrayTest extends V4TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
+    public function test_arrayify_wraps_object_with_protected_magic_methods(): void
+    {
+        $value = new NotCallableStub();
+        $expected = [$value];
+
+        $this->runAsserts($expected, $value);
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
     public function test_arrayify_returns_arrayable_result_with_wrap_true(): void
     {
         $value = new ArrayableStub([$this->faker->sentence()]);
@@ -213,17 +225,4 @@ class ArrayTest extends V4TestCase
         $this->assertSame($expected, \Smpita\TypeAs\asNullableArray($value, ...$options), 'Nullable global helper assertion failed');
         $this->assertSame($expected, $this->builder($value, true, $options)->asArray(), 'Nullable fluent assertion failed');
     }
-
-    // Requires V5
-
-    // #[Test]
-    // #[Group('smpita')]
-    // #[Group('typeas')]
-    // public function test_arrayify_wraps_object_with_protected_magic_methods(): void
-    // {
-    //     $value = new NotCallableStub();
-    //     $expected = [$value];
-
-    //     $this->runAsserts($expected, $value);
-    // }
 }

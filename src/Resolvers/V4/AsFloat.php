@@ -2,10 +2,13 @@
 
 namespace Smpita\TypeAs\Resolvers\V4;
 
+use Smpita\TypeAs\Concerns\Resolvers\Object\ResolvesMethods;
 use Smpita\TypeAs\Contracts\FloatResolver;
 
 class AsFloat implements FloatResolver
 {
+    use ResolvesMethods;
+
     public function resolve(mixed $value, ?float $default = null): ?float
     {
         return match (gettype($value)) {
@@ -18,14 +21,10 @@ class AsFloat implements FloatResolver
 
     protected function fromObject(object $value): ?float
     {
-        $muted = match (true) {
-            method_exists($value, '__toFloat') => $value->__toFloat(),
-            method_exists($value, 'toFloat') => $value->toFloat(),
-            default => null,
-        };
+        $resolved = $this->resolveMethods($value, ['__toFloat', 'toFloat']);
 
-        return is_float($muted)
-            ? $muted
+        return is_float($resolved)
+            ? $resolved
             : null;
     }
 }

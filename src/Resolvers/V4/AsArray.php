@@ -2,10 +2,13 @@
 
 namespace Smpita\TypeAs\Resolvers\V4;
 
+use Smpita\TypeAs\Concerns\Resolvers\Object\ResolvesMethods;
 use Smpita\TypeAs\Contracts\ArrayResolver;
 
 class AsArray implements ArrayResolver
 {
+    use ResolvesMethods;
+
     public function resolve(mixed $value, ?array $default = null, ?bool $wrap = true): ?array
     {
         $array = match (gettype($value)) {
@@ -28,14 +31,10 @@ class AsArray implements ArrayResolver
 
     protected function fromObject(object $value): ?array
     {
-        $muted = match (true) {
-            method_exists($value, '__toArray') => $value->__toArray(),
-            method_exists($value, 'toArray') => $value->toArray(),
-            default => null,
-        };
+        $resolved = $this->resolveMethods($value, ['__toArray', 'toArray']);
 
-        return is_array($muted)
-            ? $muted
+        return is_array($resolved)
+            ? $resolved
             : null;
     }
 }

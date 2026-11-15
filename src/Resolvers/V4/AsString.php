@@ -2,10 +2,13 @@
 
 namespace Smpita\TypeAs\Resolvers\V4;
 
+use Smpita\TypeAs\Concerns\Resolvers\Object\ResolvesMethods;
 use Smpita\TypeAs\Contracts\StringResolver;
 
 class AsString implements StringResolver
 {
+    use ResolvesMethods;
+
     public function resolve(mixed $value, ?string $default = null): ?string
     {
         return match (gettype($value)) {
@@ -18,14 +21,10 @@ class AsString implements StringResolver
 
     protected function fromObject(object $value): ?string
     {
-        $muted = match (true) {
-            method_exists($value, '__toString') => $value->__toString(),
-            method_exists($value, 'toString') => $value->toString(),
-            default => null,
-        };
+        $resolved = $this->resolveMethods($value, ['__toString', 'toString']);
 
-        return is_string($muted)
-            ? $muted
+        return is_string($resolved)
+            ? $resolved
             : null;
     }
 }
