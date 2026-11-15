@@ -283,7 +283,7 @@ Extensions are created by passing a custom resolver to a function.
 
 ```php
  /**
-  * @see \Smpita\TypeAs\Resolvers\Base\AsFilterBool
+  * @see \Smpita\TypeAs\Resolvers\V5\AsFilterBool
   *
   * Uses FILTER_VALIDATE_BOOL
   * https://www.php.net/manual/en/filter.constants.php#constant.filter-validate-bool

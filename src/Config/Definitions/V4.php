@@ -4,13 +4,13 @@ namespace Smpita\TypeAs\Config\Definitions;
 
 use Smpita\TypeAs\Contracts\ResolverConfigDefinition;
 use Smpita\TypeAs\Data\ResolverConfig;
-use Smpita\TypeAs\Resolvers\Legacy\V4\Base\AsArray;
-use Smpita\TypeAs\Resolvers\Legacy\V4\Base\AsBool;
-use Smpita\TypeAs\Resolvers\Legacy\V4\Base\AsClass;
-use Smpita\TypeAs\Resolvers\Legacy\V4\Base\AsFloat;
-use Smpita\TypeAs\Resolvers\Legacy\V4\Base\AsInt;
-use Smpita\TypeAs\Resolvers\Legacy\V4\Base\AsString;
-use Smpita\TypeAs\Resolvers\Legacy\V4\Extensions\AsFilterBool;
+use Smpita\TypeAs\Resolvers\V4\AsArray;
+use Smpita\TypeAs\Resolvers\V4\AsBool;
+use Smpita\TypeAs\Resolvers\V4\AsClass;
+use Smpita\TypeAs\Resolvers\V4\AsFloat;
+use Smpita\TypeAs\Resolvers\V4\AsInt;
+use Smpita\TypeAs\Resolvers\V4\AsString;
+use Smpita\TypeAs\Resolvers\V4\AsFilterBool;
 
 class V4 implements ResolverConfigDefinition
 {

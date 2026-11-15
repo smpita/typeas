@@ -1,0 +1,15 @@
+<?php
+
+namespace Smpita\TypeAs\Resolvers\V4;
+
+use Smpita\TypeAs\Contracts\BoolResolver;
+
+class AsBool implements BoolResolver
+{
+    public function resolve(mixed $value, ?bool $default = null): ?bool
+    {
+        return is_null($value)
+            ? $default
+            : boolval($value);
+    }
+}

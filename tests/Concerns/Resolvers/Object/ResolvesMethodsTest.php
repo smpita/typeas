@@ -4,12 +4,12 @@ namespace Smpita\TypeAs\Tests\Concerns\Resolvers\Object;
 
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
-use Smpita\TypeAs\Tests\Stubs\Objects\EdgeCases\NotCallableStub;
-use Smpita\TypeAs\Tests\Stubs\Objects\MethodObjectStub;
-use Smpita\TypeAs\Tests\Stubs\Objects\MethodObjectStubWithNonCallableFirst;
-use Smpita\TypeAs\Tests\Stubs\Objects\NullReturning;
-use Smpita\TypeAs\Tests\Stubs\Objects\OnlySecond;
-use Smpita\TypeAs\Tests\Stubs\Objects\ResolvesMethodsStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Objects\EdgeCases\NotCallableStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Objects\MethodObjectStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Objects\MethodObjectStubWithNonCallableFirst;
+use Smpita\TypeAs\Tests\Testing\Stubs\Objects\NullReturning;
+use Smpita\TypeAs\Tests\Testing\Stubs\Objects\OnlySecond;
+use Smpita\TypeAs\Tests\Testing\Stubs\Objects\ResolvesMethodsStub;
 use Smpita\TypeAs\Tests\TestCase;
 
 class ResolvesMethodsTest extends TestCase

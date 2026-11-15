@@ -6,13 +6,13 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Fluent\Nullable;
 use Smpita\TypeAs\Fluent\TypeConfig;
-use Smpita\TypeAs\Tests\Stubs\Objects\ParentClassStub;
-use Smpita\TypeAs\Tests\Stubs\Resolvers\NullableArrayResolverStub;
-use Smpita\TypeAs\Tests\Stubs\Resolvers\NullableBoolResolverStub;
-use Smpita\TypeAs\Tests\Stubs\Resolvers\NullableClassResolverStub;
-use Smpita\TypeAs\Tests\Stubs\Resolvers\NullableFloatResolverStub;
-use Smpita\TypeAs\Tests\Stubs\Resolvers\NullableIntResolverStub;
-use Smpita\TypeAs\Tests\Stubs\Resolvers\NullableStringResolverStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Objects\ParentClassStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Resolvers\NullableArrayResolverStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Resolvers\NullableBoolResolverStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Resolvers\NullableClassResolverStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Resolvers\NullableFloatResolverStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Resolvers\NullableIntResolverStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Resolvers\NullableStringResolverStub;
 use Smpita\TypeAs\TypeAs;
 
 class NullableTest extends TestCase

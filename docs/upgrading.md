@@ -36,14 +36,14 @@ The resolvers received the following updates:
 - More consistent hunting for `__to{Type}` and `to{Type}`
     - Method calls use `method_exists()` and `is_callable()` as gate.
 
-Resolver versions manage which set of resolvers TypeAs uses. TypeAs defaults to V5; switching to V4 restores legacy behavior via `src/Resolvers/Legacy/V4`.
+Resolver versions manage which set of resolvers TypeAs uses. TypeAs defaults to V5; switching to V4 restores V4 resolving behavior via `src/Resolvers/V4`.
 
 Switch the active version:
 
 ```php
 use Smpita\TypeAs\Config\ResolverVersion;
 
-// Set V4 (legacy) resolvers globally
+// Set V4 resolvers globally
 ResolverVersion::V4->setResolvers();
 
 // Revert to V5 (default) resolvers

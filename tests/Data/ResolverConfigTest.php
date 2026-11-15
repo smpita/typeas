@@ -12,13 +12,13 @@ use Smpita\TypeAs\Contracts\FloatResolver;
 use Smpita\TypeAs\Contracts\IntResolver;
 use Smpita\TypeAs\Contracts\StringResolver;
 use Smpita\TypeAs\Data\ResolverConfig;
-use Smpita\TypeAs\Resolvers\Base\AsArray;
-use Smpita\TypeAs\Resolvers\Base\AsBool;
-use Smpita\TypeAs\Resolvers\Base\AsClass;
-use Smpita\TypeAs\Resolvers\Base\AsFloat;
-use Smpita\TypeAs\Resolvers\Base\AsInt;
-use Smpita\TypeAs\Resolvers\Base\AsString;
-use Smpita\TypeAs\Resolvers\Base\AsFilterBool;
+use Smpita\TypeAs\Resolvers\V5\AsArray;
+use Smpita\TypeAs\Resolvers\V5\AsBool;
+use Smpita\TypeAs\Resolvers\V5\AsClass;
+use Smpita\TypeAs\Resolvers\V5\AsFloat;
+use Smpita\TypeAs\Resolvers\V5\AsInt;
+use Smpita\TypeAs\Resolvers\V5\AsString;
+use Smpita\TypeAs\Resolvers\V5\AsFilterBool;
 use Smpita\TypeAs\Tests\TestCase;
 
 class ResolverConfigTest extends TestCase
