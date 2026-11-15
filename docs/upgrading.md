@@ -34,7 +34,7 @@ See [Resolver Versions](signatures.md#resolver-versions) for resolver version sw
 The resolvers received the following updates:
 - Scalar methods cast Enum values (e.g. `asFilterBool(Enum::Off) // false assuming backed value is 'off'`)
 - More consistent hunting for `__to{Type}` and `to{Type}`
-    - Method calls use `method_exists()` and `is_callable()` as gate.
+- Method calls use `method_exists()` and `is_callable()` as gate.
 
 Resolver versions manage which set of resolvers TypeAs uses. TypeAs defaults to V5; switching to V4 restores V4 resolving behavior via `src/Resolvers/V4`.
 

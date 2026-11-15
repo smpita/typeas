@@ -25,7 +25,6 @@ Easily type your `mixed` signatures. Perfect for static analysis!
   - [Fluent Syntax](#fluent-syntax)
   - [Array Wrapping](#array-wrapping)
   - [Custom Exceptions](#custom-exceptions)
-  - [Official Extensions](#official-extensions)
   - [Custom Resolvers](#custom-resolvers)
   - [Enum / Object Resolution](#enum-object-resolution)
   - [Helpers](#helpers)
@@ -275,27 +274,6 @@ onError(null, CustomResolutionException::class)
 
 ---
 
-## Extensions
-
-Extensions are created by passing a custom resolver to a function.
-
-### Official Extensions
-
-```php
- /**
-  * @see \Smpita\TypeAs\Resolvers\V5\AsFilterBool
-  *
-  * Uses FILTER_VALIDATE_BOOL
-  * https://www.php.net/manual/en/filter.constants.php#constant.filter-validate-bool
-  *
-  * Returns true  on 1 1.0 "1" "true"  "yes" "on"
-  * Returns false on 0 0.0 "0" "false" "no" "off" ""
-  */
-
-$filterBool = TypeAs::filterBool($mixed, $default);
-$nullableFilterBool = TypeAs::nullableFilterBool($mixed, $default);
-```
-
 ### Custom Resolvers
 
 [SIGNATURES#resolver-registration](docs/signatures.md#resolver-registration)
@@ -351,6 +329,7 @@ use Smpita\TypeAs\TypeAs;
 TypeAs::setArrayResolver(new CustomArrayResolver());
 TypeAs::setBoolResolver(new CustomBoolResolver());
 TypeAs::setClassResolver(new CustomClassResolver());
+TypeAs::setFilterBoolResolver(new CustomFilterBoolResolver());
 TypeAs::setFloatResolver(new CustomFloatResolver());
 TypeAs::setIntResolver(new CustomIntResolver());
 TypeAs::setStringResolver(new CustomStringResolver());
@@ -395,7 +374,7 @@ $string = TypeAs::string($mixed, resolver: new CustomStringResolver());
 $nullableArray = TypeAs::nullableArray($mixed, resolver: new CustomArrayResolver());
 $nullableBool = TypeAs::nullableBool($mixed, resolver: new CustomBoolResolver());
 $nullableClass = TypeAs::nullableClass(Expected::class, $mixed, resolver: new CustomClassResolver());
-$nullableBool = TypeAs::nullableFilterBool($mixed, resolver: new CustomFilterBoolResolver());
+$nullableFilterBool = TypeAs::nullableFilterBool($mixed, resolver: new CustomFilterBoolResolver());
 $nullableFloat = TypeAs::nullableFloat($mixed, resolver: new CustomFloatResolver());
 $nullableInt = TypeAs::nullableInt($mixed, resolver: new CustomIntResolver());
 $nullableString = TypeAs::nullableString($mixed, resolver: new CustomStringResolver());
@@ -415,7 +394,7 @@ use Smpita\TypeAs\TypeAs;
 $array = TypeAs::array($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsArray());
 $bool = TypeAs::bool($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsBool());
 $class = TypeAs::class(Expected::class, $mixed, resolver: \Smpita\TypeAs\Resolvers\AsClass());
-$bool = TypeAs::filterBool($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsFilterBool());
+$filterBool = TypeAs::filterBool($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsFilterBool());
 $float = TypeAs::float($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsFloat());
 $int = TypeAs::int($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsInt());
 $string = TypeAs::string($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsString());
@@ -424,7 +403,7 @@ $string = TypeAs::string($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsString
 $nullableArray = TypeAs::nullableArray($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsArray());
 $nullableBool = TypeAs::nullableBool($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsBool());
 $nullableClass = TypeAs::nullableClass(Expected::class, $mixed, resolver: new \Smpita\TypeAs\Resolvers\AsClass());
-$nullableFilterBool = TypeAs::nullableBool($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsFilterBool());
+$nullableFilterBool = TypeAs::nullableFilterBool($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsFilterBool());
 $nullableFloat = TypeAs::nullableFloat($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsFloat());
 $nullableInt = TypeAs::nullableInt($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsInt());
 $nullableString = TypeAs::nullableString($mixed, resolver: new \Smpita\TypeAs\Resolvers\AsString());
@@ -444,8 +423,8 @@ Objects may hook resolution by implementing magic `__to{Type}()` or regular `to{
 |---|---|
 | AsArray | `__toArray`, `toArray` |
 | AsBool | `__toBool`, `toBool` |
-| AsFilterBool | `__toBool`, `toBool` |
 | AsClass | n/a |
+| AsFilterBool | `__toBool`, `toBool` |
 | AsFloat | `__toFloat`, `toFloat` |
 | AsInt | `__toInteger`, `__toInt`, `toInteger`, `toInt` |
 | AsString | `__toString`, `toString` |
@@ -489,15 +468,15 @@ type($mixed)->default($default)->asClass($class);
 // Standard Helpers
 $array = asArray($mixed);
 $bool = asBool($mixed);
-$filterBool = asFilterBool($mixed);
 $class = asClass(Expected::class, $mixed);
+$filterBool = asFilterBool($mixed);
 $float = asFloat($mixed);
 $int = asInt($mixed);
 $string = asString($mixed);
 $nullableArray = asNullableArray($mixed);
 $nullableBool = asNullableBool($mixed);
-$nullableFilterBool = asNullableFilterBool($mixed);
 $nullableClass = asNullableClass(Expected::class, $mixed);
+$nullableFilterBool = asNullableFilterBool($mixed);
 $nullableFloat = asNullableFloat($mixed);
 $nullableInt = asNullableInt($mixed);
 $nullableString = asNullableString($mixed);
@@ -513,15 +492,15 @@ Each global helper has a local counterpart you can import if the global helper c
 ```php
 use function Smpita\TypeAs\asArray as TypeAsArray;
 use function Smpita\TypeAs\asBool as TypeAsBool;
-use function Smpita\TypeAs\asFilterBool as TypeAsFilterBool;
 use function Smpita\TypeAs\asClass as TypeAsClass;
+use function Smpita\TypeAs\asFilterBool as TypeAsFilterBool;
 use function Smpita\TypeAs\asFloat as TypeAsFloat;
 use function Smpita\TypeAs\asInt as TypeAsInt;
 use function Smpita\TypeAs\asString as TypeAsString;
 use function Smpita\TypeAs\asNullableArray as TypeAsNullableArray;
 use function Smpita\TypeAs\asNullableBool as TypeAsNullableBool;
-use function Smpita\TypeAs\asNullableFilterBool as TypeAsNullableFilterBool;
 use function Smpita\TypeAs\asNullableClass as TypeAsNullableClass;
+use function Smpita\TypeAs\asNullableFilterBool as TypeAsNullableFilterBool;
 use function Smpita\TypeAs\asNullableFloat as TypeAsNullableFloat;
 use function Smpita\TypeAs\asNullableInt as TypeAsNullableInt;
 use function Smpita\TypeAs\asNullableString as TypeAsNullableString;
