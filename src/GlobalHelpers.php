@@ -52,20 +52,6 @@ if (!function_exists('asNullableBool')) {
     }
 }
 
-if (!function_exists('asFilterBool')) {
-    function asFilterBool(mixed $value, ?bool $default = null, ?FilterBoolResolver $resolver = null): bool
-    {
-        return TypeAs::filterBool($value, $default, $resolver);
-    }
-}
-
-if (!function_exists('asNullableFilterBool')) {
-    function asNullableFilterBool(mixed $value, ?bool $default = null, ?FilterBoolResolver $resolver = null): ?bool
-    {
-        return TypeAs::nullableFilterBool($value, $default, $resolver);
-    }
-}
-
 if (!function_exists('asClass')) {
     /**
      * @template TClass of object
@@ -93,6 +79,20 @@ if (!function_exists('asNullableClass')) {
     function asNullableClass(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null)
     {
         return TypeAs::nullableClass($class, $value, $default, $resolver);
+    }
+}
+
+if (!function_exists('asFilterBool')) {
+    function asFilterBool(mixed $value, ?bool $default = null, ?FilterBoolResolver $resolver = null): bool
+    {
+        return TypeAs::filterBool($value, $default, $resolver);
+    }
+}
+
+if (!function_exists('asNullableFilterBool')) {
+    function asNullableFilterBool(mixed $value, ?bool $default = null, ?FilterBoolResolver $resolver = null): ?bool
+    {
+        return TypeAs::nullableFilterBool($value, $default, $resolver);
     }
 }
 

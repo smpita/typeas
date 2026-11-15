@@ -128,6 +128,12 @@ Smpita\TypeAs::setBoolResolver(?\Smpita\TypeAs\Contracts\BoolResolver $resolver)
 Smpita\TypeAs::setClassResolver(?\Smpita\TypeAs\Contracts\ClassResolver $resolver): void
 ```
 
+#### FilterBool
+
+```php
+Smpita\TypeAs::setFilterBoolResolver(?\Smpita\TypeAs\Contracts\FilterBoolResolver $resolver): void
+```
+
 #### Float
 
 ```php
@@ -138,12 +144,6 @@ Smpita\TypeAs::setFloatResolver(?\Smpita\TypeAs\Contracts\FloatResolver $resolve
 
 ```php
 Smpita\TypeAs::setIntResolver(?\Smpita\TypeAs\Contracts\IntResolver $resolver): void
-```
-
-#### FilterBool
-
-```php
-Smpita\TypeAs::setFilterBoolResolver(?\Smpita\TypeAs\Contracts\FilterBoolResolver $resolver): void
 ```
 
 #### String

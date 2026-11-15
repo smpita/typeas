@@ -45,6 +45,11 @@ final class ResolverConfig
         return new $this->classResolverClass();
     }
 
+    public function filterBoolResolver(): FilterBoolResolver
+    {
+        return new $this->filterBoolResolverClass();
+    }
+
     public function floatResolver(): FloatResolver
     {
         return new $this->floatResolverClass();
@@ -58,10 +63,5 @@ final class ResolverConfig
     public function stringResolver(): StringResolver
     {
         return new $this->stringResolverClass();
-    }
-
-    public function filterBoolResolver(): FilterBoolResolver
-    {
-        return new $this->filterBoolResolverClass();
     }
 }
