@@ -2,7 +2,7 @@ parameters:
     level: max
     paths:
         - src
-        - tests/Fixtures
+        - tests/Testing/StaticAnalysis/Fixtures
     tmpDir: build/phpstan
     ignoreErrors:
         - identifier: missingType.iterableValue

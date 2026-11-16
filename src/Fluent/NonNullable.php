@@ -28,7 +28,7 @@ class NonNullable
         )->array(
             value: $this->config()->fromValue,
             default: TypeAs::nullableArray($this->config()->defaultTo, wrap: false),
-            resolver: $this->config()->arrayResolver,
+            resolver: $this->config()->resolvers()->arrayResolver(),
             wrap: $this->config()->arrayWrap,
         );
     }
@@ -44,7 +44,7 @@ class NonNullable
         )->bool(
             value: $this->config()->fromValue,
             default: TypeAs::nullableBool($this->config()->defaultTo),
-            resolver: $this->config()->boolResolver,
+            resolver: $this->config()->resolvers()->boolResolver(),
         );
     }
 
@@ -58,7 +58,8 @@ class NonNullable
             exception: $this->config()->throwException,
         )->filterBool(
             value: $this->config()->fromValue,
-            default: TypeAs::nullableBool($this->config()->defaultTo),
+            default: TypeAs::nullableFilterBool($this->config()->defaultTo),
+            resolver: $this->config()->resolvers()->filterBoolResolver()
         );
     }
 
@@ -79,7 +80,7 @@ class NonNullable
             class: $class,
             value: $this->config()->fromValue,
             default: TypeAs::nullableClass(class: $class, value: $this->config()->defaultTo),
-            resolver: $this->config()->classResolver,
+            resolver: $this->config()->resolvers()->classResolver(),
         );
     }
 
@@ -94,7 +95,7 @@ class NonNullable
         )->float(
             value: $this->config()->fromValue,
             default: TypeAs::nullableFloat($this->config()->defaultTo),
-            resolver: $this->config()->floatResolver,
+            resolver: $this->config()->resolvers()->floatResolver(),
         );
     }
 
@@ -109,7 +110,7 @@ class NonNullable
         )->int(
             value: $this->config()->fromValue,
             default: TypeAs::nullableInt($this->config()->defaultTo),
-            resolver: $this->config()->intResolver,
+            resolver: $this->config()->resolvers()->intResolver(),
         );
     }
 
@@ -124,7 +125,7 @@ class NonNullable
         )->string(
             value: $this->config()->fromValue,
             default: TypeAs::nullableString($this->config()->defaultTo),
-            resolver: $this->config()->stringResolver,
+            resolver: $this->config()->resolvers()->stringResolver(),
         );
     }
 }

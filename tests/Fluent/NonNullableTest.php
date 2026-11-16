@@ -8,14 +8,15 @@ use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Fluent\NonNullable;
 use Smpita\TypeAs\Fluent\TypeConfig;
-use Smpita\TypeAs\Tests\Stubs\Exceptions\CustomExceptionStub;
-use Smpita\TypeAs\Tests\Stubs\Objects\ParentClassStub;
-use Smpita\TypeAs\Tests\Stubs\Resolvers\ArrayResolverStub;
-use Smpita\TypeAs\Tests\Stubs\Resolvers\BoolResolverStub;
-use Smpita\TypeAs\Tests\Stubs\Resolvers\ClassResolverStub;
-use Smpita\TypeAs\Tests\Stubs\Resolvers\FloatResolverStub;
-use Smpita\TypeAs\Tests\Stubs\Resolvers\IntResolverStub;
-use Smpita\TypeAs\Tests\Stubs\Resolvers\StringResolverStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Exceptions\CustomExceptionStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Objects\ParentClassStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Resolvers\ArrayResolverStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Resolvers\BoolResolverStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Resolvers\ClassResolverStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Resolvers\FloatResolverStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Resolvers\IntResolverStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Resolvers\FilterBoolResolverStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Resolvers\StringResolverStub;
 use Smpita\TypeAs\TypeAs;
 
 class NonNullableTest extends TestCase
@@ -354,6 +355,19 @@ class NonNullableTest extends TestCase
         $this->assertSame(
             $resolver->resolve('test'),
             NonNullable::make()->type('test')->asString(),
+        );
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_non_nullable_can_use_fluent_filter_bool_resolver(): void
+    {
+        $resolver = new FilterBoolResolverStub();
+
+        $this->assertSame(
+            $resolver->resolve('test'),
+            NonNullable::make()->type('test')->using($resolver)->asFilterBool(),
         );
     }
 

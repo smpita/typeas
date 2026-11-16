@@ -5,6 +5,7 @@ namespace Smpita\TypeAs;
 use Smpita\TypeAs\Contracts\ArrayResolver;
 use Smpita\TypeAs\Contracts\BoolResolver;
 use Smpita\TypeAs\Contracts\ClassResolver;
+use Smpita\TypeAs\Contracts\FilterBoolResolver;
 use Smpita\TypeAs\Contracts\FloatResolver;
 use Smpita\TypeAs\Contracts\IntResolver;
 use Smpita\TypeAs\Contracts\StringResolver;
@@ -42,16 +43,6 @@ function asNullableBool(mixed $value, ?bool $default = null, ?BoolResolver $reso
     return TypeAs::nullableBool($value, $default, $resolver);
 }
 
-function asFilterBool(mixed $value, ?bool $default = null): bool
-{
-    return TypeAs::filterBool($value, $default);
-}
-
-function asNullableFilterBool(mixed $value, ?bool $default = null): ?bool
-{
-    return TypeAs::nullableFilterBool($value, $default);
-}
-
 /**
  * @template TClass of object
  *
@@ -76,6 +67,19 @@ function asClass(string $class, mixed $value, ?object $default = null, ?ClassRes
 function asNullableClass(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null)
 {
     return TypeAs::nullableClass($class, $value, $default, $resolver);
+}
+
+/**
+ * @throws TypeAsResolutionException
+ */
+function asFilterBool(mixed $value, ?bool $default = null, ?FilterBoolResolver $resolver = null): bool
+{
+    return TypeAs::filterBool($value, $default, $resolver);
+}
+
+function asNullableFilterBool(mixed $value, ?bool $default = null, ?FilterBoolResolver $resolver = null): ?bool
+{
+    return TypeAs::nullableFilterBool($value, $default, $resolver);
 }
 
 /**

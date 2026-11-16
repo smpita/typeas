@@ -6,19 +6,20 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\Attributes\Test;
 use ReflectionClass;
-use Smpita\TypeAs\Tests\Stubs\Objects\ParentClassStub;
-use Smpita\TypeAs\Tests\Stubs\Resolvers\ArrayResolverStub;
-use Smpita\TypeAs\Tests\Stubs\Resolvers\BoolResolverStub;
-use Smpita\TypeAs\Tests\Stubs\Resolvers\ClassResolverStub;
-use Smpita\TypeAs\Tests\Stubs\Resolvers\FloatResolverStub;
-use Smpita\TypeAs\Tests\Stubs\Resolvers\IntResolverStub;
-use Smpita\TypeAs\Tests\Stubs\Resolvers\NullableArrayResolverStub;
-use Smpita\TypeAs\Tests\Stubs\Resolvers\NullableBoolResolverStub;
-use Smpita\TypeAs\Tests\Stubs\Resolvers\NullableClassResolverStub;
-use Smpita\TypeAs\Tests\Stubs\Resolvers\NullableFloatResolverStub;
-use Smpita\TypeAs\Tests\Stubs\Resolvers\NullableIntResolverStub;
-use Smpita\TypeAs\Tests\Stubs\Resolvers\NullableStringResolverStub;
-use Smpita\TypeAs\Tests\Stubs\Resolvers\StringResolverStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Objects\ParentClassStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Resolvers\ArrayResolverStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Resolvers\BoolResolverStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Resolvers\ClassResolverStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Resolvers\FilterBoolResolverStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Resolvers\FloatResolverStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Resolvers\IntResolverStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Resolvers\NullableArrayResolverStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Resolvers\NullableBoolResolverStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Resolvers\NullableClassResolverStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Resolvers\NullableFloatResolverStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Resolvers\NullableIntResolverStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Resolvers\NullableStringResolverStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Resolvers\StringResolverStub;
 use Smpita\TypeAs\TypeAs;
 
 class TypeAsTest extends TestCase
@@ -285,24 +286,46 @@ class TypeAsTest extends TestCase
     #[Test]
     #[Group('smpita')]
     #[Group('typeas')]
+    public function test_can_use_inline_filter_bool_resolver(): void
+    {
+        $resolver = new FilterBoolResolverStub();
+
+        $this->assertSame($resolver->resolve('test'), TypeAs::filterBool('test', null, $resolver));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_can_set_filter_bool_resolver(): void
+    {
+        $resolver = new FilterBoolResolverStub();
+        TypeAs::setFilterBoolResolver($resolver);
+
+        $this->assertSame($resolver->resolve('test'), TypeAs::filterBool('test'));
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
     #[DataProvider('resolverProvider')]
     public function test_can_reset_resolvers(string $key, mixed $resolver): void
     {
-        $setResolverMethod = 'set'.ucfirst($key);
-        TypeAs::getInstance()->$setResolverMethod($resolver);
+        $factory = TypeAs::getInstance();
 
-        $value = (new ReflectionClass(TypeAs::getInstance()))
+        $factory->resolvers()->{$key} = $resolver;
+
+        $value = (new ReflectionClass($factory->resolvers()))
             ->getProperty($key)
-            ->getValue(TypeAs::getInstance());
+            ->getValue($factory->resolvers());
 
         $this->assertNotNull($value);
         $this->assertSame($resolver, $value);
 
-        TypeAs::useDefaultResolvers();
+        $factory->useDefaultResolvers();
 
-        $value = (new ReflectionClass(TypeAs::getInstance()))
+        $value = (new ReflectionClass($factory->resolvers()))
             ->getProperty($key)
-            ->getValue(TypeAs::getInstance());
+            ->getValue($factory->resolvers());
 
         $this->assertNull($value);
     }
@@ -313,6 +336,7 @@ class TypeAsTest extends TestCase
             ['arrayResolver', new ArrayResolverStub()],
             ['boolResolver', new BoolResolverStub()],
             ['classResolver', new ClassResolverStub()],
+            ['filterBoolResolver', new FilterBoolResolverStub()],
             ['floatResolver', new FloatResolverStub()],
             ['intResolver', new IntResolverStub()],
             ['stringResolver', new StringResolverStub()],

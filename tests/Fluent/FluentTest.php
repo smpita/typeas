@@ -7,8 +7,8 @@ use PHPUnit\Framework\Attributes\Test;
 use Smpita\TypeAs\Exceptions\TypeAsResolutionException;
 use Smpita\TypeAs\Fluent\NonNullable;
 use Smpita\TypeAs\Fluent\Nullable;
-use Smpita\TypeAs\Tests\Stubs\Exceptions\CustomExceptionStub;
-use Smpita\TypeAs\Tests\Stubs\Objects\ParentClassStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Exceptions\CustomExceptionStub;
+use Smpita\TypeAs\Tests\Testing\Stubs\Objects\ParentClassStub;
 use Smpita\TypeAs\TypeAs;
 
 class FluentTest extends TestCase
@@ -42,6 +42,28 @@ class FluentTest extends TestCase
     public function test_can_create_a_non_nullable_instance_from_a_nullable_instance(): void
     {
         $this->assertInstanceOf(NonNullable::class, TypeAs::type('test')->nullable()->nonNullable());
+    }
+
+    #[Test]
+    #[Group('smpita')]
+    #[Group('typeas')]
+    public function test_fluent_helpers_are_equivalent(): void
+    {
+        $value = 'test';
+
+        $static = TypeAs::type($value);
+        $globalHelper = \type($value);
+        $helper = \Smpita\TypeAs\type($value);
+
+        $different = TypeAs::type(null);
+
+        $this->assertEqualsCanonicalizing($static, $globalHelper);
+        $this->assertEqualsCanonicalizing($globalHelper, $helper);
+        $this->assertEqualsCanonicalizing($helper, $static);
+
+        $this->assertNotEqualsCanonicalizing($different, $static);
+        $this->assertNotEqualsCanonicalizing($different, $globalHelper);
+        $this->assertNotEqualsCanonicalizing($different, $helper);
     }
 
     #[Test]

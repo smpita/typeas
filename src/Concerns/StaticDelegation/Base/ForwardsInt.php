@@ -25,6 +25,6 @@ trait ForwardsInt
 
     public static function setIntResolver(?IntResolver $resolver): void
     {
-        static::getInstance()->setIntResolver($resolver);
+        static::getInstance()->resolvers()->setIntResolver($resolver);
     }
 }

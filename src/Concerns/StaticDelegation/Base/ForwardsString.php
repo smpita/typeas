@@ -25,6 +25,6 @@ trait ForwardsString
 
     public static function setStringResolver(?StringResolver $resolver): void
     {
-        static::getInstance()->setStringResolver($resolver);
+        static::getInstance()->resolvers()->setStringResolver($resolver);
     }
 }

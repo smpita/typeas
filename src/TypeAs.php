@@ -9,7 +9,7 @@ use Smpita\TypeAs\Concerns\StaticDelegation\Base\ForwardsClass;
 use Smpita\TypeAs\Concerns\StaticDelegation\Base\ForwardsFloat;
 use Smpita\TypeAs\Concerns\StaticDelegation\Base\ForwardsInt;
 use Smpita\TypeAs\Concerns\StaticDelegation\Base\ForwardsString;
-use Smpita\TypeAs\Concerns\StaticDelegation\Extensions\ForwardsFilterBool;
+use Smpita\TypeAs\Concerns\StaticDelegation\Base\ForwardsFilterBool;
 use Smpita\TypeAs\Concerns\StaticDelegation\Fluent\ForwardsNonNullable;
 
 /**
