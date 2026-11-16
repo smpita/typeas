@@ -13,7 +13,7 @@ class NullableClassResolverStub implements ClassResolver
      * @param  TClass  $default
      * @return TClass|null
      */
-    public function resolve(string $class, mixed $value, ?object $default = null)
+    public function resolve(string $class, mixed $value, ?object $default = null): ?object
     {
         return null;
     }

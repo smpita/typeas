@@ -21,7 +21,7 @@ trait ResolvesClasses
      *
      * @throws TypeAsResolutionException
      */
-    public function class(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null)
+    public function class(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null): object
     {
         $resolver ??= $this->resolvers()->classResolver();
 
@@ -35,7 +35,7 @@ trait ResolvesClasses
      * @param  TClass  $default
      * @return TClass|null
      */
-    public function nullableClass(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null)
+    public function nullableClass(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null): ?object
     {
         $resolver ??= $this->resolvers()->classResolver();
 

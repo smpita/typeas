@@ -19,7 +19,7 @@ trait ForwardsClass
      *
      * @throws TypeAsResolutionException
      */
-    public static function class(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null)
+    public static function class(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null): object
     {
         return static::getInstance()->class(class: $class, value: $value, default: $default, resolver: $resolver);
     }
@@ -31,7 +31,7 @@ trait ForwardsClass
      * @param  TClass  $default
      * @return TClass|null
      */
-    public static function nullableClass(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null)
+    public static function nullableClass(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null): ?object
     {
         return static::getInstance()->nullableClass(class: $class, value: $value, default: $default, resolver: $resolver);
     }

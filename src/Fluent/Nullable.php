@@ -59,7 +59,7 @@ class Nullable
      * @param  class-string<TClass>  $class
      * @return TClass|null
      */
-    public function asClass(string $class)
+    public function asClass(string $class): ?object
     {
         return TypeAs::onError(
             message: $this->config()->throwMessage,

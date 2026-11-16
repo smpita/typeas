@@ -71,7 +71,7 @@ class NonNullable
      *
      * @throws TypeAsResolutionException
      */
-    public function asClass(string $class)
+    public function asClass(string $class): object
     {
         return TypeAs::onError(
             message: $this->config()->throwMessage,

@@ -62,7 +62,7 @@ if (!function_exists('asClass')) {
      *
      * @throws TypeAsResolutionException
      */
-    function asClass(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null)
+    function asClass(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null): object
     {
         return TypeAs::class($class, $value, $default, $resolver);
     }
@@ -76,7 +76,7 @@ if (!function_exists('asNullableClass')) {
      * @param  TClass  $default
      * @return TClass|null
      */
-    function asNullableClass(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null)
+    function asNullableClass(string $class, mixed $value, ?object $default = null, ?ClassResolver $resolver = null): ?object
     {
         return TypeAs::nullableClass($class, $value, $default, $resolver);
     }
