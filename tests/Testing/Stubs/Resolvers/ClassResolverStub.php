@@ -16,7 +16,7 @@ class ClassResolverStub implements ClassResolver
      *
      * @throws \Smpita\TypeAs\Exceptions\TypeAsResolutionException
      */
-    public function resolve(string $class, mixed $value, ?object $default = null)
+    public function resolve(string $class, mixed $value, ?object $default = null): object
     {
         if (class_exists($class)) {
             return new $class();

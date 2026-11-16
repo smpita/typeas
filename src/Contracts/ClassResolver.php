@@ -11,5 +11,5 @@ interface ClassResolver extends TypeAsResolver
      * @param  TClass  $default
      * @return TClass|null
      */
-    public function resolve(string $class, mixed $value, ?object $default = null);
+    public function resolve(string $class, mixed $value, ?object $default = null): ?object;
 }

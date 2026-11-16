@@ -13,7 +13,7 @@ class AsClass implements ClassResolver
      * @param  TClass  $default
      * @return TClass|null
      */
-    public function resolve(string $class, mixed $value, ?object $default = null)
+    public function resolve(string $class, mixed $value, ?object $default = null): ?object
     {
         return is_object($value) && is_a($value, $class)
             ? $value
